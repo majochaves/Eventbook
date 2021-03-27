@@ -1,0 +1,2 @@
+@charset "UTF-8";.review-text q:before {	content: '“';}.review-text q:after {	content: '”';}.review-info {	font-size: 1.0625rem;	margin-left: -10px;}.review-info > * {	margin-left: 10px;}.review-info > * {	display: inline-block;}* + .review-info {	margin-top: 2.375rem;}.context-dark .review-time {	color: #aeaeb2;}
+/*# sourceMappingURL=review.css.map */
