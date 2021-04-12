@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27-mar-2021, 13:24:13
+    Author     : Merli
+*/
+
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #455a64;
+    color: white;
+}
+
+ul {
+    list-style-type: none;
+    width: 11.1em;
+}
+
+ul li {
+    background: #232F34;
+    margin: 0.5em 0;
+    padding: 0.3em;
+    border-right: 0.4em solid #F9AA33;
+    border-radius: 0.2em;
+}
+
+ul li:hover {
+    font-weight: bold;
+    background: #38474e;
+    border-right: 0.4em solid #ffdc65;
+}
+
+ul a{
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a:link {
+    color: #F9AA33;
+}
+
+a:visited {
+    color: #F9AA33;
+}
