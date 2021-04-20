@@ -21,7 +21,8 @@
     %>
     <body>
         <h1>Usuarios de EventBook</h1>
-        
+
+<%--        
         <form action="ServletUsuarioFiltrar" method="POST">
             <table>
                 <tr>
@@ -51,7 +52,7 @@
                     </td>
                 </tr>
         </form>
-        
+--%>        
         <table style="width:70%; text-align: center">
         <tr>
             <th>ID</th>
