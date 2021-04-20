@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -53,30 +54,21 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "NOMBRE")
+    @Column(name = "NOMBRE", length = 50)
     private String nombre;
-    @Size(max = 50)
-    @Column(name = "APELLIDOS")
+    @Column(name = "APELLIDOS", length = 50)
     private String apellidos;
-    @Size(max = 50)
-    @Column(name = "DOMICILIO")
+    @Column(name = "DOMICILIO", length = 50)
     private String domicilio;
-    @Size(max = 50)
-    @Column(name = "CIUDAD_RESIDENCIA")
+    @Column(name = "CIUDAD_RESIDENCIA", length = 50)
     private String ciudadResidencia;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", length = 50, nullable = false)
     private String password;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", length = 50, nullable = false)
     private String username;
-    @Size(max = 20)
-    @Column(name = "SEXO")
+    @Column(name = "SEXO", length = 20)
     private String sexo;
     @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.DATE)
@@ -95,13 +87,16 @@ public class Usuario implements Serializable {
     private Creadoreventos creadoreventos;
 
     public Usuario() {
+        chatList = new LinkedList<>();
     }
 
     public Usuario(Integer id) {
+        this();
         this.id = id;
     }
 
     public Usuario(Integer id, String password, String username) {
+        this();
         this.id = id;
         this.password = password;
         this.username = username;

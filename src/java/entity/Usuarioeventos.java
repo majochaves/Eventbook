@@ -37,8 +37,7 @@ public class Usuarioeventos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "USUARIO_ID")
+    @Column(name = "USUARIO_ID", nullable = false)
     private Integer usuarioId;
     @JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false)

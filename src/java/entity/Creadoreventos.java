@@ -37,8 +37,7 @@ public class Creadoreventos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "USUARIO_ID")
+    @Column(name = "USUARIO_ID", nullable = false)
     private Integer usuarioId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "creadoreventosId")
     private List<Evento> eventoList;
