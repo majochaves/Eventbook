@@ -20,6 +20,8 @@ import java.io.PrintWriter;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -91,6 +93,9 @@ public class ServletUsuarioGuardar extends HttpServlet {
         u.setCiudadResidencia(ciudad);
         u.setFechaCreacion(fechaCreacion);
         
+        //EntityManagerFactory emf = Persistence.createEntityManagerFactory("EventBookPU");
+        //EntityManager em = emf.createEntityManager();
+        
         if (!edicion) {
             usuarioFacade.create(u);
             switch(rol) {
@@ -121,6 +126,7 @@ public class ServletUsuarioGuardar extends HttpServlet {
                 default:
                     break;
             }
+            
         } else usuarioFacade.edit(u);
 
         response.sendRedirect("ServletUsuarioListar");

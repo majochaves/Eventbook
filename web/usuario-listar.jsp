@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Listado de usuarios</title>
     </head>
     <%
         boolean filtrado = request.getParameter("username") != null;

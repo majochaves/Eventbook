@@ -61,6 +61,7 @@ public class ServletUsuarioBorrar extends HttpServlet {
         String id = request.getParameter("id");
         Usuario usuario = usuarioFacade.find(Integer.parseInt(id));
         
+        /*
         if (usuario.getAdministrador() != null) {
             administradorFacade.remove(usuario.getAdministrador());
         } else if (usuario.getAnalista()!= null) {
@@ -72,7 +73,7 @@ public class ServletUsuarioBorrar extends HttpServlet {
         } else if (usuario.getCreadoreventos()!= null) {
             creadorEventosFacade.remove(usuario.getCreadoreventos());
         }
-
+        */
         usuarioFacade.remove(usuario);
         
         response.sendRedirect("ServletUsuarioListar");
