@@ -10,7 +10,10 @@ import dao.AdministradorFacade;
 import dao.AnalistaFacade;
 import dao.CreadoreventosFacade;
 import dao.TeleoperadorFacade;
+import dao.UsuarioFacade;
 import dao.UsuarioeventosFacade;
+import entity.Usuario;
+import entity.Usuarioeventos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -36,6 +39,9 @@ import javax.servlet.http.HttpServletResponse;
 public class crearAnalisis extends HttpServlet {
 
     @EJB
+    private UsuarioFacade usuarioFacade;
+
+    @EJB
     private TeleoperadorFacade teleoperadorFacade;
 
     @EJB
@@ -51,15 +57,20 @@ public class crearAnalisis extends HttpServlet {
     private UsuarioeventosFacade usuarioeventosFacade;
     
     
+    
+    
+    
     //Tipos de usuario
     private static final String USUARIOEVENTOS = "usuarioEventos";
     private static final String CREADOREVENTOS = "creadorEventos";
     private static final String ANALISTAS = "analistas";
     private static final String TELEOPERADORES = "teleoperadores";
     private static final String ADMINISTRADORES = "administradores";
+    
     //Tipos de filtro
     private static final String FILTRONUMUSUARIOS = "numUsuarios";
     private static final String FILTROSEXO = "sexo";
+    
     //Anyos
     private static final String ANYOTODOS = "todos";
     /**
@@ -80,42 +91,50 @@ public class crearAnalisis extends HttpServlet {
         
         
         
-        List<String> listaColumna = new ArrayList<>();
-        //Asociaremos el nombre de una columna con varias filas(por eso el HashMap<columna, filas>)
+        //Un conjunto de filas estará asociada a cierta columna en concreto (por eso el HashMap<columna, filas>)
         //Pero cada fila, debe tener un nombre Unico (en la BD el nombre es PK) por eso Set<String>
         //Pero cada fila es una tupla. ej: Masculino - 50, Femenino - 70...
+        //Ej visual:
+        //              | Ciudad | Valor |          Como se puede ver, las columnas SIEMPRE son una tupla (Elem, Valor)
+        //              | Malaga |   15  |
+        //              | Barcel |   20  |
+        //              | Madrid |   22  |
+        
         Map<String, Set<Tupla<String, Double>>> listaFila = new HashMap<>();
+        
+        
+        //Obtenemos todos los usuarios
+        List<Usuario> listaUsuarios = usuarioFacade.getUsuarioByRoles(
+                tipoUsuario.contains(ANALISTAS),
+                tipoUsuario.contains(USUARIOEVENTOS),
+                tipoUsuario.contains(CREADOREVENTOS),
+                tipoUsuario.contains(TELEOPERADORES),
+                tipoUsuario.contains(ADMINISTRADORES)
+        );
         
         
         //NUM USUARIOS
         if(tipoFiltro.contains(FILTRONUMUSUARIOS)){
-            listaColumna.add(FILTRONUMUSUARIOS);
-            double nUsuarios = 0;
-            
-            if(tipoUsuario.contains(USUARIOEVENTOS)){
-                nUsuarios += usuarioeventosFacade.count();
-            }
-            if(tipoUsuario.contains(CREADOREVENTOS)){
-                nUsuarios += creadoreventosFacade.count();
-            }
-            if(tipoUsuario.contains(ANALISTAS)){
-                nUsuarios += analistaFacade.count();
-            }
-            if(tipoUsuario.contains(TELEOPERADORES)){
-                nUsuarios += teleoperadorFacade.count();
-            }
-            if(tipoUsuario.contains(ADMINISTRADORES)){
-                nUsuarios += administradorFacade.count();
-            }
-            
+            Tupla<String, Double> t = new Tupla("Num", listaUsuarios.size());
             Set<Tupla<String, Double>> c = new HashSet<>();
-            Tupla<String, Double> t = new Tupla("NumUsuarios", nUsuarios);
             c.add(t);
-            listaFila.put(FILTRONUMUSUARIOS, c);
+            listaFila.put("Numero de Usuarios", c);
         }
         
         
         //SEXO
+        if(tipoFiltro.contains(FILTROSEXO)){
+            Map<String,Integer> lista = usuarioFacade.getNumUsersByGender(listaUsuarios);
+            Tupla<String, Double> t = new Tupla("Masculino", Double.valueOf(lista.get("Masculino")));
+            Tupla<String, Double> t2 = new Tupla("Femenino", Double.valueOf(lista.get("Femenino")));
+            Set<Tupla<String, Double>> c = new HashSet<>();
+            c.add(t);
+            c.add(t2);
+            listaFila.put("Sexo", c);
+        }
+        
+        
+        /*
         if(tipoFiltro.contains(FILTROSEXO)){
             listaColumna.add(FILTROSEXO);
             double masc = 0;
@@ -132,9 +151,8 @@ public class crearAnalisis extends HttpServlet {
             c.add(t2);
             listaFila.put(FILTROSEXO, c);
             
-        }
+        }*/
         
-        request.setAttribute("listaColumna", listaColumna);
         request.setAttribute("listaFila", listaFila);
         
         

@@ -37,10 +37,9 @@
         <br/>
         <br/>
         <%
-            List<String> listaColumna = (List)request.getAttribute("listaColumna");
             Map<String, Set<Tupla<String, Double>>> listaFila = (Map)request.getAttribute("listaFila");
-            if(listaColumna != null || listaFila != null){
-                for(String nombreColumna : listaColumna){
+            if(listaFila != null){
+                for(String nombreColumna : listaFila.keySet()){
         %>
                     <table border="1">
                         <thead>
@@ -51,7 +50,7 @@
                         </thead>
                         <tbody>
                             <%
-                                Set<Tupla<String, Double>> conjuntoDeFilas= listaFila.get(nombreColumna);
+                                Set<Tupla<String, Double>> conjuntoDeFilas = listaFila.get(nombreColumna);
                                 for(Tupla<String, Double> filaIndividual : conjuntoDeFilas){
                             %>
                                     <tr>
