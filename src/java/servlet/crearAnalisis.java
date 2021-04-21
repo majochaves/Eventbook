@@ -16,6 +16,8 @@ import entity.Usuario;
 import entity.Usuarioeventos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -72,7 +74,8 @@ public class crearAnalisis extends HttpServlet {
     private static final String FILTROSEXO = "sexo";
     
     //Anyos
-    private static final String ANYOTODOS = "todos";
+    //private static final String ANYOTODOS = "todos";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -87,9 +90,20 @@ public class crearAnalisis extends HttpServlet {
         
         List<String> tipoUsuario = Arrays.asList(request.getParameterValues("tipoUsuario"));
         List<String> tipoFiltro = Arrays.asList(request.getParameterValues("tipoFiltro"));
-        String anyo = request.getParameter("anyo");
         
+        String cadenaFechaInicial = request.getParameter("fechaInicial");
+        String cadenaFechaFinal = request.getParameter("fechaFinal");
         
+        Date fechaInicial, fechaFinal;
+        if(cadenaFechaInicial.length() == 0 || cadenaFechaInicial == null) //cadenaFechaInicial.equalsIgnoreCase(ANYOTODOS) || 
+            fechaInicial  = null;
+        else
+            fechaInicial = Date.valueOf(cadenaFechaInicial);
+        
+        if(cadenaFechaFinal.length() == 0 || cadenaFechaFinal == null) // cadenaFechaFinal.equalsIgnoreCase(ANYOTODOS) || 
+            fechaFinal  = null;
+        else
+            fechaFinal = Date.valueOf(cadenaFechaFinal);
         
         //Un conjunto de filas estará asociada a cierta columna en concreto (por eso el HashMap<columna, filas>)
         //Pero cada fila, debe tener un nombre Unico (en la BD el nombre es PK) por eso Set<String>
@@ -109,7 +123,9 @@ public class crearAnalisis extends HttpServlet {
                 tipoUsuario.contains(USUARIOEVENTOS),
                 tipoUsuario.contains(CREADOREVENTOS),
                 tipoUsuario.contains(TELEOPERADORES),
-                tipoUsuario.contains(ADMINISTRADORES)
+                tipoUsuario.contains(ADMINISTRADORES),
+                fechaInicial,
+                fechaFinal
         );
         
         
@@ -152,6 +168,7 @@ public class crearAnalisis extends HttpServlet {
             listaFila.put(FILTROSEXO, c);
             
         }*/
+        
         
         request.setAttribute("listaFila", listaFila);
         

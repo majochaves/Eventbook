@@ -28,10 +28,9 @@
             <input type="checkbox" name="tipoFiltro" value="numUsuarios" checked="checked" />Numero de usuarios<br/><br/>
             <input type="checkbox" name="tipoFiltro" value="sexo" />Sexo<br/><br/>
             <h3>Año</h3>
-            <input type="radio" name="anyo" value="todos" checked="checked" />Todos los años<br/>
-            <input type="radio" name="anyo" value="2021"/>2021<br/>
-            <input type="radio" name="anyo" value="2020"/>2020<br/>
-            <input type="radio" name="anyo" value="2019"/>2019<br/>
+            
+            <input type="date" name="fechaInicial" min="0001-01-01" max="9999-12-31" /> Fecha Inicial <br />
+            <input type="date" name="fechaFinal" min="0001-01-01" max="9999-12-31" /> Fecha Final <br />
             <input type="submit" value="Realizar Analisis" />
         </form>
         <br/>

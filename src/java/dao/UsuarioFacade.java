@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Usuario;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,36 +35,68 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
     
-    public List<Usuario> getUsuarioByRoles(boolean analistas, boolean usuarioEventos, boolean creadorEventos, boolean teleoperadores, boolean administradores){
+    /**
+     * Devuelve una lista de usuarios con los roles seleccionados. 
+     * Tambien puede filtar . En caso de no querer un filtro de fecha ponerlo a null.
+     * @param fechaInicial Poner null si no se quiere seleccionar una fecha inicial
+     * @param fechaFinal Poner null si no se quiere seleccionar una fecha final
+     * @return 
+     */
+    public List<Usuario> getUsuarioByRoles(boolean analistas, boolean usuarioEventos, boolean creadorEventos, boolean teleoperadores, boolean administradores, Date fechaInicial, Date fechaFinal){
         List<Usuario> listaUsuarios = new ArrayList<>();
         List<Usuario> l;
+        Query q;
+        if(fechaInicial == null)
+            fechaInicial = Date.valueOf("0001-01-01");  //Date.valueOf(Long.MAX_VALUE); Esto peta
+        if(fechaFinal == null)
+            fechaFinal = Date.valueOf("9999-12-31");
         
         if(analistas){
-            l = em.createQuery("SELECT u FROM Analista a, Usuario u WHERE a.usuarioId=u.id").getResultList();
+            q = em.createQuery("SELECT u FROM Analista a, Usuario u WHERE a.usuarioId=u.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal");
+            q.setParameter("fechaInicial", fechaInicial);
+            q.setParameter("fechaFinal", fechaFinal);
+            l = q.getResultList();
+            
             if(l!=null)
                 listaUsuarios.addAll(l);
         }
             
         if(usuarioEventos){
-            l = em.createQuery("SELECT u FROM Usuarioeventos ua, Usuario u WHERE ua.usuarioId=U.id").getResultList();
+            q = em.createQuery("SELECT u FROM Usuarioeventos ua, Usuario u WHERE ua.usuarioId=U.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal");
+            q.setParameter("fechaInicial", fechaInicial);
+            q.setParameter("fechaFinal", fechaFinal);
+            l = q.getResultList();
+            
             if(l!=null)
                 listaUsuarios.addAll(l);
         }
         
         if(creadorEventos){
-            l = em.createQuery("SELECT u FROM Creadoreventos c, Usuario u WHERE c.usuarioId=U.id").getResultList();
+            q = em.createQuery("SELECT u FROM Creadoreventos c, Usuario u WHERE c.usuarioId=U.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal");
+            q.setParameter("fechaInicial", fechaInicial);
+            q.setParameter("fechaFinal", fechaFinal);
+            l = q.getResultList();
+            
             if(l!=null)
                 listaUsuarios.addAll(l);
         }
             
         if(teleoperadores){
-            l = em.createQuery("SELECT u FROM Teleoperador t, Usuario u WHERE t.usuarioId=U.id").getResultList();
+            q = em.createQuery("SELECT u FROM Teleoperador t, Usuario u WHERE t.usuarioId=U.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal");
+            q.setParameter("fechaInicial", fechaInicial);
+            q.setParameter("fechaFinal", fechaFinal);
+            l = q.getResultList();
+            
             if(l!=null)
                 listaUsuarios.addAll(l);
         }
         
         if(administradores){
-            l = em.createQuery("SELECT u FROM Administrador a, Usuario u WHERE a.usuarioId=U.id").getResultList();
+            q = em.createQuery("SELECT u FROM Administrador a, Usuario u WHERE a.usuarioId=U.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal");
+            q.setParameter("fechaInicial", fechaInicial);
+            q.setParameter("fechaFinal", fechaFinal);
+            l = q.getResultList();
+            
             if(l!=null)
                 listaUsuarios.addAll(l);
         }
