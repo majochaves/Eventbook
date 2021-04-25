@@ -4,6 +4,8 @@
     Author     : majochaves
 --%>
 
+<%@page import="entity.Evento"%>
+<%@page import="entity.Evento"%>
 <%@page import="entity.Etiqueta"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,6 +23,8 @@
     </head>
     <%
         List<Etiqueta> etiquetas = (List)request.getAttribute("listaEtiquetas");
+        Evento eventoEditar = (Evento) request.getAttribute("eventoEditar");
+        boolean edicion = eventoEditar != null;
     %>
     <body>
            <div class="page">
@@ -127,35 +131,35 @@
         <div class="container">
           <div class="row justify-content-center">
             <div data-animate='{"class":"fadeInUp"}'>
-                <h1>Crear un nuevo evento</h1>
+                <h1><%= edicion ? "Editar evento": "Crear un nuevo evento" %></h1>
                 <form action = "ServletEventoGuardar">
                     <div class="form-group">
                         <label for="titulo">Título:</label>
-                        <input class="form-control" type="text" name="titulo" maxlength="30" size ="30" />
+                        <input class="form-control" type="text" name="titulo" maxlength="30" size ="30" value="<%= edicion ? eventoEditar.getTitulo(): "" %>"/>
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripción:</label>
-                        <textarea class="form-control" name="descripcion" rows="4" cols="50"></textarea>
+                        <textarea class="form-control" name="descripcion" rows="4" cols="50" value="<%= edicion ? eventoEditar.getDescripcion(): "" %>"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="fecha">Fecha:</label>
-                        <input class="form-control" type="date" name="fecha">
+                        <input class="form-control" type="date" name="fecha" value="<%= edicion ? eventoEditar.getFecha(): "" %>">
                     </div>
                     <div class="form-group">
                         <label for="fecha_limite">Fecha límite para reservar entradas:</label>
-                        <input class="form-control" type="date" name="fecha_limite">
+                        <input class="form-control" type="date" name="fecha_limite" value="<%= edicion ? eventoEditar.getFechaLimite(): "" %>>
                     </div>
                     <div class="form-group">
                         <label for="coste">Coste de entrada:</label>
-                        <input class="form-control" type="number" name="coste">
+                        <input class="form-control" type="number" name="coste" value="<%= edicion ? eventoEditar.getCosteEntrada(): "" %>>
                     </div>
                     <div class="form-group">
                         <label for="aforo">Aforo del evento:</label>
-                        <input class="form-control" type="number" name="aforo">
+                        <input class="form-control" type="number" name="aforo" value="<%= edicion ? eventoEditar.getAforo(): "" %>>
                     </div>
                     <div class="form-group">
                         <label for="max_entradas">Máximo número de entradas por usuario:</label>
-                        <input class="form-control" type="number" name="max_entradas">
+                        <input class="form-control" type="number" name="max_entradas" value="<%= edicion ? eventoEditar.getMaxEntradas(): "" %>>
                     </div>
                     <div class="form-group">
                         <label for="etiqueta">Etiquetas:</label>
@@ -165,21 +169,22 @@
                     </div>     
                     <div class="form-group">
                         <div class="form-check">
-                            <input id="asientosFijos" type="checkbox" class="form-check-input" name="asientos_fijos" value="s">
+                            <input id="asientosFijos" type="checkbox" class="form-check-input" name="asientos_fijos" value="<%= edicion ? eventoEditar.getAsientosFijos(): "s" %>>
                             <label class="form-check-label">Asientos fijos:</label>
                         </div>
                     </div>
                     <div id="configuracionAsientos" style="display:none;">
                         <div class="form-group">
                             <label for="num_filas">Número de filas:</label>
-                            <input class="form-control" type="number" name="num_filas">
+                            <input class="form-control" type="number" name="num_filas" value="<%= edicion ? eventoEditar.getNumFilas(): "" %>>
                         </div>
                         <div class="form-group">
                             <label for="num_asientos_fila">Número de asientos por fila:</label>
-                            <input class="form-control" type="number" name="num_asientos_fila">
+                            <input class="form-control" type="number" name="num_asientos_fila" value="<%= edicion ? eventoEditar.getNumAsientosFila(): "" %>">
                         </div>
                     </div>
-                    <input class="btn btn-lg btn-primary" type="submit" value="Enviar"/>
+                    <input class="btn btn-lg btn-primary" type="submit" value="<%= edicion ? "Confirmar cambios" : "Crear evento" %>"/>
+                    <a style="margin-left: 2.5%" href="ServletEventoListar">Cancelar</a>
                 </form>
             </div>
           </div>

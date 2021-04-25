@@ -5,7 +5,9 @@
  */
 package servlet;
 
+import dao.CreadoreventosFacade;
 import dao.EventoFacade;
+import entity.Creadoreventos;
 import entity.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +32,9 @@ public class ServletEventoGuardar extends HttpServlet {
     
     @EJB
     private EventoFacade eventoFacade;
+    
+    @EJB
+    private CreadoreventosFacade creadorEventosFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,18 +52,21 @@ public class ServletEventoGuardar extends HttpServlet {
         Date fecha, fechaLimite;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Evento evento = new Evento();
+        Creadoreventos creador = creadorEventosFacade.find(1);
+        
+        //CREADOR - Obligatorio
+        evento.setCreadoreventosId(creador);
         
         //TITULO - Obligatorio
         titulo = request.getParameter("titulo");
         evento.setTitulo(titulo);
         
         //DESCRIPCION - Opcional
-        /*
+        
         descripcion = request.getParameter("descripcion");
         if(!descripcion.isEmpty()){
             evento.setDescripcion(descripcion);
         }
-        */
                 
         //FECHA - Obligatorio
         str = request.getParameter("fecha");
@@ -66,7 +74,6 @@ public class ServletEventoGuardar extends HttpServlet {
         evento.setFecha(fecha);
         
         //FECHA LIMITE - Opcional
-        /*
         str = request.getParameter("fecha_limite");
         if(!str.isEmpty()){
             fechaLimite = format.parse(str);
@@ -109,7 +116,6 @@ public class ServletEventoGuardar extends HttpServlet {
         }else{
             evento.setAsientosFijos('n');
         }
-        */
         
         this.eventoFacade.create(evento);
         response.sendRedirect("ServletEventoListar");

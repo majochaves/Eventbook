@@ -24,28 +24,30 @@
         List<Evento> eventos = (List)request.getAttribute("lista");
     %>
     <body>
-           <div class="page">
+      <div class="page">
       <!--RD Navbar-->
       <header class="section rd-navbar-wrap">
-        <nav class="rd-navbar bg-dark">
+        <nav class="rd-navbar">
           <div class="navbar-container">
             <div class="navbar-cell">
-              <div class="navbar-panel bg-dark text-light">
+              <div class="navbar-panel">
                 <button class="navbar-switch int-hamburger novi-icon" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","isolate":"[data-multi-switch]"}'></button>
-                <div class="navbar-logo"><a class="navbar-logo-link" href="index.html"><img class="navbar-logo-default" src="images/EventbookLogo.svg" alt="Intense" width="161" height="36"/><img class="navbar-logo-inverse" src="images/logo-inverse-161x27.svg" alt="Intense" width="270" height="27"/></a></div>
+                <div class="navbar-logo"><a class="navbar-logo-link" href="index.jsp"><img class="navbar-logo-default" src="images/logo-default-161x27.svg" alt="Intense" width="161" height="27"/><img class="navbar-logo-inverse" src="images/logo-inverse-161x27.svg" alt="Intense" width="161" height="27"/></a></div>
               </div>
             </div>
             <div class="navbar-cell navbar-spacer"></div>
-            <div class="navbar-cell navbar-sidebar text-light">
-              <ul class="navbar-navigation bg-dark rd-navbar-nav text-light">
-                <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link text-light" href="index.html">Home</a>
+            <div class="navbar-cell navbar-sidebar">
+              <ul class="navbar-navigation rd-navbar-nav">
+                <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link" href="index.jsp">Home</a>
                 </li>
-                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link text-light" href="about-us.html">About us</a>
+                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="about-us.html">About us</a>
                 </li>
-                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link text-light" href="ServletEventoCrear">Crear Evento</a>
+                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="typography.html">Typography</a>
                 </li>
-                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link text-light" href="contact-us.html">Contact us</a>
+                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="contact-us.html">Contact us</a>
+                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
                 </li>
+                
               </ul>
             </div>
             <div class="navbar-cell text-light">
@@ -125,13 +127,27 @@
       </header>
       <!-- Intro-->
       <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div data-animate='{"class":"fadeInUp"}'>
-                <h1>Eventos</h1>
-                
+        <div class="container-fluid">
+            <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
+              Eventos
+            </h1>
+            <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a>
+            <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
+                <% if(eventos != null){
+                    for(Evento e : eventos){
+                %>
+                <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
+                        <!-- Layout-->
+                        <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="ServletEventoVer?id=<%= e.getId() %>"><img src="images/layouts/layout-1-336x450.jpg" alt="" width="336" height="450"/></a>
+                            <div class="layout-title h6"><a class="layout-title-link" href="ServletEventoVer?id=<%= e.getId() %>"><%=e.getTitulo()%></a>
+                          </div>
+                        </article>
+                </div>
+                <%
+                    }
+                }
+                %>
             </div>
-          </div>
         </div>
       </section>
       
