@@ -5,9 +5,13 @@
  */
 package servlet;
 
+import dao.CreadoreventosFacade;
 import dao.UsuarioFacade;
+import entity.Creadoreventos;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,11 +27,15 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletUsuarioListar extends HttpServlet {
 
     @EJB
+    private CreadoreventosFacade creadoreventosFacade;
+
+    @EJB
     private UsuarioFacade usuarioFacade;
+    
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         request.setAttribute("usuarios", usuarioFacade.findAll());
         request.getRequestDispatcher("usuario-listar.jsp").forward(request, response);
     }

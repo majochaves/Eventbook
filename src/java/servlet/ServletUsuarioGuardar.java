@@ -121,6 +121,7 @@ public class ServletUsuarioGuardar extends HttpServlet {
                 default:
                     break;
             }
+            usuarioFacade.edit(u);
         } else usuarioFacade.edit(u);
 
         response.sendRedirect("ServletUsuarioListar");
