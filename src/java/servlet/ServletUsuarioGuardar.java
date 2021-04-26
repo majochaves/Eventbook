@@ -67,12 +67,15 @@ public class ServletUsuarioGuardar extends HttpServlet {
         boolean edicion = usuarioEditar != null;
 
         String nombreUsuario = request.getParameter("usuario");
-        if (!edicion) {
-            for (Usuario u : usuarioFacade.findAll()) {
-                if (u.getUsername().equalsIgnoreCase(nombreUsuario))
-                    throw new RuntimeException("Username already exists.");
-            }    
-        }
+        for (Usuario u : usuarioFacade.findAll()) {
+            if ((edicion && !usuarioEditar.equals(u) && u.getUsername().equalsIgnoreCase(nombreUsuario)) || u.getUsername().equalsIgnoreCase(nombreUsuario)) {
+                // throw new RuntimeException("Username already exists.");                
+                
+                request.setAttribute("error", "El nombre de usuario '" + nombreUsuario +  "' ya está en uso");
+                request.setAttribute("usuarioEditar", usuarioEditar);
+                request.getRequestDispatcher("usuario-crear.jsp").forward(request, response);
+            }
+        }    
         
         String contrasena = request.getParameter("contrasena");
         String nombre = request.getParameter("nombre");
@@ -84,7 +87,7 @@ public class ServletUsuarioGuardar extends HttpServlet {
         Date fechaCreacion = new Date();
         
         Usuario u = edicion ? usuarioEditar : new Usuario();
-        u.setUsername(edicion ? u.getUsername() : nombreUsuario);
+        u.setUsername(nombreUsuario);
         u.setNombre(nombre);
         u.setApellidos(apellidos);
         u.setPassword(contrasena);
@@ -127,7 +130,8 @@ public class ServletUsuarioGuardar extends HttpServlet {
                     break;
             }
             
-        } else usuarioFacade.edit(u);
+        }
+        usuarioFacade.edit(u);
 
         response.sendRedirect("ServletUsuarioListar");
     }

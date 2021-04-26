@@ -13,6 +13,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Listado de usuarios</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta property="og:title" content="Template Monster Admin Template">
+        <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
+        <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
+        <meta property="og:url" content="http://digipunk.netii.net">
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="components/base/base.css">
+        <script src="components/base/core.js"></script>
+        <script src="components/base/script.js"></script>
     </head>
     <%
         boolean filtrado = request.getParameter("username") != null;
@@ -20,7 +31,7 @@
         
     %>
     <body>
-        <h1>Usuarios de EventBook</h1>
+        <jsp:include page="header.jsp" />
 
 <%--        
         <form action="ServletUsuarioFiltrar" method="POST">
@@ -53,46 +64,50 @@
                 </tr>
         </form>
 --%>        
-        <table style="width:70%; text-align: center">
-        <tr>
-            <th>ID</th>
-            <th>USER</th>
-            <th>NAME</th>
-            <th>ROL</th>
-            <th>BORRADO</th>
-            <th>EDICIÓN</th>
-        </tr>        
-            
-        <%
-            for (Usuario u : usuarios) {
-                
-                String rol = "???";
-                if (u.getAdministrador() != null) {
-                    rol = "Administrador";
-                } else if (u.getAnalista()!= null) {
-                    rol = "Analista";
-                } else if (u.getTeleoperador()!= null) {
-                    rol = "Teleoperador";
-                } else if (u.getUsuarioeventos() != null) {
-                    rol = "Usuario de Eventos";
-                } else if (u.getCreadoreventos()!= null) {
-                    rol = "Creador de Eventos";
-                }
-        %>   
-        <tr>
-            <td><%= u.getId() %></td>            
-            <td><%= u.getUsername() %></td>
-            <td><%= u.getNombre() %></td>
-            <td><%= rol %></td>
-            <td> <a href="ServletUsuarioBorrar?id=<%= u.getId() %>">X</a> </td>
-            <td> <a href="ServletUsuarioEditar?id=<%= u.getId() %>">Editar</a> </td>
-        </tr>        
-        <%
-            }
-        %>
-        </table>
+    <div style="margin-left: 1%;">
         <br/>
-        <a href="ServletUsuarioCrear">Nuevo usuario ...</a>
-        
+        <h1>Usuarios de EventBook</h1>
+        <br/>
+        <table style="width:70%; text-align: center">
+            <tr>
+                <th>ID</th>
+                <th>USER</th>
+                <th>NAME</th>
+                <th>ROL</th>
+                <th>BORRADO</th>
+                <th>EDICIÓN</th>
+            </tr>        
+
+            <%
+                for (Usuario u : usuarios) {
+
+                    String rol = "???";
+                    if (u.getAdministrador() != null) {
+                        rol = "Administrador";
+                    } else if (u.getAnalista()!= null) {
+                        rol = "Analista";
+                    } else if (u.getTeleoperador()!= null) {
+                        rol = "Teleoperador";
+                    } else if (u.getUsuarioeventos() != null) {
+                        rol = "Usuario de Eventos";
+                    } else if (u.getCreadoreventos()!= null) {
+                        rol = "Creador de Eventos";
+                    }
+            %>   
+            <tr>
+                <td><%= u.getId() %></td>            
+                <td><%= u.getUsername() %></td>
+                <td><%= u.getNombre() %></td>
+                <td><%= rol %></td>
+                <td> <a href="ServletUsuarioBorrar?id=<%= u.getId() %>" style="background-color: #e72660; color: white; padding-left: 10px; padding-right: 10px; border-radius: 10px;">X</a> </td>
+                <td> <a href="ServletUsuarioEditar?id=<%= u.getId() %>" style="background-color: #43DD93; color: white; padding-left: 10px; padding-right: 10px; border-radius: 10px;">Editar</a> </td>
+            </tr>        
+            <%
+                }
+            %>
+            </table>
+            <br/>
+            <a href="ServletUsuarioCrear">Nuevo usuario ...</a>
+        </div>
     </body>
 </html>
