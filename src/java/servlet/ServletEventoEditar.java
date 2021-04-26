@@ -9,6 +9,8 @@ import dao.EventoFacade;
 import entity.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +41,16 @@ public class ServletEventoEditar extends HttpServlet {
         String id = request.getParameter("id");
         Evento e = this.eventoFacade.find(Integer.parseInt(id));
         
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = e.getFecha();
+        Date fechaLimite = e.getFechaLimite();
+        
+        String fechaString = format.format(fecha);
+        String fechaLimiteString = format.format(fechaLimite);
+        
         request.setAttribute("eventoEditar", e);
+        request.setAttribute("eventoFecha", fechaString);
+        request.setAttribute("eventoFechaLimite", fechaLimiteString);
         request.getRequestDispatcher("evento.jsp").forward(request, response);
     }
 
