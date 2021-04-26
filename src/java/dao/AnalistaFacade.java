@@ -6,9 +6,11 @@
 package dao;
 
 import entity.Analista;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,12 @@ public class AnalistaFacade extends AbstractFacade<Analista> {
 
     public AnalistaFacade() {
         super(Analista.class);
+    }
+    
+    public List<Integer> getAllId(){
+        Query q;
+        q = em.createQuery("SELECT a.id FROM Analista a");
+        return q.getResultList();
     }
     
 }

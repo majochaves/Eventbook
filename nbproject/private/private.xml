@@ -1,33 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>web/filtroAnalisis.jsp</url>
+            <bookmark id="1">
+                <name/>
+                <line>25</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/ReservaFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/WEB-INF/glassfish-resources.xml</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/UsuarioeventosFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/TeleoperadorFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/ChatFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/servlet/ServletUsuarioGuardar.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/UsuarioFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/components/button/button.css</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/servlet/ServletEventoGuardar.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/entity/Usuario.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/AnalisisFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/AnalistaFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/entity/Analisis.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/entity/Administrador.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/footer.jsp</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/header.jsp</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/index.jsp</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/TipoanalisisFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/usuario-crear.jsp</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/EventoFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/servlet/ServletUsuarioBorrar.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/usuario-listar.jsp</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/entity/Analista.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/about-us.html</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
