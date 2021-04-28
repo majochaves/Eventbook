@@ -72,9 +72,11 @@ public class crearAnalisis extends HttpServlet {
     //Tipos de filtro
     private static final String FILTRONUMUSUARIOS = "numUsuarios";
     private static final String FILTROSEXO = "sexo";
-    
-    //Anyos
-    //private static final String ANYOTODOS = "todos";
+    private static final String FILTROCIUDAD = "ciudad";
+    private static final String FILTRONOMBRE ="nombre";
+    private static final String FILTROAPELLIDO = "apellido";
+    private static final String FILTROFECHAPORMES = "filtroFechaMeses";
+    private static final String FILTROFECHAPORANYOS = "filtroFechaAnyos";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -94,6 +96,7 @@ public class crearAnalisis extends HttpServlet {
         String cadenaFechaInicial = request.getParameter("fechaInicial");
         String cadenaFechaFinal = request.getParameter("fechaFinal");
         
+        
         Date fechaInicial, fechaFinal;
         if(cadenaFechaInicial.length() == 0 || cadenaFechaInicial == null) //cadenaFechaInicial.equalsIgnoreCase(ANYOTODOS) || 
             fechaInicial  = null;
@@ -105,6 +108,7 @@ public class crearAnalisis extends HttpServlet {
         else
             fechaFinal = Date.valueOf(cadenaFechaFinal);
         
+        
         //Un conjunto de filas estará asociada a cierta columna en concreto (por eso el HashMap<columna, filas>)
         //Pero cada fila, debe tener un nombre Unico (en la BD el nombre es PK) por eso Set<String>
         //Pero cada fila es una tupla. ej: Masculino - 50, Femenino - 70...
@@ -113,8 +117,10 @@ public class crearAnalisis extends HttpServlet {
         //              | Malaga |   15  |
         //              | Barcel |   20  |
         //              | Madrid |   22  |
-        
-        Map<String, Set<Tupla<String, Double>>> listaFila = new HashMap<>();
+        //
+        //
+        //Haremos un Map<NombreColumna, Map<Nombre, Valor>>
+        Map<String, Map<String, Double>> listaFila = new HashMap<>();
         
         
         //Obtenemos todos los usuarios
@@ -128,53 +134,78 @@ public class crearAnalisis extends HttpServlet {
                 fechaFinal
         );
         
+        //Obtenemos el id de todos los usuarios
+        List<Integer> listaUsuariosIds = new ArrayList<>();
+        for(Usuario u : listaUsuarios)
+            listaUsuariosIds.add(u.getId());
         
-        //NUM USUARIOS
+        
+        
+        
+        //------------------------------FILTROS--------------------------
+        
+        //Numero de usuarios totales
         if(tipoFiltro.contains(FILTRONUMUSUARIOS)){
-            Tupla<String, Double> t = new Tupla("Num", listaUsuarios.size());
-            Set<Tupla<String, Double>> c = new HashSet<>();
-            c.add(t);
-            listaFila.put("Numero de Usuarios", c);
+            Map<String, Double> m = new HashMap<>();
+            m.put("Num", new Double(listaUsuarios.size()));
+            listaFila.put("Numero de Usuarios", m);
         }
         
         
-        //SEXO
+        //Sexo
         if(tipoFiltro.contains(FILTROSEXO)){
-            Map<String,Integer> lista = usuarioFacade.getNumUsersByGender(listaUsuarios);
-            Tupla<String, Double> t = new Tupla("Masculino", Double.valueOf(lista.get("Masculino")));
-            Tupla<String, Double> t2 = new Tupla("Femenino", Double.valueOf(lista.get("Femenino")));
-            Set<Tupla<String, Double>> c = new HashSet<>();
-            c.add(t);
-            c.add(t2);
-            listaFila.put("Sexo", c);
-        }
-        
-        
-        /*
-        if(tipoFiltro.contains(FILTROSEXO)){
-            listaColumna.add(FILTROSEXO);
-            double masc = 0;
-            double fem = 0;
+            double nMasc = 0, nFem = 0;
             
-            if(tipoUsuario.contains(USUARIOEVENTOS)){
-                //...
+            for(Usuario u : listaUsuarios){
+                if(u.getSexo().equalsIgnoreCase("MASCULINO") || u.getSexo().equalsIgnoreCase("HOMBRE"))
+                    nMasc++;
+                if(u.getSexo().equalsIgnoreCase("FEMENINO") || u.getSexo().equalsIgnoreCase("MUJER"))
+                    nFem++;
             }
-            //...
-            Set<Tupla<String, Double>> c = new HashSet<>();
-            Tupla<String, Double> t1 = new Tupla("Masculino", masc);
-            Tupla<String, Double> t2 = new Tupla("Femenino", fem);
-            c.add(t1);
-            c.add(t2);
-            listaFila.put(FILTROSEXO, c);
             
-        }*/
+            Map<String, Double> m = new HashMap<>();
+            m.put("Masculino", nMasc);    
+            m.put("Femenino", nFem);
+            listaFila.put("Sexo", m);
+            
+        }
+        
+        
+        //Ciudad
+        if(tipoFiltro.contains(FILTROCIUDAD)){
+            Map<String, Double> listaCiudades = usuarioFacade.getNumUsersByCities(listaUsuariosIds);
+            listaFila.put("Ciudades", listaCiudades);
+        }
+        
+        
+        //Nombre
+        if(tipoFiltro.contains(FILTRONOMBRE)){
+            Map<String, Double> listaNombres = usuarioFacade.getNumUsersByName(listaUsuariosIds);
+            listaFila.put("Nombres", listaNombres);
+        }
+        
+        
+        //Apellido
+        if(tipoFiltro.contains(FILTROAPELLIDO)){
+            Map<String, Double> listaApellidos = usuarioFacade.getNumUsersByLastName(listaUsuariosIds);
+            listaFila.put("Apellidos", listaApellidos);
+        }
+        
+        //Fecha de creacion - Anyo
+        if(tipoFiltro.contains(FILTROFECHAPORANYOS)){
+            Map<String, Double> listaFechasAnyos = usuarioFacade.getNumUsersByYears(listaUsuariosIds);
+            listaFila.put("Año", listaFechasAnyos);
+        }
+        
+        //Fecha de creacion - Mes y Anyo
+        if(tipoFiltro.contains(FILTROFECHAPORMES)){
+            Map<String, Double> listaFechasMeses = usuarioFacade.getNumUsersByMonths(listaUsuariosIds);
+            listaFila.put("Mes y Año", listaFechasMeses);
+        }
+        
         
         
         request.setAttribute("listaFila", listaFila);
-        
-        
-        
-        
         
         RequestDispatcher rd = request.getRequestDispatcher("crearAnalisis.jsp");
         rd.forward(request, response);

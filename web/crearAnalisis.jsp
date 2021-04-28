@@ -24,9 +24,14 @@
             <input type="checkbox" name="tipoUsuario" value="administradores" />Administradores<br/>
             <input type="checkbox" name="tipoUsuario" value="teleoperadores" />Teleoperadores<br/>
             <input type="checkbox" name="tipoUsuario" value="analistas" />Analistas<br/><br/>
-            <h3>Tipo de analisis</h3>
-            <input type="checkbox" name="tipoFiltro" value="numUsuarios" checked="checked" />Numero de usuarios<br/><br/>
+            <h3>Tipo de analisis - Tabla Usuario</h3>
+            <input type="checkbox" name="tipoFiltro" value="numUsuarios" checked="checked" />Numero de usuarios totales<br/><br/>
             <input type="checkbox" name="tipoFiltro" value="sexo" />Sexo<br/><br/>
+            <input type="checkbox" name="tipoFiltro" value="ciudad" />Ciudad<br/><br/>
+            <input type="checkbox" name="tipoFiltro" value="nombre" />Nombre<br/><br/>
+            <input type="checkbox" name="tipoFiltro" value="apellido" />Apellido<br/><br/>
+            <input type="checkbox" name="tipoFiltro" value="filtroFechaMeses" />Fecha - Por meses<br/><br/>
+            <input type="checkbox" name="tipoFiltro" value="filtroFechaAnyos" />Fecha - Por anyos<br/><br/>
             <h3>Año</h3>
             
             <input type="date" name="fechaInicial" min="0001-01-01" max="9999-12-31" /> Fecha Inicial <br />
@@ -36,7 +41,7 @@
         <br/>
         <br/>
         <%
-            Map<String, Set<Tupla<String, Double>>> listaFila = (Map)request.getAttribute("listaFila");
+            Map<String, Map<String, Double>> listaFila = (Map)request.getAttribute("listaFila");
             if(listaFila != null){
                 for(String nombreColumna : listaFila.keySet()){
         %>
@@ -49,12 +54,12 @@
                         </thead>
                         <tbody>
                             <%
-                                Set<Tupla<String, Double>> conjuntoDeFilas = listaFila.get(nombreColumna);
-                                for(Tupla<String, Double> filaIndividual : conjuntoDeFilas){
+                                Map<String, Double> conjuntoDeFilas = listaFila.get(nombreColumna);
+                                for(String key : conjuntoDeFilas.keySet()){
                             %>
                                     <tr>
-                                        <td><%=filaIndividual.getPrimerElem()%></td>
-                                        <td><%=filaIndividual.getSegundoElem()%></td>
+                                        <td><%=key%></td>
+                                        <td><%=conjuntoDeFilas.get(key)%></td>
                                     </tr>
                             <%
                                 }
