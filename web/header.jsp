@@ -34,7 +34,9 @@
                         <%
                     }
                 %>
-                
+                <!-- Esto deberá comprobar en un futuro si el usuario logeado es Admin o Analista -->
+                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="crearAnalisis.jsp">Analisis</a>
+                </li>
               </ul>
             </div>
             <div class="navbar-cell">
