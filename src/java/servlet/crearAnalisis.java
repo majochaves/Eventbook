@@ -98,12 +98,12 @@ public class crearAnalisis extends HttpServlet {
         
         
         Date fechaInicial, fechaFinal;
-        if(cadenaFechaInicial.length() == 0 || cadenaFechaInicial == null) //cadenaFechaInicial.equalsIgnoreCase(ANYOTODOS) || 
+        if(cadenaFechaInicial.length() == 0)
             fechaInicial  = null;
         else
             fechaInicial = Date.valueOf(cadenaFechaInicial);
         
-        if(cadenaFechaFinal.length() == 0 || cadenaFechaFinal == null) // cadenaFechaFinal.equalsIgnoreCase(ANYOTODOS) || 
+        if(cadenaFechaFinal.length() == 0)
             fechaFinal  = null;
         else
             fechaFinal = Date.valueOf(cadenaFechaFinal);
