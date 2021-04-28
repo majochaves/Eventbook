@@ -89,9 +89,16 @@ public class crearAnalisis extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<String> tipoUsuario = null;
+        List<String> tipoFiltro = null;
         
-        List<String> tipoUsuario = Arrays.asList(request.getParameterValues("tipoUsuario"));
-        List<String> tipoFiltro = Arrays.asList(request.getParameterValues("tipoFiltro"));
+        try{
+            tipoUsuario = Arrays.asList(request.getParameterValues("tipoUsuario"));
+            tipoFiltro = Arrays.asList(request.getParameterValues("tipoFiltro"));
+
+        } catch(NullPointerException e){
+            response.sendRedirect("crearAnalisis.jsp");
+        }
         
         String cadenaFechaInicial = request.getParameter("fechaInicial");
         String cadenaFechaFinal = request.getParameter("fechaFinal");

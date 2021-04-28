@@ -81,41 +81,6 @@
                     
             </div>
         </div>
-        <br/>
-        <br/>
-        <%
-            //Ya no esta en uso
-            Map<String, Map<String, Double>> listaFila = (Map)request.getAttribute("listaFila");
-            if(listaFila != null){
-                for(String nombreColumna : listaFila.keySet()){
-        %>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th><%=nombreColumna%></th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                                Map<String, Double> conjuntoDeFilas = listaFila.get(nombreColumna);
-                                for(String key : conjuntoDeFilas.keySet()){
-                            %>
-                                    <tr>
-                                        <td><%=key%></td>
-                                        <td><%=conjuntoDeFilas.get(key)%></td>
-                                    </tr>
-                            <%
-                                }
-                            %>
-                        </tbody>
-                    </table>
-                    <br/>
-                    <hr/>
-            <%
-                }
-            }
-            %>
     
     </body>
 </html>
