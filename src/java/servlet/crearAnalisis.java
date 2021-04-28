@@ -142,7 +142,7 @@ public class crearAnalisis extends HttpServlet {
         
         
         
-        //------------------------------FILTROS--------------------------
+        //------------------------------FILTROS----------------------------
         
         //Numero de usuarios totales
         if(tipoFiltro.contains(FILTRONUMUSUARIOS)){
@@ -150,7 +150,6 @@ public class crearAnalisis extends HttpServlet {
             m.put("Num", new Double(listaUsuarios.size()));
             listaFila.put("Numero de Usuarios", m);
         }
-        
         
         //Sexo
         if(tipoFiltro.contains(FILTROSEXO)){
@@ -170,20 +169,17 @@ public class crearAnalisis extends HttpServlet {
             
         }
         
-        
         //Ciudad
         if(tipoFiltro.contains(FILTROCIUDAD)){
             Map<String, Double> listaCiudades = usuarioFacade.getNumUsersByCities(listaUsuariosIds);
             listaFila.put("Ciudades", listaCiudades);
         }
         
-        
         //Nombre
         if(tipoFiltro.contains(FILTRONOMBRE)){
             Map<String, Double> listaNombres = usuarioFacade.getNumUsersByName(listaUsuariosIds);
             listaFila.put("Nombres", listaNombres);
         }
-        
         
         //Apellido
         if(tipoFiltro.contains(FILTROAPELLIDO)){
@@ -200,14 +196,18 @@ public class crearAnalisis extends HttpServlet {
         //Fecha de creacion - Mes y Anyo
         if(tipoFiltro.contains(FILTROFECHAPORMES)){
             Map<String, Double> listaFechasMeses = usuarioFacade.getNumUsersByMonths(listaUsuariosIds);
-            listaFila.put("Mes y Año", listaFechasMeses);
+            listaFila.put("Mes - Año", listaFechasMeses);
         }
+        
+        
+        
+        
         
         
         
         request.setAttribute("listaFila", listaFila);
         
-        RequestDispatcher rd = request.getRequestDispatcher("crearAnalisis.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("crear-analisis-listar.jsp");
         rd.forward(request, response);
     }
 
