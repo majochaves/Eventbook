@@ -23,6 +23,10 @@
         <meta property="og:url" content="http://digipunk.netii.net">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
+        <link rel="stylesheet" href="components/base/alert.css">
+        <script src="components/jquery/jquery-3.4.1.min.js"></script>
+        <script src="components/bootstrap/js/popper.js"></script>
+        <script src="components/bootstrap/js/bootstrap.min.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
     </head>
@@ -54,7 +58,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <h5>Tipo de analisis - Tabla Usuario</h5>
+                            <h5>Tipo de análisis - Tabla Usuario</h5>
                             <div class="form-check">
                                 <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="numUsuarios" checked="checked" />Numero de usuarios totales<br/>
                                 <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="sexo" />Sexo<br/>
@@ -74,10 +78,27 @@
                     
                     <div class="row justify-content-md-center">
                         <div class="col-8">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">Realizar Analisis</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Realizar Análisis</button>
                         </div>
                     </div>
                 </form>
+                <%
+                    Boolean muestraError = (Boolean)request.getAttribute("muestraError");
+                    if(muestraError!=null && muestraError.booleanValue()){
+                %>
+                    <div class="row mt-6">
+                        <div class="col-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error!</strong> Intenta seleccionar al menos un tipo de usuario y un tipo de análisis
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <%
+                    } 
+                %>
             </div>
         </div>
     

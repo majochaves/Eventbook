@@ -92,21 +92,22 @@ public class crearAnalisis extends HttpServlet {
         
         List<String> tipoUsuario = null;
         List<String> tipoFiltro = null;
-        boolean realizarRedirect = false;
+        boolean muestraError = false;
         
         try{
             tipoUsuario = Arrays.asList(request.getParameterValues("tipoUsuario"));
             tipoFiltro = Arrays.asList(request.getParameterValues("tipoFiltro"));
         } catch(NullPointerException e){
-            response.sendRedirect("crearAnalisis.jsp");
-            realizarRedirect = true;
+            muestraError = true;
+            request.setAttribute("muestraError", muestraError);
+            RequestDispatcher rd = request.getRequestDispatcher("crearAnalisis.jsp");
+            rd.forward(request, response);
         }
         
-        if(!realizarRedirect){
+        if(!muestraError){
             String cadenaFechaInicial = request.getParameter("fechaInicial");
             String cadenaFechaFinal = request.getParameter("fechaFinal");
-
-
+            
             Date fechaInicial, fechaFinal;
             if(cadenaFechaInicial.length() == 0)
                 fechaInicial  = null;
@@ -117,8 +118,22 @@ public class crearAnalisis extends HttpServlet {
                 fechaFinal  = null;
             else
                 fechaFinal = Date.valueOf(cadenaFechaFinal);
-
-
+            
+            
+            
+            String AutoGeneradoAnalisisDe = "", AutoGeneradoTiposFiltros = "";
+            if(tipoUsuario.contains(ANALISTAS))
+                AutoGeneradoAnalisisDe+=" Analistas,";
+            if(tipoUsuario.contains(USUARIOEVENTOS))
+                AutoGeneradoAnalisisDe+=" Usuario Eventos,";
+            if(tipoUsuario.contains(CREADOREVENTOS))
+                AutoGeneradoAnalisisDe+=" Creadores de Eventos,";
+            if(tipoUsuario.contains(TELEOPERADORES))
+                AutoGeneradoAnalisisDe+=" Teleoperadores,";
+            if(tipoUsuario.contains(ADMINISTRADORES))
+                AutoGeneradoAnalisisDe+=" Administradores,";
+            AutoGeneradoAnalisisDe = AutoGeneradoAnalisisDe.substring(0, AutoGeneradoAnalisisDe.lastIndexOf(","));
+            
             //Un conjunto de filas estará asociada a cierta columna en concreto (por eso el HashMap<columna, filas>)
             //Pero cada fila, debe tener un nombre Unico (en la BD el nombre es PK) por eso Set<String>
             //Pero cada fila es una tupla. ej: Masculino - 50, Femenino - 70...
@@ -159,6 +174,8 @@ public class crearAnalisis extends HttpServlet {
                 Map<String, Double> m = new HashMap<>();
                 m.put("Num", new Double(listaUsuarios.size()));
                 listaFila.put("Numero de Usuarios", m);
+                
+                AutoGeneradoTiposFiltros+=" número de usuarios totales,";
             }
 
             //Sexo
@@ -176,39 +193,50 @@ public class crearAnalisis extends HttpServlet {
                 m.put("Masculino", nMasc);    
                 m.put("Femenino", nFem);
                 listaFila.put("Sexo", m);
-
+                
+                AutoGeneradoTiposFiltros+=" generos, ";
             }
 
             //Ciudad
             if(tipoFiltro.contains(FILTROCIUDAD)){
                 Map<String, Double> listaCiudades = usuarioFacade.getNumUsersByCities(listaUsuariosIds);
                 listaFila.put("Ciudades", listaCiudades);
+                
+                AutoGeneradoTiposFiltros+=" ciudades, ";
             }
 
             //Nombre
             if(tipoFiltro.contains(FILTRONOMBRE)){
                 Map<String, Double> listaNombres = usuarioFacade.getNumUsersByName(listaUsuariosIds);
                 listaFila.put("Nombres", listaNombres);
+                
+                AutoGeneradoTiposFiltros+=" nombres, ";
             }
 
             //Apellido
             if(tipoFiltro.contains(FILTROAPELLIDO)){
                 Map<String, Double> listaApellidos = usuarioFacade.getNumUsersByLastName(listaUsuariosIds);
                 listaFila.put("Apellidos", listaApellidos);
+                AutoGeneradoTiposFiltros+=" apellidos, ";
             }
 
             //Fecha de creacion - Anyo
             if(tipoFiltro.contains(FILTROFECHAPORANYOS)){
                 Map<String, Double> listaFechasAnyos = usuarioFacade.getNumUsersByYears(listaUsuariosIds);
-                listaFila.put("Año", listaFechasAnyos);
+                listaFila.put("Creado en (Año)", listaFechasAnyos);
+                
+                AutoGeneradoTiposFiltros+=" fecha por años, ";
             }
 
             //Fecha de creacion - Mes y Anyo
             if(tipoFiltro.contains(FILTROFECHAPORMES)){
                 Map<String, Double> listaFechasMeses = usuarioFacade.getNumUsersByMonths(listaUsuariosIds);
-                listaFila.put("Mes - Año", listaFechasMeses);
+                listaFila.put("Creado en (Mes - Año)", listaFechasMeses);
+                
+                AutoGeneradoTiposFiltros+=" fecha por meses-años, ";
             }
-
+            
+            AutoGeneradoTiposFiltros = AutoGeneradoTiposFiltros.substring(0, AutoGeneradoTiposFiltros.lastIndexOf(","));
 
 
 
@@ -216,7 +244,11 @@ public class crearAnalisis extends HttpServlet {
 
 
             request.setAttribute("listaFila", listaFila);
-
+            
+            //Texto AutoGenerado
+            request.setAttribute("AutoGeneradoAnalisisDe", AutoGeneradoAnalisisDe);
+            request.setAttribute("AutoGeneradoTiposFiltros", AutoGeneradoTiposFiltros);
+            
             RequestDispatcher rd = request.getRequestDispatcher("crear-analisis-listar.jsp");
             rd.forward(request, response);
         }

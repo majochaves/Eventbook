@@ -34,7 +34,11 @@
                 </div>
                 
                 <hr class="divider divider-sm mt-0" />
-                
+                <p>
+                    <b>Autogenerado:</b>
+                    <u>Análisis de:</u><%=(String)request.getAttribute("AutoGeneradoAnalisisDe")%>
+                    ; <u>Usando un tipo de filtro:</u> <%=(String)request.getAttribute("AutoGeneradoTiposFiltros")%>
+                </p>
                 <div class="row">
                 <%
                     Map<String, Map<String, Double>> listaFila = (Map)request.getAttribute("listaFila");
@@ -101,6 +105,9 @@
                             <label for="desc" class="col-form-label">Nombre y/o descripción</label>
                             <textarea class="form-control" id="desc" name="descripcion"></textarea>
                         </div>
+                          <div class="text-right">
+                              <a href="#" class="badge badge-success" id="botonAutogenerar">Autogenerar descripción</a>
+                          </div>
                       </div>
                         
                       <div class="modal-footer">
@@ -112,5 +119,14 @@
                 </form>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let cajaDescripcion = document.getElementById('desc');
+                let botonAutog = document.getElementById('botonAutogenerar');
+                botonAutog.onclick = function() {
+                    cajaDescripcion.textContent = 'Analisis de:<%=(String)request.getAttribute("AutoGeneradoAnalisisDe")%>; Usando un tipo de filtro:<%=(String)request.getAttribute("AutoGeneradoTiposFiltros")%>';
+                };
+            });
+        </script>
     </body>
 </html>
