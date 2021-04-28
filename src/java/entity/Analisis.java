@@ -43,8 +43,7 @@ public class Analisis implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 300)
-    @Column(name = "DESCRIPCION")
+    @Column(name = "DESCRIPCION", length = 300, nullable = false)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "analisisId")
     private List<Tipoanalisis> tipoanalisisList;

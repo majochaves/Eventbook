@@ -13,14 +13,13 @@
         <title>EventBook - Listar Análisis</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta property="og:title" content="Template Monster Admin Template">
-        <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
-        <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
-        <meta property="og:url" content="http://digipunk.netii.net">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <link rel="stylesheet" href="components/base/tablas.css">
+        <link rel="stylesheet" href="components/base/modal.css">
+        <script src="components/jquery/jquery-3.4.1.min.js"></script>
+        <script src="components/bootstrap/js/popper.js"></script>
+        <script src="components/bootstrap/js/bootstrap.min.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
     </head>
@@ -30,21 +29,24 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>Listar Analisis Realizado</h3>
+                        <h3>Listar Análisis Realizado</h3>
                     </div>
                 </div>
                 
                 <hr class="divider divider-sm mt-0" />
+                
                 <div class="row">
                 <%
                     Map<String, Map<String, Double>> listaFila = (Map)request.getAttribute("listaFila");
                     if(listaFila != null){
+                        HttpSession sesion = request.getSession(false);
+                        sesion.setAttribute("analisisListaFila", listaFila);
                         for(String nombreColumna : listaFila.keySet()){
                 %>
                         <div class="col-sm-6 pb-4">
                             <table class="table table-hover table-bordered">
                                 <thead>
-                                    <tr class="table-primary">
+                                    <tr class="table-secondary">
                                         <th cope="col"><%=nombreColumna%></th>
                                         <th scope="col">Valor</th>
                                     </tr>
@@ -73,8 +75,42 @@
                     %>
            
                 </div>
+                    <div class="row justify-content-md-center">
+                        <div class="col-8">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#abrirDialogoGuardar">Guardar Análisis</button>
+                        </div>
+                    </div>
             </div>
+        <br/>            
+        </div>
                     
+        <div class="modal fade" id="abrirDialogoGuardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="POST" action="ServletAnalisisGuardar">
+                    <div class="modal-content">
+                        
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Guardar Análisis</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                      <div class="modal-body">
+                        <div class="form-group">
+                            <label for="desc" class="col-form-label">Nombre y/o descripción</label>
+                            <textarea class="form-control" id="desc" name="descripcion"></textarea>
+                        </div>
+                      </div>
+                        
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary mt-0" data-dismiss="modal">Cancelar</button>
+                          <button type="submit" class="btn btn-primary mt-0">Guardar</button>
+                      </div>
+                        
+                    </div>
+                </form>
+            </div>
         </div>
     </body>
 </html>

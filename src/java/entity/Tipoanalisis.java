@@ -43,8 +43,7 @@ public class Tipoanalisis implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "NOMBRE")
+    @Column(name = "NOMBRE", length = 50)
     private String nombre;
     @JoinColumn(name = "ANALISIS_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)

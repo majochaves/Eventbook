@@ -20,13 +20,10 @@ import javax.validation.constraints.Size;
 public class CampoanalisisPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "NOMBRE")
+    @Column(name = "NOMBRE", length = 50, nullable = false)
     private String nombre;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "TIPOANALISIS_ID")
+    @Column(name = "TIPOANALISIS_ID", nullable = false)
     private int tipoanalisisId;
 
     public CampoanalisisPK() {
