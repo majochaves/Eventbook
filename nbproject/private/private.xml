@@ -12,10 +12,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/UMA/Tercero/Segundo%20Semestre/Tecnologia%20de%20Aplicaciones%20web/workspaceProyecto/Eventbook/src/java/servlet/ServeltAnalisisBorrar.java</file>
             <file>file:/F:/UMA/Tercero/Segundo%20Semestre/Tecnologia%20de%20Aplicaciones%20web/workspaceProyecto/Eventbook/web/analisisVer.jsp</file>
+            <file>file:/F:/UMA/Tercero/Segundo%20Semestre/Tecnologia%20de%20Aplicaciones%20web/workspaceProyecto/Eventbook/src/java/servlet/ServletAnalisisGuardar.java</file>
             <file>file:/F:/UMA/Tercero/Segundo%20Semestre/Tecnologia%20de%20Aplicaciones%20web/workspaceProyecto/Eventbook/src/java/servlet/crearAnalisis.java</file>
             <file>file:/F:/UMA/Tercero/Segundo%20Semestre/Tecnologia%20de%20Aplicaciones%20web/workspaceProyecto/Eventbook/web/crearAnalisis.jsp</file>
+            <file>file:/F:/UMA/Tercero/Segundo%20Semestre/Tecnologia%20de%20Aplicaciones%20web/workspaceProyecto/Eventbook/src/java/entity/Campoanalisis.java</file>
+            <file>file:/F:/UMA/Tercero/Segundo%20Semestre/Tecnologia%20de%20Aplicaciones%20web/workspaceProyecto/Eventbook/src/java/entity/Analisis.java</file>
         </group>
     </open-files>
 </project-private>

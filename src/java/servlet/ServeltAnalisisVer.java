@@ -57,7 +57,7 @@ public class ServeltAnalisisVer extends HttpServlet {
             Map<String, Double> tablaIndividual = new HashMap<>();
             
             for(Campoanalisis thisCampoAnalisis : listaCampoAnalisis){
-                tablaIndividual.put(thisCampoAnalisis.getCampoanalisisPK().getNombre(), new Double(thisCampoAnalisis.getValor()));
+                tablaIndividual.put(thisCampoAnalisis.getCampoanalisisPK().getNombre(), new Double(thisCampoAnalisis.getValor().intValue()));
             }
             
             listaTablas.put(thisTipoAnalisis.getNombre(), tablaIndividual);

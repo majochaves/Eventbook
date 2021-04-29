@@ -66,9 +66,10 @@
                     %>
                         <div class="col-md-6">
                             <%
-                                if(nombreColumna.equalsIgnoreCase("SEXO")){
+                                if(nombreColumna.equalsIgnoreCase("Sexo")){
                             %>
                                 <div id="piechart_3d" style="width: 600px; height: 300px;"></div>
+                                <p>ENTRA</p>
                             <%
                                 }
                             %>

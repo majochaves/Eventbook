@@ -45,10 +45,10 @@ public class Analisis implements Serializable {
     private Integer id;
     @Column(name = "DESCRIPCION", length = 300, nullable = false)
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "analisisId")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "analisisId")
     private List<Tipoanalisis> tipoanalisisList;
     @JoinColumn(name = "ANALISTA_USUARIO_ID", referencedColumnName = "USUARIO_ID")
-    @ManyToOne(optional = false, cascade = {CascadeType.MERGE})
+    @ManyToOne(optional = false)  //, cascade = {CascadeType.MERGE}
     private Analista analistaUsuarioId;
 
     public Analisis() {

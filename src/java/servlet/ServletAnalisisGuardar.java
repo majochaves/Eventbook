@@ -66,20 +66,22 @@ public class ServletAnalisisGuardar extends HttpServlet {
         String descripcion = request.getParameter("descripcion");
         
         Analista thisAnalista = analistaFacade.find(1);         //ESTO HAY QUE CAMBIARLO CUANDO HAYA LOGIN
+        
         Analisis thisAnalisis = new Analisis();
         thisAnalisis.setDescripcion(descripcion);
         thisAnalisis.setAnalistaUsuarioId(thisAnalista);
-        analisisFacade.create(thisAnalisis);
+        analisisFacade.create(thisAnalisis);                    //Posteriormente debemos meter la lista de Tipos
+        
         List<Tipoanalisis> listaTipoanalisis = new ArrayList<>();
         for(String nombreColumna : listaFila.keySet()){
             
             Tipoanalisis ta = new Tipoanalisis();
             ta.setAnalisisId(thisAnalisis);
             ta.setNombre(nombreColumna);
-            tipoanalisisFacade.create(ta);
+            tipoanalisisFacade.create(ta);                      //Posteriormente debemos meter la lista de campos
             
+            List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
             Map<String, Double> filas = listaFila.get(nombreColumna);
-            //List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
             for(String nombreFila: filas.keySet()){
                 Campoanalisis ca = new Campoanalisis();
                 CampoanalisisPK capk = new CampoanalisisPK();
@@ -89,18 +91,19 @@ public class ServletAnalisisGuardar extends HttpServlet {
                 ca.setValor(filas.get(nombreFila).intValue());  //ESTO HAY QUE CAMBIARLO EN LA BD Y EN LA ENTITY
                 ca.setTipoanalisis(ta);
                 campoanalisisFacade.create(ca);
-                campoanalisisFacade.edit(ca);
-                //listaCampoanalisis.add(ca);
+                listaCampoanalisis.add(ca);
             }
-            //ta.setCampoanalisisList(listaCampoanalisis);
-            tipoanalisisFacade.edit(ta); //Actualiza para evitar errores
-            //listaTipoanalisis.add(ta);
+            ta.setCampoanalisisList(listaCampoanalisis);        //Metemos la la lista de campos
+            tipoanalisisFacade.edit(ta);
+            listaTipoanalisis.add(ta);
         }
+        thisAnalisis.setTipoanalisisList(listaTipoanalisis);    //Metemos la lista de Tipos
+        analisisFacade.edit(thisAnalisis);
         
-        thisAnalisis.setTipoanalisisList(listaTipoanalisis);
-        analisisFacade.edit(thisAnalisis);  //Actualiza para evitar errores
         
-        
+        //thisAnalista = analistaFacade.find(1);
+        //thisAnalisis = analisisFacade.find(thisAnalista.getAnalisisList().get(0).getId());
+        //Tipoanalisis ta = tipoanalisisFacade.find(thisAnalisis.getTipoanalisisList().get(0).getId());
         
         
         response.sendRedirect("crearAnalisis.jsp");
