@@ -27,12 +27,14 @@
         <script src="components/base/script.js"></script>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        
-        <b>EN DESARROLLO</b><br/>
-        Si algo no funciona es debido a que no hay un usuario logeado. Para probar esto mientras tanto debes poner a un analista con id=1<br/><br/>
-        
-        Aun no has creado estadisticas! <a href="crearAnalisis.jsp">Empezar a crear una estadística</a><br/><br/>
-        <a href="ServeltAnalisisListar">Ver mi lista de análisis</a>
+        <div class="page">
+            <jsp:include page="header.jsp" />
+
+            <b>EN DESARROLLO</b><br/>
+            Si algo no funciona es debido a que no hay un usuario logeado. Para probar esto mientras tanto debes poner a un analista con id=1<br/><br/>
+
+            Aun no has creado estadisticas! <a href="crearAnalisis.jsp">Empezar a crear una estadística</a><br/><br/>
+            <a href="ServeltAnalisisListar">Ver mi lista de análisis</a>
+        </div>
     </body>
 </html>

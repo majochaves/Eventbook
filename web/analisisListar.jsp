@@ -25,52 +25,53 @@
         <script src="components/base/script.js"></script>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        
-        <div class="section section-lg bg-transparent">
-            <div class="container">
-                
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>Mis Análisis Realizados</h3>
+        <div class="page">
+            <jsp:include page="header.jsp" />
+
+            <div class="section section-lg bg-transparent">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Mis Análisis Realizados</h3>
+                        </div>
                     </div>
-                </div>
-                
-                <hr class="divider divider-sm mt-0" />
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                                <tr class="table-secondary">
-                                    <th cope="col">Descripción</th>
-                                    <th scope="col" class="text-center">Acceder</th>
-                                    <th scope="col" class="text-center">Duplicar</th>
-                                    <th scope="col" class="text-center">Eliminar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    List<Analisis> listaAnalisis = (List)request.getAttribute("listaAnalisis");
-                                    for(Analisis esteAnalisis : listaAnalisis){
-                                %>
-                                        <tr>
-                                            <td><%=esteAnalisis.getDescripcion()%></td>
-                                            <td class="align-middle text-center"><a href="ServeltAnalisisVer?id=<%=esteAnalisis.getId()%>" class="btn btn-primary">Acceder</a></td>
-                                            <td class="align-middle text-center"><a href="#" class="btn btn-warning">Duplicar</a></td>
-                                            <td class="align-middle text-center"><a href="ServeltAnalisisBorrar?id=<%=esteAnalisis.getId()%>" class="btn btn-danger">Eliminar</a></td>
-                                        </tr>
-                                <%
-                                    }
-                                %>
-                            </tbody>
-                        </table>
+
+                    <hr class="divider divider-sm mt-0" />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th cope="col">Descripción</th>
+                                        <th scope="col" class="text-center">Acceder</th>
+                                        <th scope="col" class="text-center">Duplicar</th>
+                                        <th scope="col" class="text-center">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        List<Analisis> listaAnalisis = (List)request.getAttribute("listaAnalisis");
+                                        for(Analisis esteAnalisis : listaAnalisis){
+                                    %>
+                                            <tr>
+                                                <td><%=esteAnalisis.getDescripcion()%></td>
+                                                <td class="align-middle text-center"><a href="ServeltAnalisisVer?id=<%=esteAnalisis.getId()%>" class="btn btn-primary">Acceder</a></td>
+                                                <td class="align-middle text-center"><a href="#" class="btn btn-warning">Duplicar</a></td>
+                                                <td class="align-middle text-center"><a href="ServeltAnalisisBorrar?id=<%=esteAnalisis.getId()%>" class="btn btn-danger">Eliminar</a></td>
+                                            </tr>
+                                    <%
+                                        }
+                                    %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    <br/>
+                    <br/>
                 </div>
-                <br/>
-                <br/>
             </div>
-        </div>
-              
+        </div>   
     </body>
 </html>

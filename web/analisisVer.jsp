@@ -47,41 +47,43 @@
         </script>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        <div class="section section-lg bg-transparent">
-            <div class="container">
-                
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>Análisis</h3>
-                    </div>
-                </div>
-                
-                <hr class="divider divider-sm mt-0" />
-                
-                <div class="row">
-                    <%
-                        Map<String, Map<String, Double>> listaTablas = (Map) request.getAttribute("listaTablas");
-                        for(String nombreColumna : listaTablas.keySet()){
-                    %>
-                        <div class="col-md-6">
-                            <%
-                                if(nombreColumna.equalsIgnoreCase("Sexo")){
-                            %>
-                                <div id="piechart_3d" style="width: 600px; height: 300px;"></div>
-                                <p>ENTRA</p>
-                            <%
-                                }
-                            %>
+        <div class="page">
+            <jsp:include page="header.jsp" />
+            <div class="section section-lg bg-transparent">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Análisis</h3>
                         </div>
-                    <%
-                        }
-                    %>
+                    </div>
+
+                    <hr class="divider divider-sm mt-0" />
+
+                    <div class="row">
+                        <%
+                            Map<String, Map<String, Double>> listaTablas = (Map) request.getAttribute("listaTablas");
+                            for(String nombreColumna : listaTablas.keySet()){
+                        %>
+                            <div class="col-md-6">
+                                <%
+                                    if(nombreColumna.equalsIgnoreCase("Sexo")){
+                                %>
+                                    <div id="piechart_3d" style="width: 600px; height: 300px;"></div>
+                                    <p>ENTRA</p>
+                                <%
+                                    }
+                                %>
+                            </div>
+                        <%
+                            }
+                        %>
+                    </div>
+
+
+
+
                 </div>
-                
-                
-                
-                
             </div>
         </div>
     </body>
