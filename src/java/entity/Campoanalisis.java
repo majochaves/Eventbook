@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -36,7 +37,7 @@ public class Campoanalisis implements Serializable {
     @Column(name = "VALOR")
     private Integer valor;
     @JoinColumn(name = "TIPOANALISIS_ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = {CascadeType.MERGE})
     private Tipoanalisis tipoanalisis;
 
     public Campoanalisis() {

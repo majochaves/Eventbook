@@ -48,7 +48,7 @@ public class Analisis implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "analisisId")
     private List<Tipoanalisis> tipoanalisisList;
     @JoinColumn(name = "ANALISTA_USUARIO_ID", referencedColumnName = "USUARIO_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = {CascadeType.MERGE})
     private Analista analistaUsuarioId;
 
     public Analisis() {

@@ -16,6 +16,8 @@ import entity.CampoanalisisPK;
 import entity.Tipoanalisis;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -63,12 +65,12 @@ public class ServletAnalisisGuardar extends HttpServlet {
         Map<String, Map<String, Double>> listaFila = (Map)sesion.getAttribute("analisisListaFila");
         String descripcion = request.getParameter("descripcion");
         
-        Analista thisAnalista = analistaFacade.find(1); //ESTO SE DEBE CAMBIAR PARA CUANDO SE IMPLEMENTE EL LOGIN
+        Analista thisAnalista = analistaFacade.find(1);         //ESTO HAY QUE CAMBIARLO CUANDO HAYA LOGIN
         Analisis thisAnalisis = new Analisis();
         thisAnalisis.setDescripcion(descripcion);
         thisAnalisis.setAnalistaUsuarioId(thisAnalista);
         analisisFacade.create(thisAnalisis);
-        
+        List<Tipoanalisis> listaTipoanalisis = new ArrayList<>();
         for(String nombreColumna : listaFila.keySet()){
             
             Tipoanalisis ta = new Tipoanalisis();
@@ -77,6 +79,7 @@ public class ServletAnalisisGuardar extends HttpServlet {
             tipoanalisisFacade.create(ta);
             
             Map<String, Double> filas = listaFila.get(nombreColumna);
+            //List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
             for(String nombreFila: filas.keySet()){
                 Campoanalisis ca = new Campoanalisis();
                 CampoanalisisPK capk = new CampoanalisisPK();
@@ -86,10 +89,15 @@ public class ServletAnalisisGuardar extends HttpServlet {
                 ca.setValor(filas.get(nombreFila).intValue());  //ESTO HAY QUE CAMBIARLO EN LA BD Y EN LA ENTITY
                 ca.setTipoanalisis(ta);
                 campoanalisisFacade.create(ca);
+                campoanalisisFacade.edit(ca);
+                //listaCampoanalisis.add(ca);
             }
+            //ta.setCampoanalisisList(listaCampoanalisis);
             tipoanalisisFacade.edit(ta); //Actualiza para evitar errores
-            
+            //listaTipoanalisis.add(ta);
         }
+        
+        thisAnalisis.setTipoanalisisList(listaTipoanalisis);
         analisisFacade.edit(thisAnalisis);  //Actualiza para evitar errores
         
         

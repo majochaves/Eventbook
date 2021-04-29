@@ -175,7 +175,7 @@ public class crearAnalisis extends HttpServlet {
                 m.put("Num", new Double(listaUsuarios.size()));
                 listaFila.put("Numero de Usuarios", m);
                 
-                AutoGeneradoTiposFiltros+=" número de usuarios totales,";
+                AutoGeneradoTiposFiltros+=" numero de usuarios totales,";
             }
 
             //Sexo

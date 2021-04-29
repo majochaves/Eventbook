@@ -46,7 +46,7 @@ public class Tipoanalisis implements Serializable {
     @Column(name = "NOMBRE", length = 50)
     private String nombre;
     @JoinColumn(name = "ANALISIS_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = {CascadeType.MERGE})
     private Analisis analisisId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoanalisis")
     private List<Campoanalisis> campoanalisisList;
