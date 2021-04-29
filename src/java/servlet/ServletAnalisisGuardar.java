@@ -106,7 +106,7 @@ public class ServletAnalisisGuardar extends HttpServlet {
         //Tipoanalisis ta = tipoanalisisFacade.find(thisAnalisis.getTipoanalisisList().get(0).getId());
         
         
-        response.sendRedirect("crearAnalisis.jsp");
+        response.sendRedirect("ServeltAnalisisIndex");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

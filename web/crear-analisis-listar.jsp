@@ -80,11 +80,13 @@
                         %>
 
                     </div>
-                        <div class="row justify-content-md-center">
-                            <div class="col-8">
-                                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#abrirDialogoGuardar">Guardar Análisis</button>
-                            </div>
+                        
+                    <div class="row justify-content-md-center">
+                        <div class="col-8">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#abrirDialogoGuardar">Guardar Análisis</button>
                         </div>
+                    </div>
+                        
                 </div>
             <br/>            
             </div>

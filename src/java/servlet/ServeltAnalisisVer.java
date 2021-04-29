@@ -64,6 +64,7 @@ public class ServeltAnalisisVer extends HttpServlet {
         }
         
         request.setAttribute("listaTablas", listaTablas);
+        request.setAttribute("descripcionAnalisis", thisAnalisis.getDescripcion());
         
         
         RequestDispatcher rd = request.getRequestDispatcher("analisisVer.jsp");

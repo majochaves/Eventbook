@@ -14,37 +14,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        
         <link rel="stylesheet" href="components/base/base.css">
         <link rel="stylesheet" href="components/base/tablas.css">
         <link rel="stylesheet" href="components/base/modal.css">
+        
         <script src="components/jquery/jquery-3.4.1.min.js"></script>
         <script src="components/bootstrap/js/popper.js"></script>
         <script src="components/bootstrap/js/bootstrap.min.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
-        <script type="text/javascript" src="components/propios/chart.js"></script>
-        <script type="text/javascript">
-            google.charts.load("current", {packages:["corechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-              var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work',     11],
-                ['Eat',      2],
-                ['Commute',  2],
-                ['Watch TV', 2],
-                ['Sleep',    7]
-              ]);
-
-              var options = {
-                title: 'My Daily Activities',
-                is3D: true,
-              };
-
-              var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-              chart.draw(data, options);
-            }
-        </script>
     </head>
     <body>
         <div class="page">
@@ -57,28 +36,108 @@
                             <h3>Análisis</h3>
                         </div>
                     </div>
-
+                    
                     <hr class="divider divider-sm mt-0" />
-
+                    
+                    <div class="row align-items-center">
+                        <div class="col-sm-10">
+                            <p>
+                                <b>Descripción: </b><%=(String)request.getAttribute("descripcionAnalisis")%>
+                            </p>
+                        </div>
+                            
+                        <div class="col-sm-2">
+                            <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal" data-target="#abrirDialogoEditar">Editar descripción</button>
+                        </div>
+                    </div>
+                            
                     <div class="row">
                         <%
                             Map<String, Map<String, Double>> listaTablas = (Map) request.getAttribute("listaTablas");
-                            for(String nombreColumna : listaTablas.keySet()){
+                            if(listaTablas != null){
+                                for(String nombreColumna : listaTablas.keySet()){
                         %>
-                            <div class="col-md-6">
-                                <%
-                                    if(nombreColumna.equalsIgnoreCase("Sexo")){
-                                %>
-                                    <div id="piechart_3d" style="width: 600px; height: 300px;"></div>
-                                    <p>ENTRA</p>
-                                <%
-                                    }
-                                %>
-                            </div>
+                                <div class="col-sm-6 pb-4">
+                                    <table class="table table-sm table-hover table-bordered">
+                                        
+                                        <thead>
+                                            <tr class="table-secondary">
+                                                <th cope="col"><%=nombreColumna%></th>
+                                                <th scope="col">Valor</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <%
+                                                Map<String, Double> conjuntoDeFilas = listaTablas.get(nombreColumna);
+                                                for(String key : conjuntoDeFilas.keySet()){
+                                            %>
+                                                    <tr>
+                                                        <td><%=key%></td>
+                                                        <td><%=conjuntoDeFilas.get(key)%></td>
+                                                    </tr>
+                                            <%
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <br/>
                         <%
+                                }
                             }
                         %>
                     </div>
+                    
+                    
+                    
+            <!--Dialogo para editar-->
+                    <div class="modal fade" id="abrirDialogoEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <form method="POST" action="ServletAnalisisEditar">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar Análisis</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="form-group pb-4">
+                                            <label for="desc" class="col-form-label">Descripción</label>
+                                            <textarea class="form-control" id="desc" name="descripcion"><%=(String)request.getAttribute("descripcionAnalisis")%></textarea>
+                                        </div>
+                                        
+                                        <%
+                                            for(String nombreColumna : listaTablas.keySet()){
+                                        %>
+                                            <div class="row align-middle mt-4">
+                                                <div class="col-6">
+                                                    <%=nombreColumna%>
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <a href="#" class="shadow-none badge badge-warning">Editar tabla</a>
+                                                </div>
+                                            </div>
+                                            
+                                            <hr class="divider divider-sm mt-0"/>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary mt-0" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary mt-0">Guardar</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                   
 
 
 
@@ -86,5 +145,6 @@
                 </div>
             </div>
         </div>
+        <div class="to-top int-arrow-up"></div>
     </body>
 </html>
