@@ -19,12 +19,20 @@
         <link rel="stylesheet" href="components/base/base.css">
         <link rel="stylesheet" href="components/base/tablas.css">
         <link rel="stylesheet" href="components/base/modal.css">
+        <link rel="stylesheet" href="components/propios/tooltip.css">
         
         <script src="components/jquery/jquery-3.4.1.min.js"></script>
         <script src="components/bootstrap/js/popper.js"></script>
         <script src="components/bootstrap/js/bootstrap.min.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
+        <script src="components/propios/valoresNoRepetibles.js" defer></script> 
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+        
     </head>
     <body>
         <div class="page">
@@ -67,7 +75,7 @@
                                         %>
                                                 <tr>
                                                     <td>
-                                                        <input class="form-control form-control-sm" type="text" name="fila<%=i%>col1" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
+                                                        <input class="form-control form-control-sm textoColumna1" type="text" name="fila<%=i%>col1" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
                                                         <input name="fila<%=i%>colAntiguo" type="hidden" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
                                                     </td>
                                                     <td><input class="form-control form-control-sm" type="number" name="fila<%=i%>col2" value="<%=thisCampoanalisis.getValor()%>"></td>
@@ -81,13 +89,27 @@
                             </form>
                             <br/>
                         </div>
+                        
+              
                     </div>
-                                
+                                    
+                    <div class="row justify-content-md-center">
+                        <div class="col-8">
+                            <span id="spanTooltip">
+                                <button type="button" class="btn btn-primary btn-lg btn-block"  id="btnEnviar">Guardar</button>
+                            </span>
+                        </div>
+                    </div>            
                                 
                                 
                                 
                 </div>
             </div>
         </div>
+       
+        
     </body>
+    
 </html>
+
+
