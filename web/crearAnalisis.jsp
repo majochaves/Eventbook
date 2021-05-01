@@ -38,7 +38,7 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>Realizar Analisis - Filtros</h3>
+                            <h3>Realizar Análisis - Filtros</h3>
 
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                                 </div> 
                             </div>    
                             <div class="col-sm-4">
-                                <h5>Año</h5>
+                                <h5>Fecha de registro</h5>
                                 <input type="date" name="fechaInicial" min="0001-01-01" max="9999-12-31" /> Fecha Inicial <br />
                                 <input type="date" name="fechaFinal" min="0001-01-01" max="9999-12-31" /> Fecha Final <br />
                             </div>

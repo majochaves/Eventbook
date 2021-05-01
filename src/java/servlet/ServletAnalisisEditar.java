@@ -5,8 +5,11 @@
  */
 package servlet;
 
+import dao.AnalisisFacade;
+import entity.Analisis;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ServletAnalisisEditar", urlPatterns = {"/ServletAnalisisEditar"})
 public class ServletAnalisisEditar extends HttpServlet {
 
+    @EJB
+    private AnalisisFacade analisisFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,7 +37,15 @@ public class ServletAnalisisEditar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("analisisVer.jsp");
+        
+        String descripcion = request.getParameter("descripcion");
+        Integer idAnalisis = Integer.parseInt(request.getParameter("id"));
+        
+        Analisis thisAnalisis = analisisFacade.find(idAnalisis);
+        thisAnalisis.setDescripcion(descripcion);
+        analisisFacade.edit(thisAnalisis);
+        
+        response.sendRedirect("ServeltAnalisisVer?id=" + idAnalisis);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

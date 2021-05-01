@@ -4,6 +4,9 @@
     Author     : Merli
 --%>
 
+<%@page import="entity.Campoanalisis"%>
+<%@page import="entity.Tipoanalisis"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,34 +50,33 @@
                         </div>
                             
                         <div class="col-sm-2">
-                            <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal" data-target="#abrirDialogoEditar">Editar descripción</button>
+                            <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal" data-target="#abrirDialogoEditar">Modificar</button>
                         </div>
                     </div>
                             
                     <div class="row">
                         <%
-                            Map<String, Map<String, Double>> listaTablas = (Map) request.getAttribute("listaTablas");
-                            if(listaTablas != null){
-                                for(String nombreColumna : listaTablas.keySet()){
+                            List<Tipoanalisis> listaTiposAnalisis = (List) request.getAttribute("listaTiposAnalisis");
+                            for(Tipoanalisis thisTipoDeAnalisis : listaTiposAnalisis){
+                                
                         %>
                                 <div class="col-sm-6 pb-4">
                                     <table class="table table-sm table-hover table-bordered">
                                         
                                         <thead>
                                             <tr class="table-secondary">
-                                                <th cope="col"><%=nombreColumna%></th>
+                                                <th cope="col"><%=thisTipoDeAnalisis.getNombre()%></th> <!--Nombre de la columna-->
                                                 <th scope="col">Valor</th>
                                             </tr>
                                         </thead>
                                         
                                         <tbody>
                                             <%
-                                                Map<String, Double> conjuntoDeFilas = listaTablas.get(nombreColumna);
-                                                for(String key : conjuntoDeFilas.keySet()){
+                                                for(Campoanalisis thisCampoanalisis : thisTipoDeAnalisis.getCampoanalisisList()){
                                             %>
                                                     <tr>
-                                                        <td><%=key%></td>
-                                                        <td><%=conjuntoDeFilas.get(key)%></td>
+                                                        <td><%=thisCampoanalisis.getCampoanalisisPK().getNombre()%></td>
+                                                        <td><%=thisCampoanalisis.getValor()%></td>
                                                     </tr>
                                             <%
                                                 }
@@ -84,7 +86,6 @@
                                 </div>
                             <br/>
                         <%
-                                }
                             }
                         %>
                     </div>
@@ -94,7 +95,7 @@
             <!--Dialogo para editar-->
                     <div class="modal fade" id="abrirDialogoEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                            <form method="POST" action="ServletAnalisisEditar">
+                            <form method="POST" action="ServletAnalisisEditar?id=<%=request.getAttribute("idAnalisis")%>">
                                 <div class="modal-content">
 
                                     <div class="modal-header">
@@ -111,14 +112,14 @@
                                         </div>
                                         
                                         <%
-                                            for(String nombreColumna : listaTablas.keySet()){
+                                            for(Tipoanalisis thisTipoDeAnalisis : listaTiposAnalisis){
                                         %>
                                             <div class="row align-middle mt-4">
                                                 <div class="col-6">
-                                                    <%=nombreColumna%>
+                                                    <%=thisTipoDeAnalisis.getNombre()%>
                                                 </div>
                                                 <div class="col-6 text-right">
-                                                    <a href="#" class="shadow-none badge badge-warning">Editar tabla</a>
+                                                    <a href="ServletTipoanalisisVer?id=<%=thisTipoDeAnalisis.getId()%>" class="shadow-none badge badge-warning">Editar tabla</a>
                                                 </div>
                                             </div>
                                             

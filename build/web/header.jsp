@@ -35,7 +35,7 @@
                     }
                 %>
                 <!-- Esto deberá comprobar en un futuro si el usuario logeado es Admin o Analista -->
-                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServeltAnalisisIndex">Analisis</a>
+                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServeltAnalisisIndex">Análisis</a>
                 </li>
               </ul>
             </div>

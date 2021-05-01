@@ -48,24 +48,11 @@ public class ServeltAnalisisVer extends HttpServlet {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Analisis thisAnalisis = analisisFacade.find(id);
         
-        Map<String, Map<String, Double>> listaTablas = new HashMap<>();
         List<Tipoanalisis> listaTiposAnalisis = thisAnalisis.getTipoanalisisList();
         
-        for(Tipoanalisis thisTipoAnalisis : listaTiposAnalisis){
-            
-            List<Campoanalisis> listaCampoAnalisis = thisTipoAnalisis.getCampoanalisisList();
-            Map<String, Double> tablaIndividual = new HashMap<>();
-            
-            for(Campoanalisis thisCampoAnalisis : listaCampoAnalisis){
-                tablaIndividual.put(thisCampoAnalisis.getCampoanalisisPK().getNombre(), new Double(thisCampoAnalisis.getValor().intValue()));
-            }
-            
-            listaTablas.put(thisTipoAnalisis.getNombre(), tablaIndividual);
-        }
-        
-        request.setAttribute("listaTablas", listaTablas);
         request.setAttribute("descripcionAnalisis", thisAnalisis.getDescripcion());
-        
+        request.setAttribute("idAnalisis", id.intValue());
+        request.setAttribute("listaTiposAnalisis", listaTiposAnalisis);
         
         RequestDispatcher rd = request.getRequestDispatcher("analisisVer.jsp");
         rd.forward(request, response);
