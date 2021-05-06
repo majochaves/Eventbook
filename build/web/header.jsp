@@ -4,7 +4,12 @@
     Author     : josie
 --%>
 
-      <%@page import="entity.Administrador"%>
+      <%@page import="entity.Usuario"%>
+<%@page import="entity.Administrador"%>
+
+<%
+    Usuario loggedUser = (Usuario) request.getSession().getAttribute("logged-user");
+%>
       
 <header class="section rd-navbar-wrap">
         <nav class="rd-navbar">
@@ -27,7 +32,7 @@
                 <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="contact-us.html">Contact us</a>
                 </li>
                 <%
-                    if (true || request.getSession().getAttribute("logged-user") instanceof Administrador) {
+                    if (true || loggedUser != null && loggedUser.getAdministrador() != null) {
                         %>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Administration</a>
                         </li>
@@ -52,8 +57,18 @@
                   <div class="navbar-search-results">No results</div>
                   <button class="navbar-button search-switch int-search novi-icon" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","class":"navbar-search-active","isolate":"[data-multi-switch]:not(.search-switch)"}'></button>
                 </div>
-                <div class="navbar-subpanel-item">
-                </div>
+                <%
+                    if (true || loggedUser == null) {
+                        %>
+                        <div class="navbar-subpanel-item">
+                            <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Log in</a></li>
+                        </div>
+                        <div class="navbar-subpanel-item">
+                            <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Sign in</a></li>
+                        </div>
+                        <%
+                    }
+                %>
               </div>
             </div>
           </div>
