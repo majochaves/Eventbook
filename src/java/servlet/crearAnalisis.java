@@ -72,9 +72,11 @@ public class crearAnalisis extends HttpServlet {
     //Tipos de filtro
     private static final String FILTRONUMUSUARIOS = "numUsuarios";
     private static final String FILTROSEXO = "sexo";
-    
-    //Anyos
-    //private static final String ANYOTODOS = "todos";
+    private static final String FILTROCIUDAD = "ciudad";
+    private static final String FILTRONOMBRE ="nombre";
+    private static final String FILTROAPELLIDO = "apellido";
+    private static final String FILTROFECHAPORMES = "filtroFechaMeses";
+    private static final String FILTROFECHAPORANYOS = "filtroFechaAnyos";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -88,96 +90,168 @@ public class crearAnalisis extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        List<String> tipoUsuario = Arrays.asList(request.getParameterValues("tipoUsuario"));
-        List<String> tipoFiltro = Arrays.asList(request.getParameterValues("tipoFiltro"));
+        List<String> tipoUsuario = null;
+        List<String> tipoFiltro = null;
+        boolean muestraError = false;
         
-        String cadenaFechaInicial = request.getParameter("fechaInicial");
-        String cadenaFechaFinal = request.getParameter("fechaFinal");
-        
-        Date fechaInicial, fechaFinal;
-        if(cadenaFechaInicial.length() == 0 || cadenaFechaInicial == null) //cadenaFechaInicial.equalsIgnoreCase(ANYOTODOS) || 
-            fechaInicial  = null;
-        else
-            fechaInicial = Date.valueOf(cadenaFechaInicial);
-        
-        if(cadenaFechaFinal.length() == 0 || cadenaFechaFinal == null) // cadenaFechaFinal.equalsIgnoreCase(ANYOTODOS) || 
-            fechaFinal  = null;
-        else
-            fechaFinal = Date.valueOf(cadenaFechaFinal);
-        
-        //Un conjunto de filas estará asociada a cierta columna en concreto (por eso el HashMap<columna, filas>)
-        //Pero cada fila, debe tener un nombre Unico (en la BD el nombre es PK) por eso Set<String>
-        //Pero cada fila es una tupla. ej: Masculino - 50, Femenino - 70...
-        //Ej visual:
-        //              | Ciudad | Valor |          Como se puede ver, las columnas SIEMPRE son una tupla (Elem, Valor)
-        //              | Malaga |   15  |
-        //              | Barcel |   20  |
-        //              | Madrid |   22  |
-        
-        Map<String, Set<Tupla<String, Double>>> listaFila = new HashMap<>();
-        
-        
-        //Obtenemos todos los usuarios
-        List<Usuario> listaUsuarios = usuarioFacade.getUsuarioByRoles(
-                tipoUsuario.contains(ANALISTAS),
-                tipoUsuario.contains(USUARIOEVENTOS),
-                tipoUsuario.contains(CREADOREVENTOS),
-                tipoUsuario.contains(TELEOPERADORES),
-                tipoUsuario.contains(ADMINISTRADORES),
-                fechaInicial,
-                fechaFinal
-        );
-        
-        
-        //NUM USUARIOS
-        if(tipoFiltro.contains(FILTRONUMUSUARIOS)){
-            Tupla<String, Double> t = new Tupla("Num", listaUsuarios.size());
-            Set<Tupla<String, Double>> c = new HashSet<>();
-            c.add(t);
-            listaFila.put("Numero de Usuarios", c);
+        try{
+            tipoUsuario = Arrays.asList(request.getParameterValues("tipoUsuario"));
+            tipoFiltro = Arrays.asList(request.getParameterValues("tipoFiltro"));
+        } catch(NullPointerException e){
+            muestraError = true;
+            request.setAttribute("muestraError", muestraError);
+            RequestDispatcher rd = request.getRequestDispatcher("crearAnalisis.jsp");
+            rd.forward(request, response);
         }
         
-        
-        //SEXO
-        if(tipoFiltro.contains(FILTROSEXO)){
-            Map<String,Integer> lista = usuarioFacade.getNumUsersByGender(listaUsuarios);
-            Tupla<String, Double> t = new Tupla("Masculino", Double.valueOf(lista.get("Masculino")));
-            Tupla<String, Double> t2 = new Tupla("Femenino", Double.valueOf(lista.get("Femenino")));
-            Set<Tupla<String, Double>> c = new HashSet<>();
-            c.add(t);
-            c.add(t2);
-            listaFila.put("Sexo", c);
-        }
-        
-        
-        /*
-        if(tipoFiltro.contains(FILTROSEXO)){
-            listaColumna.add(FILTROSEXO);
-            double masc = 0;
-            double fem = 0;
+        if(!muestraError){
+            String cadenaFechaInicial = request.getParameter("fechaInicial");
+            String cadenaFechaFinal = request.getParameter("fechaFinal");
             
-            if(tipoUsuario.contains(USUARIOEVENTOS)){
-                //...
+            Date fechaInicial, fechaFinal;
+            if(cadenaFechaInicial.length() == 0)
+                fechaInicial  = null;
+            else
+                fechaInicial = Date.valueOf(cadenaFechaInicial);
+
+            if(cadenaFechaFinal.length() == 0)
+                fechaFinal  = null;
+            else
+                fechaFinal = Date.valueOf(cadenaFechaFinal);
+            
+            
+            
+            String AutoGeneradoAnalisisDe = "", AutoGeneradoTiposFiltros = "";
+            if(tipoUsuario.contains(ANALISTAS))
+                AutoGeneradoAnalisisDe+=" Analistas,";
+            if(tipoUsuario.contains(USUARIOEVENTOS))
+                AutoGeneradoAnalisisDe+=" Usuario Eventos,";
+            if(tipoUsuario.contains(CREADOREVENTOS))
+                AutoGeneradoAnalisisDe+=" Creadores de Eventos,";
+            if(tipoUsuario.contains(TELEOPERADORES))
+                AutoGeneradoAnalisisDe+=" Teleoperadores,";
+            if(tipoUsuario.contains(ADMINISTRADORES))
+                AutoGeneradoAnalisisDe+=" Administradores,";
+            AutoGeneradoAnalisisDe = AutoGeneradoAnalisisDe.substring(0, AutoGeneradoAnalisisDe.lastIndexOf(","));
+            
+            //Un conjunto de filas estará asociada a cierta columna en concreto (por eso el HashMap<columna, filas>)
+            //Pero cada fila, debe tener un nombre Unico (en la BD el nombre es PK) por eso Set<String>
+            //Pero cada fila es una tupla. ej: Masculino - 50, Femenino - 70...
+            //Ej visual:
+            //              | Ciudad | Valor |          Como se puede ver, las columnas SIEMPRE son una tupla (Elem, Valor)
+            //              | Malaga |   15  |
+            //              | Barcel |   20  |
+            //              | Madrid |   22  |
+            //
+            //
+            //Haremos un Map<NombreColumna, Map<Nombre, Valor>>
+            Map<String, Map<String, Double>> listaFila = new HashMap<>();
+
+
+            //Obtenemos todos los usuarios
+            List<Usuario> listaUsuarios = usuarioFacade.getUsuarioByRoles(
+                    tipoUsuario.contains(ANALISTAS),
+                    tipoUsuario.contains(USUARIOEVENTOS),
+                    tipoUsuario.contains(CREADOREVENTOS),
+                    tipoUsuario.contains(TELEOPERADORES),
+                    tipoUsuario.contains(ADMINISTRADORES),
+                    fechaInicial,
+                    fechaFinal
+            );
+
+            //Obtenemos el id de todos los usuarios
+            List<Integer> listaUsuariosIds = new ArrayList<>();
+            for(Usuario u : listaUsuarios)
+                listaUsuariosIds.add(u.getId());
+
+
+
+
+            //------------------------------FILTROS----------------------------
+
+            //Numero de usuarios totales
+            if(tipoFiltro.contains(FILTRONUMUSUARIOS)){
+                Map<String, Double> m = new HashMap<>();
+                m.put("Num", new Double(listaUsuarios.size()));
+                listaFila.put("Numero de Usuarios", m);
+                
+                AutoGeneradoTiposFiltros+=" numero de usuarios totales,";
             }
-            //...
-            Set<Tupla<String, Double>> c = new HashSet<>();
-            Tupla<String, Double> t1 = new Tupla("Masculino", masc);
-            Tupla<String, Double> t2 = new Tupla("Femenino", fem);
-            c.add(t1);
-            c.add(t2);
-            listaFila.put(FILTROSEXO, c);
+
+            //Sexo
+            if(tipoFiltro.contains(FILTROSEXO)){
+                double nMasc = 0, nFem = 0;
+
+                for(Usuario u : listaUsuarios){
+                    if(u.getSexo().equalsIgnoreCase("MASCULINO") || u.getSexo().equalsIgnoreCase("HOMBRE"))
+                        nMasc++;
+                    if(u.getSexo().equalsIgnoreCase("FEMENINO") || u.getSexo().equalsIgnoreCase("MUJER"))
+                        nFem++;
+                }
+
+                Map<String, Double> m = new HashMap<>();
+                m.put("Masculino", nMasc);    
+                m.put("Femenino", nFem);
+                listaFila.put("Sexo", m);
+                
+                AutoGeneradoTiposFiltros+=" generos, ";
+            }
+
+            //Ciudad
+            if(tipoFiltro.contains(FILTROCIUDAD)){
+                Map<String, Double> listaCiudades = usuarioFacade.getNumUsersByCities(listaUsuariosIds);
+                listaFila.put("Ciudades", listaCiudades);
+                
+                AutoGeneradoTiposFiltros+=" ciudades, ";
+            }
+
+            //Nombre
+            if(tipoFiltro.contains(FILTRONOMBRE)){
+                Map<String, Double> listaNombres = usuarioFacade.getNumUsersByName(listaUsuariosIds);
+                listaFila.put("Nombres", listaNombres);
+                
+                AutoGeneradoTiposFiltros+=" nombres, ";
+            }
+
+            //Apellido
+            if(tipoFiltro.contains(FILTROAPELLIDO)){
+                Map<String, Double> listaApellidos = usuarioFacade.getNumUsersByLastName(listaUsuariosIds);
+                listaFila.put("Apellidos", listaApellidos);
+                AutoGeneradoTiposFiltros+=" apellidos, ";
+            }
+
+            //Fecha de creacion - Anyo
+            if(tipoFiltro.contains(FILTROFECHAPORANYOS)){
+                Map<String, Double> listaFechasAnyos = usuarioFacade.getNumUsersByYears(listaUsuariosIds);
+                listaFila.put("Creado en (Año)", listaFechasAnyos);
+                
+                AutoGeneradoTiposFiltros+=" fecha por años, ";
+            }
+
+            //Fecha de creacion - Mes y Anyo
+            if(tipoFiltro.contains(FILTROFECHAPORMES)){
+                Map<String, Double> listaFechasMeses = usuarioFacade.getNumUsersByMonths(listaUsuariosIds);
+                listaFila.put("Creado en (Mes - Año)", listaFechasMeses);
+                
+                AutoGeneradoTiposFiltros+=" fecha por meses-años, ";
+            }
             
-        }*/
-        
-        
-        request.setAttribute("listaFila", listaFila);
-        
-        
-        
-        
-        
-        RequestDispatcher rd = request.getRequestDispatcher("crearAnalisis.jsp");
-        rd.forward(request, response);
+            AutoGeneradoTiposFiltros = AutoGeneradoTiposFiltros.substring(0, AutoGeneradoTiposFiltros.lastIndexOf(","));
+
+
+
+
+
+
+            request.setAttribute("listaFila", listaFila);
+            
+            //Texto AutoGenerado
+            request.setAttribute("AutoGeneradoAnalisisDe", AutoGeneradoAnalisisDe);
+            request.setAttribute("AutoGeneradoTiposFiltros", AutoGeneradoTiposFiltros);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("crear-analisis-listar.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

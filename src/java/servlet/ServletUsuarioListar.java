@@ -28,6 +28,8 @@ public class ServletUsuarioListar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        
+        
         request.setAttribute("usuarios", usuarioFacade.findAll());
         request.getRequestDispatcher("usuario-listar.jsp").forward(request, response);
     }

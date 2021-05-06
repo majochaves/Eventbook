@@ -4,7 +4,9 @@
     Author     : josie
 --%>
 
-      <%@page import="entity.Usuario"%>
+      <%@page import="entity.Analista"%>
+<%@page import="clases.Autenticacion"%>
+<%@page import="entity.Usuario"%>
 <%@page import="entity.Administrador"%>
 
 <%
@@ -25,51 +27,38 @@
               <ul class="navbar-navigation rd-navbar-nav">
                 <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link" href="index.jsp">Home</a>
                 </li>
-                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="about-us.html">About us</a>
-                </li>
-                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="typography.html">Typography</a>
-                </li>
-                <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="contact-us.html">Contact us</a>
-                </li>
+                
+                <!-- Esto deberá comprobar en un futuro si el usuario logeado es Admin o Analista -->
+        
                 <%
-                    if (true || loggedUser != null && loggedUser.getAdministrador() != null) {
+                    if (Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)) {
                         %>
-                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Administration</a>
+                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServeltAnalisisIndex">Análisis</a>
+                        </li>
+                        <%
+                    }
+                    if (Autenticacion.tieneRol(request, response, Administrador.class)) {
+                        %>
+                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Administración</a>
+                        </li>
+                        <%
+                    }
+
+                    if (!Autenticacion.estaLogeado(request, response)) {
+                        %>
+                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="usuario-iniciar-sesion.jsp">Iniciar sesión</a>
+                        </li>
+                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Registrarse</a>
+                        </li>
+                        <%
+                    } else {
+                        %>
+                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioCerrarSesion">Cerrar sesión</a>
                         </li>
                         <%
                     }
                 %>
-                
               </ul>
-            </div>
-            <div class="navbar-cell">
-              <div class="navbar-subpanel">
-                <div class="navbar-subpanel-item">
-                  <div class="navbar-search">
-                    <div class="navbar-search-container">
-                      <form class="navbar-search-form">
-                        <input class="navbar-search-input" type="text" placeholder="Enter search terms..." autocomplete="off" name="s"/>
-                        <button class="navbar-search-btn int-search novi-icon"></button>
-                        <button class="navbar-search-close search-switch int-close novi-icon" type="button" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","class":"navbar-search-active","isolate":"[data-multi-switch]:not(.search-switch)"}'></button>
-                      </form>
-                    </div>
-                  </div>
-                  <div class="navbar-search-results">No results</div>
-                  <button class="navbar-button search-switch int-search novi-icon" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","class":"navbar-search-active","isolate":"[data-multi-switch]:not(.search-switch)"}'></button>
-                </div>
-                <%
-                    if (true || loggedUser == null) {
-                        %>
-                        <div class="navbar-subpanel-item">
-                            <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Log in</a></li>
-                        </div>
-                        <div class="navbar-subpanel-item">
-                            <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Sign in</a></li>
-                        </div>
-                        <%
-                    }
-                %>
-              </div>
             </div>
           </div>
         </nav>

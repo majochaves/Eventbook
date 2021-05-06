@@ -4,6 +4,8 @@
     Author     : josie
 --%>
 
+<%@page import="entity.Administrador"%>
+<%@page import="clases.Autenticacion"%>
 <%@page import="entity.Usuario"%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.util.List"%>
@@ -15,99 +17,148 @@
         <title>Listado de usuarios</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta property="og:title" content="Template Monster Admin Template">
-        <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
-        <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
-        <meta property="og:url" content="http://digipunk.netii.net">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
+        <link rel="stylesheet" href="components/base/tablas.css">
+        <link rel="stylesheet" href="components/base/modal.css">
+        <script src="components/jquery/jquery-3.4.1.min.js"></script>
+        <script src="components/bootstrap/js/popper.js"></script>
+        <script src="components/bootstrap/js/bootstrap.min.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
     </head>
     <%
+        // AUTENTICACION
+        Autenticacion.autenticar(request, response, Autenticacion.PERMISOS, Administrador.class);
+        
         boolean filtrado = request.getParameter("username") != null;
         List<Usuario> usuarios = (List)request.getAttribute("usuarios");
-        
     %>
     <body>
         <jsp:include page="header.jsp" />
-
-<%--        
-        <form action="ServletUsuarioFiltrar" method="POST">
-            <table>
-                <tr>
-                    <td>Usuario:</td>
-                    <td><input type="text" name="usuario" maxlength="30" size="30" minlength="1" required="required" value="<%= filtrado ? request.getParameter("username") : "" %>"/></td>
-                </tr>
-                <tr>
-                    <td>Contraseña:</td>
-                    <td><input type="password" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
-                </tr>
-                <tr>
-                    <td>Nombre:</td>
-                    <td><input type="text" name="nombre" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getNombre(): "" %>"/></td>
-                </tr>
-                <tr>
-                    <td>Apellidos:</td>
-                    <td><input type="text" name="apellidos" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getApellidos(): "" %>"/></td>
-                </tr>
-                <tr>
-                    <td>Sexo:</td>
-                    
-                    <td>
-                        <input type="radio" id="male" name="sexo" value="hombre" checked="checked" >
-                        <label for="male">Hombre</label><br>
-                        <input type="radio" id="female" name="sexo" value="mujer" <%= edicion && usuarioEditar.getSexo().equalsIgnoreCase("mujer") ? "checked" : "" %> >
-                        <label for="female">Mujer</label><br/>
-                    </td>
-                </tr>
-        </form>
---%>        
-    <div style="margin-left: 1%;">
-        <br/>
-        <h1>Usuarios de EventBook</h1>
-        <br/>
-        <table style="width:70%; text-align: center">
-            <tr>
-                <th>ID</th>
-                <th>USER</th>
-                <th>NAME</th>
-                <th>ROL</th>
-                <th>BORRADO</th>
-                <th>EDICIÓN</th>
-            </tr>        
-
-            <%
-                for (Usuario u : usuarios) {
-
-                    String rol = "???";
-                    if (u.getAdministrador() != null) {
-                        rol = "Administrador";
-                    } else if (u.getAnalista()!= null) {
-                        rol = "Analista";
-                    } else if (u.getTeleoperador()!= null) {
-                        rol = "Teleoperador";
-                    } else if (u.getUsuarioeventos() != null) {
-                        rol = "Usuario de Eventos";
-                    } else if (u.getCreadoreventos()!= null) {
-                        rol = "Creador de Eventos";
-                    }
-            %>   
-            <tr>
-                <td><%= u.getId() %></td>            
-                <td><%= u.getUsername() %></td>
-                <td><%= u.getNombre() %></td>
-                <td><%= rol %></td>
-                <td> <a href="ServletUsuarioBorrar?id=<%= u.getId() %>" style="background-color: #e72660; color: white; padding-left: 10px; padding-right: 10px; border-radius: 10px;">X</a> </td>
-                <td> <a href="ServletUsuarioEditar?id=<%= u.getId() %>" style="background-color: #43DD93; color: white; padding-left: 10px; padding-right: 10px; border-radius: 10px;">Editar</a> </td>
-            </tr>        
-            <%
-                }
-            %>
-            </table>
+    <div class="section section-lg bg-transparent">
+        <div class="container">
             <br/>
-            <a href="ServletUsuarioCrear">Nuevo usuario ...</a>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Usuarios de EventBook</h1>
+                </div>
+            </div>
+            <hr class="divider divider-sm mt-0" />
+            <br/>
+            
+            <div style="float:right; margin-bottom: 1%;">
+                <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal" data-target="#abrirDialogoEditar">Filtrar usuarios</button>
+            </div>
+                <!--Dialogo para editar-->
+    <div class="modal fade" id="abrirDialogoEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Filtrado de usuarios</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="ServletUsuarioFiltrar" method="GET">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>
+                                    <h3> Rol </h3>
+                                    <div class="form-check">
+                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="usuarioEventos" checked="checked" />UsuarioEventos <br/>
+                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="creadorEventos" checked="checked"/>CreadorEventos<br/>
+                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="administradores" checked="checked"/>Administradores<br/>
+                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="teleoperadores" checked="checked"/>Teleoperadores<br/>
+                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="analistas" checked="checked"/>Analistas<br/><br/>
+                                    </div>  
+                                </td>
+                                <td>
+                                    <h3> Sexo </h3>
+                                    <div class="form-check">
+                                        <input class="form-check-input mt-2" type="checkbox" name="sexo" value="hombre" checked="checked" />Hombre<br/>
+                                        <input class="form-check-input mt-2" type="checkbox" name="sexo" value="mujer" checked="checked" />Mujer<br/><br/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <div class="form-group-sm">
+                            Nombre de usuario<input type="text" class="form-control" name="username"><br/><br/>
+                        </div>
+                        
+                        <div class="form-group-sm">
+                            Nombre<input type="text" class="form-control" name="nombre"><br/><br/>
+                        </div>
+                        
+                        <div class="form-group-sm">
+                            Apellidos<input type="text" class="form-control" name="apellidos"><br/><br/>
+                        </div>
+
+                        <div class="form-group-sm">
+                            Domicilio<input type="text" class="form-control" name="domicilio"><br/><br/>
+                        </div>
+                        
+                        <div class="form-group-sm">
+                            Ciudad<input type="text" class="form-control" name="ciudad"><br/><br/>
+                        </div>
+                        
+                        <div class="align-middle text-center">
+                            <input type="submit" class="btn btn-primary" value="Aplicar"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+    </div>
+            <br>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="table-secondary">
+                        <th>ID</th>
+                        <th>USER</th>
+                        <th>NAME</th>
+                        <th>ROL</th>
+                        <th>EDICIÓN</th>
+                        <th>BORRADO</th>
+                    </tr>        
+                </thead>
+                
+                <%
+                    for (Usuario u : usuarios) {
+
+                        String rol = "???";
+                        if (u.getAdministrador() != null) {
+                            rol = "Administrador";
+                        } else if (u.getAnalista()!= null) {
+                            rol = "Analista";
+                        } else if (u.getTeleoperador()!= null) {
+                            rol = "Teleoperador";
+                        } else if (u.getUsuarioeventos() != null) {
+                            rol = "Usuario de Eventos";
+                        } else if (u.getCreadoreventos()!= null) {
+                            rol = "Creador de Eventos";
+                        }
+                %>   
+                <tbody>
+                   <tr>
+                       <td><%= u.getId() %></td>            
+                       <td><%= u.getUsername() %></td>
+                       <td><%= u.getNombre() %></td>
+                       <td><%= rol %></td>
+                       <td class="align-middle text-center"> <a href="ServletUsuarioEditar?id=<%= u.getId() %>" class="btn btn-primary">Editar</a> </td>
+                       <td class="align-middle text-center"> <a href="ServletUsuarioBorrar?id=<%= u.getId() %>" class="btn btn-danger" >X</a> </td>
+                   </tr>     
+                </tbody>
+                <%
+                    }
+                %>
+            </table>
+            <a href="ServletUsuarioCrear" style="margin-bottom: 20px">Nuevo usuario ...</a>
+        </div>
+    </div>
     </body>
 </html>
