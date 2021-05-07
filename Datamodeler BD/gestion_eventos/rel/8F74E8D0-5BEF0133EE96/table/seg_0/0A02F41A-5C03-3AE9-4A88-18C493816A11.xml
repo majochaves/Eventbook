@@ -1,0 +1,80 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0A02F41A-5C03-3AE9-4A88-18C493816A11" name="CampoAnalisis">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>7FFC7127-C90E-AA5E-2904-BCEEE2F3849E</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Nombre" id="3FAEDCEF-E698-0260-7A5E-32C61004B6BB">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>B3B6AB02-32A2-C424-5F80-4F76A68CD859</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Valor" id="90832AFC-E4CE-E67D-BF47-CA4C37A2D51B">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>52260D89-2570-7199-979F-A29DD9CC7E5C</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,20,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TipoAnalisis_ID" id="591C59D5-F2F5-AAEB-C2C2-117995840A2B">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>BDBF493D-23F1-2056-7C1F-35DDBF601AB2</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5F9561AA-171E-E135-258E-9B4FC1E8BF17" referredColumn="3B424F0D-17DA-96A4-0138-BF3CEF7F13F7"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B0114261-7D20-5C12-26BA-9A3571A73310" name="CampoAnalisis_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>4FD465DC-6057-578B-C3FA-C972084B1AE4</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="591C59D5-F2F5-AAEB-C2C2-117995840A2B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F48DB423-BBB3-6162-4C06-A4335FB05F33" name="CampoAnalisis_TipoAnalisis_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>8B8AC95D-665F-09D5-C773-EB1BA5EF94FF</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="591C59D5-F2F5-AAEB-C2C2-117995840A2B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

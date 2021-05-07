@@ -1,0 +1,53 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C111EB14-1BCF-5A31-CE38-A94C76E31A24" name="Teleoperador">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>9B686497-6CA6-2288-AA86-DDE9B5EBEEEC</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Usuario_ID" id="10507E3B-EA07-0C4D-C481-3C7B70D2EC87">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>5813250C-FB65-3FC5-BEFF-864F87D29EC3</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="89F94DF2-8BBD-FFF0-0A42-1602740C98EB" referredColumn="7EBE9065-F26E-9C11-754A-7CC06F5CC523"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="570922F4-A29A-476D-494F-DB747A8A409B" name="Teleoperador_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>C4DD39D2-EFE3-70A2-2C07-00D1E37C96B1</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="10507E3B-EA07-0C4D-C481-3C7B70D2EC87"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2B59A93B-3C67-886F-113C-C7F7BB12CA00" name="Teleoperador_Usuario_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>4AF10AC7-5F87-FEF7-C821-5859E014C39A</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="10507E3B-EA07-0C4D-C481-3C7B70D2EC87"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

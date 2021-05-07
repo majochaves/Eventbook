@@ -1,0 +1,51 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="279D00F4-C993-DE7B-50AC-F0888C0A3F40" name="Etiqueta">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>F697F7FC-A6B5-75C1-2129-8BC78BDE8249</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID" id="7D1AC163-E2A7-808A-2326-F82E480A9D4B">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>A3CC3E94-CFAE-3C0B-8347-B8BCD685D570</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Descripcion" id="B0558CF4-6CC0-11DC-D417-00F4836D49E1">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>732692DC-FCCE-890F-D05E-708B7D79EFC7</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D00AB048-F223-6A46-DA21-C602F71E2027" name="Etiqueta_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>3BBD7B86-5CB4-3B65-94F6-CADF799FCC18</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7D1AC163-E2A7-808A-2326-F82E480A9D4B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

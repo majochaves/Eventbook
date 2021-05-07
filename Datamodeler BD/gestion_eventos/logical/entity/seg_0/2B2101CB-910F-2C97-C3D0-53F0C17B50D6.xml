@@ -1,0 +1,131 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2B2101CB-910F-2C97-C3D0-53F0C17B50D6" name="Usuario">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:18:18 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID" id="BE62DB17-A37C-AC07-81DA-C244AA6F3E7F">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:19:24 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Nombre" id="F71663EF-F053-9AE0-0B22-7A8E88CA777C">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:19:58 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Apellidos" id="1C158DB4-097C-4C0A-5BB1-9AC13CCF6D4F">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:20:16 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Domicilio" id="DC447D27-65B3-6756-6F31-055CD3D399F4">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:20:28 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Ciudad_residencia" id="59ADFA21-8E78-FF39-A2C5-D158F2FB4C23">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:20:45 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Password" id="372FBFD7-4A54-CFDB-12C4-CE68B243D040">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:21:41 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Username" id="92C1D1FE-F736-54C5-EB9D-0CA2028D57B8">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:22:50 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Sexo" id="1ADD0B0A-0A8F-00F7-86EF-07C8CEEE20AB">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:37:45 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Fecha_creacion" id="CAE0003B-E727-C935-51C0-1155FDA12E75">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-27 15:02:53 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="8FA44965-C2EA-2D02-0DEC-BA055E09C695" name="Usuario PK">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:19:56 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>BE62DB17-A37C-AC07-81DA-C244AA6F3E7F</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="7C67B3DA-5406-38E8-52E2-EA132D88D0F0" name="UK_USERNAME">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:23:36 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<newElementsIDs>92C1D1FE-F736-54C5-EB9D-0CA2028D57B8</newElementsIDs>
+<usedAttributes>
+<attributeRef>92C1D1FE-F736-54C5-EB9D-0CA2028D57B8</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

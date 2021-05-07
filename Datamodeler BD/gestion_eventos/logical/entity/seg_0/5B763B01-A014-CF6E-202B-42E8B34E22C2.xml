@@ -1,0 +1,48 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5B763B01-A014-CF6E-202B-42E8B34E22C2" name="UsuarioEventos">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:30:05 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID" id="E3879DC8-71C3-D0F9-FB1C-EC7BEF7DDCB8">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:36:27 UTC</createdTime>
+<generatorID>19E50F81-2143-B8EF-81FB-96F02DFC9394</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<referedAttribute>BE62DB17-A37C-AC07-81DA-C244AA6F3E7F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="1A05A810-1F6C-5B9D-70AD-A9D5CB818D29" name="UsuarioEventos PK">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:36:27 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>E3879DC8-71C3-D0F9-FB1C-EC7BEF7DDCB8</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

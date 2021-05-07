@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relacion_debil_teleoperador" directorySegmentName="seg_0" id="4AF10AC7-5F87-FEF7-C821-5859E014C39A">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:39:37 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<sourcePk>8FA44965-C2EA-2D02-0DEC-BA055E09C695</sourcePk>
+<identifying>true</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>2B2101CB-910F-2C97-C3D0-53F0C17B50D6</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>9B686497-6CA6-2288-AA86-DDE9B5EBEEEC</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

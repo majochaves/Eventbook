@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Rel_even_etiq" directorySegmentName="seg_0" id="832DC7F8-3CEE-227A-EC2E-A940EEFD9691">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:50:54 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>712B568E-8042-1795-5B52-004ED741B8D9</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>F697F7FC-A6B5-75C1-2129-8BC78BDE8249</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

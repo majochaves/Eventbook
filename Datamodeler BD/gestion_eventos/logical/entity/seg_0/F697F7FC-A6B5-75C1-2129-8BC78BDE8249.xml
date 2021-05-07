@@ -1,0 +1,60 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F697F7FC-A6B5-75C1-2129-8BC78BDE8249" name="Etiqueta">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:49:32 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="8F74E8D0-01D3-887A-FB1E-5BEF0133EE96" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID" id="A3CC3E94-CFAE-3C0B-8347-B8BCD685D570">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:50:14 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="8F74E8D0-01D3-887A-FB1E-5BEF0133EE96" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Descripcion" id="732692DC-FCCE-890F-D05E-708B7D79EFC7">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:50:21 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="8F74E8D0-01D3-887A-FB1E-5BEF0133EE96" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="3BBD7B86-5CB4-3B65-94F6-CADF799FCC18" name="EtiquetaEvento PK">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:50:43 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="8F74E8D0-01D3-887A-FB1E-5BEF0133EE96" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>A3CC3E94-CFAE-3C0B-8347-B8BCD685D570</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

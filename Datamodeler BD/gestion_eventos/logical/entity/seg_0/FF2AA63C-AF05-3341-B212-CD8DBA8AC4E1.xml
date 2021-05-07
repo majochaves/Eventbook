@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="FF2AA63C-AF05-3341-B212-CD8DBA8AC4E1" name="Mensaje">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 09:10:05 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID_mensaje" id="8323C44D-D4A1-4811-21A2-FB1161E23C8A">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 14:55:11 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Fecha" id="EC102D5A-59BE-9F30-4B2A-F0F93EB937C4">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 09:10:08 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Contenido" id="E6814501-E1AE-2055-14B0-3FD6E8BD24FB">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 09:10:35 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID2" id="020FC933-D24D-BFFF-981C-88B156BE6F60">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 09:12:21 UTC</createdTime>
+<generatorID>333FBB6F-DA84-258D-835A-BDDBF8C542B2</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<referedAttribute>BE62DB17-A37C-AC07-81DA-C244AA6F3E7F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID" id="7D74EF2E-1749-D7FD-D51E-12AE26650F6D">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:06:29 UTC</createdTime>
+<generatorID>5B7963A4-CEE2-3485-3A05-5C497F7B6C6D</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<referedAttribute>35AE32B5-1B4C-9AA6-059A-AC00D99503BD</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID1" id="249EEFB8-32A9-007F-5612-5BDCEB76478C">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:06:29 UTC</createdTime>
+<generatorID>5B7963A4-CEE2-3485-3A05-5C497F7B6C6D</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<referedAttribute>0D515911-67E7-A8A8-FC54-389301169C13</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="D75860B7-5505-59DC-5842-4809372917C3" name="Mensaje PK">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 09:11:30 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>8323C44D-D4A1-4811-21A2-FB1161E23C8A</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

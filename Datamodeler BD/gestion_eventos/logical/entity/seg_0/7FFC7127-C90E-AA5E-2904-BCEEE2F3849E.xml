@@ -1,0 +1,77 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="7FFC7127-C90E-AA5E-2904-BCEEE2F3849E" name="CampoAnalisis">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-25 13:29:00 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Nombre" id="B3B6AB02-32A2-C424-5F80-4F76A68CD859">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-25 13:29:25 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Valor" id="52260D89-2570-7199-979F-A29DD9CC7E5C">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-25 13:29:37 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,20,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID" id="BDBF493D-23F1-2056-7C1F-35DDBF601AB2">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-25 13:35:23 UTC</createdTime>
+<generatorID>8B8AC95D-665F-09D5-C773-EB1BA5EF94FF</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<referedAttribute>D1053E07-417F-C57B-6874-EBD2EE9E2298</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="4FD465DC-6057-578B-C3FA-C972084B1AE4" name="CampoAnalisis PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-25 13:30:08 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>BDBF493D-23F1-2056-7C1F-35DDBF601AB2</attributeRef>
+<attributeRef>B3B6AB02-32A2-C424-5F80-4F76A68CD859</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

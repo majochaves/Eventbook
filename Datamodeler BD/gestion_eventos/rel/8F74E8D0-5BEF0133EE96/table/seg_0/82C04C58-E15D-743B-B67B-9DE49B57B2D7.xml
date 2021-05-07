@@ -1,0 +1,134 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="82C04C58-E15D-743B-B67B-9DE49B57B2D7" name="Mensaje">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>FF2AA63C-AF05-3341-B212-CD8DBA8AC4E1</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_mensaje" id="43627508-8250-4DD9-0B55-71CCC76021A8">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>8323C44D-D4A1-4811-21A2-FB1161E23C8A</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Fecha" id="AF10A0BF-3AC5-68E9-51C2-E8A1D07DD052">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>EC102D5A-59BE-9F30-4B2A-F0F93EB937C4</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Contenido" id="6414B4CC-9518-511E-7796-DD5883E21435">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>E6814501-E1AE-2055-14B0-3FD6E8BD24FB</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Usuario_ID" id="CAB06AAD-F854-6B68-3572-7BCBA0C00B4D">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>020FC933-D24D-BFFF-981C-88B156BE6F60</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="460CE5CC-6043-99BE-FE3A-6D21FA273788" referredColumn="F3C60101-08CE-793B-CCB0-AC49A9FC415A"/>
+</associations>
+</Column>
+<Column name="Chat_ID" id="51542CE0-0765-D5A3-2663-47FA955CCCC8">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>7D74EF2E-1749-D7FD-D51E-12AE26650F6D</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F83D3BF7-B5E3-6AC0-191D-4E7EFEDE72CE" referredColumn="08A10F60-A38E-B84F-C651-76B0166DB8D5"/>
+</associations>
+</Column>
+<Column name="Chat_ID1" id="E5317B19-CE94-7D41-6B7C-814D9A930C79">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>249EEFB8-32A9-007F-5612-5BDCEB76478C</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F83D3BF7-B5E3-6AC0-191D-4E7EFEDE72CE" referredColumn="90D53F0C-3C92-9C75-D576-A25BA4B92BCC"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F80A28AE-9299-28FA-A5AD-5C0F06FCB49E" name="Mensaje_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>D75860B7-5505-59DC-5842-4809372917C3</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="43627508-8250-4DD9-0B55-71CCC76021A8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="90BC8EF6-92F5-E430-48C2-334C3CCB7333" name="Mensaje_Chat_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>5B7963A4-CEE2-3485-3A05-5C497F7B6C6D</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="51542CE0-0765-D5A3-2663-47FA955CCCC8"/>
+<colUsage columnID="E5317B19-CE94-7D41-6B7C-814D9A930C79"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D2094C96-D9E1-B268-5D81-D3FA99BF7F15" name="Mensaje_Usuario_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>333FBB6F-DA84-258D-835A-BDDBF8C542B2</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CAB06AAD-F854-6B68-3572-7BCBA0C00B4D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

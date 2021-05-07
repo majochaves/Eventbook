@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="91A66EC7-8661-CD24-30A6-CD7AF1EC66D6" containerWithKeyObject="4E138CCA-F83A-FBDF-0322-64BB49B305F9" localFKIndex="65B8EA86-BD47-60EE-1235-DF595B62DCD5" name="Rel_even_etiq_EtiquetaEvento_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>832DC7F8-3CEE-227A-EC2E-A940EEFD9691</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<referredTableLongName>EtiquetaEvento</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>C3BEF37B-3D3A-5B4A-FC17-F08CB8259C9C</referredTableID>
+<keyObject>98ED4F3F-DBF4-6795-5AE4-F2D290746AA2</keyObject>
+<referredKeyID>98ED4F3F-DBF4-6795-5AE4-F2D290746AA2</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

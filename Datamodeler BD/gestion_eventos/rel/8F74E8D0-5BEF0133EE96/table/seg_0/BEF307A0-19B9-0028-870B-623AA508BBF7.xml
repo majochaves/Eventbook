@@ -1,0 +1,93 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BEF307A0-19B9-0028-870B-623AA508BBF7" name="Chat">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>4542AD19-6CB4-F84E-C18B-F2B939BAF02C</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Fecha" id="B77F8BE1-4269-F724-A3C1-D81F0CFDA66E">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>BFEF7F32-7633-F3EB-AEF6-1E52AD26DD3D</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Teleoperador_Usuario_ID" id="08A10F60-A38E-B84F-C651-76B0166DB8D5">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>35AE32B5-1B4C-9AA6-059A-AC00D99503BD</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E4BECD93-E656-A91E-F631-64B4FB509781" referredColumn="88AD706B-7043-E704-248B-F4A16D0A0BEF"/>
+</associations>
+</Column>
+<Column name="Usuario_ID" id="90D53F0C-3C92-9C75-D576-A25BA4B92BCC">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>0D515911-67E7-A8A8-FC54-389301169C13</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F6920781-3A29-C993-6F81-CDACDC00B0F4" referredColumn="F3C60101-08CE-793B-CCB0-AC49A9FC415A"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="6D75AA16-331C-E280-3D8A-04FF66584A40" name="Chat_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>0F36F6E0-7E1D-2ADB-1F7C-1A9F2829C1BF</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="08A10F60-A38E-B84F-C651-76B0166DB8D5"/>
+<colUsage columnID="90D53F0C-3C92-9C75-D576-A25BA4B92BCC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A25A0D60-C6D3-A55C-E36B-1B700264F3AF" name="Chat_Teleoperador_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>635CA8B9-9183-2EA3-39E6-496EBBA08714</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="08A10F60-A38E-B84F-C651-76B0166DB8D5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FC6E9E4E-2E98-6262-C06A-1A684AA9F058" name="Chat_Usuario_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>6C8DCB02-B68F-ACE2-0A63-948BC8325E8C</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="90D53F0C-3C92-9C75-D576-A25BA4B92BCC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

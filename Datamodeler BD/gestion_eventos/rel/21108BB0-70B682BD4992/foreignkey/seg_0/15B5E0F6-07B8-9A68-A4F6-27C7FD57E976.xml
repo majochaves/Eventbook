@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="15B5E0F6-07B8-9A68-A4F6-27C7FD57E976" containerWithKeyObject="1872DC00-89A5-062B-1B46-AEBD142986F7" localFKIndex="A048C60C-4097-7BD7-2A6C-174BBAA3641E" name="Mensaje_Chat_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>5B7963A4-CEE2-3485-3A05-5C497F7B6C6D</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<referredTableLongName>Chat</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>929A757E-9641-FB26-2E03-DD63BE1D4B10</referredTableID>
+<keyObject>6C517BEE-C39B-659C-ED57-BDE39AFB4010</keyObject>
+<referredKeyID>6C517BEE-C39B-659C-ED57-BDE39AFB4010</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>Teleoperador_Usuario_ID,Usuario_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,118 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1A3DA920-ED6F-D625-66AB-57449E8B89EB" name="Reserva">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>967A3ED5-C806-E11A-285F-A85BB4A00553</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Fila" id="F8C6E47E-DE34-81A4-F0D6-F530C473A158">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>8D84FD0D-9C8A-E79B-7874-A8B6C52377E1</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Asiento" id="311AE373-B68C-7E69-B5A2-008FACCA88E1">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>D96E0B3F-4940-3185-88D6-B6EC719DE75E</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Fecha" id="5C8DB5A6-765D-90F7-2D27-5DEB686E5EC1">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>0F988B9C-A11E-0550-BBE2-61649F390D24</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Evento_ID" id="A4714A17-FE90-F4EF-6D64-066510984D03">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>DC47D3DE-FB77-AF62-B644-3120A5729B7B</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A7DC607F-4CDD-B192-4F5E-91E62429F7FB" referredColumn="114BA2DD-F36F-F834-9171-F3CEC34B1D38"/>
+</associations>
+</Column>
+<Column name="UsuarioEventos_ID" id="7AA6C9D0-67C5-841E-9ED2-2197A456835A">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>6FD4A28A-4B67-EEA5-A4F4-5E3D4DAC0222</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6E2D3D99-95CD-5D94-E42B-E0608D21680A" referredColumn="6FDB6C9A-EC78-87B7-8043-79605B6A7B02"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="13AE4BBF-46C4-DE04-9A47-37FF23A8D69B" name="Reserva_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>26C67593-CC09-D93A-55A4-CDA95DE78EAD</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="311AE373-B68C-7E69-B5A2-008FACCA88E1"/>
+<colUsage columnID="A4714A17-FE90-F4EF-6D64-066510984D03"/>
+<colUsage columnID="F8C6E47E-DE34-81A4-F0D6-F530C473A158"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="09C6E620-E49A-CE26-1329-6365EFFA08B5" name="Reserva_UsuarioEventos_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>5AFC0B5C-3DA2-0ED4-EE7A-8E3AC0C99F77</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7AA6C9D0-67C5-841E-9ED2-2197A456835A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="287F96CA-46EE-57D3-1DDF-3785783FD6C3" name="Reserva_Evento_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>0245190F-8B23-D757-2FDA-12ECA6A79E73</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A4714A17-FE90-F4EF-6D64-066510984D03"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

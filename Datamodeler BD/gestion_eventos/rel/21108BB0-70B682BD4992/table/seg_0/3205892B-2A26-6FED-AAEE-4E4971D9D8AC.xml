@@ -1,0 +1,77 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3205892B-2A26-6FED-AAEE-4E4971D9D8AC" name="Rel_even_etiq">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Evento_ID" id="5D9D2987-6902-63E2-F0B6-AC1F123C67EC">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="23D34076-DEEB-6FE9-AA06-84CCDA4533A6" referredColumn="114BA2DD-F36F-F834-9171-F3CEC34B1D38"/>
+</associations>
+</Column>
+<Column name="Etiqueta_ID" id="B9486D20-8788-B77A-0256-7B04ABA0DAFD">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5F371C1F-59C5-2827-527D-2B4A1D40BE8D" referredColumn="7D1AC163-E2A7-808A-2326-F82E480A9D4B"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="01373700-D089-CD6F-969E-F53A6393AD8A" name="Rel_even_etiq_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5D9D2987-6902-63E2-F0B6-AC1F123C67EC"/>
+<colUsage columnID="B9486D20-8788-B77A-0256-7B04ABA0DAFD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0CD0E351-0C08-1403-C402-30F2DD27EDBC" name="Rel_even_etiq_Evento_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>832DC7F8-3CEE-227A-EC2E-A940EEFD9691</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5D9D2987-6902-63E2-F0B6-AC1F123C67EC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="494BC6B4-3F26-7734-B537-64ED7A04AE52" name="Rel_even_etiq_Etiqueta_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-29 13:32:51 UTC</createdTime>
+<generatorID>832DC7F8-3CEE-227A-EC2E-A940EEFD9691</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B9486D20-8788-B77A-0256-7B04ABA0DAFD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

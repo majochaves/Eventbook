@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="rel_analisis_tipo" directorySegmentName="seg_0" id="E630E4C9-B2A5-5851-2022-339FB49224BF">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 14:56:37 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<sourcePk>4632F058-B773-DC91-8351-0A3D371FDDEE</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>6C5322DA-0663-141A-3361-252040BA6E06</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>928E300D-C99C-C4DB-7F1A-EF9107B3626A</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

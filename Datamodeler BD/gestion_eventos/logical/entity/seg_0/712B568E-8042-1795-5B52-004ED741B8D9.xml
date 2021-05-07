@@ -1,0 +1,198 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="712B568E-8042-1795-5B52-004ED741B8D9" name="Evento">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:42:39 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID" id="0ECFA3C9-CD62-0668-545F-B44FAEBEE7CD">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:42:42 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Titulo" id="8478BB6E-F55A-1BD7-F2D7-13AE7B79EB4B">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:43:00 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Descripcion" id="79F305F8-2482-CE39-9AB5-FAE595A2B468">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:43:17 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Fecha" id="F4103AF3-B2A9-C014-83FB-0367ABCBFCE0">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:43:42 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Fecha_Limite" id="FA029E3D-652F-8A8C-882C-F509D9E213B7">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:43:50 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Coste_entrada" id="89EB5815-4735-9136-50FF-6E928E618824">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:44:18 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Aforo" id="C9366E7C-D6D2-02D0-127E-CA0BBAECFF73">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:44:41 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Max_entradas" id="BC9F8015-846C-3994-ECF2-8C51B02C3399">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:46:14 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Asientos_fijos" id="0E9D76CE-3665-CC78-0D43-301292F7314A">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:47:43 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1 BYTE</dataTypeSize>
+<ownDataTypeParameters>1 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Num_filas" id="C9137409-8F50-2EB2-3DFF-1424094B9C78">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:48:15 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Num_asientos_fila" id="32F6D1F5-FB91-BE21-ADF9-70138EC36ECB">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:48:27 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID1" id="5016D675-7C71-A0B9-5014-5674CCAD54D1">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:58:51 UTC</createdTime>
+<generatorID>E4AA0513-1CBB-E669-0136-ECBD7E6A0285</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<referedAttribute>BA93D516-D399-CBD7-2222-6B4AEC0389B5</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,20,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="8C0493B1-295E-175D-6002-0414DA9D4150" name="Evento PK">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:42:58 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="AA2FBE31-B521-3920-FC21-962F0C0825F4" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>0ECFA3C9-CD62-0668-545F-B44FAEBEE7CD</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

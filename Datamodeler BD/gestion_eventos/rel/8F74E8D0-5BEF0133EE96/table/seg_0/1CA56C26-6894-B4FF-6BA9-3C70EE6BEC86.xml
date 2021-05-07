@@ -1,0 +1,53 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1CA56C26-6894-B4FF-6BA9-3C70EE6BEC86" name="CreadorEventos">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>6F92A889-B95E-E219-0A9F-5D23C15870DE</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Usuario_ID" id="73CA80B7-892E-43DE-21B3-CAE0BB5BE5DD">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>BA93D516-D399-CBD7-2222-6B4AEC0389B5</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F7119F52-7502-05DE-F39F-E6F90647CEE4" referredColumn="F3C60101-08CE-793B-CCB0-AC49A9FC415A"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F85ACEF5-2205-BE7F-F889-B1A511BFC675" name="CreadorEventos_PK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>FA491E20-6EB2-B94E-0DA0-3223EF389CC3</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="73CA80B7-892E-43DE-21B3-CAE0BB5BE5DD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CBA4B3C7-E968-2F49-F745-CCA021428484" name="CreadorEventos_Usuario_FK">
+<createdBy>Merli</createdBy>
+<createdTime>2021-03-26 17:13:48 UTC</createdTime>
+<generatorID>73C9501B-C0E0-FC95-2F15-04EDA535179A</generatorID>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="73CA80B7-892E-43DE-21B3-CAE0BB5BE5DD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

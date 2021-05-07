@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="gestion_eventos" id="CED86C0C-6953-22E3-284A-D6D289EFF51F" version="3.5">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:13:21 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>CED86C0C-6953-22E3-284A-D6D289EFF51F</designId>
+</OSDM_Design>

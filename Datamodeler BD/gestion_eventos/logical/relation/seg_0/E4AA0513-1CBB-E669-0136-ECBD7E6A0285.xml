@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_creador_evento" directorySegmentName="seg_0" id="E4AA0513-1CBB-E669-0136-ECBD7E6A0285">
+<createdBy>alumno</createdBy>
+<createdTime>2021-03-22 08:58:51 UTC</createdTime>
+<ownerDesignName>gestion_eventos</ownerDesignName>
+<engineerTo>
+<item key="015CD01B-D09B-3B22-C36E-05B3E3641B2E" value="true"/>
+</engineerTo>
+<sourcePk>FA491E20-6EB2-B94E-0DA0-3223EF389CC3</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>6F92A889-B95E-E219-0A9F-5D23C15870DE</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>712B568E-8042-1795-5B52-004ED741B8D9</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
