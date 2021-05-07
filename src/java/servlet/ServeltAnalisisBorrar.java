@@ -5,8 +5,11 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.AnalisisFacade;
+import entity.Administrador;
 import entity.Analisis;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -38,12 +41,34 @@ public class ServeltAnalisisBorrar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer idAnalisis = null;
         
-        Analisis thisAnalisis = analisisFacade.find(id);
-        analisisFacade.remove(thisAnalisis);
+        try{
+            idAnalisis = Integer.parseInt(request.getParameter("id"));
+        } catch(Exception ex){
+            
+        }
         
-        response.sendRedirect("ServeltAnalisisListar");
+        
+        if(idAnalisis != null){
+            Analisis thisAnalisis = analisisFacade.find(idAnalisis);
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            
+            if(thisAnalisis != null && thisUsuario != null && 
+                    (thisAnalisis.getAnalistaUsuarioId().getUsuarioId().equals(thisUsuario.getId()) || 
+                    Autenticacion.tieneRol(request, response, Administrador.class))){
+            
+                analisisFacade.remove(thisAnalisis);
+
+                response.sendRedirect("ServeltAnalisisListar");
+            } else {
+                Autenticacion.error(request, response, "No estás logeado, no tienes suficientes permisos o el análisis no ha sido encontrado.");
+            }
+ 
+            
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

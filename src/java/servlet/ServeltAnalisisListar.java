@@ -5,10 +5,13 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.AnalisisFacade;
 import dao.AnalistaFacade;
+import entity.Administrador;
 import entity.Analisis;
 import entity.Analista;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -46,15 +49,24 @@ public class ServeltAnalisisListar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Analista thisAnalista = analistaFacade.find(1); //ESTO HAY QUE CAMBIARLO CUANDO HAYA LOGIN
         
-        List<Analisis> listaAnalisis = analisisFacade.getAllAnalisis(thisAnalista);
+        if(Autenticacion.tieneRol(request, response, Analista.class)){
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            
+            Analista thisAnalista = thisUsuario.getAnalista();
+
+            List<Analisis> listaAnalisis = analisisFacade.getAllAnalisis(thisAnalista);
+
+            request.setAttribute("listaAnalisis", listaAnalisis);
+
+
+            RequestDispatcher rd = request.getRequestDispatcher("analisisListar.jsp");
+            rd.forward(request, response);
         
-        request.setAttribute("listaAnalisis", listaAnalisis);
+        } else {
+            Autenticacion.error(request, response, "No estas logeado o no posees el rol de Analista");
+        }
         
-        
-        RequestDispatcher rd = request.getRequestDispatcher("analisisListar.jsp");
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

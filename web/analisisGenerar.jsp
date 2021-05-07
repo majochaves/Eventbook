@@ -45,7 +45,7 @@
 
                     <hr class="divider divider-sm mt-0" />
 
-                    <form method="POST" action="crearAnalisis">
+                    <form method="POST" action="ServletAnalisisGenerar">
                         <div class="row">
                             <div class="col-sm-4">
                                 <h5>Tipo de usuario</h5>

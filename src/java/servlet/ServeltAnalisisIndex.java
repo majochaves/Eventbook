@@ -5,9 +5,13 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.AnalisisFacade;
 import dao.AnalistaFacade;
+import dao.UsuarioFacade;
+import entity.Administrador;
 import entity.Analista;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -17,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,6 +29,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServeltAnalisisIndex", urlPatterns = {"/ServeltAnalisisIndex"})
 public class ServeltAnalisisIndex extends HttpServlet {
+
+    @EJB
+    private UsuarioFacade usuarioFacade;
 
     @EJB
     private AnalisisFacade analisisFacade;
@@ -45,13 +53,22 @@ public class ServeltAnalisisIndex extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        //Cambiar en un futuro: Mostrar el ultimo analisis realizado
-        Analista thisAnalista = analistaFacade.find(1);             //ESTO HAY QUE CAMBIARLO CUANDO HAYA LOGIN
+        //Si solo tiene rol de administrador no podra acceder. Debe tener tambien rol de analista
+        //Esto se debe a que los analisis tienen relacion con la tabla Analista y no con con la tabla Administrador
+        if(Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)){
+            //Cambiar en un futuro: Mostrar el ultimo analisis realizado
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            
+            Analista thisAnalista = thisUsuario.getAnalista();
+            
+            RequestDispatcher rd = request.getRequestDispatcher("analisisIndex.jsp");
+            rd.forward(request, response);
+        } else {
+            //Este metodo ya hace el requestDispatcher.forward()
+            Autenticacion.error(request, response, "No estas logeado o no tienes suficientes permisos");
+        }
         
         
-        
-        RequestDispatcher rd = request.getRequestDispatcher("analisisIndex.jsp");
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

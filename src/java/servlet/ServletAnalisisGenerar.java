@@ -37,8 +37,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Merli
  */
-@WebServlet(name = "crearAnalisis", urlPatterns = {"/crearAnalisis"})
-public class crearAnalisis extends HttpServlet {
+@WebServlet(name = "ServletAnalisisGenerar", urlPatterns = {"/ServletAnalisisGenerar"})
+public class ServletAnalisisGenerar extends HttpServlet {
 
     @EJB
     private UsuarioFacade usuarioFacade;
@@ -100,7 +100,7 @@ public class crearAnalisis extends HttpServlet {
         } catch(NullPointerException e){
             muestraError = true;
             request.setAttribute("muestraError", muestraError);
-            RequestDispatcher rd = request.getRequestDispatcher("crearAnalisis.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("analisisVerGenerado.jsp");
             rd.forward(request, response);
         }
         
@@ -146,7 +146,6 @@ public class crearAnalisis extends HttpServlet {
             //
             //Haremos un Map<NombreColumna, Map<Nombre, Valor>>
             Map<String, Map<String, Double>> listaFila = new HashMap<>();
-
 
             //Obtenemos todos los usuarios
             List<Usuario> listaUsuarios = usuarioFacade.getUsuarioByRoles(
@@ -249,7 +248,7 @@ public class crearAnalisis extends HttpServlet {
             request.setAttribute("AutoGeneradoAnalisisDe", AutoGeneradoAnalisisDe);
             request.setAttribute("AutoGeneradoTiposFiltros", AutoGeneradoTiposFiltros);
             
-            RequestDispatcher rd = request.getRequestDispatcher("crear-analisis-listar.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("analisisVerGenerado.jsp");
             rd.forward(request, response);
         }
     }
