@@ -50,7 +50,7 @@
     %>
     <body>
         <jsp:include page="header.jsp" />
-        <div class="section section-lg bg-transparent">
+        <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
             <div class="container">
                 <form action="ServletUsuarioGuardar" method="POST">
                     <div class="row">
@@ -58,9 +58,8 @@
                             <h1><%= edicion ? "Editar usuario: " + usuarioEditar.getUsername() : "Nuevo usuario" %></h1>
                         </div>
                     </div>
-                    <hr class="divider divider-sm mt-0" />
+                    <img style="float: right; margin-right: 15%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
                     <br/>
-
                     <% 
                         if (error != null || "".equals(error)) {
                             %>
@@ -71,24 +70,24 @@
                     <table>
                         <tr>
                             <td <%= edicion ? "" : "hidden" %>>ID <span style="color: #ec5482;">*</span></td>
-                            <td><input type="text" name="id" maxlength="30" size="30" minlength="1" <%= edicion ? "disabled" : "enabled" %> <%= edicion ? "" : "hidden" %> value="<%= edicion ? usuarioEditar.getId() : "" %>"/></td>
-                            <td><input type="text" name="id" maxlength="30" size="30" minlength="1" hidden value="<%= edicion ? usuarioEditar.getId() : "" %>"/></td>
+                            <td><input type="text" class="textf" name="id" maxlength="30" size="30" minlength="1" <%= edicion ? "disabled" : "enabled" %> <%= edicion ? "" : "hidden" %> value="<%= edicion ? usuarioEditar.getId() : "" %>"/></td>
+                            <td><input type="text" class="textf" name="id" maxlength="30" size="30" minlength="1" hidden value="<%= edicion ? usuarioEditar.getId() : "" %>"/></td>
                         </tr>
                         <tr>
                             <td>Usuario <span style="color: #ec5482;">*</span></td>
-                            <td><input type="text" name="usuario" maxlength="30" size="30" minlength="1" required="required" value="<%= edicion ? usuarioEditar.getUsername() : "" %>"/></td>
+                            <td><input type="text" class="textf" name="usuario" maxlength="30" size="30" minlength="1" required="required" value="<%= edicion ? usuarioEditar.getUsername() : "" %>"/></td>
                         </tr>
                         <tr>
                             <td>Contraseña <span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
-                            <td><input type="password" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
+                            <td><input type="password" class="textf" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
                         </tr>
                         <tr>
                             <td>Nombre <span style="color: #ec5482;">*</span></td>
-                            <td><input type="text" name="nombre" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getNombre(): "" %>"/></td>
+                            <td><input type="text" class="textf" name="nombre" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getNombre(): "" %>"/></td>
                         </tr>
                         <tr>
                             <td>Apellidos <span style="color: #ec5482;">*</span></td>
-                            <td><input type="text" name="apellidos" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getApellidos(): "" %>"/></td>
+                            <td><input type="text" class="textf" name="apellidos" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getApellidos(): "" %>"/></td>
                         </tr>
                         <tr>
                             <td>Sexo <span style="color: #ec5482;">*</span></td>
@@ -102,11 +101,11 @@
                         </tr>
                         <tr>
                             <td>Domicilio</td>
-                            <td><input type="text" name="domicilio" maxlength="30" size="30" value="<%= edicion ? usuarioEditar.getDomicilio(): "" %>"/> </td>
+                            <td><input type="text" class="textf" name="domicilio" maxlength="30" size="30" value="<%= edicion ? usuarioEditar.getDomicilio(): "" %>"/> </td>
                         </tr>
                         <tr>
                             <td>Ciudad</td>
-                            <td><input type="text" name="ciudad" maxlength="30" size="30" value="<%= edicion ? usuarioEditar.getCiudadResidencia(): "" %>"/> </td>
+                            <td><input type="text" class="textf" name="ciudad" maxlength="30" size="30" value="<%= edicion ? usuarioEditar.getCiudadResidencia(): "" %>"/> </td>
                         </tr>
                         <tr>
                             <td>Rol <span style="color: #ec5482;">*</span></td>
@@ -114,13 +113,13 @@
                                 <%
                                 if (edicion) {
                                     %>
-                                    <select name="rol" disabled>
+                                    <select class="textf" name="rol" disabled>
                                    <option value="seleccionado"><%=rol%></option>
                                    </select>
                                    <%
                                 } else {
                                     %>
-                                   <select name="rol">
+                                   <select class="textf" name="rol">
                                    <option value="administrador">Administrador</option>
                                    <option value="creador-eventos">Creador de eventos</option>
                                    <option value="teleoperador">Teleoperador</option>

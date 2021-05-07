@@ -48,8 +48,10 @@
             <br/>
             
             <div style="float:right; margin-bottom: 1%;">
+                <a  class="shadow-sm badge badge-info" href="ServletUsuarioCrear">Nuevo usuario</a>
                 <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal" data-target="#abrirDialogoEditar">Filtrar usuarios</button>
             </div>
+            
                 <!--Dialogo para editar-->
     <div class="modal fade" id="abrirDialogoEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -157,7 +159,6 @@
                     }
                 %>
             </table>
-            <a href="ServletUsuarioCrear" style="margin-bottom: 20px">Nuevo usuario ...</a>
         </div>
     </div>
     </body>
