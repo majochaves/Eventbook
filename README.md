@@ -6,8 +6,7 @@ En esta carpeta se encuentra el script para la creación de las tablas de la bas
   
 __Nota importante:__ Si habías ejecutado la versión antigua del script, deberás: 
 - Ejecutar únicamente el script __ActualizarBD.sql__.
-- Posteriormente, deberás cambiar el tipo de dato en el paquete __dao__ -> __Campoanalisis.java__ -> el atributo "__Integer__ valor"  cambiarlo a __Double__
-- Por último cambiar tambien el get y set de dicho atributo (el código marcará el error automáticamente).
+- Obtener el último pull de la rama principal.
 
 ## Imágenes DB
 ### Entidad/Relación
