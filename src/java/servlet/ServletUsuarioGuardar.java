@@ -142,6 +142,10 @@ public class ServletUsuarioGuardar extends HttpServlet {
             switch(rol) {
                 case "administrador":
                     crearAdministrador(u);
+                    crearCreadorEventos(u);
+                    crearTeleoperador(u);
+                    crearAnalista(u);
+                    crearUsuarioEventos(u);
                     break;
                 case "creador-eventos":
                     crearCreadorEventos(u);

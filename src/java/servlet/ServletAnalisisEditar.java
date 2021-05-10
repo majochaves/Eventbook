@@ -5,8 +5,11 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.AnalisisFacade;
+import entity.Administrador;
 import entity.Analisis;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -38,14 +41,38 @@ public class ServletAnalisisEditar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String descripcion = request.getParameter("descripcion");
-        Integer idAnalisis = Integer.parseInt(request.getParameter("id"));
+        String descripcion = null;
+        Integer idAnalisis = null;
         
-        Analisis thisAnalisis = analisisFacade.find(idAnalisis);
-        thisAnalisis.setDescripcion(descripcion);
-        analisisFacade.edit(thisAnalisis);
+        try{
+            descripcion = request.getParameter("descripcion");
+            idAnalisis = Integer.parseInt(request.getParameter("id"));
+        }catch(Exception ex){
+            Autenticacion.error(request, response, "ID del Análisis escrito incorrectamente");
+        }
         
-        response.sendRedirect("ServeltAnalisisVer?id=" + idAnalisis);
+        
+        if(descripcion!=null && idAnalisis!=null){
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            Analisis thisAnalisis = analisisFacade.find(idAnalisis);
+            
+            
+            //Solo el dueño (Analista) o un Administrador podrá editar un analsis
+            if(thisUsuario != null && thisAnalisis != null && 
+                    (Autenticacion.tieneRol(request, response, Administrador.class) || 
+                    thisAnalisis.getAnalistaUsuarioId().getUsuarioId().equals(thisUsuario.getId()))){
+                
+                
+                thisAnalisis.setDescripcion(descripcion);
+                analisisFacade.edit(thisAnalisis);
+
+                response.sendRedirect("ServeltAnalisisVer?id=" + idAnalisis);
+            } else {
+                Autenticacion.error(request, response, "No estás logeado, no tienes suficientes permisos o el análisis no ha sido encontrado.");
+            }
+            
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
