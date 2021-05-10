@@ -25,7 +25,7 @@
             <div class="navbar-cell navbar-spacer"></div>
             <div class="navbar-cell navbar-sidebar">
               <ul class="navbar-navigation rd-navbar-nav">
-                <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link" href="index.jsp">Home</a>
+                <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link" href="index.jsp">Inicio</a>
                 </li>
                 
                 <!-- Esto deberá comprobar en un futuro si el usuario logeado es Admin o Analista -->

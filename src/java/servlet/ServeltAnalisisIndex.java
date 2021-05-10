@@ -55,7 +55,7 @@ public class ServeltAnalisisIndex extends HttpServlet {
         
         //Si solo tiene rol de administrador no podra acceder. Debe tener tambien rol de analista
         //Esto se debe a que los analisis tienen relacion con la tabla Analista y no con con la tabla Administrador
-        if(Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)){
+        if(Autenticacion.tieneRol(request, response, Administrador.class) && Autenticacion.tieneRol(request, response, Analista.class)){
             //Cambiar en un futuro: Mostrar el ultimo analisis realizado
             Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
             
