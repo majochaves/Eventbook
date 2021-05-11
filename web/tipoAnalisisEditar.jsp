@@ -56,54 +56,54 @@
                     
                     
 
-                    
-                    <div class="row justify-content-md-center">
-                        <div class="col-sm-6 pb-4">
-                            <form method="POST" action="ServletTipoanalisisEditar?id=<%=tipoAnalisis.getId()%>">
-                                <table id="tablaAnyadirFila" class="table table-sm table-hover table-bordered">
+                    <form method="POST" action="ServletTipoanalisisEditar?id=<%=tipoAnalisis.getId()%>">
+                        <div class="row justify-content-md-center">
+                            <div class="col-sm-6 pb-4">
 
-                                    <thead>
-                                        <tr class="table-secondary">
-                                            <th cope="col"><%=tipoAnalisis.getNombre()%></th> <!--Nombre de la columna-->
-                                            <th scope="col">Valor</th>
-                                        </tr>
-                                    </thead>
+                                    <table id="tablaAnyadirFila" class="table table-sm table-hover table-bordered">
 
-                                    <tbody>
-                                        <%
-                                            int i = 1;
-                                            for(Campoanalisis thisCampoanalisis : tipoAnalisis.getCampoanalisisList()){//fila=icol1
-                                        %>
-                                                <tr>
-                                                    <td>
-                                                        <input class="form-control form-control-sm textoColumna1" type="text" name="nombres" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
-                                                    </td>
-                                                    <td><input class="form-control form-control-sm" type="number" name="fila<%=i%>col2" value="<%=thisCampoanalisis.getValor()%>"></td>
-                                                </tr>
-                                        <%
-                                                i++;
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                                <div class="text-right">
-                                    <button type="button" id="anyadirFila" class="shadow-sm badge badge-info">Añadir fila</button>
-                                </div>
-                            </form>
-                            <br/>
-                        </div>
+                                        <thead>
+                                            <tr class="table-secondary">
+                                                <th cope="col"><%=tipoAnalisis.getNombre()%></th> <!--Nombre de la columna-->
+                                                <th scope="col">Valor</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <%
+                                                int i = 1;
+                                                for(Campoanalisis thisCampoanalisis : tipoAnalisis.getCampoanalisisList()){
+                                            %>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control form-control-sm textoColumna1" type="text" name="nombres" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
+                                                        </td>
+                                                        <td><input class="form-control form-control-sm" type="number" name="valores" value="<%=thisCampoanalisis.getValor()%>"></td>
+                                                    </tr>
+                                            <%
+                                                    i++;
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-right">
+                                        <button type="button" id="anyadirFila" class="shadow-sm badge badge-info">Añadir fila</button>
+                                    </div>
+
+                                <br/>
+                            </div>
                         
               
-                    </div>
-                                    
-                    <div class="row justify-content-md-center">
-                        <div class="col-8">
-                            <span id="spanTooltip">
-                                <button type="button" class="btn btn-primary btn-lg btn-block"  id="btnEnviar">Guardar</button>
-                            </span>
                         </div>
-                    </div>            
-                                
+                                    
+                        <div class="row justify-content-md-center">
+                            <div class="col-8">
+                                <span id="spanTooltip">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"  id="btnEnviar">Guardar</button>
+                                </span>
+                            </div>
+                        </div>            
+                    </form>            
                                 
                                 
                 </div>

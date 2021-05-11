@@ -12,6 +12,8 @@ import entity.CampoanalisisPK;
 import entity.Tipoanalisis;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,18 +51,29 @@ public class ServletTipoanalisisEditar extends HttpServlet {
         
         Tipoanalisis thisTipoanalisis = tipoanalisisFacade.find(idTipoAnalisis);
         
-        int numFilas = thisTipoanalisis.getCampoanalisisList().size();
+        String [] conjuntoNombres = request.getParameterValues("nombres");
+        String [] conjuntoValores = request.getParameterValues("valores");
         
-        for(int i=1; i<=numFilas; i++){
-            //El nombre esta en la columna 1
-            String nombre = request.getParameter("fila" + i + "col" + 1);
-            CampoanalisisPK campoAnalisisPk = new CampoanalisisPK(nombre, idTipoAnalisis);
-            Campoanalisis thisCampoAnalisis = campoanalisisFacade.find(campoAnalisisPk);
-            
+        campoanalisisFacade.deleteCampoanalisisByTipoanalisisId(idTipoAnalisis);
+        
+        List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
+        for(int i=0;i<conjuntoNombres.length; i++){
+            CampoanalisisPK capk = new CampoanalisisPK();
+            capk.setNombre(conjuntoNombres[i]);
+            capk.setTipoanalisisId(idTipoAnalisis);
+            Campoanalisis nuevoCampoanalisis = new Campoanalisis();
+            nuevoCampoanalisis.setCampoanalisisPK(capk);
+            nuevoCampoanalisis.setTipoanalisis(thisTipoanalisis);
+            nuevoCampoanalisis.setValor(new Double(conjuntoValores[i]));
+            campoanalisisFacade.create(nuevoCampoanalisis);
+            listaCampoanalisis.add(nuevoCampoanalisis);
         }
         
+        thisTipoanalisis.setCampoanalisisList(listaCampoanalisis);
+        tipoanalisisFacade.edit(thisTipoanalisis);
         
         
+        response.sendRedirect("ServeltAnalisisVer?id=" + thisTipoanalisis.getAnalisisId().getId());
         
         
     }

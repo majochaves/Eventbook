@@ -42,7 +42,7 @@ function realizarConteo(inputs){
 function colocarInvalidos(inputs){
     let existeInvalidos = false;
     for(let i=0;i<listaPalabras.length; i++){
-        if(listaPalabras[i].indexs.length >= 2){
+        if(listaPalabras[i].indexs.length >= 2 || listaPalabras[i].texto === ""){
             existeInvalidos = true;
             for(let q=0;q<listaPalabras[i].indexs.length;q++){
                 inputs[listaPalabras[i].indexs[q]].className = nombreClassInicial + " is-invalid";
