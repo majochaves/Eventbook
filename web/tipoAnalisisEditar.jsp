@@ -26,7 +26,8 @@
         <script src="components/bootstrap/js/bootstrap.min.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
-        <script src="components/propios/valoresNoRepetibles.js" defer></script> 
+        <script src="components/propios/valoresNoRepetibles.js" defer></script>
+        <script src="components/propios/anyadirFilaEnUnaTabla.js" defer></script>
         <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
@@ -59,7 +60,7 @@
                     <div class="row justify-content-md-center">
                         <div class="col-sm-6 pb-4">
                             <form method="POST" action="ServletTipoanalisisEditar?id=<%=tipoAnalisis.getId()%>">
-                                <table class="table table-sm table-hover table-bordered">
+                                <table id="tablaAnyadirFila" class="table table-sm table-hover table-bordered">
 
                                     <thead>
                                         <tr class="table-secondary">
@@ -71,12 +72,11 @@
                                     <tbody>
                                         <%
                                             int i = 1;
-                                            for(Campoanalisis thisCampoanalisis : tipoAnalisis.getCampoanalisisList()){
+                                            for(Campoanalisis thisCampoanalisis : tipoAnalisis.getCampoanalisisList()){//fila=icol1
                                         %>
                                                 <tr>
                                                     <td>
-                                                        <input class="form-control form-control-sm textoColumna1" type="text" name="fila<%=i%>col1" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
-                                                        <input name="fila<%=i%>colAntiguo" type="hidden" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
+                                                        <input class="form-control form-control-sm textoColumna1" type="text" name="nombres" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
                                                     </td>
                                                     <td><input class="form-control form-control-sm" type="number" name="fila<%=i%>col2" value="<%=thisCampoanalisis.getValor()%>"></td>
                                                 </tr>
@@ -86,6 +86,9 @@
                                         %>
                                     </tbody>
                                 </table>
+                                <div class="text-right">
+                                    <button type="button" id="anyadirFila" class="shadow-sm badge badge-info">Añadir fila</button>
+                                </div>
                             </form>
                             <br/>
                         </div>

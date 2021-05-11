@@ -31,9 +31,6 @@
             <jsp:include page="header.jsp" />
 
             <b>EN DESARROLLO</b><br/>
-            Debes ser Analista para poder acceder a todo. Si solo eres administrador como mucho podras ver, editar, eliminar pero NO CREAR.
-            Esto es debido a en la BD, la tabla Analisis solo tiene relacion con la tabla Analista y no con Administrador.
-            Por lo tanto, si solo eres admin no podrás crear estadisticas para ti pero podras visualizar estadisticas de otras personas.<br/><br/>
 
             Aun no has creado estadisticas! <a href="analisisGenerar.jsp">Empezar a crear una estadística</a><br/><br/>
             <a href="ServeltAnalisisListar">Ver mi lista de análisis</a>

@@ -62,9 +62,7 @@
                             
                     <div class="row">
                         <%
-                            
                             for(Tipoanalisis thisTipoDeAnalisis : listaTiposAnalisis){
-                                
                         %>
                                 <div class="col-sm-6 pb-4">
                                     <table class="table table-sm table-hover table-bordered">
@@ -191,7 +189,7 @@
                     let cajaDescripcion = document.getElementById('desc');
                     let botonAutog = document.getElementById('botonAutogenerar');
                     botonAutog.onclick = function() {
-                        cajaDescripcion.value = '<%= thisDescripcion %>';
+                        cajaDescripcion.value = 'Duplicado: <%= thisDescripcion %>';
                     };
                 });
             </script>    
