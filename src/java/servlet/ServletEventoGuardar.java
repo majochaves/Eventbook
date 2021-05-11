@@ -65,7 +65,7 @@ public class ServletEventoGuardar extends HttpServlet {
         
         descripcion = request.getParameter("descripcion");
         if(!descripcion.isEmpty()){
-            evento.setDescripcion(descripcion);
+            evento.setDescripcion(" ");
         }
                 
         //FECHA - Obligatorio

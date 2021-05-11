@@ -126,7 +126,7 @@
                     <div id="configuracionAsientos" style="display:none;">
                         <div class="form-group">
                             <label for="num_filas">Número de filas:</label>
-                            <input class="form-control" type="text" name="num_filas" value="<%= (edicion ? ((numFilas == -1) ? "": numFilas): "")%>>
+                            <input class="form-control" type="text" name="num_filas" value="<%= (edicion ? ((numFilas == -1) ? "": numFilas): "")%>">
                         </div>
                         <div class="form-group">
                             <label for="num_asientos_fila">Número de asientos por fila:</label>

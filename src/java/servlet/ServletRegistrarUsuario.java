@@ -56,12 +56,14 @@ public class ServletRegistrarUsuario extends HttpServlet {
         
         String error = "";
         String url = "usuario-registrar.jsp";
+        Boolean registrado = false;
         
         for(Usuario u: this.usuarioFacade.findAll()){
             if(u.getUsername().equalsIgnoreCase(usuario)){
                 error = "El nombre de usuario "+usuario+" ya está en uso.";
                 request.setAttribute("error", error);
                 request.getRequestDispatcher(url).forward(request, response);
+                registrado = true;
             }
         }
         
@@ -73,7 +75,7 @@ public class ServletRegistrarUsuario extends HttpServlet {
         } else if(!pass.equals(pass1)){
             error = "Error, las contraseñas no coinciden.";
             request.setAttribute("error", error);
-        } else {
+        } else if(!registrado) {
             
             Usuario u = new Usuario();
             u.setUsername(usuario);

@@ -12,14 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/index.jsp</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/servlet/crearAnalisis.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/usuario-listar.jsp</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/dao/AbstractFacade.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/servlet/ServletUsuarioListar.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/src/java/servlet/ServletEventoListar.java</file>
-            <file>file:/C:/Users/josie/Documents/NetBeansProjects/Eventbook/web/header.jsp</file>
+            <file>file:/F:/Curso%202020-2021/Tecnología%20de%20Aplicaciones%20Web%20-%203ºA/Eventbook/src/java/clases/Autenticacion.java</file>
+            <file>file:/F:/Curso%202020-2021/Tecnología%20de%20Aplicaciones%20Web%20-%203ºA/Eventbook/nbproject/build-impl.xml</file>
+            <file>file:/F:/Curso%202020-2021/Tecnología%20de%20Aplicaciones%20Web%20-%203ºA/Eventbook/src/java/dao/AbstractFacade.java</file>
+            <file>file:/F:/Curso%202020-2021/Tecnología%20de%20Aplicaciones%20Web%20-%203ºA/Eventbook/src/java/dao/AdministradorFacade.java</file>
         </group>
     </open-files>
 </project-private>

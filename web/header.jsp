@@ -19,17 +19,16 @@
             <div class="navbar-cell">
               <div class="navbar-panel">
                 <button class="navbar-switch int-hamburger novi-icon" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","isolate":"[data-multi-switch]"}'></button>
-                <div class="navbar-logo"><a class="navbar-logo-link" href="index.jsp"><img class="navbar-logo-default" src="images/logo-default-161x27.svg" alt="Intense" width="161" height="27"/><img class="navbar-logo-inverse" src="images/logo-inverse-161x27.svg" alt="Intense" width="161" height="27"/></a></div>
+                <div class="navbar-logo"><a class="navbar-logo-link" href="index.jsp"><img class="navbar-logo-default" src="images/EventbookLogoOscuro.svg" alt="Intense" width="161" height="27"/><img class="navbar-logo-inverse" src="images/EventbookLogoClaro.svg" alt="Intense" width="161" height="27"/></a></div>
               </div>
             </div>
             <div class="navbar-cell navbar-spacer"></div>
             <div class="navbar-cell navbar-sidebar">
               <ul class="navbar-navigation rd-navbar-nav">
-                <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link" href="index.jsp">Home</a>
+                <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link" href="index.jsp">Inicio</a>
                 </li>
                 
                 <!-- Esto deberá comprobar en un futuro si el usuario logeado es Admin o Analista -->
-        
                 <%
                     if (Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)) {
                         %>
@@ -43,7 +42,6 @@
                         </li>
                         <%
                     }
-
                     if (!Autenticacion.estaLogeado(request, response)) {
                         %>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="usuario-iniciar-sesion.jsp">Iniciar sesión</a>
