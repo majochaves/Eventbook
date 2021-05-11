@@ -4,6 +4,7 @@
     Author     : majochaves
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Evento"%>
 <%@page import="entity.Evento"%>
 <%@page import="entity.Etiqueta"%>
@@ -16,6 +17,7 @@
         <title>Crear evento</title>
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
         <script src="components/eventos/eventos.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
@@ -24,35 +26,43 @@
     <%
         List<Etiqueta> etiquetas = (List)request.getAttribute("listaEtiquetas");
         
-        Evento eventoEditar = (Evento) request.getAttribute("eventoEditar");
-        boolean edicion = eventoEditar != null;
-        String fechaEvento = (String) request.getAttribute("eventoFecha");
+        Evento evento = (Evento) request.getAttribute("evento");
         
-        String fechaLimiteEvento = (String) request.getAttribute("eventoFechaLimite");
-        if(fechaLimiteEvento == null){
-            fechaLimiteEvento = "";
-        }
-        //Valores opcionales
+        String id="", titulo = "", descripcion = "", fecha = "", fecha_limite= "", asientosFijosNoChecked = "checked", asientosFijosSiChecked ="", showConfig="none";
         Double costeEntrada = -1.0;
         int aforo = -1, maxEntradas = -1, numFilas = -1, numAsientosFila = -1;
-        if(edicion){
-            
-            if(eventoEditar.getCosteEntrada() != null){
-                costeEntrada = eventoEditar.getCosteEntrada();
+        
+        if(evento != null){
+            id = evento.getId().toString();
+            titulo = evento.getTitulo();
+            if(evento.getDescripcion()!=null){
+                descripcion = evento.getDescripcion();
             }
-            
-            if(eventoEditar.getAforo()!= null){
-                aforo = eventoEditar.getAforo();
+            fecha = new SimpleDateFormat("yyy-MM-dd").format(evento.getFecha());
+            if(evento.getFechaLimite() != null){
+                fecha_limite = new SimpleDateFormat("yyy-MM-dd").format(evento.getFechaLimite());
             }
-            
-            if(eventoEditar.getMaxEntradas() != null){
-                maxEntradas = eventoEditar.getMaxEntradas();
+            if(evento.getCosteEntrada() != null){
+                costeEntrada = evento.getCosteEntrada();
             }
-            if(eventoEditar.getNumFilas()!= null){
-                numFilas = eventoEditar.getNumFilas();
+            if(evento.getAforo() != null){
+                aforo = evento.getAforo();
             }
-            if(eventoEditar.getNumAsientosFila() != null){
-                numAsientosFila = eventoEditar.getNumAsientosFila();
+            if(evento.getMaxEntradas() != null){
+                maxEntradas = evento.getMaxEntradas();
+            }
+            if(evento.getAsientosFijos() != null){
+                if(evento.getAsientosFijos() == 's'){
+                    asientosFijosNoChecked = "";
+                    asientosFijosSiChecked = "checked";
+                    showConfig="block";
+                }
+                if(evento.getNumFilas() != null){
+                    numFilas = evento.getNumFilas();
+                }
+                if(evento.getNumAsientosFila() != null){
+                    numAsientosFila = evento.getNumAsientosFila();
+                }
             }
         }
     %>
@@ -65,43 +75,43 @@
         <div class="container">
           <div class="row justify-content-center">
             <div data-animate='{"class":"fadeInUp"}'>
-                <h1><%= edicion ? "Editar evento": "Crear un nuevo evento" %></h1>
+                <h1><%= evento != null ? "Editar evento": "Crear un nuevo evento" %></h1>
                 <form action = "ServletEventoGuardar">
+                    <input type="hidden" name="id" value="<%=id%>"/>
                     <div class="form-group">
                         <label for="titulo">Título:</label>
-                        <input class="form-control" type="text" name="titulo" maxlength="30" size ="30" value="<%= (edicion ? eventoEditar.getTitulo(): "" )%>"/>
+                        <input class="form-control" type="text" name="titulo" maxlength="30" size ="30" value="<%=titulo%>"/>
                     </div>
-                    <!--<div class="form-group">
+                    <div class="form-group">
                         <label for="descripcion">Descripción:</label>
-                        <textarea class="form-control" name="descripcion" rows="4" cols="50" value="<%= (edicion ? eventoEditar.getDescripcion(): "" )%>"></textarea>
+                        <textarea class="form-control" name="descripcion" rows="4" cols="50" value="<%=descripcion%>"><%=descripcion%></textarea>
                     </div>
-                    -->
                     <div class="form-group">
                         <label for="fecha">Fecha:</label>
-                        <input class="form-control" type="date" name="fecha" value="<%= (edicion ? fechaEvento: "") %>">
+                        <input class="form-control" type="date" name="fecha" value="<%=fecha%>"/>
                     </div>
                     <div class="form-group">
                         <label for="fecha_limite">Fecha límite para reservar entradas:</label>
-                        <input class="form-control" type="date" name="fecha_limite" value="<%=( edicion ? fechaLimiteEvento: "" )%>>
+                        <input class="form-control" type="date" name="fecha_limite" value="<%=fecha_limite%>"/>
                     </div>
                     <div class="form-group">
                         <label for="coste">Coste de entrada:</label>
-                        <input class="form-control" type="number" name="coste" value="<%= (edicion ? ((costeEntrada == -1) ? "": costeEntrada): "")%>">
+                        <input class="form-control" type="number" name="coste" value="<%=(costeEntrada == -1) ? "": costeEntrada%>"/>
                     </div>
                     <div class="form-group">
                         <label for="aforo">Aforo del evento:</label>
-                        <input class="form-control" type="text" name="aforo" value="<%=(edicion ? ((aforo == -1) ? "": aforo): "")%>">
+                        <input class="form-control" type="number" name="aforo" value="<%=(aforo == -1) ? "": aforo%>"/>
                     </div>
                     <div class="form-group">
                         <label for="max_entradas">Máximo número de entradas por usuario:</label>
-                        <input class="form-control" type="text" name="max_entradas" value="<%=(edicion ? ((maxEntradas == -1) ? "": maxEntradas): "") %>">
+                        <input class="form-control" type="number" name="max_entradas" value="<%=(maxEntradas == -1) ? "": maxEntradas%>"/>
                     </div>
                     <div class="form-group">
                         <label for="etiqueta">Etiquetas:</label>
                         <%
                             if(etiquetas != null){
                         %>
-                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <select multiple="multiple" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                             <%
                                 for(Etiqueta et: etiquetas){
                             %>
@@ -118,22 +128,27 @@
                     <div class="form-group" id="etiquetasDiv">
                     </div>     
                     <div class="form-group">
+                        <label for="asientosFijos">Asientos fijos:</label>
                         <div class="form-check">
-                            <input id="asientosFijos" type="checkbox" class="form-check-input" name="asientos_fijos" value="<%= edicion ? eventoEditar.getAsientosFijos().toString(): "s" %>>
-                            <label class="form-check-label">Asientos fijos:</label>
+                            <input class="form-check-input" type="radio" name="asientos_fijos" id="asientosFijosSi" value="si" <%=asientosFijosSiChecked%>>
+                            <label class="form-check-label" for="asientosFijosSi">Si</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="asientos_fijos" id="asientosFijosNo" value="no"<%=asientosFijosNoChecked%>>
+                            <label class="form-check-label" for="asientosFijosNo">No</label>
                         </div>
                     </div>
-                    <div id="configuracionAsientos" style="display:none;">
+                    <div id="configuracionAsientos" style="display:<%=showConfig%>;">
                         <div class="form-group">
                             <label for="num_filas">Número de filas:</label>
-                            <input class="form-control" type="text" name="num_filas" value="<%= (edicion ? ((numFilas == -1) ? "": numFilas): "")%>>
+                            <input class="form-control" type="number" name="num_filas" value="<%=(numFilas == -1) ? "": numFilas %>"/>
                         </div>
                         <div class="form-group">
                             <label for="num_asientos_fila">Número de asientos por fila:</label>
-                            <input class="form-control" type="text" name="num_asientos_fila" value="<%= (edicion ? ((numAsientosFila == -1) ? "": numAsientosFila): "") %>">
+                            <input class="form-control" type="number" name="num_asientos_fila" value="<%=(numAsientosFila == -1) ? "": numAsientosFila %>"/>
                         </div>
                     </div>
-                    <input class="btn btn-lg btn-primary" type="submit" value="<%= edicion ? "Confirmar cambios" : "Crear evento" %>"/>
+                    <input class="btn btn-lg btn-primary" type="submit" value="<%= evento != null ? "Confirmar cambios" : "Crear evento" %>"/>
                     <a style="margin-left: 2.5%" href="ServletEventoListar">Cancelar</a>
                 </form>
             </div>

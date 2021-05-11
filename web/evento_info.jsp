@@ -4,6 +4,7 @@
     Author     : majochaves
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="entity.Evento"%>
 <%@page import="entity.Etiqueta"%>
@@ -40,14 +41,12 @@
                     <p><%=evento.getDescripcion()%></p>
                 <%
                 }
-                Date d = evento.getFecha();
                 %>
-                <p>Fecha: <%=d.toString()%></p>
+                <p>Fecha: <%=new SimpleDateFormat("dd/MM/yyyy").format(evento.getFecha())%></p>
                 <%
                 if(evento.getFechaLimite() != null){
-                    Date fL = evento.getFechaLimite();
                 %>
-                    <p>Fecha limite: <%=fL.toString()%></p>
+                    <p>Fecha limite: <%=new SimpleDateFormat("dd/MM/yyyy").format(evento.getFechaLimite())%></p>
                 <%
                 }
                 if(evento.getCosteEntrada() != null){

@@ -40,7 +40,7 @@
                 %>
                 <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
                         <!-- Layout-->
-                        <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="ServletEventoVer?id=<%= e.getId() %>"><img src="images/layouts/layout-1-336x450.jpg" alt="" width="336" height="450"/></a>
+                        <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="ServletEventoVer?id=<%= e.getId() %>"><img src="images/calendar.svg" alt="" width="336" height="450"/></a>
                             <div class="layout-title h6"><a class="layout-title-link" href="ServletEventoVer?id=<%= e.getId() %>"><%=e.getTitulo()%></a>
                           </div>
                         </article>
