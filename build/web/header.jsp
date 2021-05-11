@@ -4,7 +4,9 @@
     Author     : josie
 --%>
 
-      <%@page import="entity.Analista"%>
+      <%@page import="entity.Usuarioeventos"%>
+<%@page import="entity.Creadoreventos"%>
+<%@page import="entity.Analista"%>
 <%@page import="clases.Autenticacion"%>
 <%@page import="entity.Usuario"%>
 <%@page import="entity.Administrador"%>
@@ -42,6 +44,11 @@
                         </li>
                         <%
                     }
+                    %>
+                    <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
+                    </li>
+                    
+                    <%
                     if (!Autenticacion.estaLogeado(request, response)) {
                         %>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="usuario-iniciar-sesion.jsp">Iniciar sesión</a>

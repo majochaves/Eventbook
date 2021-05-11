@@ -54,7 +54,7 @@ public class ServletEventoGuardar extends HttpServlet {
         Creadoreventos creador;
         if(id == null || id.isEmpty()){
             e = new Evento();
-            creador = creadorEventosFacade.find(1);
+            creador = creadorEventosFacade.find(7);
             e.setCreadoreventosId(creador);
         }else{
             e = this.eventoFacade.find(new Integer(id));

@@ -42,11 +42,11 @@
                 <%
                 }
                 %>
-                <p>Fecha: <%=new SimpleDateFormat("dd/mm/yyyy").format(evento.getFecha())%></p>
+                <p>Fecha: <%=new SimpleDateFormat("dd/MM/yyyy").format(evento.getFecha())%></p>
                 <%
                 if(evento.getFechaLimite() != null){
                 %>
-                    <p>Fecha limite: <%=new SimpleDateFormat("dd/mm/yyyy").format(evento.getFechaLimite())%></p>
+                    <p>Fecha limite: <%=new SimpleDateFormat("dd/MM/yyyy").format(evento.getFechaLimite())%></p>
                 <%
                 }
                 if(evento.getCosteEntrada() != null){
