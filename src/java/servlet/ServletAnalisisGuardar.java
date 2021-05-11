@@ -5,17 +5,22 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.AnalisisFacade;
 import dao.AnalistaFacade;
 import dao.CampoanalisisFacade;
 import dao.TipoanalisisFacade;
+import entity.Administrador;
 import entity.Analisis;
 import entity.Analista;
 import entity.Campoanalisis;
 import entity.CampoanalisisPK;
 import entity.Tipoanalisis;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -59,43 +64,66 @@ public class ServletAnalisisGuardar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         HttpSession sesion = request.getSession(false);
-        Map<String, Map<String, Double>> listaFila = (Map)sesion.getAttribute("analisisListaFila");
-        String descripcion = request.getParameter("descripcion");
+        Map<String, Map<String, Double>> listaFila = null;
+        String descripcion = null;
         
-        Analista thisAnalista = analistaFacade.find(1); //ESTO SE DEBE CAMBIAR PARA CUANDO SE IMPLEMENTE EL LOGIN
-        Analisis thisAnalisis = new Analisis();
-        thisAnalisis.setDescripcion(descripcion);
-        thisAnalisis.setAnalistaUsuarioId(thisAnalista);
-        analisisFacade.create(thisAnalisis);
-        
-        for(String nombreColumna : listaFila.keySet()){
-            
-            Tipoanalisis ta = new Tipoanalisis();
-            ta.setAnalisisId(thisAnalisis);
-            ta.setNombre(nombreColumna);
-            tipoanalisisFacade.create(ta);
-            
-            Map<String, Double> filas = listaFila.get(nombreColumna);
-            for(String nombreFila: filas.keySet()){
-                Campoanalisis ca = new Campoanalisis();
-                CampoanalisisPK capk = new CampoanalisisPK();
-                capk.setNombre(nombreFila);
-                capk.setTipoanalisisId(ta.getId());
-                ca.setCampoanalisisPK(capk);
-                ca.setValor(filas.get(nombreFila).intValue());  //ESTO HAY QUE CAMBIARLO EN LA BD Y EN LA ENTITY
-                ca.setTipoanalisis(ta);
-                campoanalisisFacade.create(ca);
-            }
-            tipoanalisisFacade.edit(ta); //Actualiza para evitar errores
+        try{
+            listaFila = (Map)sesion.getAttribute("analisisListaFila");
+            descripcion = request.getParameter("descripcion");
+        }catch(Exception ex){
             
         }
-        analisisFacade.edit(thisAnalisis);  //Actualiza para evitar errores
         
-        
-        
-        
-        response.sendRedirect("crearAnalisis.jsp");
+        //Control de errores
+        if(listaFila != null && descripcion != null){
+            
+            //Miramos si el usuario esta logeado y si tiene rol de Analista.
+            //Nota: Solo un Analista puede guardar analisis, un Administrador que no tenga rol de analista no puede!
+            if(Autenticacion.tieneRol(request, response, Analista.class)){
+                Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+                Analista thisAnalista = thisUsuario.getAnalista();
+                
+                Analisis thisAnalisis = new Analisis();
+                thisAnalisis.setDescripcion(descripcion);
+                thisAnalisis.setAnalistaUsuarioId(thisAnalista);
+                analisisFacade.create(thisAnalisis);                    //Posteriormente debemos meter la lista de Tipos
+
+                List<Tipoanalisis> listaTipoanalisis = new ArrayList<>();
+                for(String nombreColumna : listaFila.keySet()){
+
+                    Tipoanalisis ta = new Tipoanalisis();
+                    ta.setAnalisisId(thisAnalisis);
+                    ta.setNombre(nombreColumna);
+                    tipoanalisisFacade.create(ta);                      //Posteriormente debemos meter la lista de campos
+
+                    List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
+                    Map<String, Double> filas = listaFila.get(nombreColumna);
+                    for(String nombreFila: filas.keySet()){
+                        Campoanalisis ca = new Campoanalisis();
+                        CampoanalisisPK capk = new CampoanalisisPK();
+                        capk.setNombre(nombreFila);
+                        capk.setTipoanalisisId(ta.getId());
+                        ca.setCampoanalisisPK(capk);
+                        ca.setValor(filas.get(nombreFila));
+                        ca.setTipoanalisis(ta);
+                        campoanalisisFacade.create(ca);
+                        listaCampoanalisis.add(ca);
+                    }
+                    ta.setCampoanalisisList(listaCampoanalisis);        //Metemos la la lista de campos
+                    tipoanalisisFacade.edit(ta);
+                    listaTipoanalisis.add(ta);
+                }
+                
+                thisAnalisis.setTipoanalisisList(listaTipoanalisis);    //Metemos la lista de Tipos
+                analisisFacade.edit(thisAnalisis);
+            
+            }
+            
+        }
+
+        response.sendRedirect("ServeltAnalisisIndex");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

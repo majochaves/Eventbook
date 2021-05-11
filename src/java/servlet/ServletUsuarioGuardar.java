@@ -10,11 +10,13 @@ import dao.AnalistaFacade;
 import dao.CreadoreventosFacade;
 import dao.TeleoperadorFacade;
 import dao.UsuarioFacade;
+import dao.UsuarioeventosFacade;
 import entity.Administrador;
 import entity.Analista;
 import entity.Creadoreventos;
 import entity.Teleoperador;
 import entity.Usuario;
+import entity.Usuarioeventos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -60,6 +62,44 @@ public class ServletUsuarioGuardar extends HttpServlet {
     @EJB
     private AnalistaFacade analistaFacade;
     
+    @EJB
+    private UsuarioeventosFacade usuarioEventosFacade;
+    
+    private void crearAdministrador(Usuario u) {
+        Administrador administrador = new Administrador(u.getId());
+        u.setAdministrador(administrador);
+        administrador.setUsuario(u);
+        administradorFacade.create(administrador);
+    }
+    
+    private void crearUsuarioEventos(Usuario u) {
+        Usuarioeventos usuarioEventos = new Usuarioeventos(u.getId());
+        u.setUsuarioeventos(usuarioEventos);
+        usuarioEventos.setUsuario(u);
+        usuarioEventosFacade.create(usuarioEventos);
+    }
+    
+    private void crearAnalista(Usuario u) {
+        Analista analista = new Analista(u.getId());
+        u.setAnalista(analista);
+        analista.setUsuario(u);
+        analistaFacade.create(analista);
+    }
+    
+    private void crearCreadorEventos(Usuario u) {
+        Creadoreventos creadorEventos = new Creadoreventos(u.getId());
+        u.setCreadoreventos(creadorEventos);
+        creadorEventos.setUsuario(u);
+        creadorEventosFacade.create(creadorEventos);        
+    }
+    
+    private void crearTeleoperador(Usuario u) {
+        Teleoperador teleoperador = new Teleoperador(u.getId());
+        u.setTeleoperador(teleoperador);
+        teleoperador.setUsuario(u);
+        teleoperadorFacade.create(teleoperador);       
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -68,9 +108,7 @@ public class ServletUsuarioGuardar extends HttpServlet {
 
         String nombreUsuario = request.getParameter("usuario");
         for (Usuario u : usuarioFacade.findAll()) {
-            if ((edicion && !usuarioEditar.equals(u) && u.getUsername().equalsIgnoreCase(nombreUsuario)) || u.getUsername().equalsIgnoreCase(nombreUsuario)) {
-                // throw new RuntimeException("Username already exists.");                
-                
+            if ((edicion && !usuarioEditar.equals(u) && u.getUsername().equalsIgnoreCase(nombreUsuario)) || (!edicion && u.getUsername().equalsIgnoreCase(nombreUsuario))) {
                 request.setAttribute("error", "El nombre de usuario '" + nombreUsuario +  "' ya está en uso");
                 request.setAttribute("usuarioEditar", usuarioEditar);
                 request.getRequestDispatcher("usuario-crear.jsp").forward(request, response);
@@ -103,28 +141,20 @@ public class ServletUsuarioGuardar extends HttpServlet {
             usuarioFacade.create(u);
             switch(rol) {
                 case "administrador":
-                    Administrador administrador = new Administrador(u.getId());
-                    u.setAdministrador(administrador);
-                    administrador.setUsuario(u);
-                    administradorFacade.create(administrador);
+                    crearAdministrador(u);
+                    crearCreadorEventos(u);
+                    crearTeleoperador(u);
+                    crearAnalista(u);
+                    crearUsuarioEventos(u);
                     break;
                 case "creador-eventos":
-                    Creadoreventos creadorEventos = new Creadoreventos(u.getId());
-                    u.setCreadoreventos(creadorEventos);
-                    creadorEventos.setUsuario(u);
-                    creadorEventosFacade.create(creadorEventos);
+                    crearCreadorEventos(u);
                     break;
                 case "teleoperador":
-                    Teleoperador teleoperador = new Teleoperador(u.getId());
-                    u.setTeleoperador(teleoperador);
-                    teleoperador.setUsuario(u);
-                    teleoperadorFacade.create(teleoperador);
+                    crearTeleoperador(u);
                     break;
                 case "analista":
-                    Analista analista = new Analista(u.getId());
-                    u.setAnalista(analista);
-                    analista.setUsuario(u);
-                    analistaFacade.create(analista);
+                    crearAnalista(u);
                     break;
                 default:
                     break;
