@@ -35,11 +35,13 @@
                     </div>
 
                     <hr class="divider divider-sm mt-0" />
+                    
                     <p>
                         <b>Autogenerado:</b>
                         <u>Análisis de:</u><%=(String)request.getAttribute("AutoGeneradoAnalisisDe")%>
                         ; <u>Usando un tipo de filtro:</u> <%=(String)request.getAttribute("AutoGeneradoTiposFiltros")%>
                     </p>
+                    
                     <div class="row">
                     <%
                         Map<String, Map<String, Double>> listaFila = (Map)request.getAttribute("listaFila");
@@ -88,9 +90,11 @@
                     </div>
                         
                 </div>
-            <br/>            
+            <br/>
             </div>
-
+            
+            <!-- Bootstrap Modal (Ventana emergente) -->
+            
             <div class="modal fade" id="abrirDialogoGuardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <form method="POST" action="ServletAnalisisGuardar">
@@ -122,7 +126,8 @@
                     </form>
                 </div>
             </div>
-
+            
+            <!--Autogeneracion de descripcion-->
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     let cajaDescripcion = document.getElementById('desc');
