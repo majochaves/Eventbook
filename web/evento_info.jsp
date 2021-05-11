@@ -4,6 +4,9 @@
     Author     : majochaves
 --%>
 
+<%@page import="entity.Administrador"%>
+<%@page import="clases.Autenticacion"%>
+<%@page import="entity.Usuario"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="entity.Evento"%>
@@ -24,6 +27,11 @@
     </head>
     <%
         Evento evento = (Evento)request.getAttribute("evento");
+        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
+        boolean puedeEditarBorrar = false;
+        if(u != null){
+            puedeEditarBorrar = Autenticacion.tieneRol(request, response, Administrador.class) || evento.getCreadoreventosId().getUsuarioId() == u.getId();
+        }
     %>
     <body>
       <div class="page">
@@ -82,8 +90,10 @@
                 <%
                 }
                 %>
-                <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
-                <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
+                <% if(puedeEditarBorrar){ %>
+                    <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
+                    <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
+                <%}%>
             <%
             }
             %>

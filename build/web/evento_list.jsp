@@ -4,6 +4,10 @@
     Author     : majochaves
 --%>
 
+<%@page import="entity.Creadoreventos"%>
+<%@page import="entity.Administrador"%>
+<%@page import="clases.Autenticacion"%>
+<%@page import="entity.Usuario"%>
 <%@page import="entity.Evento"%>
 <%@page import="entity.Etiqueta"%>
 <%@page import="java.util.List"%>
@@ -22,6 +26,8 @@
     </head>
     <%
         List<Evento> eventos = (List)request.getAttribute("lista");
+        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
+        boolean puedeCrear = Autenticacion.tieneRol(request, response, Administrador.class, Creadoreventos.class);
     %>
     <body>
       <div class="page">
@@ -33,7 +39,7 @@
             <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
               Eventos
             </h1>
-            <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a>
+            <% if(puedeCrear){%><a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a><%}%>
             <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
                 <% if(eventos != null){
                     for(Evento e : eventos){

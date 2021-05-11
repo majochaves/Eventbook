@@ -5,12 +5,15 @@
  */
 package servlet;
 
+import dao.EtiquetaFacade;
 import dao.EventoFacade;
+import entity.Etiqueta;
 import entity.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletEventoEditar", urlPatterns = {"/ServletEventoEditar"})
 public class ServletEventoEditar extends HttpServlet {
+    @EJB
+    private EtiquetaFacade etiquetaFacade;
     
     @EJB
     private EventoFacade eventoFacade;
@@ -40,6 +45,10 @@ public class ServletEventoEditar extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         Evento e = this.eventoFacade.find(Integer.parseInt(id));
+        
+        List<Etiqueta> listaEtiquetas = this.etiquetaFacade.findAll();
+        
+        request.setAttribute("listaEtiquetas", listaEtiquetas);
         
         request.setAttribute("evento", e);
         request.getRequestDispatcher("evento.jsp").forward(request, response);
