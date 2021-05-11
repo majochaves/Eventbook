@@ -6,9 +6,11 @@
 package dao;
 
 import entity.Teleoperador;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,17 @@ public class TeleoperadorFacade extends AbstractFacade<Teleoperador> {
     public TeleoperadorFacade() {
         super(Teleoperador.class);
     }
+    
+    
+    public Teleoperador findByUsuarioID(Integer id){
+        Query q = this.em.createNamedQuery("Teleoperador.findByUsuarioId");
+        q.setParameter("usuarioId", id);
+        List<Teleoperador> teleops = q.getResultList();
+        
+        return teleops.get(0);
+        
+    }
+    
+    
     
 }

@@ -6,9 +6,11 @@
 package dao;
 
 import entity.Chat;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,17 @@ public class ChatFacade extends AbstractFacade<Chat> {
 
     public ChatFacade() {
         super(Chat.class);
+    }
+    
+    public Chat findByChatPK(Integer userID, Integer opID){
+        Query q;
+       
+        
+        q = this.em.createQuery("SELECT c FROM Chat c WHERE  c.chatPK.teleoperadorId = :teleoperadorId AND c.chatPK.usuarioId = :usuarioId");
+        q.setParameter("usuarioId", userID);
+        q.setParameter("teleoperadorId", opID);
+        
+        return (Chat) q.getSingleResult();
     }
     
 }

@@ -4,6 +4,8 @@
     Author     : guzman
 --%>
 
+<%@page import="entity.Usuario"%>
+<%@page import="clases.Autenticacion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +17,13 @@
         <script src="components/eventos/eventos.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
+        
+        <%
+        // AUTENTICACION
+        Autenticacion.autenticar(request, response, Autenticacion.PERMISOS, Usuario.class);
+        
+        %>
+        
     </head>
     <body onload="getMessages();">
     

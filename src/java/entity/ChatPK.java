@@ -19,12 +19,10 @@ import javax.validation.constraints.NotNull;
 public class ChatPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "TELEOPERADOR_ID")
+    @Column(name = "TELEOPERADOR_ID", nullable=false)
     private int teleoperadorId;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "USUARIO_ID")
+    @Column(name = "USUARIO_ID",  nullable=false)
     private int usuarioId;
 
     public ChatPK() {

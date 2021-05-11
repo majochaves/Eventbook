@@ -5,9 +5,8 @@
  */
 package servlet;
 
-import dao.UsuarioFacade;
+import dao.ChatFacade;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,19 +18,20 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author josie
  */
-@WebServlet(name = "ServletUsuarioListar", urlPatterns = {"/ServletUsuarioListar"})
-public class ServletUsuarioListar extends HttpServlet {
+@WebServlet(name = "ServletChatListar", urlPatterns = {"/ServletChatListar"})
+public class ServletChatListar extends HttpServlet {
 
     @EJB
-    private UsuarioFacade usuarioFacade;
+    private ChatFacade chatFacade;
+
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         
-        
-        
-        request.setAttribute("usuarios", usuarioFacade.findAll());
-        request.getRequestDispatcher("usuario-listar.jsp").forward(request, response);
+        request.setAttribute("chats", chatFacade.findAll());
+        request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
