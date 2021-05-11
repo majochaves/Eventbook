@@ -48,7 +48,7 @@
                         %>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="usuario-iniciar-sesion.jsp">Iniciar sesión</a>
                         </li>
-                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Registrarse</a>
+                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="usuario-registrar.jsp">Registrarse</a>
                         </li>
                         <%
                     } else {
