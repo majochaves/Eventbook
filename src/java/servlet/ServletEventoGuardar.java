@@ -6,22 +6,29 @@
 package servlet;
 
 import dao.CreadoreventosFacade;
+import dao.EtiquetaFacade;
 import dao.EventoFacade;
 import entity.Creadoreventos;
+import entity.Etiqueta;
 import entity.Evento;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,6 +42,9 @@ public class ServletEventoGuardar extends HttpServlet {
     
     @EJB
     private CreadoreventosFacade creadorEventosFacade;
+    
+    @EJB
+    private EtiquetaFacade etiquetaFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,12 +59,15 @@ public class ServletEventoGuardar extends HttpServlet {
             throws ServletException, IOException, Exception {
         
         String id = request.getParameter("id");
+        String usuarioId = request.getParameter("usuarioId");
+        String error;
         
         Evento e;
         Creadoreventos creador;
         if(id == null || id.isEmpty()){
             e = new Evento();
-            creador = creadorEventosFacade.find(7);
+            System.out.println("Id de usuario: " + usuarioId);
+            creador = this.creadorEventosFacade.find(new Integer(usuarioId));
             e.setCreadoreventosId(creador);
         }else{
             e = this.eventoFacade.find(new Integer(id));
@@ -75,62 +88,121 @@ public class ServletEventoGuardar extends HttpServlet {
         numAsientosFila = request.getParameter("num_asientos_fila");
         
         
-        //TITULO - Obligatorio
-        e.setTitulo(titulo);
+        String[] etiquetas = request.getParameterValues("etiquetas");
         
-        //DESCRIPCION - Opcional
-        if(!descripcion.isEmpty()){
-            e.setDescripcion(descripcion);
-        }
-                
-        //FECHA - Obligatorio
-        e.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
         
-        //FECHA LIMITE - Opcional
-        if(!fechaLimite.isEmpty()){
-            e.setFechaLimite(new SimpleDateFormat("yyyy-MM-dd").parse(fechaLimite));
-        }
         
-        //COSTE ENTRADA - Opcional
-        if(!costeEntrada.isEmpty()){
-            e.setCosteEntrada(new Double(costeEntrada));
-        }
-        
-        //AFORO - Opcional
-        if(!aforo.isEmpty()){
-            e.setAforo(new Integer(aforo));
-        }
-        
-        //MAX ENTRADAS - Opcional
-        if(!maxEntradas.isEmpty()){
-            e.setMaxEntradas(new Integer(maxEntradas));
-        }
-        
-        //ASIENTOS_FIJOS - Opcional
-        if(asientosFijos.equals("si")){
-            e.setAsientosFijos('s');
-            //NUM FILAS - Opcional
-            if(numFilas != null){
-                e.setNumFilas(new Integer(numFilas));
-            }
-            
-            //NUM ASIENTOS POR FILA - Opcional
-            if(numAsientosFila != null){
-                e.setNumAsientosFila(Integer.parseInt(numAsientosFila));
-            }
+        if(titulo.isEmpty() || fecha.isEmpty()){
+            error = "Error: por favor rellene todos los campos obligatorios.";
+            request.setAttribute("strError", error);
+            RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+            rd.forward(request, response);
         }else{
-            e.setAsientosFijos('n');
-            e.setNumFilas(null);
-            e.setNumAsientosFila(null);
+            //TITULO - Obligatorio
+
+            e.setTitulo(titulo);
+
+
+            //DESCRIPCION - Opcional
+            if(!descripcion.isEmpty() ){
+                e.setDescripcion(descripcion);
+            }
+
+            //FECHA - Obligatorio
+            e.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
+
+            //FECHA LIMITE - Opcional
+            if(!fechaLimite.isEmpty()){
+                e.setFechaLimite(new SimpleDateFormat("yyyy-MM-dd").parse(fechaLimite));
+                if(e.getFecha().compareTo(e.getFechaLimite()) < 0){
+                    error = "Error: fecha límite para comprar entradas tiene que ser anterior a la fecha del evento.";
+                    request.setAttribute("strError", error);
+                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    rd.forward(request, response);
+                }
+            }else{
+
+                //COSTE ENTRADA - Opcional
+                if(!costeEntrada.isEmpty()){
+                    if(new Double(costeEntrada) < 0){
+                        error = "Error: campos numéricos deben ser positivos.";
+                        request.setAttribute("strError", error);
+                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        rd.forward(request, response);
+                    }
+                    e.setCosteEntrada(new Double(costeEntrada));
+                }
+
+                //AFORO - Opcional
+                if(!aforo.isEmpty()){
+                    if(new Integer(aforo) < 0){
+                        error = "Error: campos numéricos deben ser positivos.";
+                        request.setAttribute("strError", error);
+                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        rd.forward(request, response);
+                    }
+                    e.setAforo(new Integer(aforo));
+                }
+
+                //MAX ENTRADAS - Opcional
+                if(!maxEntradas.isEmpty()){
+                    if(new Integer(maxEntradas) < 0){
+                        error = "Error: campos numéricos deben ser positivos.";
+                        request.setAttribute("strError", error);
+                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        rd.forward(request, response);
+                    }
+                    e.setMaxEntradas(new Integer(maxEntradas));
+                }
+
+                if(etiquetas != null){
+                    for(int i = 0; i < etiquetas.length; i++){
+                        Etiqueta etiqueta = this.etiquetaFacade.find(new Integer(etiquetas[i]));
+                        etiqueta.getEventoList().add(e);
+                        this.etiquetaFacade.edit(etiqueta);
+                        e.getEtiquetaList().add(etiqueta);
+                    }
+                }
+
+                //ASIENTOS_FIJOS - Opcional
+                if(asientosFijos.equals("si")){
+                    e.setAsientosFijos('s');
+                    //NUM FILAS - Opcional
+                    if(numFilas != null){
+                        if(new Integer(numFilas) < 0){
+                            error = "Error: campos numéricos deben ser positivos.";
+                            request.setAttribute("strError", error);
+                            RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                            rd.forward(request, response);
+                        }
+                        e.setNumFilas(new Integer(numFilas));
+                    }
+
+                    //NUM ASIENTOS POR FILA - Opcional
+                    if(numAsientosFila != null){
+                        if(new Integer(numAsientosFila) < 0){
+                            error = "Error: campos numéricos deben ser positivos.";
+                            request.setAttribute("strError", error);
+                            RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                            rd.forward(request, response);
+                        }
+                        e.setNumAsientosFila(Integer.parseInt(numAsientosFila));
+                    }
+                }else{
+                    e.setAsientosFijos('n');
+                    e.setNumFilas(null);
+                    e.setNumAsientosFila(null);
+                }
+
+                if(id == null || id.isEmpty()){
+                    this.eventoFacade.create(e);
+                }else{
+                    this.eventoFacade.edit(e);
+                }
+
+                response.sendRedirect("ServletEventoListar");
+            }
         }
-        
-        if(id == null || id.isEmpty()){
-            this.eventoFacade.create(e);
-        }else{
-            this.eventoFacade.edit(e);
-        }
-        
-        response.sendRedirect("ServletEventoListar");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

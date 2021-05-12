@@ -4,6 +4,10 @@
     Author     : majochaves
 --%>
 
+<%@page import="entity.Creadoreventos"%>
+<%@page import="entity.Administrador"%>
+<%@page import="clases.Autenticacion"%>
+<%@page import="entity.Usuario"%>
 <%@page import="entity.Evento"%>
 <%@page import="entity.Etiqueta"%>
 <%@page import="java.util.List"%>
@@ -22,7 +26,12 @@
     </head>
     <%
         List<Evento> eventos = (List)request.getAttribute("lista");
+<<<<<<< HEAD
         String filtro = (String) request.getAttribute("filtro");
+=======
+        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
+        boolean puedeCrear = Autenticacion.tieneRol(request, response, Administrador.class, Creadoreventos.class);
+>>>>>>> c8c634b0ffa1edbde46b53b90d1530cdb626282f
     %>
     <body>
       <div class="page">
@@ -34,6 +43,7 @@
             <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
             Eventos
             </h1>
+<<<<<<< HEAD
             <!-- <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a> -->
             <form align="right" action="ServletEventoListar">
                 <table>
@@ -50,6 +60,9 @@
                     </tr>
                 </table>
             </form>            
+=======
+            <% if(puedeCrear){%><a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a><%}%>
+>>>>>>> c8c634b0ffa1edbde46b53b90d1530cdb626282f
             <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
                 <% if(eventos != null){
                     for(Evento e : eventos){

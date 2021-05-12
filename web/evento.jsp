@@ -4,6 +4,7 @@
     Author     : majochaves
 --%>
 
+<%@page import="entity.Usuario"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Evento"%>
 <%@page import="entity.Evento"%>
@@ -27,6 +28,9 @@
         List<Etiqueta> etiquetas = (List)request.getAttribute("listaEtiquetas");
         
         Evento evento = (Evento) request.getAttribute("evento");
+        String strError = (String) request.getAttribute("strError");
+        
+        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
         
         String id="", titulo = "", descripcion = "", fecha = "", fecha_limite= "", asientosFijosNoChecked = "checked", asientosFijosSiChecked ="", showConfig="none";
         Double costeEntrada = -1.0;
@@ -76,10 +80,14 @@
           <div class="row justify-content-center">
             <div data-animate='{"class":"fadeInUp"}'>
                 <h1><%= evento != null ? "Editar evento": "Crear un nuevo evento" %></h1>
+                <%if(strError != null){%>
+                    <p><%=strError%></p>
+                <%}%>
                 <form action = "ServletEventoGuardar">
+                    <input type="hidden" name="usuarioId" value="<%=u.getId()%>"
                     <input type="hidden" name="id" value="<%=id%>"/>
                     <div class="form-group">
-                        <label for="titulo">Título:</label>
+                        <label for="titulo">Título:*</label>
                         <input class="form-control" type="text" name="titulo" maxlength="30" size ="30" value="<%=titulo%>"/>
                     </div>
                     <div class="form-group">
@@ -87,7 +95,7 @@
                         <textarea class="form-control" name="descripcion" rows="4" cols="50" value="<%=descripcion%>"><%=descripcion%></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="fecha">Fecha:</label>
+                        <label for="fecha">Fecha:*</label>
                         <input class="form-control" type="date" name="fecha" value="<%=fecha%>"/>
                     </div>
                     <div class="form-group">
@@ -107,15 +115,19 @@
                         <input class="form-control" type="number" name="max_entradas" value="<%=(maxEntradas == -1) ? "": maxEntradas%>"/>
                     </div>
                     <div class="form-group">
-                        <label for="etiqueta">Etiquetas:</label>
+                        <label for="etiquetas">Etiquetas:</label>
                         <%
                             if(etiquetas != null){
                         %>
-                        <select multiple="multiple" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <select name="etiquetas" multiple="multiple" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                             <%
                                 for(Etiqueta et: etiquetas){
+                                    String strSelected = "";
+                                    if(evento.getEtiquetaList().contains(et)){
+                                        strSelected = "selected";
+                                    }
                             %>
-                                <option value="<%=et.getId()%>"><%=et.getDescripcion()%></option>
+                                <option value="<%=et.getId()%>" <%=strSelected%>><%=et.getDescripcion()%></option>
                             <%
                                 }
                             %>
