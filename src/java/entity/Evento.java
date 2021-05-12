@@ -93,7 +93,8 @@ public class Evento implements Serializable {
     private Creadoreventos creadoreventosId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
     private List<Reserva> reservaList;
-
+    
+    
     public Evento() {
     }
 

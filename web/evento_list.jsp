@@ -9,7 +9,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Eventos</title>
@@ -22,6 +22,7 @@
     </head>
     <%
         List<Evento> eventos = (List)request.getAttribute("lista");
+        String filtro = (String) request.getAttribute("filtro");
     %>
     <body>
       <div class="page">
@@ -31,9 +32,24 @@
       <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
         <div class="container-fluid">
             <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
-              Eventos
+            Eventos
             </h1>
-            <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a>
+            <!-- <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a> -->
+            <form align="right" action="ServletEventoListar">
+                <table>
+                    <tr>
+                        <td>Filtrar</td>
+                        <td>
+                            <select name="fechaFiltrado">
+                                <option <%= (filtro != null && filtro.equalsIgnoreCase("reciente") ? "selected" : " ")%> value="reciente">Fecha más reciente</option>
+                                <option <%= (filtro != null && filtro.equalsIgnoreCase("noReciente") ? "selected" : " ")%> value="noReciente">Fecha menos reciente</option>
+                                
+                            </select>
+                        </td>
+                        <td><input type="submit" value="OK" class="btn btn-secondary"/></td>
+                    </tr>
+                </table>
+            </form>            
             <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
                 <% if(eventos != null){
                     for(Evento e : eventos){
@@ -58,4 +74,4 @@
     </div>
     <div class="to-top int-arrow-up"></div>
     </body>
-</html>
+

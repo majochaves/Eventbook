@@ -4,6 +4,10 @@
     Author     : majochaves
 --%>
 
+<%@page import="entity.Usuarioeventos"%>
+<%@page import="entity.Administrador"%>
+<%@page import="entity.Creadoreventos"%>
+<%@page import="clases.Autenticacion"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="entity.Evento"%>
@@ -81,9 +85,19 @@
                 <p>Número de asientos por fila: <%=evento.getNumAsientosFila()%></p>
                 <%
                 }
+                if(Autenticacion.tieneRol(request, response, Creadoreventos.class, Administrador.class)){
                 %>
-                <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
-                <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
+                    <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
+                    <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
+                <%
+                } 
+                if(Autenticacion.tieneRol(request, response, Administrador.class, Usuarioeventos.class, Administrador.class)){
+                %>
+                    <a href="ServletEventoDatos?id=<%=evento.getId()%>" class="btn btn-secondary">Reservar</a>
+                <%
+                }
+                %>
+                
             <%
             }
             %>
