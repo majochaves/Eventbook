@@ -98,7 +98,7 @@
                 }
                 if(Autenticacion.tieneRol(request, response, Creadoreventos.class, Administrador.class)){
                 %>
-<<<<<<< HEAD
+
                     <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
                     <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
                 <%
@@ -110,12 +110,12 @@
                 }
                 %>
                 
-=======
+
                 <% if(puedeEditarBorrar){ %>
                     <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
                     <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
                 <%}%>
->>>>>>> c8c634b0ffa1edbde46b53b90d1530cdb626282f
+
             <%
             }
             %>
