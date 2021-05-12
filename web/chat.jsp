@@ -18,6 +18,11 @@
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
         
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+        <link rel="stylesheet" href="components/chat/chat.css">
+        
         <%
         // AUTENTICACION
         Autenticacion.autenticar(request, response, Autenticacion.PERMISOS, Usuario.class);
@@ -135,8 +140,235 @@
                 </ul>
         </div>
       </section>
-      <!-- Typography example-->
+      <!-- Start chat-->
       <section class="section section-lg bg-transparent">
+           <div class="container ChatContainer clearfix">
+    <div class="people-list" id="people-list">
+      <div class="search">
+        <input type="text" placeholder="search" />
+        <i class="fa fa-search"></i>
+      </div>
+      <ul class="list">
+        <li class="clearfix">
+
+          <div class="about">
+            <div class="name">Vincent Porter</div>
+            <div class="status">
+              <i class="fa fa-circle online"></i> online
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Aiden Chavez</div>
+            <div class="status">
+              <i class="fa fa-circle offline"></i> left 7 mins ago
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Mike Thomas</div>
+            <div class="status">
+              <i class="fa fa-circle online"></i> online
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Erica Hughes</div>
+            <div class="status">
+              <i class="fa fa-circle online"></i> online
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Ginger Johnston</div>
+            <div class="status">
+              <i class="fa fa-circle online"></i> online
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Tracy Carpenter</div>
+            <div class="status">
+              <i class="fa fa-circle offline"></i> left 30 mins ago
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Christian Kelly</div>
+            <div class="status">
+              <i class="fa fa-circle offline"></i> left 10 hours ago
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Monica Ward</div>
+            <div class="status">
+              <i class="fa fa-circle online"></i> online
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Dean Henry</div>
+            <div class="status">
+              <i class="fa fa-circle offline"></i> offline since Oct 28
+            </div>
+          </div>
+        </li>
+        
+        <li class="clearfix">
+          
+          <div class="about">
+            <div class="name">Peyton Mckinney</div>
+            <div class="status">
+              <i class="fa fa-circle online"></i> online
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="chat">
+      <div class="chat-header clearfix">
+        
+        
+        <div class="chat-about">
+          <div class="chat-with">Chat with Vincent Porter</div>
+          <div class="chat-num-messages">already 1 902 messages</div>
+        </div>
+        <i class="fa fa-star"></i>
+      </div> <!-- end chat-header -->
+      
+      <div class="chat-history">
+        <ul>
+          <li class="clearfix">
+            <div class="message-data align-right">
+              <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+              
+            </div>
+            <div class="message other-message float-right">
+              Hi Vincent, how are you? How is the project coming along?
+            </div>
+          </li>
+          
+          <li>
+            <div class="message-data">
+              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+              <span class="message-data-time">10:12 AM, Today</span>
+            </div>
+            <div class="message my-message">
+              Are we meeting today? Project has been already finished and I have results to show you.
+            </div>
+          </li>
+          
+          <li class="clearfix">
+            <div class="message-data align-right">
+              <span class="message-data-time" >10:14 AM, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+              
+            </div>
+            <div class="message other-message float-right">
+              Well I am not sure. The rest of the team is not here yet. Maybe in an hour or so? Have you faced any problems at the last phase of the project?
+            </div>
+          </li>
+          
+          <li>
+            <div class="message-data">
+              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+              <span class="message-data-time">10:20 AM, Today</span>
+            </div>
+            <div class="message my-message">
+              Actually everything was fine. I'm very excited to show this to our team.
+            </div>
+          </li>
+          
+          <li>
+            <div class="message-data">
+              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+              <span class="message-data-time">10:31 AM, Today</span>
+            </div>
+            <i class="fa fa-circle online"></i>
+            <i class="fa fa-circle online" style="color: #AED2A6"></i>
+            <i class="fa fa-circle online" style="color:#DAE9DA"></i>
+          </li>
+          <div class="message-data">
+              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+              <span class="message-data-time">10:31 AM, Today</span>
+            </div>
+            <i class="fa fa-circle online"></i>
+            <i class="fa fa-circle online" style="color: #AED2A6"></i>
+            <i class="fa fa-circle online" style="color:#DAE9DA"></i>
+          </li>
+        </ul>
+        
+      </div> <!-- end chat-history -->
+      
+      <div class="chat-message clearfix">
+        <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+                
+        <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+        <i class="fa fa-file-image-o"></i>
+        
+        <button>Send</button>
+
+      </div> <!-- end chat-message -->
+      
+    </div> <!-- end chat -->
+    
+  </div> <!-- end container -->
+
+<script id="message-template" type="text/x-handlebars-template">
+  <li class="clearfix">
+    <div class="message-data align-right">
+      <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
+      <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+    </div>
+    <div class="message other-message float-right">
+      {{messageOutput}}
+    </div>
+  </li>
+</script>
+
+<script id="message-response-template" type="text/x-handlebars-template">
+  <li>
+    <div class="message-data">
+      <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+      <span class="message-data-time">{{time}}, Today</span>
+    </div>
+    <div class="message my-message">
+      {{response}}
+    </div>
+  </li>
+</script>
+
+          
+          
+          
+          
         <div class="container">
           <h1>SHOUT-OUT!</h1>
         <form>
@@ -190,185 +422,115 @@
             }
             setInterval(getMessages, 1000);
         </script>
+        
+        
+        
+        <script>
+            (function(){
+
+                var chat = {
+                  messageToSend: '',
+                  messageResponses: [
+                    'Why did the web developer leave the restaurant? Because of the table layout.',
+                    'How do you comfort a JavaScript bug? You console it.',
+                    'An SQL query enters a bar, approaches two tables and asks: "May I join you?"',
+                    'What is the most used language in programming? Profanity.',
+                    'What is the object-oriented way to become wealthy? Inheritance.',
+                    'An SEO expert walks into a bar, bars, pub, tavern, public house, Irish pub, drinks, beer, alcohol'
+                  ],
+                  init: function() {
+                    this.cacheDOM();
+                    this.bindEvents();
+                    this.render();
+                  },
+                  cacheDOM: function() {
+                    this.$chatHistory = $('.chat-history');
+                    this.$button = $('button');
+                    this.$textarea = $('#message-to-send');
+                    this.$chatHistoryList =  this.$chatHistory.find('ul');
+                  },
+                  bindEvents: function() {
+                    this.$button.on('click', this.addMessage.bind(this));
+                    this.$textarea.on('keyup', this.addMessageEnter.bind(this));
+                  },
+                  render: function() {
+                    this.scrollToBottom();
+                    if (this.messageToSend.trim() !== '') {
+                      var template = Handlebars.compile( $("#message-template").html());
+                      var context = { 
+                        messageOutput: this.messageToSend,
+                        time: this.getCurrentTime()
+                      };
+
+                      this.$chatHistoryList.append(template(context));
+                      this.scrollToBottom();
+                      this.$textarea.val('');
+
+                      // responses
+                      var templateResponse = Handlebars.compile( $("#message-response-template").html());
+                      var contextResponse = { 
+                        response: this.getRandomItem(this.messageResponses),
+                        time: this.getCurrentTime()
+                      };
+
+                      setTimeout(function() {
+                        this.$chatHistoryList.append(templateResponse(contextResponse));
+                        this.scrollToBottom();
+                      }.bind(this), 1500);
+
+                    }
+
+                  },
+
+                  addMessage: function() {
+                    this.messageToSend = this.$textarea.val()
+                    this.render();         
+                  },
+                  addMessageEnter: function(event) {
+                      // enter was pressed
+                      if (event.keyCode === 13) {
+                        this.addMessage();
+                      }
+                  },
+                  scrollToBottom: function() {
+                     this.$chatHistory.scrollTop(this.$chatHistory[0].scrollHeight);
+                  },
+                  getCurrentTime: function() {
+                    return new Date().toLocaleTimeString().
+                            replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+                  },
+                  getRandomItem: function(arr) {
+                    return arr[Math.floor(Math.random()*arr.length)];
+                  }
+
+                };
+
+                chat.init();
+
+                var searchFilter = {
+                  options: { valueNames: ['name'] },
+                  init: function() {
+                    var userList = new List('people-list', this.options);
+                    var noItems = $('<li id="no-items-found">No items found</li>');
+
+                    userList.on('updated', function(list) {
+                      if (list.matchingItems.length === 0) {
+                        $(list.list).append(noItems);
+                      } else {
+                        noItems.detach();
+                      }
+                    });
+                  }
+                };
+
+                searchFilter.init();
+
+              })();
+              </script>
+        
         </div>
       </section>
-      <!-- Section divider-->
-      <section class="section">
-        <div class="container">
-          <hr class="divider divider-sm">
-        </div>
-      </section>
-      <!-- Text Aligment-->
-      <section class="section section-lg bg-transparent">
-        <div class="container">
-          <div class="row row-30">
-            <div class="col-lg-4">
-              <h2>Text alignment</h2>
-            </div>
-            <div class="col-lg-8">
-              <h1>Left aligned text</h1>
-              <p>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for. You will definitely have a great experience of using our web page.</p>
-              <h1 class="text-center">Centered text</h1>
-              <p class="text-center">Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for. You will definitely have a great experience of using our web page.</p>
-              <h1 class="text-right">Right aligned text</h1>
-              <p class="text-right">Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for. You will definitely have a great experience of using our web page.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Section divider-->
-      <section class="section">
-        <div class="container">
-          <hr class="divider divider-sm">
-        </div>
-      </section>
-      <!-- Lists-->
-      <section class="section section-lg bg-transparent">
-        <div class="container">
-          <div class="row row-15 row-xxl-70">
-            <div class="col-lg-4">
-              <h2>Unordered list</h2>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <ul class="list list-marked-arrow">
-                <li class="list-item">Fully responsive design</li>
-                <li class="list-item">Social integration
-                  <ul class="list list-marked-arrow">
-                    <li class="list-item">30+ predesigned pages</li>
-                    <li class="list-item">Regular content updates</li>
-                  </ul>
-                </li>
-                <li class="list-item">Child themes</li>
-              </ul>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <ul class="list list-marked">
-                <li class="list-item">Fully responsive design</li>
-                <li class="list-item">Social integration
-                  <ul class="list list-marked">
-                    <li class="list-item">30+ predesigned pages</li>
-                    <li class="list-item">Regular content updates</li>
-                  </ul>
-                </li>
-                <li class="list-item">Child themes</li>
-              </ul>
-            </div>
-          </div>
-          <div class="row row-15 row-xxl-70 row-offset-lg">
-            <div class="col-lg-4">
-              <h2>Ordered list</h2>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-              <ol class="list list-ordered">
-                <li class="list-item">Fully responsive design</li>
-                <li class="list-item">Social integration
-                  <ol class="list list-ordered">
-                    <li class="list-item">30+ predesigned pages</li>
-                    <li class="list-item">Regular content updates</li>
-                  </ol>
-                </li>
-                <li class="list-item">Child themes</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Section divider-->
-      <section class="section">
-        <div class="container">
-          <hr class="divider divider-sm">
-        </div>
-      </section>
-      <!-- Image floating-->
-      <section class="section section-lg bg-transparent">
-        <div class="container">
-          <div class="row row-30 row-xxl-70">
-            <div class="col-lg-4">
-              <h2>Image floating</h2>
-            </div>
-            <div class="col-lg-8">
-              <div class="clearfix">
-                <figure class="figure figure-float figure-float-left"><img class="figure-img" src="images/image-05-380x245.jpg" alt="" width="380" height="245"/>
-                </figure>
-                <div>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for. With advanced features of activating account and new login widgets, you will definitely have a great experience of using our web page. It will tell you lots of interesting things about our company, its products and services, highly professional staff and happy customers. Our site design and navigation has been thoroughly thought out. The layout is aesthetically appealing, contains concise texts in order not to take your precious time. Text styling allows scanning the pages quickly.  Site navigation is extremely intuitive and</div>
-                <figure class="figure figure-float figure-float-right"><img class="figure-img" src="images/image-05-380x245.jpg" alt="" width="380" height="245"/>
-                </figure>
-                <div>user-friendly. You will always know where you are now and will be able to skip from one page to another with a single mouse click. We use only trusted, verified content, so you can believe every word we are saying. We are always happy to greet the new visitors on our site. The layout is aesthetically appealing, contains concise texts in order not to take your precious time. We hope you’ll enjoy visiting us.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Section divider-->
-      <section class="section">
-        <div class="container">
-          <hr class="divider divider-sm">
-        </div>
-      </section>
-      <!-- Dropcaps-->
-      <section class="section section-lg bg-transparent">
-        <div class="container">
-          <div class="row row-30 row-xxl-70">
-            <div class="col-lg-4">
-              <h2>Text drop caps</h2>
-            </div>
-            <div class="col-lg-8">
-              <p class="drop-cap drop-cap-dark">Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for. With advanced features of activating account and new login widgets, you will definitely have a great experience of using our web page. It will tell you lots of interesting things about our company, its products and services, highly professional staff and happy customers. Our site design and navigation has been thoroughly thought out. The layout is aesthetically appealing, contains concise texts in order not to take your precious time. Text styling allows scanning the pages quickly.  Site navigation is extremely intuitive and user-friendly.</p>
-            </div>
-          </div>
-        </div>
-      </section><a class="section section-banner" href="https://www.templatemonster.com/intense-multipurpose-html-template.html" style="background-image: url(images/banners/background-03-1920x310.jpg); background-image: -webkit-image-set( url(images/banners/background-03-1920x310.jpg) 1x, url(images/banners/background-03-3840x620.jpg) 2x )" target="_blank"><img src="images/banners/foreground-03-1600x310.png" srcset="images/banners/foreground-03-1600x310.png 1x, images/banners/foreground-03-3200x620.png 2x" alt="" width="1600" height="310"></a>
-      <!-- Footer default-->
-      <footer class="section footer footer-sm bg-800 text-400 context-dark">
-        <div class="container">
-          <div class="row row-30 justify-content-xxl-between">
-            <div class="col-lg-5">
-                    <!-- Logo-->
-                    <div class="logo"><a class="logo-link" href="index.html"><img class="logo-image-default" src="images/logo-default-161x27.svg" alt="Intense" width="161" height="27"/><img class="logo-image-inverse" src="images/logo-inverse-161x27.svg" alt="Intense" width="161" height="27"/></a></div>
-              <p class="small">Join the 205,000+ Satified Customers Today at TemplateMonster.com. Created by the industry leaders Intense is a comprehensive set of tools which are super easy to pick up and run. It gives you a huge leg up to create your own beautiful site.</p>
-            </div>
-            <div class="col-md-11 col-lg-7 col-xxl-6">
-              <p class="small">178 West 27th Street, Suite 527, New York NY 10012, United States</p>
-              <div class="row row-20">
-                <div class="col-auto col-sm-4">
-                  <div class="media media-xxs text-white">
-                    <div class="media-left"><span class="icon icon-xs int-phone novi-icon"></span></div>
-                    <div class="media-body">
-                      <ul class="list list-contact">
-                        <li class="list-contact-item"><a class="list-contact-link" href="tel:#">+1 234 567 8901</a></li>
-                        <li class="list-contact-item"><a class="list-contact-link" href="tel:#">+1 234 567 8902</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-auto col-sm-4">
-                  <ul class="list list-xs small">
-                    <li class="list-item">Mon-Fri: 8am - 6pm</li>
-                    <li class="list-item">Sat-Sun: 8am - 4pm</li>
-                    <li class="list-item">Holidays: closed</li>
-                  </ul>
-                </div>
-                <div class="col-auto col-sm-4">
-                  <ul class="list list-lg small text-white">
-                    <li class="list-item"><a class="link link-contrast link-secondary" href="mailto:#">support@example.com</a></li>
-                    <li class="list-item"><a class="link link-contrast link-secondary" href="mailto:#">sales@example.com</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr class="divider footer-divider">
-          <div class="row row-15 align-items-center justify-content-between footer-panel">
-            <div class="col-auto">
-                    <!-- Copyright-->
-                    <p class="rights"><span>&copy; 2019&nbsp;</span><span>Intense</span><span>. All rights reserved</span></p>
-            </div>
-            <div class="col-auto">
-              <div class="group-30 d-flex text-white"><a class="icon icon-xs icon-social int-youtube novi-icon" href="#"></a><a class="icon icon-xs icon-social int-facebook novi-icon" href="#"></a><a class="icon icon-xs icon-social int-instagram novi-icon" href="#"></a><a class="icon icon-xs icon-social int-twitter novi-icon" href="#"></a><a class="icon icon-xs icon-social int-linkedin novi-icon" href="#"></a></div>
-            </div>
-          </div>
-        </div>
-      </footer>
+     
     </div>
     <div class="to-top int-arrow-up"></div>
         

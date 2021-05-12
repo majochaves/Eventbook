@@ -69,7 +69,7 @@ public class ServletChatGuardar extends HttpServlet {
 //         teleoperador.setChatList(teleoperador.getChatList().add(current)););
         // usuario.setchatlist(usuario.listchat.append)
         
-        RequestDispatcher rd = request.getRequestDispatcher("ServletChat");
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         request.setAttribute("chatID", chat.getChatPK().getTeleoperadorId());
         rd.forward(request, response);
         

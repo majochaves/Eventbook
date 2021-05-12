@@ -67,7 +67,7 @@ public class ServletChat extends HttpServlet {
         String message = request.getParameter("message");
         
         // Message contains data
-        if ((name == null || name.isEmpty())||(message == null || message.isEmpty())) {
+//        if ((name == null || name.isEmpty())||(message == null || message.isEmpty())) {
             // Find if chat already exists
 //            chat = this.chatFacade.findByTwoUsers(usuario a, usuario b);
 //            if(chat == null){
@@ -83,9 +83,9 @@ public class ServletChat extends HttpServlet {
 //            // Add message to chat
 //            chat.getMensajeList().add();
             
-        } else { // Message had an error
-            // TODO display error
-        }
+//        } else { // Message had an error
+//            // TODO display error
+//        }
         
         String htmlMessage = "<p><b>" + name + "</b><br/>" + message + "</p>";
         
