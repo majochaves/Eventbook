@@ -18,6 +18,8 @@ and open the template in the editor.
   background: #444753;
   border-radius: 5px;
   height: 890px;
+  display: flex;
+  flex-direction: row;
 }
 
 .people-list {

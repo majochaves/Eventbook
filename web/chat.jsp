@@ -55,78 +55,6 @@
                 </li>
               </ul>
             </div>
-            <div class="navbar-cell">
-              <div class="navbar-subpanel">
-                <div class="navbar-subpanel-item">
-                  <div class="navbar-search">
-                    <div class="navbar-search-container">
-                      <form class="navbar-search-form">
-                        <input class="navbar-search-input" type="text" placeholder="Enter search terms..." autocomplete="off" name="s"/>
-                        <button class="navbar-search-btn int-search novi-icon"></button>
-                        <button class="navbar-search-close search-switch int-close novi-icon" type="button" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","class":"navbar-search-active","isolate":"[data-multi-switch]:not(.search-switch)"}'></button>
-                      </form>
-                    </div>
-                  </div>
-                  <div class="navbar-search-results">No results</div>
-                  <button class="navbar-button search-switch int-search novi-icon" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","class":"navbar-search-active","isolate":"[data-multi-switch]:not(.search-switch)"}'></button>
-                </div>
-                <div class="navbar-subpanel-item">
-                  <button class="navbar-button int-cart novi-icon" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","class":"navbar-cart-active","isolate":"[data-multi-switch]"}'></button>
-                  <div class="navbar-cart">
-                    <h5 class="navbar-cart-heading">Shopping cart</h5>
-                    <div class="navbar-cart-item">
-                      <div class="navbar-cart-item-left"><a class="thumbnail-small" href="#"><img src="images/products/product-03-80x103.jpg" alt="" width="80" height="103"/></a></div>
-                      <div class="navbar-cart-item-body"><a class="navbar-cart-item-heading" href="#">Ombré vinyl backpack</a>
-                        <div class="navbar-cart-item-price">$29</div>
-                        <div class="navbar-cart-item-parameter">Size: S</div>
-                        <div class="navbar-cart-item-parameter">Color: Black</div>
-                        <div class="navbar-cart-item-parameter">Dimension: 80X120mm</div>
-                        <div class="navbar-cart-item-parameter">Qty:
-                          <input class="form-control navbar-cart-item-qty" type="number" value="1" name="qty" data-spinner='{"classes":{"ui-spinner":"navbar-cart-spinner"}}'/>
-                        </div>
-                      </div>
-                      <div class="navbar-cart-item-right">
-                        <button class="navbar-cart-remove int-trash novi-icon"></button>
-                      </div>
-                    </div>
-                    <div class="navbar-cart-item">
-                      <div class="navbar-cart-item-left"><a class="thumbnail-small" href="#"><img src="images/products/product-08-80x103.jpg" alt="" width="80" height="103"/></a></div>
-                      <div class="navbar-cart-item-body"><a class="navbar-cart-item-heading" href="#">Phone case with chain</a>
-                        <div class="navbar-cart-item-price">$34</div>
-                        <div class="navbar-cart-item-parameter">Size: S</div>
-                        <div class="navbar-cart-item-parameter">Color: Red</div>
-                        <div class="navbar-cart-item-parameter">Dimension: 80X120mm</div>
-                        <div class="navbar-cart-item-parameter">Qty:
-                          <input class="form-control navbar-cart-item-qty" type="number" value="1" name="qty" data-spinner='{"classes":{"ui-spinner":"navbar-cart-spinner"}}'/>
-                        </div>
-                      </div>
-                      <div class="navbar-cart-item-right">
-                        <button class="navbar-cart-remove int-trash novi-icon"></button>
-                      </div>
-                    </div>
-                    <div class="navbar-cart-line">
-                      <div class="navbar-cart-line-name">Subtotal:</div>
-                      <div class="navbar-cart-line-value">$63.00</div>
-                    </div>
-                    <div class="navbar-cart-line">
-                      <div class="navbar-cart-line-name">Shipping:</div>
-                      <div class="navbar-cart-line-value">Free</div>
-                    </div>
-                    <div class="navbar-cart-line">
-                      <div class="navbar-cart-line-name">Taxes:</div>
-                      <div class="navbar-cart-line-value">$0.00</div>
-                    </div>
-                    <div class="navbar-cart-line">
-                      <div class="navbar-cart-line-name">Total:</div>
-                      <div class="navbar-cart-total">$63</div>
-                    </div>
-                    <div class="navbar-cart-buttons">
-                      <div class="navbar-cart-group"><a class="btn btn-dark btn-sm" href="#">Continue shopping</a><a class="btn btn-primary btn-sm" href="#"><span class="btn-icon int-check novi-icon"></span><span>Checkout</span></a></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </nav>
       </header>
@@ -426,22 +354,17 @@
         
         
         <script>
+                
             (function(){
 
+                var messagesWaiting = false;
                 var chat = {
                   messageToSend: '',
-                  messageResponses: [
-                    'Why did the web developer leave the restaurant? Because of the table layout.',
-                    'How do you comfort a JavaScript bug? You console it.',
-                    'An SQL query enters a bar, approaches two tables and asks: "May I join you?"',
-                    'What is the most used language in programming? Profanity.',
-                    'What is the object-oriented way to become wealthy? Inheritance.',
-                    'An SEO expert walks into a bar, bars, pub, tavern, public house, Irish pub, drinks, beer, alcohol'
-                  ],
                   init: function() {
                     this.cacheDOM();
                     this.bindEvents();
                     this.render();
+                    setInterval(this.getMessages, 1000);
                   },
                   cacheDOM: function() {
                     this.$chatHistory = $('.chat-history');
@@ -453,6 +376,48 @@
                     this.$button.on('click', this.addMessage.bind(this));
                     this.$textarea.on('keyup', this.addMessageEnter.bind(this));
                   },
+                  sendMessageToBackend: function(context){
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.open("POST", "ServletChat", false);
+                    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    var nameText = escape(document.getElementById("name").value);
+                    document.getElementById("message").value = "";
+                    xmlhttp.send("name="+nameText+"&message="+context.messageOutput);
+                  },
+                  getMessages: function(){
+                    console.log("get messages");
+                    if(!messagesWaiting){
+                        console.log("message");
+                        messagesWaiting = true;
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange=function(){
+                            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                                messagesWaiting = false;
+//                                
+                                var contextResponse = { 
+                                  response: xmlhttp.responseText,
+                                  time: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")
+                                };
+                                
+                                var templateResponse = Handlebars.compile( $("#message-response-template").html());
+//                                var contextResponse = { 
+//                                  response: "xmlhttp.rteestest",
+//                                  time: new Date().toLocaleTimeString()
+//                                };
+
+
+                                $('.chat-history').find('ul').append(templateResponse(contextResponse));
+                                // TODO ARREGLAR ESTO NO FUNCIONA this.scrollToBottom();
+                                
+//                                
+                                console.log("test");
+                            }
+                        };
+//                            
+                        xmlhttp.open("GET", "ServletChat", true);
+                        xmlhttp.send();
+                    }
+                  },
                   render: function() {
                     this.scrollToBottom();
                     if (this.messageToSend.trim() !== '') {
@@ -462,28 +427,21 @@
                         time: this.getCurrentTime()
                       };
 
+                      this.sendMessageToBackend(context);
                       this.$chatHistoryList.append(template(context));
                       this.scrollToBottom();
                       this.$textarea.val('');
 
-                      // responses
-                      var templateResponse = Handlebars.compile( $("#message-response-template").html());
-                      var contextResponse = { 
-                        response: this.getRandomItem(this.messageResponses),
-                        time: this.getCurrentTime()
-                      };
+                      
+                      
 
-                      setTimeout(function() {
-                        this.$chatHistoryList.append(templateResponse(contextResponse));
-                        this.scrollToBottom();
-                      }.bind(this), 1500);
 
                     }
 
                   },
 
                   addMessage: function() {
-                    this.messageToSend = this.$textarea.val()
+                    this.messageToSend = this.$textarea.val();
                     this.render();         
                   },
                   addMessageEnter: function(event) {
@@ -506,6 +464,7 @@
                 };
 
                 chat.init();
+                setInterval(chat.getMessages(), 1000);
 
                 var searchFilter = {
                   options: { valueNames: ['name'] },
