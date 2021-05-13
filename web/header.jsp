@@ -13,6 +13,8 @@
 
 <%
     Usuario loggedUser = (Usuario) request.getSession().getAttribute("logged-user");
+    String nav = (String) request.getParameter("nav");
+    if(nav == null) nav = "";
 %>
       
 <header class="section rd-navbar-wrap">
@@ -27,40 +29,40 @@
             <div class="navbar-cell navbar-spacer"></div>
             <div class="navbar-cell navbar-sidebar">
               <ul class="navbar-navigation rd-navbar-nav">
-                <li class="navbar-navigation-root-item active"><a class="navbar-navigation-root-link" href="index.jsp">Inicio</a>
+                <li class="navbar-navigation-root-item <%= (nav.equals("inicio") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="index.jsp">Inicio</a>
                 </li>
                 
                 <!-- Esto deberá comprobar en un futuro si el usuario logeado es Admin o Analista -->
                 <%
                     if (Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)) {
                         %>
-                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServeltAnalisisIndex">Análisis</a>
+                        <li class="navbar-navigation-root-item <%= (nav.equals("analisis") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServeltAnalisisIndex">Análisis</a>
                         </li>
                         <%
                     }
                     if (Autenticacion.tieneRol(request, response, Administrador.class)) {
                         %>
-                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Administración</a>
-                        </li>
+                    <li class="navbar-navigation-root-item <%= (nav.equals("administracion") ? "active" : "") %>" ><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Administración</a>
+                    </li>
                         <%
                     }
                     %>
                     <% 
                     if (Autenticacion.tieneRol(request, response, Usuarioeventos.class, Administrador.class)) {
                     %>
-                    <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Mis reservas</a>
+                    <li class="navbar-navigation-root-item <%= (nav.equals("reservas") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Mis reservas</a>
                         </li>
                     <%
                     }
                     %>
-                    <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
+                    <li class="navbar-navigation-root-item <%= (nav.equals("eventos") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
                     </li>
                     <%
                     if (!Autenticacion.estaLogeado(request, response)) {
                         %>
-                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="usuario-iniciar-sesion.jsp">Iniciar sesión</a>
+                        <li class="navbar-navigation-root-item <%= (nav.equals("iniciar") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="usuario-iniciar-sesion.jsp">Iniciar sesión</a>
                         </li>
-                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="usuario-registrar.jsp">Registrarse</a>
+                        <li class="navbar-navigation-root-item <%= (nav.equals("registrar") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="usuario-registrar.jsp">Registrarse</a>
                         </li>
                         <%
                     } else {

@@ -4,16 +4,14 @@
     Author     : majochaves
 --%>
 
-<<<<<<< HEAD
+
 <%@page import="entity.Usuarioeventos"%>
 <%@page import="entity.Administrador"%>
 <%@page import="entity.Creadoreventos"%>
 <%@page import="clases.Autenticacion"%>
-=======
 <%@page import="entity.Administrador"%>
 <%@page import="clases.Autenticacion"%>
 <%@page import="entity.Usuario"%>
->>>>>>> c8c634b0ffa1edbde46b53b90d1530cdb626282f
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="entity.Evento"%>
@@ -35,10 +33,6 @@
     <%
         Evento evento = (Evento)request.getAttribute("evento");
         Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
-        boolean puedeEditarBorrar = false;
-        if(u != null){
-            puedeEditarBorrar = Autenticacion.tieneRol(request, response, Administrador.class) || evento.getCreadoreventosId().getUsuarioId() == u.getId();
-        }
     %>
     <body>
       <div class="page">
@@ -108,15 +102,6 @@
                     <a href="ServletEventoDatos?id=<%=evento.getId()%>" class="btn btn-secondary">Reservar</a>
                 <%
                 }
-                %>
-                
-
-                <% if(puedeEditarBorrar){ %>
-                    <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
-                    <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
-                <%}%>
-
-            <%
             }
             %>
         </div>

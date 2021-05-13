@@ -25,56 +25,54 @@
         <title>Registro</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        <div class="section section-lg bg-transparent container">
-            <br/>
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>Registro</h1>
+        <jsp:include page="header.jsp">
+            <jsp:param name="nav" value="registrar"/>  
+        </jsp:include>
+                <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Registro de usuario</h1>
+                    </div>
                 </div>
-            </div>
-            <hr class="divider divider-sm mt-0" />
-            <br/>
-            
-            <%-- ERROR --%>
-            <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
-            <form action="ServletRegistrarUsuario" method="POST">
+                <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
+                <img style="float: right; margin-right: 15%; margin-top: -10%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
+                <form action="ServletRegistrarUsuario" method="POST">
                 <table>
                     <tr>
                         <td>Usuario</td>
-                        <td><input type="text" name="usuario" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                        <td><input class="textf" type="text" name="usuario" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td>Contraseña&nbsp&nbsp</td>
-                        <td><input type="password" name="pass" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                        <td><input class="textf" type="password" name="pass" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td>Repetir Contraseña&nbsp&nbsp</td>
-                        <td><input type="password" name="pass1" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                        <td><input class="textf" type="password" name="pass1" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td>Nombre</td>
-                        <td><input type="text" name="nombre" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                        <td><input class="textf" type="text" name="nombre" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td>Apellidos</td>
-                        <td><input type="text" name="apellidos" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                        <td><input class="textf" type="text" name="apellidos" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td>Domicilio</td>
-                        <td><input type="text" name="domicilio" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                        <td><input class="textf" type="text" name="domicilio" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td>Ciudad de Residencia</td>
-                        <td><input type="text" name="ciudad" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                        <td><input class="textf" type="text" name="ciudad" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
                         <td>Sexo</td>
                         <td>
                             <select name="sexo">
-                                <option>HOMBRE</option>
-                                <option>MUJER</option>
-                                <option>OTRO</option>
+                                <option>Hombre</option>
+                                <option>Mujer</option>
                             </select>
                     </tr>
                 </table>    

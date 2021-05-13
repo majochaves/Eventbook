@@ -36,7 +36,9 @@
     <body>
       <div class="page">
       <!--RD Navbar-->
-      <jsp:include page="header.jsp" />
+      <jsp:include page="header.jsp">
+            <jsp:param name="nav" value="eventos"/>  
+        </jsp:include>
       <!-- Intro-->
       <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
         <div class="container-fluid">

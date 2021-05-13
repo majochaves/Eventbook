@@ -25,33 +25,33 @@
         <title>Inicio de sesión</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        <div class="section section-lg bg-transparent container">
-            <br/>
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>Inicio de sesión</h1>
+        <jsp:include page="header.jsp">
+            <jsp:param name="nav" value="iniciar"/>  
+        </jsp:include>
+        <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Inicio de sesión</h1>
+                    </div>
                 </div>
+                <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
+                <img style="float: right; margin-right: 15%; margin-top: -10%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
+                <form action="ServletUsuarioIniciarSesion" method="POST">
+                    <table>
+                    <tr>
+                        <td>Usuario</td>
+                        <td><input class="textf" type="text" name="usuario" maxlength="30" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña&nbsp&nbsp</td>
+                        <td><input class="textf" type="password" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
+                    </tr>
+                    <table/>
+                    <input class="btn btn-primary" type="submit" value="Iniciar sesión"> 
+                    <a style="margin-left: 2%" href="index.jsp">Cancelar</a>
+                </form>
             </div>
-            <hr class="divider divider-sm mt-0" />
-            <br/>
-            
-            <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
-            <form action="ServletUsuarioIniciarSesion" method="POST">
-                <table>
-                <tr>
-                    <td>Usuario</td>
-                    <td><input type="text" name="usuario" maxlength="30" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                </tr>
-                <tr>
-                    <td>Contraseña&nbsp&nbsp</td>
-                    <td><input type="password" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
-                </tr>
-                <table/>
-                
-                <input class="btn btn-primary" type="submit" value="Iniciar sesión"> 
-                <a style="margin-left: 2%" href="index.jsp">Cancelar</a>
-            </form>
         </div>
     </body>
 </html>

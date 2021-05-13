@@ -35,7 +35,9 @@
         List<Usuario> usuarios = (List)request.getAttribute("usuarios");
     %>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="header.jsp">
+            <jsp:param name="nav" value="administracion"/>  
+        </jsp:include>
     <div class="section section-lg bg-transparent">
         <div class="container">
             <br/>

@@ -28,7 +28,10 @@
     </head>
     <body>
         <div class="page">
-            <jsp:include page="header.jsp" />
+            <jsp:include page="header.jsp">
+                <jsp:param name="nav" value="analisis"/>  
+            </jsp:include>
+            
 
             <b>EN DESARROLLO</b><br/>
 
