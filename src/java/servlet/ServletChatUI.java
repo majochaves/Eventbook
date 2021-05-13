@@ -5,13 +5,18 @@
  */
 package servlet;
 
+import clases.Autenticacion;
+import dao.MensajeFacade;
 import dao.TeleoperadorFacade;
 import dao.UsuarioFacade;
+import entity.Mensaje;
 import entity.Teleoperador;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
+import javafx.util.Pair;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,6 +31,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletChatUI", urlPatterns = {"/ServletChatUI"})
 public class ServletChatUI extends HttpServlet {
+
+    @EJB
+    private MensajeFacade mensajeFacade;
 
     @EJB
     private UsuarioFacade usuarioFacade;
@@ -44,6 +52,11 @@ public class ServletChatUI extends HttpServlet {
         String userID = request.getParameter("userID");
         Usuario user = this.usuarioFacade.getUserByID(userID);
         request.setAttribute("usuarioChat", user);
+        
+        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+        
+        List<Pair<Integer, Mensaje>> mensajes = this.mensajeFacade.getMapOfMensajesByIDs(new Integer(userID), thisUsuario.getId());
+        request.setAttribute("mensajesHistorial", mensajes);
         
         RequestDispatcher rd = request.getRequestDispatcher("chat.jsp");
         rd.forward(request, response);
