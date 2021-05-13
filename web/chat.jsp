@@ -4,6 +4,7 @@
     Author     : guzman
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="javafx.util.Pair"%>
 <%@page import="entity.Mensaje"%>
 <%@page import="java.util.Map"%>
@@ -76,7 +77,7 @@
             <div class="container">
                 <!-- Breadcrumb-->
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="ServletChatListar">Chats</a></li>
                     <li class="breadcrumb-item"><span class="breadcrumb-text breadcrumb-active">Chat con <%= usuarioChat.getNombre() %></span></li>
                 </ul>
             </div>
@@ -152,11 +153,11 @@
             <script id="message-response-template" type="text/x-handlebars-template">
                 <li>
                 <div class="message-data">
-                <span class="message-data-name"><i class="fa fa-circle online"></i>{{name}}</span>
-                <span class="message-data-time">{{time}}, Today</span>
+                <span class="message-data-name"><i class="fa fa-circle online"></i><%= usuarioChat.getNombre() %></span>
+                <span class="message-data-time">{{time}}</span>
                 </div>
                 <div class="message my-message">
-                {{response}}
+                {{messageOutput}}
                 </div>
                 </li>
             </script>
@@ -256,7 +257,7 @@
                             console.log("Size", "<%= mensajes.size() %>");
                             <% for (Pair<Integer, Mensaje> msg : mensajes){ %>
                                 console.log("IMP MENSAJE");
-                                console.log("<%= msg.getKey() %>");
+                                console.log("<%= msg.getValue().getContenido() %>");
                                 console.log("<%= msg.getValue().getUsuarioEmisorId() %>");
                                 console.log("<%= msg.getKey() %>");
                                 
@@ -265,13 +266,11 @@
                                 
                                 var data = {
                                     messageOutput: "<%= msg.getValue().getContenido() %>",
-                                    time: this.getCurrentTime()
+                                    time: "<%= new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(msg.getValue().getFecha()) %>"
                                 }; 
                                 
                                 
                             <% if (msg.getKey().equals(thisUsuario.getId())){ %>  
-                                    console.log("this usuario id");
-                                    console.log(<%= thisUsuario.getId() %>);
                                     this.$chatHistoryList.append(templateEnviar(data));            
                                 <% } else {%>   
                                     this.$chatHistoryList.append(templateResponse(data));    
