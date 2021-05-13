@@ -9,6 +9,7 @@ import entity.Campoanalisis;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,12 @@ public class CampoanalisisFacade extends AbstractFacade<Campoanalisis> {
 
     public CampoanalisisFacade() {
         super(Campoanalisis.class);
+    }
+    
+    public void deleteCampoanalisisByTipoanalisisId(Integer idTipoanalisis){
+        Query q = em.createQuery("DELETE FROM Campoanalisis c WHERE c.campoanalisisPK.tipoanalisisId = :idTipoanalisis");
+        q.setParameter("idTipoanalisis", idTipoanalisis);
+        q.executeUpdate();
     }
     
 }

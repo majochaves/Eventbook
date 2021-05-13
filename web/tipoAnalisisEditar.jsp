@@ -26,7 +26,8 @@
         <script src="components/bootstrap/js/bootstrap.min.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
-        <script src="components/propios/valoresNoRepetibles.js" defer></script> 
+        <script src="components/propios/valoresNoRepetibles.js" defer></script>
+        <script src="components/propios/anyadirFilaEnUnaTabla.js" defer></script>
         <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
@@ -55,52 +56,54 @@
                     
                     
 
-                    
-                    <div class="row justify-content-md-center">
-                        <div class="col-sm-6 pb-4">
-                            <form method="POST" action="ServletTipoanalisisEditar?id=<%=tipoAnalisis.getId()%>">
-                                <table class="table table-sm table-hover table-bordered">
+                    <form method="POST" action="ServletTipoanalisisEditar?id=<%=tipoAnalisis.getId()%>">
+                        <div class="row justify-content-md-center">
+                            <div class="col-sm-6 pb-4">
 
-                                    <thead>
-                                        <tr class="table-secondary">
-                                            <th cope="col"><%=tipoAnalisis.getNombre()%></th> <!--Nombre de la columna-->
-                                            <th scope="col">Valor</th>
-                                        </tr>
-                                    </thead>
+                                    <table id="tablaAnyadirFila" class="table table-sm table-hover table-bordered">
 
-                                    <tbody>
-                                        <%
-                                            int i = 1;
-                                            for(Campoanalisis thisCampoanalisis : tipoAnalisis.getCampoanalisisList()){
-                                        %>
-                                                <tr>
-                                                    <td>
-                                                        <input class="form-control form-control-sm textoColumna1" type="text" name="fila<%=i%>col1" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
-                                                        <input name="fila<%=i%>colAntiguo" type="hidden" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
-                                                    </td>
-                                                    <td><input class="form-control form-control-sm" type="number" name="fila<%=i%>col2" value="<%=thisCampoanalisis.getValor()%>"></td>
-                                                </tr>
-                                        <%
-                                                i++;
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
-                            </form>
-                            <br/>
-                        </div>
+                                        <thead>
+                                            <tr class="table-secondary">
+                                                <th cope="col"><%=tipoAnalisis.getNombre()%></th> <!--Nombre de la columna-->
+                                                <th scope="col">Valor</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <%
+                                                int i = 1;
+                                                for(Campoanalisis thisCampoanalisis : tipoAnalisis.getCampoanalisisList()){
+                                            %>
+                                                    <tr>
+                                                        <td>
+                                                            <input class="form-control form-control-sm textoColumna1" type="text" name="nombres" value="<%=thisCampoanalisis.getCampoanalisisPK().getNombre()%>">
+                                                        </td>
+                                                        <td><input class="form-control form-control-sm" type="number" name="valores" value="<%=thisCampoanalisis.getValor()%>"></td>
+                                                    </tr>
+                                            <%
+                                                    i++;
+                                                }
+                                            %>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-right">
+                                        <button type="button" id="anyadirFila" class="shadow-sm badge badge-info">Añadir fila</button>
+                                    </div>
+
+                                <br/>
+                            </div>
                         
               
-                    </div>
-                                    
-                    <div class="row justify-content-md-center">
-                        <div class="col-8">
-                            <span id="spanTooltip">
-                                <button type="button" class="btn btn-primary btn-lg btn-block"  id="btnEnviar">Guardar</button>
-                            </span>
                         </div>
-                    </div>            
-                                
+                                    
+                        <div class="row justify-content-md-center">
+                            <div class="col-8">
+                                <span id="spanTooltip">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block"  id="btnEnviar">Guardar</button>
+                                </span>
+                            </div>
+                        </div>            
+                    </form>            
                                 
                                 
                 </div>

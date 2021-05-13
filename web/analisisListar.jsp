@@ -46,7 +46,6 @@
                                     <tr class="table-secondary">
                                         <th cope="col">Descripción</th>
                                         <th scope="col" class="text-center">Acceder</th>
-                                        <th scope="col" class="text-center">Duplicar</th>
                                         <th scope="col" class="text-center">Eliminar</th>
                                     </tr>
                                 </thead>
@@ -57,8 +56,9 @@
                                     %>
                                             <tr>
                                                 <td><%=esteAnalisis.getDescripcion()%></td>
+                                                
                                                 <td class="align-middle text-center"><a href="ServeltAnalisisVer?id=<%=esteAnalisis.getId()%>" class="btn btn-primary">Acceder</a></td>
-                                                <td class="align-middle text-center"><a href="#" class="btn btn-warning">Duplicar</a></td>
+                                                
                                                 <td class="align-middle text-center"><a href="ServeltAnalisisBorrar?id=<%=esteAnalisis.getId()%>" class="shadow-sm btn btn-danger">Eliminar</a></td>
                                             </tr>
                                     <%
@@ -72,6 +72,8 @@
                     <br/>
                 </div>
             </div>
+            
+            
         </div>   
     </body>
 </html>
