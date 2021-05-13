@@ -112,6 +112,7 @@
                         <th>Teleoperador</th>
                         <th>Usuario</th>
                         <th></th>
+                        <th></th>
                     </tr>        
                 </thead>
                 
@@ -125,6 +126,7 @@
                        <td><%= new SimpleDateFormat("dd-M-yyyy hh:mm").format(chat.getFecha())  %></td>
                        <td><%= tele.getUsuario().getNombre() %></td>
                        <td><%= usuario.getNombre() %></td>
+                       <td class="align-middle text-center"> <a href="ServletChatUI?opID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn" >Chat</a> </td>
                        <td class="align-middle text-center"> <a href="ServletChatBorrar?userID=<%= chat.getChatPK().getUsuarioId() %>&opID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
                    </tr>     
                 </tbody>

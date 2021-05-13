@@ -31,7 +31,9 @@
         
         // Lista de teleoperadores;
         List<Teleoperador> teleoperadores = (List<Teleoperador>)  request.getAttribute("teleoperadores");
-
+        Teleoperador opChat = (Teleoperador)request.getAttribute("operador");
+        
+        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         %>
         
     </head>
@@ -102,7 +104,7 @@
         
         
         <div class="chat-about">
-          <div class="chat-with">Chat with Vincent Porter</div>
+          <div class="chat-with"><%= opChat.getUsuario().getNombre() %> </div>
           <div class="chat-num-messages">already 1 902 messages</div>
         </div>
         <i class="fa fa-star"></i>
@@ -133,8 +135,8 @@
 <script id="message-template" type="text/x-handlebars-template">
   <li class="clearfix">
     <div class="message-data align-right">
-      <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
-      <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+      <span class="message-data-time" >{{time}}</span> &nbsp; &nbsp;
+      <span class="message-data-name" ><%= thisUsuario.getNombre() %></span> <i class="fa fa-circle me"></i>
     </div>
     <div class="message other-message float-right">
       {{messageOutput}}
@@ -212,7 +214,7 @@
                                 
                                 var templateResponse = Handlebars.compile( $("#message-response-template").html());
 
-
+                                
 //                                $('.chat-history').find('ul').append(templateResponse(contextResponse));
                                 $('.chat-history').find('ul').append(xmlhttp.responseText);
                                 // TODO ARREGLAR ESTO NO FUNCIONA 

@@ -35,6 +35,10 @@ public class ServletChatUI extends HttpServlet {
         List<Teleoperador> teleoperadores = this.teleoperadorFacade.findAll();
         request.setAttribute("teleoperadores", teleoperadores);
         
+        Integer opID = new Integer(request.getParameter("opID"));
+        Teleoperador op = this.teleoperadorFacade.findByUsuarioID(opID);
+        request.setAttribute("operador", op);
+        
         RequestDispatcher rd = request.getRequestDispatcher("chat.jsp");
         rd.forward(request, response);
     }

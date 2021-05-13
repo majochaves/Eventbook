@@ -65,6 +65,10 @@ and open the template in the editor.
   color: #92959E;
 }
 
+.name {
+    color: whitesmoke;
+}
+
 .chat {
   width: 1020px;
   height: 100%;
@@ -88,10 +92,11 @@ and open the template in the editor.
 }
 .chat .chat-header .chat-with {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
 }
 .chat .chat-header .chat-num-messages {
   color: #92959E;
+  font-size: 12px;
 }
 .chat .chat-header .fa-star {
   float: right;
