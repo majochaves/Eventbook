@@ -80,6 +80,9 @@ public class ServletChat extends HttpServlet {
             System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             System.out.println(message);
             
+            // Current time
+            Date currentTime = new Date();
+            
             // Usuario envia es el logueado
             envia = Autenticacion.getUsuarioLogeado(request, response);
             
@@ -87,27 +90,32 @@ public class ServletChat extends HttpServlet {
             recibe = this.usuarioFacade.getUserByID(userTo);
             
             // HTML to be appended to the chat
-            htmlMessage = "<li><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date())+"</span></div><div class='message my-message'>"+ message +"</div></li>";
+            htmlMessage = "<li><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
             
             // Find if chat already exists
-//            chat = this.chatFacade.findByTwoUsers(usuario a, usuario b);
-//            if(chat == null){
-//                
-//            }
-//            
-//            // Compose message from data
-//            Mensaje msg = new Message();
-//            msg.setFecha(fecha);
-//            msg.setContenido(name);
-//            msg.setUsuarioEmisorId(0);
-//            
-//            // Add message to chat
-//            chat.getMensajeList().add();
-
+            chat = this.chatFacade.findByChatPK(envia.getId(), recibe.getId());
+            if(chat == null){ // El chat no existe
+                // TODO Crear chat
+                System.out.println("CREAR CHAT");
+                LOG.severe("Se ha producido un error: se debe crear chat ");
+            }
+      
+            // Compose message from data
+            Mensaje msg = new Mensaje();
+            msg.setFecha(currentTime);
+            msg.setContenido(message);
+            msg.setUsuarioEmisorId(envia.getId());
+            msg.setChat(chat);
+            mensajeFacade.create(msg);
+            
+            // Add message to chat
+            boolean add = chat.getMensajeList().add(msg);
+            
+            if (!add){
+                LOG.severe("Se ha producido un error: " + add);
+            }
         
 
-
-            
         } else { // Message had an error
             htmlMessage = "";
         }
@@ -137,18 +145,6 @@ public class ServletChat extends HttpServlet {
             }
         }
 
-        /*
-        // Create entity for db
-        Mensaje msg = new Mensaje();
-//        msg.setChat(chat); TODO: Add chat rooms
-        msg.setContenido(message);
-        msg.setFecha(new Date());
-//        msg.setUsuarioEmisorId(usuario); TODO : GET USUARIO
-        
-        // Save to db
-        mensajeFacade.create(msg);
-*/
-        
         
 
     }

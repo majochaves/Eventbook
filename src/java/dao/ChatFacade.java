@@ -42,4 +42,6 @@ public class ChatFacade extends AbstractFacade<Chat> {
         return (Chat) q.getSingleResult();
     }
     
+    
+    
 }
