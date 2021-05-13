@@ -192,65 +192,8 @@
       
       <div class="chat-history">
         <ul>
-          <li class="clearfix">
-            <div class="message-data align-right">
-              <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-              <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
-              
-            </div>
-            <div class="message other-message float-right">
-              Hi Vincent, how are you? How is the project coming along?
-            </div>
-          </li>
-          
-          <li>
-            <div class="message-data">
-              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-              <span class="message-data-time">10:12 AM, Today</span>
-            </div>
-            <div class="message my-message">
-              Are we meeting today? Project has been already finished and I have results to show you.
-            </div>
-          </li>
-          
-          <li class="clearfix">
-            <div class="message-data align-right">
-              <span class="message-data-time" >10:14 AM, Today</span> &nbsp; &nbsp;
-              <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
-              
-            </div>
-            <div class="message other-message float-right">
-              Well I am not sure. The rest of the team is not here yet. Maybe in an hour or so? Have you faced any problems at the last phase of the project?
-            </div>
-          </li>
-          
-          <li>
-            <div class="message-data">
-              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-              <span class="message-data-time">10:20 AM, Today</span>
-            </div>
-            <div class="message my-message">
-              Actually everything was fine. I'm very excited to show this to our team.
-            </div>
-          </li>
-          
-          <li>
-            <div class="message-data">
-              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-              <span class="message-data-time">10:31 AM, Today</span>
-            </div>
-            <i class="fa fa-circle online"></i>
-            <i class="fa fa-circle online" style="color: #AED2A6"></i>
-            <i class="fa fa-circle online" style="color:#DAE9DA"></i>
-          </li>
-          <div class="message-data">
-              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-              <span class="message-data-time">10:31 AM, Today</span>
-            </div>
-            <i class="fa fa-circle online"></i>
-            <i class="fa fa-circle online" style="color: #AED2A6"></i>
-            <i class="fa fa-circle online" style="color:#DAE9DA"></i>
-          </li>
+       
+
         </ul>
         
       </div> <!-- end chat-history -->
@@ -284,7 +227,7 @@
 <script id="message-response-template" type="text/x-handlebars-template">
   <li>
     <div class="message-data">
-      <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+      <span class="message-data-name"><i class="fa fa-circle online"></i>{{name}}</span>
       <span class="message-data-time">{{time}}, Today</span>
     </div>
     <div class="message my-message">
@@ -296,62 +239,9 @@
           
           
           
-          
-        <div class="container">
-          <h1>SHOUT-OUT!</h1>
-        <form>
-            <table>
-                <tr>
-                    <td>Your name:</td>
-                    <td><input type="text" id="name" name="name"/></td>
-                </tr>
-                <tr>
-                    <td>Your shout:</td>
-                    <td><input type="text" id="message" name="message" /></td>
-                </tr>
-                <tr>
-                    <td><input type="button" onclick="postMessage();" value="SHOUT" /></td>
-                </tr>
-            </table>
-        </form>
-        <h2> Current Shouts </h2>
-        <div id="content">
-            <% if (application.getAttribute("messages") != null) {%>
-            <%= application.getAttribute("messages")%>
-            <% }%>
-        </div>
-        <script>
-            function postMessage() {
-                var xmlhttp = new XMLHttpRequest();
-                //xmlhttp.open("POST", "shoutServlet?t="+new Date(), false);
-                xmlhttp.open("POST", "ServletChat", false);
-                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                var nameText = escape(document.getElementById("name").value);
-                var messageText = escape(document.getElementById("message").value);
-                document.getElementById("message").value = "";
-                xmlhttp.send("name="+nameText+"&message="+messageText);
-            }
-            var messagesWaiting = false;
-            function getMessages(){
-                if(!messagesWaiting){
-                    messagesWaiting = true;
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange=function(){
-                        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                            messagesWaiting = false;
-                            var contentElement = document.getElementById("content");
-                            contentElement.innerHTML = xmlhttp.responseText + contentElement.innerHTML;
-                        }
-                    }
-                    //xmlhttp.open("GET", "shoutServlet?t="+new Date(), true);
-                    xmlhttp.open("GET", "ServletChat", true);
-                    xmlhttp.send();
-                }
-            }
-            setInterval(getMessages, 1000);
-        </script>
+  
         
-        
+
         
         <script>
                 
@@ -380,9 +270,7 @@
                     var xmlhttp = new XMLHttpRequest();
                     xmlhttp.open("POST", "ServletChat", false);
                     xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    var nameText = escape(document.getElementById("name").value);
-                    document.getElementById("message").value = "";
-                    xmlhttp.send("name="+nameText+"&message="+context.messageOutput);
+                    xmlhttp.send("message="+context.messageOutput+"&userTo=1");
                   },
                   getMessages: function(){
                     console.log("get messages");
@@ -393,27 +281,28 @@
                         xmlhttp.onreadystatechange=function(){
                             if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                                 messagesWaiting = false;
+                                
+                                rawData = xmlhttp.responseText;
+                                
+//                                console.log(rawData);
 //                                
                                 var contextResponse = { 
-                                  response: xmlhttp.responseText,
-                                  time: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3")
+                                  response: rawData.text,
+                                  time: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
+                                  name: rawData.name
                                 };
                                 
                                 var templateResponse = Handlebars.compile( $("#message-response-template").html());
-//                                var contextResponse = { 
-//                                  response: "xmlhttp.rteestest",
-//                                  time: new Date().toLocaleTimeString()
-//                                };
 
 
-                                $('.chat-history').find('ul').append(templateResponse(contextResponse));
-                                // TODO ARREGLAR ESTO NO FUNCIONA this.scrollToBottom();
+//                                $('.chat-history').find('ul').append(templateResponse(contextResponse));
+                                $('.chat-history').find('ul').append(xmlhttp.responseText);
+                                // TODO ARREGLAR ESTO NO FUNCIONA 
+                                // this.scrollToBottom();
+                                                                
                                 
-//                                
-                                console.log("test");
                             }
-                        };
-//                            
+                        };                            
                         xmlhttp.open("GET", "ServletChat", true);
                         xmlhttp.send();
                     }

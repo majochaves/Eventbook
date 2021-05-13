@@ -219,4 +219,12 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     
     
     
+    public Usuario getUserByID(String userID){
+        Query q = this.em.createNamedQuery("Usuario.findById");
+        q.setParameter("id", new Integer(userID));
+        
+        List<Usuario> resultado = q.getResultList();
+        return resultado.get(0);
+    }
+    
 }

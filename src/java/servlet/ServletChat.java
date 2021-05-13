@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.ChatFacade;
 import dao.MensajeFacade;
 import dao.UsuarioFacade;
@@ -13,6 +14,8 @@ import entity.Mensaje;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import entity.Usuario;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,12 +65,30 @@ public class ServletChat extends HttpServlet {
         this.contexts.clear();
         ServletContext application = request.getServletContext();
         
-        Chat chat;        
-        String name = request.getParameter("name");
-        String message = request.getParameter("message");
+        Chat chat;  
+        Usuario envia;
+        Usuario recibe = new Usuario();
+        recibe.setNombre("error");
         
-        // Message contains data
-//        if ((name == null || name.isEmpty())||(message == null || message.isEmpty())) {
+        String message = request.getParameter("message");
+        String userTo = request.getParameter("userTo");
+        
+        String htmlMessage;
+        
+//         Message contains data
+        if (!(message == null || message.contentEquals(""))) {
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            System.out.println(message);
+            
+            // Usuario envia es el logueado
+            envia = Autenticacion.getUsuarioLogeado(request, response);
+            
+            // Usuario que recibe se consigue con request XHR
+            recibe = this.usuarioFacade.getUserByID(userTo);
+            
+            // HTML to be appended to the chat
+            htmlMessage = "<li><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date())+"</span></div><div class='message my-message'>"+ message +"</div></li>";
+            
             // Find if chat already exists
 //            chat = this.chatFacade.findByTwoUsers(usuario a, usuario b);
 //            if(chat == null){
@@ -82,16 +103,19 @@ public class ServletChat extends HttpServlet {
 //            
 //            // Add message to chat
 //            chat.getMensajeList().add();
+
+        
+
+
             
-//        } else { // Message had an error
-//            // TODO display error
-//        }
-        
-        String htmlMessage = "<p><b>" + name + "</b><br/>" + message + "</p>";
+        } else { // Message had an error
+            htmlMessage = "";
+        }
         
         
-       
         
+        
+        System.out.println(htmlMessage);
 
         if (application.getAttribute("messages") == null) {
             application.setAttribute("messages", htmlMessage);
@@ -113,6 +137,7 @@ public class ServletChat extends HttpServlet {
             }
         }
 
+        /*
         // Create entity for db
         Mensaje msg = new Mensaje();
 //        msg.setChat(chat); TODO: Add chat rooms
@@ -122,6 +147,9 @@ public class ServletChat extends HttpServlet {
         
         // Save to db
         mensajeFacade.create(msg);
+*/
+        
+        
 
     }
 }
