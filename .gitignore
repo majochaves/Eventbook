@@ -6,4 +6,8 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
+ant-deploy.xml
+build-impl.xml
+genfiles.properties
+
 *.class
