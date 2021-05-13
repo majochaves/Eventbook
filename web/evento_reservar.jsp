@@ -32,6 +32,7 @@
         Integer numMaxEntradas = evento.getMaxEntradas();
         String maxentradas = " "+"máximo "+numMaxEntradas+" entradas.";
         List<ReservaPK> reservas = (List) request.getAttribute("reservas");
+        String error = (String)request.getAttribute("error");
         
     %>
     <body>
@@ -44,6 +45,9 @@
             <% if(evento != null){
             %>
                 <h1><%=evento.getTitulo()%></h1>
+                <% if(error != null){ %>
+                    <p><%=error%></p>
+                <% } %>
                 <form method="POST" action="ServletEventoReservar">
                     <table>
                         <tr>
@@ -51,30 +55,7 @@
                             <td><input type="text" name="numEntradas" value="" /><%=maxentradas%></td>
                             <input type="hidden" name="id" value="<%= evento.getId() %>" />
                         </tr>
-                        <%
-                          
-                            if(evento.getAsientosFijos().equals('s')){
-                                int filas = evento.getNumFilas();
-                                int numAsientos = evento.getNumAsientosFila();
-                        %>
-                        <th>Seleccione sus entradas</th>
-                        <table>
-                            <%
-                                for(int i = 0; i < filas; i++){
-                            %>        
-                                <tr>
-                            <%        
-                                    for(int j = 0; j < numAsientos; j++){  
-                            %>        
-                                        <td><input type="checkbox" <%= (reservas != null && reservas.contains(new ReservaPK(i+1, j+1, evento.getId())) ? "checked disabled" : " ")%> name="" value="<%= i %>+' '+<%= j %>" /></td>
-                            <%            
-                                    }
-                            %>
-                                </tr>
-                            <%
-                                }   
-                            }
-                        %>    
+                       
                     </table>
                     <input type="submit" class="btn btn-secondary" value="Aceptar" />
                 </form>

@@ -221,6 +221,50 @@ public class Evento implements Serializable {
     public void setReservaList(List<Reserva> reservaList) {
         this.reservaList = reservaList;
     }
+    
+    public void inicializar(int[][] asientos){
+        for(int i = 0; i < asientos.length; i++){
+            for(int o = 0; o < asientos[0].length; o++){
+                asientos[i][o]=0;
+            }
+        }
+    }
+    
+    public int[][] matrizAsientos(){
+        int[][] asientos = new int[this.numFilas][this.numAsientosFila];
+        inicializar(asientos);
+        this.reservaList.forEach((r) -> {
+            asientos[r.getReservaPK().getFila()-1][r.getReservaPK().getAsiento()-1] = 1;
+        });
+        return asientos;
+    }
+    
+    public int getEntradasReservadas(Usuario u){
+        int reservas = 0;
+        if(!this.reservaList.isEmpty()){
+            for(Reserva r: this.reservaList){
+                if(r.getUsuarioeventosId().getUsuarioId() == u.getId()){
+                    reservas++;
+                }
+            }
+        }
+        return reservas;
+    }   
+    
+    public int asientosDisponibles(){
+        if(this.aforo == null && this.asientosFijos == 'n'){
+            return 10000;
+        }
+        int reservas = 0;
+        if(!this.reservaList.isEmpty()){
+            reservas = this.reservaList.size();
+        }
+        if(this.aforo != null && this.asientosFijos == 'n'){
+            return this.aforo - reservas;
+        }else{
+            return this.numAsientosFila * this.numFilas - reservas;
+        }
+    }
 
     @Override
     public int hashCode() {

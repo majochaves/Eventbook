@@ -71,7 +71,7 @@
         }
     %>
     <body>
-           <div class="page">
+      <div class="page">
       <!--RD Navbar-->
       <jsp:include page="header.jsp" />
       <!-- Intro-->
@@ -79,7 +79,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div data-animate='{"class":"fadeInUp"}'>
-                <h1><%= evento != null ? "Editar evento": "Crear un nuevo evento" %></h1>
+                <h1><%= evento != null ? "Editar evento " + id: "Crear un nuevo evento" %></h1>
                 <%if(strError != null){%>
                     <p><%=strError%></p>
                 <%}%>
@@ -135,10 +135,7 @@
                         <%
                             }
                         %>
-                        <button class="btn btn-sm btn-primary" id="etiquetasBtn">+</button>
                     </div>
-                    <div class="form-group" id="etiquetasDiv">
-                    </div>     
                     <div class="form-group">
                         <label for="asientosFijos">Asientos fijos:</label>
                         <div class="form-check">

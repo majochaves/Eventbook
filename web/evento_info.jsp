@@ -70,7 +70,7 @@
                 }
                 if(evento.getMaxEntradas() != null){
                 %>
-                    <p>Aforo: <%=evento.getMaxEntradas()%></p>
+                    <p>Máximo número de entradas por usuario: <%=evento.getMaxEntradas()%></p>
                 <%
                 }
                 // SÓLO VISIBLE PARA CREADOR O ADMINISTRADOR

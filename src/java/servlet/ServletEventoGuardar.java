@@ -65,11 +65,13 @@ public class ServletEventoGuardar extends HttpServlet {
         Evento e;
         Creadoreventos creador;
         if(id == null || id.isEmpty()){
+            System.out.print("Evento nuevo");
             e = new Evento();
             System.out.println("Id de usuario: " + usuarioId);
             creador = this.creadorEventosFacade.find(new Integer(usuarioId));
             e.setCreadoreventosId(creador);
         }else{
+            System.out.println("Id de evento: " + id);
             e = this.eventoFacade.find(new Integer(id));
         }
         
@@ -120,88 +122,94 @@ public class ServletEventoGuardar extends HttpServlet {
                     RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
                     rd.forward(request, response);
                 }
-            }else{
-
-                //COSTE ENTRADA - Opcional
-                if(!costeEntrada.isEmpty()){
-                    if(new Double(costeEntrada) < 0){
-                        error = "Error: campos numéricos deben ser positivos.";
-                        request.setAttribute("strError", error);
-                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
-                        rd.forward(request, response);
-                    }
-                    e.setCosteEntrada(new Double(costeEntrada));
-                }
-
-                //AFORO - Opcional
-                if(!aforo.isEmpty()){
-                    if(new Integer(aforo) < 0){
-                        error = "Error: campos numéricos deben ser positivos.";
-                        request.setAttribute("strError", error);
-                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
-                        rd.forward(request, response);
-                    }
-                    e.setAforo(new Integer(aforo));
-                }
-
-                //MAX ENTRADAS - Opcional
-                if(!maxEntradas.isEmpty()){
-                    if(new Integer(maxEntradas) < 0){
-                        error = "Error: campos numéricos deben ser positivos.";
-                        request.setAttribute("strError", error);
-                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
-                        rd.forward(request, response);
-                    }
-                    e.setMaxEntradas(new Integer(maxEntradas));
-                }
-
-                if(etiquetas != null){
-                    for(int i = 0; i < etiquetas.length; i++){
-                        Etiqueta etiqueta = this.etiquetaFacade.find(new Integer(etiquetas[i]));
-                        etiqueta.getEventoList().add(e);
-                        this.etiquetaFacade.edit(etiqueta);
-                        e.getEtiquetaList().add(etiqueta);
-                    }
-                }
-
-                //ASIENTOS_FIJOS - Opcional
-                if(asientosFijos.equals("si")){
-                    e.setAsientosFijos('s');
-                    //NUM FILAS - Opcional
-                    if(numFilas != null){
-                        if(new Integer(numFilas) < 0){
-                            error = "Error: campos numéricos deben ser positivos.";
-                            request.setAttribute("strError", error);
-                            RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
-                            rd.forward(request, response);
-                        }
-                        e.setNumFilas(new Integer(numFilas));
-                    }
-
-                    //NUM ASIENTOS POR FILA - Opcional
-                    if(numAsientosFila != null){
-                        if(new Integer(numAsientosFila) < 0){
-                            error = "Error: campos numéricos deben ser positivos.";
-                            request.setAttribute("strError", error);
-                            RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
-                            rd.forward(request, response);
-                        }
-                        e.setNumAsientosFila(Integer.parseInt(numAsientosFila));
-                    }
-                }else{
-                    e.setAsientosFijos('n');
-                    e.setNumFilas(null);
-                    e.setNumAsientosFila(null);
-                }
-
-                if(id == null || id.isEmpty()){
-                    this.eventoFacade.create(e);
-                }else{
-                    this.eventoFacade.edit(e);
-                }
-
-                response.sendRedirect("ServletEventoListar");
             }
+            //COSTE ENTRADA - Opcional
+            if(!costeEntrada.isEmpty()){
+                if(new Double(costeEntrada) < 0){
+                    error = "Error: campos numéricos deben ser positivos.";
+                    request.setAttribute("strError", error);
+                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    rd.forward(request, response);
+                }
+                e.setCosteEntrada(new Double(costeEntrada));
+            }
+
+            //AFORO - Opcional
+            if(!aforo.isEmpty()){
+                if(new Integer(aforo) < 0){
+                    error = "Error: campos numéricos deben ser positivos.";
+                    request.setAttribute("strError", error);
+                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    rd.forward(request, response);
+                }
+                e.setAforo(new Integer(aforo));
+            }
+
+            //MAX ENTRADAS - Opcional
+            if(!maxEntradas.isEmpty()){
+                if(new Integer(maxEntradas) < 0){
+                    error = "Error: campos numéricos deben ser positivos.";
+                    request.setAttribute("strError", error);
+                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    rd.forward(request, response);
+                }
+                if(!aforo.isEmpty()){
+                    if(new Integer(aforo) < new Integer(maxEntradas)){
+                        error = "Error: máximo número de entradas por usuario debe ser menor que el aforo.";
+                        request.setAttribute("strError", error);
+                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        rd.forward(request, response);
+                    }
+                }
+                e.setMaxEntradas(new Integer(maxEntradas));
+            }
+
+            if(etiquetas != null){
+                for(int i = 0; i < etiquetas.length; i++){
+                    Etiqueta etiqueta = this.etiquetaFacade.find(new Integer(etiquetas[i]));
+                    etiqueta.getEventoList().add(e);
+                    this.etiquetaFacade.edit(etiqueta);
+                    e.getEtiquetaList().add(etiqueta);
+                }
+            }
+
+            //ASIENTOS_FIJOS - Opcional
+            if(asientosFijos.equals("si")){
+                e.setAsientosFijos('s');
+                //NUM FILAS - Opcional
+                if(numFilas != null){
+                    if(new Integer(numFilas) <= 0){
+                        error = "Error: campos numéricos deben ser positivos.";
+                        request.setAttribute("strError", error);
+                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        rd.forward(request, response);
+                    }
+                    e.setNumFilas(new Integer(numFilas));
+                }
+
+                //NUM ASIENTOS POR FILA - Opcional
+                if(numAsientosFila != null){
+                    if(new Integer(numAsientosFila) <= 0){
+                        error = "Error: campos numéricos deben ser positivos.";
+                        request.setAttribute("strError", error);
+                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        rd.forward(request, response);
+                    }
+                    e.setNumAsientosFila(Integer.parseInt(numAsientosFila));
+                }
+            }else{
+                e.setAsientosFijos('n');
+                e.setNumFilas(null);
+                e.setNumAsientosFila(null);
+            }
+
+            if(id == null || id.isEmpty()){
+                this.eventoFacade.create(e);
+            }else{
+                this.eventoFacade.edit(e);
+            }
+
+            response.sendRedirect("ServletEventoListar");
         }
     }
 

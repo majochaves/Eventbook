@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,14 +10,12 @@ import dao.EventoFacade;
 import dao.ReservaFacade;
 import entity.Evento;
 import entity.Reserva;
-import entity.ReservaPK;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,11 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author fcode
+ * @author majochaves
  */
-@WebServlet(name = "ServletEventoReservar", urlPatterns = {"/ServletEventoReservar"})
-public class ServletEventoReservar extends HttpServlet {
-
+@WebServlet(name = "ServletEventoReservarAsientos", urlPatterns = {"/ServletEventoReservarAsientos"})
+public class ServletEventoReservarAsientos extends HttpServlet {
+    
     @EJB
     private EventoFacade eventoFacade;
     
@@ -49,58 +46,25 @@ public class ServletEventoReservar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Integer id = new Integer(request.getParameter("id"));
-        Integer numAsientos = new Integer(request.getParameter("numEntradas"));
+        Integer id = new Integer(request.getParameter("eventoId"));
+        Integer numAsientos = new Integer(request.getParameter("numAsientos"));
+        String[] asientosSeleccionados = request.getParameterValues("asientosSeleccionados");
         
         Usuario user = Autenticacion.getUsuarioLogeado(request, response);
         Evento e = this.eventoFacade.find(id);
-        int entradasReservadas = e.getEntradasReservadas(user);
-        if(numAsientos > e.getMaxEntradas() || entradasReservadas >= e.getMaxEntradas()){
-            String error = "Error: Sólo se pueden reservar " + e.getMaxEntradas() + " por usuario.";
-            request.setAttribute("error", error);
-            request.setAttribute("evento", e);
-            request.setAttribute("reservas", e.getReservaList());
-            RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
-            rd.forward(request, response);
+        
+        for(int i = 0; i < numAsientos; i++){
+            String filaAsiento = asientosSeleccionados[i];
+            String fila = filaAsiento.substring( 0, filaAsiento.indexOf(":"));
+            String asiento = filaAsiento.substring(filaAsiento.indexOf(":")+1, filaAsiento.length());
+            Reserva reserva = new Reserva(new Integer(fila), new Integer(asiento), e.getId());
+            reserva.setFecha(new Date());
+            reserva.setUsuarioeventosId(user.getUsuarioeventos());
+            this.reservaFacade.create(reserva);
+            e.getReservaList().add(reserva);
+            this.eventoFacade.edit(e);
         }
-        if(e.asientosDisponibles() < numAsientos){
-            String error = "Error: Sólo hay " + e.asientosDisponibles() + " asientos disponibles. ";
-            request.setAttribute("error", error);
-            request.setAttribute("evento", e);
-            request.setAttribute("reservas", e.getReservaList());
-            RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
-            rd.forward(request, response);
-        }else{
-            if(e.getAsientosFijos() == 's'){
-                int[][] matrizAsientos = e.matrizAsientos();
-                request.setAttribute("matrizAsientos", matrizAsientos);
-                request.setAttribute("evento", e);
-                request.setAttribute("numAsientos", numAsientos);
-                request.setAttribute("usuario", user);
-                RequestDispatcher rd = request.getRequestDispatcher("seleccionar_asientos.jsp");
-                rd.forward(request, response);
-            }else{
-                for(int i = 0; i < numAsientos; i++){
-                    List<Reserva> listaReservas = e.getReservaList();
-                    int numAsiento = 0;
-                    if(listaReservas != null){
-                        numAsiento = listaReservas.size() + 1;
-                    }
-                    Reserva reserva = new Reserva(1, numAsiento, e.getId());
-                    reserva.setFecha(new Date());
-                    reserva.setUsuarioeventosId(user.getUsuarioeventos());
-                    this.reservaFacade.create(reserva);
-                    e.getReservaList().add(reserva);
-                    this.eventoFacade.edit(e);
-                }
-                response.sendRedirect("ServletEventoListar");
-            }
-        }
-        
-        
-        
-        
+        response.sendRedirect("ServletEventoListar");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

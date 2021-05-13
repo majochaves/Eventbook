@@ -9,7 +9,7 @@
     <property name="serverName" value="localhost"/>
     <property name="PortNumber" value="1527"/>
     <property name="DatabaseName" value="Eventbook"/>
-    <property name="User" value="Eventbook"/>
-    <property name="Password" value="Eventbook"/>
+    <property name="User" value="root"/>
+    <property name="Password" value="root"/>
   </jdbc-connection-pool>
 </resources>
