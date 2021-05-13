@@ -77,8 +77,6 @@ public class ServletChat extends HttpServlet {
         
 //         Message contains data
         if (!(message == null || message.contentEquals(""))) {
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            System.out.println(message);
             
             // Current time
             Date currentTime = new Date();

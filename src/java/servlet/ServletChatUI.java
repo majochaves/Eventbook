@@ -6,7 +6,9 @@
 package servlet;
 
 import dao.TeleoperadorFacade;
+import dao.UsuarioFacade;
 import entity.Teleoperador;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -26,8 +28,12 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletChatUI extends HttpServlet {
 
     @EJB
+    private UsuarioFacade usuarioFacade;
+
+    @EJB
     private TeleoperadorFacade teleoperadorFacade;
 
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,9 +41,9 @@ public class ServletChatUI extends HttpServlet {
         List<Teleoperador> teleoperadores = this.teleoperadorFacade.findAll();
         request.setAttribute("teleoperadores", teleoperadores);
         
-        Integer opID = new Integer(request.getParameter("opID"));
-        Teleoperador op = this.teleoperadorFacade.findByUsuarioID(opID);
-        request.setAttribute("operador", op);
+        String userID = request.getParameter("userID");
+        Usuario user = this.usuarioFacade.getUserByID(userID);
+        request.setAttribute("usuarioChat", user);
         
         RequestDispatcher rd = request.getRequestDispatcher("chat.jsp");
         rd.forward(request, response);

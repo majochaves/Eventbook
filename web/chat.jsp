@@ -31,7 +31,7 @@
         
         // Lista de teleoperadores;
         List<Teleoperador> teleoperadores = (List<Teleoperador>)  request.getAttribute("teleoperadores");
-        Teleoperador opChat = (Teleoperador)request.getAttribute("operador");
+        Usuario usuarioChat = (Usuario)request.getAttribute("usuarioChat");
         
         Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         %>
@@ -104,7 +104,7 @@
         
         
         <div class="chat-about">
-          <div class="chat-with"><%= opChat.getUsuario().getNombre() %> </div>
+          <div class="chat-with"><%= usuarioChat.getNombre() %> </div>
           <div class="chat-num-messages">already 1 902 messages</div>
         </div>
         <i class="fa fa-star"></i>
