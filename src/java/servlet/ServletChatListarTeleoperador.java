@@ -48,6 +48,7 @@ public class ServletChatListarTeleoperador extends HttpServlet {
             request.setAttribute("allMessages", "Modo Operador: mostrando todos los mensajes");
             request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
         } else {
+            request.setAttribute("error", "Solo los teleoperadores pueden ver esta página.");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         

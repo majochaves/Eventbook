@@ -113,6 +113,9 @@
                 
                 
             <br>
+            <% if (!chats.isEmpty()) { %>
+                
+            
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr class="table-secondary">
@@ -142,6 +145,10 @@
                     }
                 %>
             </table>
+            <% } else {%>
+            <h4>No hay mensajes para mostrar.</h4>
+            
+            <% } %>
         </div>
     </div>
     </body>
