@@ -23,7 +23,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ver Evento</title>
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <script src="components/eventos/eventos.js"></script>
         <script src="components/base/core.js"></script>
