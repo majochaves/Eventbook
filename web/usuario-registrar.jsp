@@ -17,7 +17,7 @@
         <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
         <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
         <meta property="og:url" content="http://digipunk.netii.net">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
@@ -36,41 +36,41 @@
                     </div>
                 </div>
                 <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
-                <img style="float: right; margin-right: 15%; margin-top: -10%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
+                <img style="float: right; margin-right: 15%; margin-top: 0%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
                 <form action="ServletRegistrarUsuario" method="POST">
                 <table>
                     <tr>
-                        <td>Usuario</td>
+                        <td>Usuario<span style="color: #ec5482;">*</span></td>
                         <td><input class="textf" type="text" name="usuario" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td>Contraseña&nbsp&nbsp</td>
+                        <td>Contraseña<span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
                         <td><input class="textf" type="password" name="pass" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td>Repetir Contraseña&nbsp&nbsp</td>
+                        <td>Repetir Contraseña<span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
                         <td><input class="textf" type="password" name="pass1" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td>Nombre</td>
+                        <td>Nombre<span style="color: #ec5482;">*</span></td>
                         <td><input class="textf" type="text" name="nombre" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td>Apellidos</td>
+                        <td>Apellidos<span style="color: #ec5482;">*</span></td>
                         <td><input class="textf" type="text" name="apellidos" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td>Domicilio</td>
+                        <td>Domicilio<span style="color: #ec5482;">*</span></td>
                         <td><input class="textf" type="text" name="domicilio" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td>Ciudad de Residencia</td>
+                        <td>Ciudad de Residencia<span style="color: #ec5482;">*</span></td>
                         <td><input class="textf" type="text" name="ciudad" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
                     </tr>
                     <tr>
-                        <td>Sexo</td>
+                        <td>Sexo<span style="color: #ec5482;">*</span></td>
                         <td>
-                            <select name="sexo">
+                            <select class="textf" name="sexo">
                                 <option>Hombre</option>
                                 <option>Mujer</option>
                             </select>

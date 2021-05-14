@@ -24,8 +24,8 @@
     <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
     <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
     <meta property="og:url" content="http://digipunk.netii.net">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="components/base/base.css">
+    <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
     <script src="components/base/core.js"></script>
     <script src="components/base/script.js"></script>
   </head>
@@ -40,9 +40,11 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7 col-xxl-6" data-animate='{"class":"fadeInUp"}'>
-              <h1>The smartest and the most flexible Bootstrap template</h1>
-              <p>Create exactly what you need with our powerful Bootstrap toolkit.</p>
-              <div class="offset-md group-30"><a class="btn btn-lg btn-primary" href="https://www.templatemonster.com/intense-multipurpose-html-template.html" target="_blank">Buy Intense Now</a><a class="btn btn-lg btn-secondary" href="#journey" data-anchor-link="">Start a Journey</a></div>
+              <img style="background-color: white; padding: 20px; border-radius: 30px;" src="images/EventbookLogoOscuro.svg"/>
+              <p>Tu web de gestión de eventos.</p>
+              <div class="offset-md group-30">
+                  <a class="btn btn-lg btn-primary" href="usuario-iniciar-sesion.jsp">¿Ya tienes una cuenta?</a>
+                  <a class="btn btn-lg btn-secondary" href="usuario-registrar.jsp">¡Únete a nosotros!</a></div>
             </div>
           </div>
         </div>

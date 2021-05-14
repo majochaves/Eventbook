@@ -17,7 +17,7 @@
         <title>Listado de usuarios</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <link rel="stylesheet" href="components/base/tablas.css">
         <link rel="stylesheet" href="components/base/modal.css">

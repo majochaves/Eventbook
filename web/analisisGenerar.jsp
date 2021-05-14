@@ -21,7 +21,7 @@
         <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
         <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
         <meta property="og:url" content="http://digipunk.netii.net">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <link rel="stylesheet" href="components/base/alert.css">
         <script src="components/jquery/jquery-3.4.1.min.js"></script>
@@ -71,8 +71,8 @@
                             </div>    
                             <div class="col-sm-4">
                                 <h5>Fecha de registro</h5>
-                                <input type="date" name="fechaInicial" min="0001-01-01" max="9999-12-31" /> Fecha Inicial <br />
-                                <input type="date" name="fechaFinal" min="0001-01-01" max="9999-12-31" /> Fecha Final <br />
+                                <input type="date" class="textf" name="fechaInicial" min="0001-01-01" max="9999-12-31" /> Fecha Inicial <br />
+                                <input type="date" class="textf" name="fechaFinal" min="0001-01-01" max="9999-12-31" /> Fecha Final <br />
                             </div>
                         </div>
 

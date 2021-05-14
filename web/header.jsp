@@ -16,7 +16,7 @@
     String nav = (String) request.getParameter("nav");
     if(nav == null) nav = "";
 %>
-      
+
 <header class="section rd-navbar-wrap">
         <nav class="rd-navbar">
           <div class="navbar-container">
