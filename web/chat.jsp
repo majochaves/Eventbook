@@ -20,7 +20,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
-        <script src="components/eventos/eventos.js"></script>
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
 
@@ -44,7 +43,7 @@
         %>
 
     </head>
-    <body onload="getMessages();">
+    <body>
 
         <!--RD Navbar-->
         <header class="section rd-navbar-wrap">
@@ -191,7 +190,7 @@
                             var xmlhttp = new XMLHttpRequest();
                             xmlhttp.open("POST", "ServletChat", false);
                             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                            xmlhttp.send("message=" + context.messageOutput + "&userTo=1");
+                            xmlhttp.send("message=" + context.messageOutput + "&userTo=<%= usuarioChat.getId() %>");
                         },
                         getMessages: function () {
                             console.log("get messages");

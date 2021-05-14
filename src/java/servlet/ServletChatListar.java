@@ -5,7 +5,10 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.ChatFacade;
+import dao.UsuarioFacade;
+import entity.Usuario;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletChatListar extends HttpServlet {
 
     @EJB
+    private UsuarioFacade usuarioFacade;
+
+    @EJB
     private ChatFacade chatFacade;
 
     
@@ -29,8 +35,10 @@ public class ServletChatListar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         
-        request.setAttribute("chats", chatFacade.findAll());
+        request.setAttribute("allMessages", "Modo Usuario: mostrando tus mensajes");
+        request.setAttribute("chats", thisUsuario.getChatList());
         request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
     }
 

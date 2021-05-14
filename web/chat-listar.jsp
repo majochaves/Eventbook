@@ -36,6 +36,9 @@
         
 //        boolean filtrado = request.getParameter("username") != null;
         List<Chat> chats = (List)request.getAttribute("chats");
+        
+        String allMessages = (String) request.getAttribute("allMessages");
+        
     %>
     <body>
         <jsp:include page="header.jsp" />
@@ -49,6 +52,9 @@
             </div>
             <hr class="divider divider-sm mt-0" />
             <br/>
+            <div style="float:left; margin-bottom: 1%;">
+                <p><%= allMessages %></p>
+            </div>
             
             <div style="float:right; margin-bottom: 1%;">
                 <a  class="shadow-sm badge badge-info" href="ServletChatCrear">Nuevo chat</a>
@@ -104,6 +110,8 @@
             </div>
         </div>
     </div>
+                
+                
             <br>
             <table class="table table-hover table-bordered">
                 <thead>
