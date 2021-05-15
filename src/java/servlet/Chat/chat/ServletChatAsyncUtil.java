@@ -75,7 +75,7 @@ public class ServletChatAsyncUtil extends HttpServlet {
         
         String htmlMessage;
         
-//         Message contains data
+        // Message contains data
         if (!(message == null || message.contentEquals(""))) {
             
             // Current time
@@ -87,9 +87,6 @@ public class ServletChatAsyncUtil extends HttpServlet {
             // Usuario que recibe se consigue con request XHR
             recibe = this.usuarioFacade.getUserByID(userTo);
             
-            // HTML to be appended to the chat
-            htmlMessage = "<li><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
-            
             // Find if chat already exists
             chat = this.chatFacade.findByChatPK(envia.getId(), recibe.getId());
             if(chat == null){ // El chat no existe
@@ -97,7 +94,7 @@ public class ServletChatAsyncUtil extends HttpServlet {
                 System.out.println("CREAR CHAT");
                 LOG.severe("Se ha producido un error: se debe crear chat ");
             }
-      
+            
             // Compose message from data
             Mensaje msg = new Mensaje();
             msg.setFecha(currentTime);
@@ -105,6 +102,11 @@ public class ServletChatAsyncUtil extends HttpServlet {
             msg.setUsuarioEmisorId(envia.getId());
             msg.setChat(chat);
             mensajeFacade.create(msg);
+            
+            
+            // HTML to be appended to the chat
+            htmlMessage = "<li id=\""+ msg.getId() +"\"><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
+            
             
             // Add message to chat
             boolean add = chat.getMensajeList().add(msg);
