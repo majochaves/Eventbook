@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.util.Pair;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +23,11 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MensajeFacade extends AbstractFacade<Mensaje> {
+
+    @EJB
+    private ChatFacade chatFacade;
+    
+    
 
     @PersistenceContext(unitName = "EventBookPU")
     private EntityManager em;
@@ -39,7 +45,10 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
     public List<Pair<Integer, Mensaje>> getListOfMensajesByIDs( Integer to, Integer from){
         List<Pair<Integer, Mensaje>> res = new ArrayList<>();
         
-        Query q = this.em.createQuery("SELECT m FROM Mensaje m WHERE m.usuarioEmisorId = :usuarioEmisorIdA OR m.usuarioEmisorId = :usuarioEmisorIdB ORDER BY m.fecha");
+        Query q = this.em.createQuery("SELECT m FROM Mensaje m WHERE "
+                + "(m.chat.chatPK.teleoperadorId = :usuarioEmisorIdA AND m.chat.chatPK.usuarioId = :usuarioEmisorIdB) OR"
+                + "(m.chat.chatPK.teleoperadorId = :usuarioEmisorIdB AND m.chat.chatPK.usuarioId = :usuarioEmisorIdA)"
+                + "ORDER BY m.fecha");
         q.setParameter("usuarioEmisorIdA", to);
         q.setParameter("usuarioEmisorIdB", from);
         
