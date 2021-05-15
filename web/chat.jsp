@@ -146,6 +146,7 @@
                 
                 <% if (adminPriviledges){ %>
                 <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
+                <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
                     <% } %>
                 </div>
                 <div class="message other-message float-right">
@@ -159,6 +160,7 @@
                 <div class="message-data">
                 <% if (adminPriviledges){ %>
                     <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
+                        <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
                 <% } %>
                 
                 <span class="message-data-name"><i class="fa fa-circle online"></i><%= usuarioChat.getNombre() %></span>
