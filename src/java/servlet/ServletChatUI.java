@@ -56,6 +56,7 @@ public class ServletChatUI extends HttpServlet {
         Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         
         List<Pair<Integer, Mensaje>> mensajes = this.mensajeFacade.getListOfMensajesByIDs(new Integer(userID), thisUsuario.getId());
+        System.out.println(mensajes);
         request.setAttribute("mensajesHistorial", mensajes);
         
         RequestDispatcher rd = request.getRequestDispatcher("chat.jsp");

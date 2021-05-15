@@ -35,11 +35,17 @@ public class ServletChatListar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+        try {
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         
         request.setAttribute("allMessages", "Modo Usuario: mostrando tus chats");
         request.setAttribute("chats", chatFacade.findChatsByUserID(thisUsuario.getId()));
         request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "¿Has iniciado sesión?");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

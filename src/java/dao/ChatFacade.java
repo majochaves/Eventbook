@@ -34,7 +34,7 @@ public class ChatFacade extends AbstractFacade<Chat> {
     public Chat findByChatPK(Integer userID, Integer opID){
         Query q;
        
-        q = this.em.createQuery("SELECT c FROM Chat c WHERE  c.chatPK.teleoperadorId = :teleoperadorId AND c.chatPK.usuarioId = :usuarioId");
+        q = this.em.createQuery("SELECT c FROM Chat c WHERE  (c.chatPK.teleoperadorId = :teleoperadorId AND c.chatPK.usuarioId = :usuarioId) OR (c.chatPK.teleoperadorId = :usuarioId AND c.chatPK.teleoperadorId = :usuarioId)");
         q.setParameter("usuarioId", userID);
         q.setParameter("teleoperadorId", opID);
         
