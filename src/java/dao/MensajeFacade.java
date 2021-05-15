@@ -64,5 +64,16 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
         
         return res;
     }
+
+
+    public Mensaje getMessageByID( Integer msgID){
+        Query q = this.em.createNamedQuery("Mensaje.findById");
+        q.setParameter("id", msgID);
+        List<Mensaje> teleops = q.getResultList();
+        
+        return teleops.get(0); 
+        
+        
+    }
     
 }

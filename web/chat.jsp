@@ -143,7 +143,7 @@
                 
                 <span class="message-data-time" >{{time}}</span> &nbsp; &nbsp;
                 <span class="message-data-name" ><%= thisUsuario.getNombre()%></span> <i class="fa fa-circle me"></i>
-                <span class="message-data-edit"><a href="ServletMessageEditar?id={{id}}"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
+                <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
                 </div>
                 <div class="message other-message float-right">
                 {{messageOutput}}
@@ -154,7 +154,7 @@
             <script id="message-response-template" type="text/x-handlebars-template">
                 <li id="{{id}}">
                 <div class="message-data">
-                <span class="message-data-edit"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit</span>
+                <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
                 <span class="message-data-name"><i class="fa fa-circle online"></i><%= usuarioChat.getNombre() %></span>
                 <span class="message-data-time">{{time}}</span>
                 </div>
