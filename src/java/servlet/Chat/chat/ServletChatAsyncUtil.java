@@ -88,12 +88,18 @@ public class ServletChatAsyncUtil extends HttpServlet {
             recibe = this.usuarioFacade.getUserByID(userTo);
             
             // Find if chat already exists
-            chat = this.chatFacade.findByChatPK(envia.getId(), recibe.getId());
-            if(chat == null){ // El chat no existe
+            chat = null;
+            try {
+                chat = this.chatFacade.findByChatPK(envia.getId(), recibe.getId());
+                if(chat == null){ // El chat no existe
+                    throw(new Exception());
+                }
+            } catch (Exception e) {
                 // TODO Crear chat
                 System.out.println("CREAR CHAT");
                 LOG.severe("Se ha producido un error: se debe crear chat ");
             }
+            
             
             // Compose message from data
             Mensaje msg = new Mensaje();
