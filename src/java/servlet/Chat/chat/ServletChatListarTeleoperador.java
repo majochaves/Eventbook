@@ -41,6 +41,12 @@ public class ServletChatListarTeleoperador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+        if (thisUsuario == null){
+            request.setAttribute("error", "¿Has iniciado sesión?");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        
+        
         Boolean esTeleoperador = (thisUsuario.getTeleoperador() != null) || (thisUsuario.getAdministrador() != null);
         
         if(esTeleoperador){

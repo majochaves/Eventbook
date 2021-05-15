@@ -46,14 +46,18 @@ public class ServletChatUI extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+        if (thisUsuario == null){
+            request.setAttribute("error", "¿Has iniciado sesión?");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        
         List<Teleoperador> teleoperadores = this.teleoperadorFacade.findAll();
         request.setAttribute("teleoperadores", teleoperadores);
         
         String userID = request.getParameter("userID");
         Usuario user = this.usuarioFacade.getUserByID(userID);
         request.setAttribute("usuarioChat", user);
-        
-        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         
         List<Pair<Integer, Mensaje>> mensajes = this.mensajeFacade.getListOfMensajesByIDs(new Integer(userID), thisUsuario.getId());
         System.out.println(mensajes);

@@ -51,6 +51,10 @@ public class ServletChatGuardar extends HttpServlet {
         
         // Usuario envia es el logueado
         Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+        if (thisUsuario == null){
+            request.setAttribute("error", "¿Has iniciado sesión?");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
         
         // Receptor el teleoperador
         Integer opId = new Integer(request.getParameter("teleoperador"));

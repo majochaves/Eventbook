@@ -5,9 +5,11 @@
  */
 package servlet.Chat.chat;
 
+import clases.Autenticacion;
 import dao.ChatFacade;
 import java.io.IOException;
 import entity.Chat;
+import entity.Usuario;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,13 +43,30 @@ public class ServletChatBorrar extends HttpServlet {
             throws ServletException, IOException {
         
         
-        Integer userID = new Integer(request.getParameter("userID"));
-        Integer opID = new Integer(request.getParameter("opID"));
+         try {
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            if (thisUsuario == null){
+                request.setAttribute("error", "¿Has iniciado sesión?");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+            }
         
-        Chat chat = this.chatFacade.findByChatPK(userID, opID);
-        this.chatFacade.remove(chat);
+        
+       
+            Integer userID = new Integer(request.getParameter("userID"));
+            Integer opID = new Integer(request.getParameter("opID"));
 
-        response.sendRedirect("ServletChatListar");
+            Chat chat = this.chatFacade.findByChatPK(userID, opID);
+            this.chatFacade.remove(chat);
+
+            response.sendRedirect("ServletChatListar");
+            
+            
+        } catch (Exception e) {
+            request.setAttribute("error", "Hemos tenido un problema...");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        
+        
         
     }
 
