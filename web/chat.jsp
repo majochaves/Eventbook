@@ -213,10 +213,20 @@
                                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                                         messagesWaiting = false;
 
-                                        rawData = xmlhttp.responseText;
-                                        $('.chat-history').find('ul').append(xmlhttp.responseText);
-                                        // TODO ARREGLAR ESTO NO FUNCIONA
-                                        // this.scrollToBottom();
+                                        
+                                        // Benchmark of this only took 0.14 milliseconds lol
+                                        HTMLMessage = document.implementation.createHTMLDocument("HTMLMessage");
+                                        HTMLMessage.documentElement.innerHTML = xmlhttp.responseText;
+                                        sender = HTMLMessage.children[0].getElementsByTagName("li")[0].getAttribute("userid");
+                                        
+                                        // Evitar hacer render de los mensajes que el usuario envía dos veces
+                                        if (sender !== "<%= thisUsuario.getId() %>"){
+                                             $('.chat-history').find('ul').append(xmlhttp.responseText);
+                                            // TODO ARREGLAR ESTO NO FUNCIONA
+                                            // this.scrollToBottom();
+                                        }
+                                        
+                                        
                                     }
                                 };
                                 xmlhttp.open("GET", "ServletChat", true);
