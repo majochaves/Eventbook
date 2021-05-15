@@ -59,7 +59,7 @@
                         <tr>            
                             <td colspan="2">
                                 <br/>
-                               <input type="submit" class="btn btn-primary" href="ServletChatGuardar" target="_blank"/>
+                               <input type="submit" class="btn btn-primary" value="Crear Chat con Teleoperador" href="ServletChatGuardar" target="_blank"/>
                                <a style="margin-left: 2.5%" href="ServletChatListar">Cancelar</a>
                             </td>
                         </tr>

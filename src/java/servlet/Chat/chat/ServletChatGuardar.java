@@ -56,26 +56,33 @@ public class ServletChatGuardar extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         
-        // Receptor el teleoperador
-        Integer opId = new Integer(request.getParameter("teleoperador"));
-        Teleoperador teleoperador = this.teleoperadorFacade.findByUsuarioID(opId);
+        try {
+            // Receptor el teleoperador
+            Integer opId = new Integer(request.getParameter("teleoperador"));
+            Teleoperador teleoperador = this.teleoperadorFacade.findByUsuarioID(opId);
+
+            // Create chat
+            Chat chat = new Chat();
+            ChatPK chatPK = new ChatPK(teleoperador.getUsuarioId(), thisUsuario.getId());
+            chat.setChatPK(chatPK);
+            chat.setFecha(new Date());
+            chat.setTeleoperador(teleoperador);
+            chat.setUsuario(thisUsuario);
+            this.chatFacade.create(chat);
+
+            // TODO hacer setchatlist con chat actual
+    //         teleoperador.setChatList(teleoperador.getChatList().add(current)););
+            // usuario.setchatlist(usuario.listchat.append)
+
+            RequestDispatcher rd = request.getRequestDispatcher("ServletChatListar");
+            request.setAttribute("chatID", chat.getChatPK().getTeleoperadorId());
+            rd.forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Hemos encontrado un error");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
         
-        // Create chat
-        Chat chat = new Chat();
-        ChatPK chatPK = new ChatPK(teleoperador.getUsuarioId(), thisUsuario.getId());
-        chat.setChatPK(chatPK);
-        chat.setFecha(new Date());
-        chat.setTeleoperador(teleoperador);
-        chat.setUsuario(thisUsuario);
-        this.chatFacade.create(chat);
         
-        // TODO hacer setchatlist con chat actual
-//         teleoperador.setChatList(teleoperador.getChatList().add(current)););
-        // usuario.setchatlist(usuario.listchat.append)
-        
-        RequestDispatcher rd = request.getRequestDispatcher("ServletChatListar");
-        request.setAttribute("chatID", chat.getChatPK().getTeleoperadorId());
-        rd.forward(request, response);
         
         
     }

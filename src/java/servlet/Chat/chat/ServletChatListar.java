@@ -37,12 +37,16 @@ public class ServletChatListar extends HttpServlet {
 
         try {
             Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
-        
-        request.setAttribute("allMessages", "Modo Usuario: mostrando tus chats");
-        request.setAttribute("chats", chatFacade.findChatsByUserID(thisUsuario.getId()));
-        request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
+            if (thisUsuario == null){
+                request.setAttribute("error", "¿Has iniciado sesión?");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+            }
+
+            request.setAttribute("allMessages", "Modo Usuario: mostrando tus chats");
+            request.setAttribute("chats", chatFacade.findChatsByUserID(thisUsuario.getId()));
+            request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
         } catch (Exception e) {
-            request.setAttribute("error", "¿Has iniciado sesión?");
+            request.setAttribute("error", "Hemos encontrado un error");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
