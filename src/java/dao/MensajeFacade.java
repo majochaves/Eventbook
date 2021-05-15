@@ -36,7 +36,7 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
     }
     
     
-    public List<Pair<Integer, Mensaje>> getMapOfMensajesByIDs( Integer to, Integer from){
+    public List<Pair<Integer, Mensaje>> getListOfMensajesByIDs( Integer to, Integer from){
         List<Pair<Integer, Mensaje>> res = new ArrayList<>();
         
         Query q = this.em.createQuery("SELECT m FROM Mensaje m WHERE m.usuarioEmisorId = :usuarioEmisorIdA OR m.usuarioEmisorId = :usuarioEmisorIdB ORDER BY m.fecha");
