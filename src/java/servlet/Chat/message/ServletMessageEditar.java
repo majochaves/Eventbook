@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet.Chat.chat;
+package servlet.Chat.message;
 
-import dao.ChatFacade;
 import java.io.IOException;
-import entity.Chat;
-import javax.ejb.EJB;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,15 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author memoriasIT
  */
-@WebServlet(name = "ServletChatBorrar", urlPatterns = {"/ServletChatBorrar"})
-public class ServletChatBorrar extends HttpServlet {
+@WebServlet(name = "ServletMessageEditar", urlPatterns = {"/ServletMessageEditar"})
+public class ServletMessageEditar extends HttpServlet {
 
-    @EJB
-    private ChatFacade chatFacade;
-
-    
-    
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,16 +31,19 @@ public class ServletChatBorrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        Integer userID = new Integer(request.getParameter("userID"));
-        Integer opID = new Integer(request.getParameter("opID"));
-        
-        Chat chat = this.chatFacade.findByChatPK(userID, opID);
-        this.chatFacade.remove(chat);
-
-        response.sendRedirect("ServletChatListar");
-        
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ServletMessageEditar</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ServletMessageEditar at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

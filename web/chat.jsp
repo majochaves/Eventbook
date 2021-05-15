@@ -138,10 +138,12 @@
             </div> <!-- end container -->
 
             <script id="message-template" type="text/x-handlebars-template">
-                <li class="clearfix">
+                <li class="clearfix" id="{{id}}">
                 <div class="message-data align-right">
+                
                 <span class="message-data-time" >{{time}}</span> &nbsp; &nbsp;
                 <span class="message-data-name" ><%= thisUsuario.getNombre()%></span> <i class="fa fa-circle me"></i>
+                <span class="message-data-edit"><a href="ServletMessageEditar?id={{id}}"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
                 </div>
                 <div class="message other-message float-right">
                 {{messageOutput}}
@@ -150,8 +152,9 @@
             </script>
 
             <script id="message-response-template" type="text/x-handlebars-template">
-                <li>
+                <li id="{{id}}">
                 <div class="message-data">
+                <span class="message-data-edit"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit</span>
                 <span class="message-data-name"><i class="fa fa-circle online"></i><%= usuarioChat.getNombre() %></span>
                 <span class="message-data-time">{{time}}</span>
                 </div>
@@ -265,6 +268,7 @@
                                 
                                 var data = {
                                     messageOutput: "<%= msg.getValue().getContenido() %>",
+                                    id: "<%= msg.getValue().getId() %>",
                                     time: "<%= new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(msg.getValue().getFecha()) %>"
                                 }; 
                                 

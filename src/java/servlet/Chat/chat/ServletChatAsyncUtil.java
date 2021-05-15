@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Chat.chat;
 
 import clases.Autenticacion;
 import dao.ChatFacade;
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/async-servlet/async-servlets.html
  */
 @WebServlet(urlPatterns = {"/ServletChat"}, asyncSupported=true)
-public class ServletChat extends HttpServlet {
+public class ServletChatAsyncUtil extends HttpServlet {
 
     @EJB
     private ChatFacade chatFacade;
@@ -48,7 +48,7 @@ public class ServletChat extends HttpServlet {
     private MensajeFacade mensajeFacade;
     
     private List<AsyncContext> contexts = new LinkedList<>();
-    private static final Logger LOG = Logger.getLogger(ServletChat.class.getName());
+    private static final Logger LOG = Logger.getLogger(ServletChatAsyncUtil.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
