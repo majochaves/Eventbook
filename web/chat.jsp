@@ -93,10 +93,12 @@
                         <% for (Teleoperador op : teleoperadores) {%>
                         <li class="clearfix">
                             <div class="about">
+                                <a href="ServletChatUI?userID=<%= op.getUsuario().getId() %>">
                                 <div class="name"><%= op.getUsuario().getNombre()%></div>
                                 <div class="status">
                                     <i class="fa fa-circle online"></i> online
                                 </div>
+                                </a>
                             </div>
                         </li>
                         <% }%>
