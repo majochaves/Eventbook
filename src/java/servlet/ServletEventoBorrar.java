@@ -5,8 +5,11 @@
  */
 package servlet;
 
+import clases.Autenticacion;
 import dao.EventoFacade;
+import entity.Administrador;
 import entity.Analisis;
+import entity.Creadoreventos;
 import entity.Evento;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,6 +43,11 @@ public class ServletEventoBorrar extends HttpServlet {
         Integer id = Integer.parseInt(request.getParameter("id"));
         
         Evento evento = this.eventoFacade.find(id);
+        
+        if(!(Autenticacion.tieneRol(request, response, Administrador.class) || (Autenticacion.tieneRol(request, response, Creadoreventos.class) && evento.getCreadoreventosId().equals(Autenticacion.getUsuarioLogeado(request, response).getCreadoreventos())))) {
+            Autenticacion.error(request, response, Autenticacion.PERMISOS);
+        }
+        
         eventoFacade.remove(evento);
         
         response.sendRedirect("ServletEventoListar");
