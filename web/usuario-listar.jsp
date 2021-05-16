@@ -159,7 +159,7 @@
                                    <td><%= u.getNombre() %></td>
                                    <td><%= rol %></td>
                                    <td class="align-middle text-center"> <a href="ServletUsuarioEditar?id=<%= u.getId() %>" class="btn btn-primary">Editar</a> </td>
-                                   <td class="align-middle text-center"> <a href="ServletUsuarioBorrar?id=<%= u.getId() %>" class="btn btn-danger" >X</a> </td>
+                                   <td class="align-middle text-center"> <a href="ServletUsuarioBorrar?id=<%= u.getId() %>" class="btn btn-danger" ><i class="fas fa-trash"></i></a> </td>
                                </tr>     
                             </tbody>
                         <%

@@ -57,7 +57,9 @@
 
                                 </select>
                             </td>
-                            <td><input type="submit" value="OK" class="btn btn-secondary"/></td>
+                            <td>
+                                <button type="submit" class="btn btn-secondary"><i class="fas fa-filter"></i></button>
+                            </td>
                         </tr>
                     </table>
                 </form>            
