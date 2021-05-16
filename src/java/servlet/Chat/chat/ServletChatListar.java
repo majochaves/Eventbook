@@ -8,8 +8,11 @@ package servlet.Chat.chat;
 import clases.Autenticacion;
 import dao.ChatFacade;
 import dao.UsuarioFacade;
+import entity.Chat;
 import entity.Usuario;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -78,7 +81,40 @@ public class ServletChatListar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        try {
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            if (thisUsuario == null){
+                request.setAttribute("error", "¿Has iniciado sesión?");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+            }
+            
+            String username = request.getParameter("username");
+            String nombre = request.getParameter("nombre");
+            String apellidos = request.getParameter("apellidos");
+            
+            
+            List<Chat> chatsFiltrados = chatFacade.findChatsByUserID(thisUsuario.getId());
+            
+            // FILTRO NOMBRE DE USUARIO
+            chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getUsuario().getUsername().toLowerCase().contains(username.toLowerCase())).collect(Collectors.toList());
+
+            // FILTRO NOMBRE
+            chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getUsuario().getNombre().toLowerCase().contains(nombre.toLowerCase())).collect(Collectors.toList());
+
+            // FILTRO APELLIDOS
+            chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getUsuario().getApellidos().toLowerCase().contains(apellidos.toLowerCase())).collect(Collectors.toList());
+            
+
+            request.setAttribute("allMessages", "Modo Usuario: mostrando tus chats");
+            request.setAttribute("chats", chatsFiltrados);
+            request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Hemos encontrado un error");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        
+        
     }
 
     /**

@@ -74,22 +74,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="ServletUsuarioFiltrar" method="GET">
-                        <table class="table table-bordered">
-                            <tr>
-                                <td>
-                                    <h3> Rol </h3>
-                                    <div class="form-check">
-                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="usuarioEventos" checked="checked" />UsuarioEventos <br/>
-                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="creadorEventos" checked="checked"/>CreadorEventos<br/>
-                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="administradores" checked="checked"/>Administradores<br/>
-                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="teleoperadores" checked="checked"/>Teleoperadores<br/>
-                                        <input class="form-check-input mt-2" type="checkbox" name="rol" value="analistas" checked="checked"/>Analistas<br/><br/>
-                                    </div>  
-                                </td>
-                            </tr>
-                        </table>
-                        
+                    <form action="ServletChatListar" method="POST">             
                         <div class="form-group-sm">
                             Nombre de usuario<input type="text" class="form-control" name="username"><br/><br/>
                         </div>
@@ -103,7 +88,7 @@
                         </div>
                         
                         <div class="align-middle text-center">
-                            <input type="submit" class="btn btn-primary" value="Aplicar"/>
+                            <input type="submit" class="btn btn-primary" value="Buscar"/>
                         </div>
                     </form>
                 </div>
