@@ -50,7 +50,7 @@
         </div>
       </section>
       <!-- Novi-->
-      <section class="section section-lg bg-transparent" id="journey">
+<!--      <section class="section section-lg bg-transparent" id="journey">
         <div class="container">
           <div class="row row-30 align-items-center justify-content-lg-between">
             <div class="col-sm-6 col-md-5 col-lg-4" data-animate='{"class":"fadeInLeft"}'>
@@ -63,7 +63,7 @@
           </div>
         </div>
       </section>
-      <!-- Features-->
+       Features
       <section class="section bg-transparent">
         <div class="container">
           <div class="row align-items-center slick-creative">
@@ -95,7 +95,7 @@
           </div>
         </div>
       </section>
-      <!-- Layouts-->
+       Layouts
       <section class="section section-lg bg-gradient-animated">
         <div class="container-fluid">
           <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
@@ -104,70 +104,70 @@
           </h1>
           <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="index.html"><img src="images/layouts/layout-1-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="index.html">Home — Default</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-2-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Business</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-3-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Consulting</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-4-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Portfolio</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-5-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Studio</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-6-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — App</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-7-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Event</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-8-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Blog</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-9-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Store</a>
                       </div>
                     </article>
             </div>
             <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                    <!-- Layout-->
+                     Layout
                     <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="#"><img src="images/layouts/layout-10-336x450.jpg" alt="" width="336" height="450"/></a>
                       <div class="layout-title h6"><a class="layout-title-link" href="#">Home — Minimal</a>
                       </div>
@@ -176,7 +176,7 @@
           </div>
         </div>
       </section>
-      <!-- Features-->
+       Features
       <section class="section section-lg bg-secondary context-dark">
         <div class="container">
           <div class="row row-30 justify-content-lg-between">
@@ -196,7 +196,7 @@
                   <h4 data-animate='{"class":"fadeInRight"}'>A extensive range of web design features that make Intense the best template for your website</h4>
                   <div class="row row-offset-lg row-30 row-md-50 row-xl-70 justify-content-xl-between">
                     <div class="col-xs-6 col-md-6 col-xxl-5" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb">
                               <div class="blurb-embed"><span class="blurb-icon ith-layers"></span></div>
                               <div class="blurb-title h5">60+ reusable elements</div>
@@ -204,7 +204,7 @@
                             </article>
                     </div>
                     <div class="col-xs-6 col-md-6 col-xxl-5" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb">
                               <div class="blurb-embed"><span class="blurb-icon ith-font"></span></div>
                               <div class="blurb-title h5">Unlimited Google fonts</div>
@@ -212,7 +212,7 @@
                             </article>
                     </div>
                     <div class="col-xs-6 col-md-6 col-xxl-5 align-self-center" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb">
                               <div class="blurb-embed"><span class="blurb-icon ith-effect"></span></div>
                               <div class="blurb-title h5">Various hover effects and animations</div>
@@ -220,7 +220,7 @@
                             </article>
                     </div>
                     <div class="col-xs-6 col-md-6 col-xxl-5" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb blurb-boxed blurb-primary">
                               <div class="blurb-embed"><span class="blurb-icon ith-pages"></span></div>
                               <div class="blurb-title h5">Blog and shop pages</div>
@@ -233,7 +233,7 @@
                   <h4 data-animate='{"class":"fadeInRight"}'>The latest web development technologies combined to help you create an outstanding website</h4>
                   <div class="row row-offset-lg row-30 row-md-50 row-xl-70 justify-content-xl-between">
                     <div class="col-xs-6 col-md-6 col-xxl-5" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb blurb-boxed blurb-dark">
                               <div class="blurb-embed"><span class="blurb-icon ith-devices"></span></div>
                               <div class="blurb-title h5">Bootstrap 4 framework</div>
@@ -241,7 +241,7 @@
                             </article>
                     </div>
                     <div class="col-xs-6 col-md-6 col-xxl-5 align-self-center" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb">
                               <div class="blurb-embed"><span class="blurb-icon ith-settings"></span></div>
                               <div class="blurb-title h5">HTML and CSS compiling by Pug and Sass</div>
@@ -249,7 +249,7 @@
                             </article>
                     </div>
                     <div class="col-xs-6 col-md-6 col-xxl-5 align-self-center" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb">
                               <div class="blurb-embed"><span class="blurb-icon ith-console"></span></div>
                               <div class="blurb-title h5">Fully component approach to code</div>
@@ -262,7 +262,7 @@
                   <h4 data-animate='{"class":"fadeInRight"}'>With Intense, creating customizable and fully responsive websites is easier than ever</h4>
                   <div class="row row-offset-lg row-30 row-md-50 row-xl-70 justify-content-xl-between">
                     <div class="col-xs-6 col-md-6 col-xxl-5 align-self-center" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb">
                               <div class="blurb-embed"><span class="blurb-icon ith-devices"></span></div>
                               <div class="blurb-title h5">Responsive Layout</div>
@@ -270,7 +270,7 @@
                             </article>
                     </div>
                     <div class="col-xs-6 col-md-6 col-xxl-5" data-animate='{"class":"fadeInUp"}'>
-                            <!-- Blurb-->
+                             Blurb
                             <article class="blurb blurb-boxed blurb-primary">
                               <div class="blurb-embed"><span class="blurb-icon ith-pages"></span></div>
                               <div class="blurb-title h5">Rich UI Kit</div>
@@ -284,7 +284,7 @@
           </div>
         </div>
       </section>
-      <!-- Decoration-->
+       Decoration
       <section class="section section-lg bg-transparent text-center parallax-js">
         <div class="container">
           <div class="effect effect-tazza">
@@ -349,7 +349,7 @@
           </div>
         </div>
       </section>
-      <!-- Users-->
+       Users
       <section class="section section-lg bg-transparent">
         <div class="container">
           <div class="text-center" data-animate='{"class":"fadeInUp"}'>
@@ -358,12 +358,12 @@
           </div>
         </div>
       </section>
-      <!-- Quote default-->
+       Quote default
       <section class="section section-lg bg-transparent">
         <div class="container">
           <div class="row row-40 row-md-50" data-animate='{"class":"fadeInUp"}'>
             <div class="col-sm-6 col-lg-4">
-                    <!-- Quote-->
+                     Quote
                     <article class="quote">
                             <div class="rating quote-rating">
                               <div class="rating-body">
@@ -376,7 +376,7 @@
                       <div class="quote-text h5">
                         <q>Intense is full of great details and very useful tools. The template code is clear and easy-to-edit. Moreover, it  is well-documented and supported.</q>
                       </div>
-                            <!-- Quote author-->
+                             Quote author
                             <div class="quote-author">
                               <div class="media media-md align-items-center">
                                 <div class="media-left"><img class="quote-author-image" src="images/persons/person-01-64x64.jpg" alt="" width="64" height="64"/>
@@ -390,7 +390,7 @@
                     </article>
             </div>
             <div class="col-sm-6 col-lg-4">
-                    <!-- Quote-->
+                     Quote
                     <article class="quote">
                             <div class="rating quote-rating">
                               <div class="rating-body">
@@ -403,7 +403,7 @@
                       <div class="quote-text h5">
                         <q>It is a great template with everything my website needed. It took me a few hours to figure all out but it was worth the investment.</q>
                       </div>
-                            <!-- Quote author-->
+                             Quote author
                             <div class="quote-author">
                               <div class="media media-md align-items-center">
                                 <div class="media-left"><img class="quote-author-image" src="images/persons/person-02-64x64.jpg" alt="" width="64" height="64"/>
@@ -417,7 +417,7 @@
                     </article>
             </div>
             <div class="col-sm-6 col-lg-4">
-                    <!-- Quote-->
+                     Quote
                     <article class="quote">
                             <div class="rating quote-rating">
                               <div class="rating-body">
@@ -430,7 +430,7 @@
                       <div class="quote-text h5">
                         <q>This template has lots of preconfigured child themes, effects, and components. It is a great choice if you need a customizable website.</q>
                       </div>
-                            <!-- Quote author-->
+                             Quote author
                             <div class="quote-author">
                               <div class="media media-md align-items-center">
                                 <div class="media-left"><img class="quote-author-image" src="images/persons/person-03-64x64.jpg" alt="" width="64" height="64"/>
@@ -446,7 +446,7 @@
           </div>
         </div>
       </section>
-      <!-- Call to action-->
+       Call to action
       <section class="section section-lg bg-primary-light text-center text-lg-left">
         <div class="container">
           <div class="row row-30 align-items-lg-center justify-content-lg-between">
@@ -458,7 +458,7 @@
           </div>
         </div>
       </section>
-      <!-- Features-->
+       Features
       <section class="section section-lg bg-transparent">
         <div class="container">
           <div class="row row-30">
@@ -484,56 +484,56 @@
                   <div class="tab-pane fade show active" id="navClassic2-1" role="tabpanel">
                     <div class="row row-30">
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-devices"></span></div>
                                 <div class="blurb-title h6">Based on Bootstrap 4</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-slider"></span></div>
                                 <div class="blurb-title h6">Sliders and carousels</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-parallax"></span></div>
                                 <div class="blurb-title h6">Parallax</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-layout-header"></span></div>
                                 <div class="blurb-title h6">Lots of header layouts</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-layout-footer"></span></div>
                                 <div class="blurb-title h6">A variety of footer layouts</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-smile"></span></div>
                                 <div class="blurb-title h6">Icon fonts</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-video"></span></div>
                                 <div class="blurb-title h6">Video background</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4" data-animate='{"class":"fadeInUp"}'>
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon ith-layout"></span></div>
                                 <div class="blurb-title h6">26 child themes</div>
@@ -544,63 +544,63 @@
                   <div class="tab-pane fade" id="navClassic2-2" role="tabpanel">
                     <div class="row row-30">
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-slider"></span></div>
                                 <div class="blurb-title h6">Revolution slider</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-carousel"></span></div>
                                 <div class="blurb-title h6">Owl carousel</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-calendar"></span></div>
                                 <div class="blurb-title h6">Event calendar</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-mail"></span></div>
                                 <div class="blurb-title h6">Mail form</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-recaptcha"></span></div>
                                 <div class="blurb-title h6">ReCaptcha</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-monkey"></span></div>
                                 <div class="blurb-title h6">Mailchimp</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-ball"></span></div>
                                 <div class="blurb-title h6">Animate CSS, WOW animation</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-search"></span></div>
                                 <div class="blurb-title h6">Search form</div>
                               </article>
                       </div>
                       <div class="col-6 col-xs-4 col-md-3 col-lg-4">
-                              <!-- Blurb small-->
+                               Blurb small
                               <article class="blurb blurb-small">
                                 <div class="blurb-embed"><span class="blurb-icon icon-secondary ith-gallery"></span></div>
                                 <div class="blurb-title h6">Gallery (Isotope) (hover effects)</div>
@@ -614,7 +614,7 @@
           </div>
         </div>
       </section>
-      <!-- Child themes-->
+       Child themes
       <section class="section section-lg bg-transparent">
         <div class="container">
           <div class="row row-15 align-items-center flex-md-row-reverse">
@@ -628,7 +628,7 @@
           </div>
         </div>
       </section><a class="section section-banner" href="https://www.templatemonster.com/intense-multipurpose-html-template.html" style="background-image: url(images/banners/background-03-1920x310.jpg); background-image: -webkit-image-set( url(images/banners/background-03-1920x310.jpg) 1x, url(images/banners/background-03-3840x620.jpg) 2x )" target="_blank"><img src="images/banners/foreground-03-1600x310.png" srcset="images/banners/foreground-03-1600x310.png 1x, images/banners/foreground-03-3200x620.png 2x" alt="" width="1600" height="310"></a>
-      <!-- Footer default extended-->
+       Footer default extended-->
       <jsp:include page="footer.jsp" />
     </div>
     <div class="to-top int-arrow-up"></div>
