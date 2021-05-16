@@ -82,9 +82,9 @@
                       <%if(strError != null){%>
                           <p><%=strError%></p>
                       <%}%>
-                      <form action = "ServletEventoGuardar">
-                          <input type="hidden" name="usuarioId" value="<%=u.getId()%>"
-                          <input type="hidden" name="id" value="<%=id%>"/>
+                      <form action = "ServletEventoGuardar" method="POST">
+                          <input type="text" name="usuarioId" value="<%=u.getId()%>" hidden/>
+                          <input type="text" name="id" value="<%=id%>" hidden/>
                           <div class="form-group">
                               <label for="titulo">Título:*</label>
                               <input class="form-control" type="text" name="titulo" maxlength="30" size ="30" value="<%=titulo%>"/>
