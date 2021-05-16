@@ -11,3 +11,11 @@ build-impl.xml
 genfiles.properties
 
 *.class
+build/web/WEB-INF/glassfish-resources.xml
+build/web/WEB-INF/glassfish-web.xml
+dist/EventBook.war
+nbproject/ant-deploy.xml
+nbproject/build-impl.xml
+nbproject/genfiles.properties
+setup/glassfish-resources.xml
+src/conf/persistence.xml
