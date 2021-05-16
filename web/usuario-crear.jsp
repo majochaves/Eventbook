@@ -141,8 +141,7 @@
                                 <td><input type="submit" class="btn btn-primary btn-block mt-5" value="<%= edicion ? "Confirmar cambios" : "Crear usuario" %>" /></td>
                                 
                             </tr>
-                            
-                            
+
                         </table>
                     </form>
                 </div>

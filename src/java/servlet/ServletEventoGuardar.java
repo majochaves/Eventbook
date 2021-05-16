@@ -101,7 +101,7 @@ public class ServletEventoGuardar extends HttpServlet {
             rd.forward(request, response);
         }else{
             //TITULO - Obligatorio
-
+            boolean existeError = false;
             e.setTitulo(titulo);
 
 
@@ -117,6 +117,7 @@ public class ServletEventoGuardar extends HttpServlet {
             if(!fechaLimite.isEmpty()){
                 e.setFechaLimite(new SimpleDateFormat("yyyy-MM-dd").parse(fechaLimite));
                 if(e.getFecha().compareTo(e.getFechaLimite()) < 0){
+                    existeError = true;
                     error = "Error: fecha límite para comprar entradas tiene que ser anterior a la fecha del evento.";
                     request.setAttribute("strError", error);
                     RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
@@ -126,6 +127,7 @@ public class ServletEventoGuardar extends HttpServlet {
             //COSTE ENTRADA - Opcional
             if(!costeEntrada.isEmpty()){
                 if(new Double(costeEntrada) < 0){
+                    existeError = true;
                     error = "Error: campos numéricos deben ser positivos.";
                     request.setAttribute("strError", error);
                     RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
@@ -137,6 +139,7 @@ public class ServletEventoGuardar extends HttpServlet {
             //AFORO - Opcional
             if(!aforo.isEmpty()){
                 if(new Integer(aforo) < 0){
+                    existeError = true;
                     error = "Error: campos numéricos deben ser positivos.";
                     request.setAttribute("strError", error);
                     RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
@@ -148,6 +151,7 @@ public class ServletEventoGuardar extends HttpServlet {
             //MAX ENTRADAS - Opcional
             if(!maxEntradas.isEmpty()){
                 if(new Integer(maxEntradas) < 0){
+                    existeError = true;
                     error = "Error: campos numéricos deben ser positivos.";
                     request.setAttribute("strError", error);
                     RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
@@ -155,6 +159,7 @@ public class ServletEventoGuardar extends HttpServlet {
                 }
                 if(!aforo.isEmpty()){
                     if(new Integer(aforo) < new Integer(maxEntradas)){
+                        existeError = true;
                         error = "Error: máximo número de entradas por usuario debe ser menor que el aforo.";
                         request.setAttribute("strError", error);
                         RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
@@ -179,6 +184,7 @@ public class ServletEventoGuardar extends HttpServlet {
                 //NUM FILAS - Opcional
                 if(numFilas != null){
                     if(new Integer(numFilas) <= 0){
+                        existeError = true;
                         error = "Error: campos numéricos deben ser positivos.";
                         request.setAttribute("strError", error);
                         RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
@@ -190,6 +196,7 @@ public class ServletEventoGuardar extends HttpServlet {
                 //NUM ASIENTOS POR FILA - Opcional
                 if(numAsientosFila != null){
                     if(new Integer(numAsientosFila) <= 0){
+                        existeError = true;
                         error = "Error: campos numéricos deben ser positivos.";
                         request.setAttribute("strError", error);
                         RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
@@ -202,14 +209,17 @@ public class ServletEventoGuardar extends HttpServlet {
                 e.setNumFilas(null);
                 e.setNumAsientosFila(null);
             }
+            
+            if(!existeError){
+                if(id == null || id.isEmpty()){
+                    this.eventoFacade.create(e);
+                }else{
+                    this.eventoFacade.edit(e);
+                }
 
-            if(id == null || id.isEmpty()){
-                this.eventoFacade.create(e);
-            }else{
-                this.eventoFacade.edit(e);
+                response.sendRedirect("ServletEventoListar");
             }
-
-            response.sendRedirect("ServletEventoListar");
+            
         }
     }
 
