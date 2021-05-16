@@ -39,7 +39,7 @@
         Double costeEntrada = -1.0;
         int aforo = -1, maxEntradas = -1, numFilas = -1, numAsientosFila = -1;
         
-        if(!(Autenticacion.tieneRol(request, response, Administrador.class) || (Autenticacion.tieneRol(request, response, Creadoreventos.class) && evento.getCreadoreventosId().equals(Autenticacion.getUsuarioLogeado(request, response).getCreadoreventos())))) {
+        if(evento != null && (!(Autenticacion.tieneRol(request, response, Administrador.class) || (Autenticacion.tieneRol(request, response, Creadoreventos.class) && evento.getCreadoreventosId().equals(Autenticacion.getUsuarioLogeado(request, response).getCreadoreventos()))))) {
             Autenticacion.error(request, response, Autenticacion.PERMISOS);
         }
         
