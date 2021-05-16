@@ -134,13 +134,15 @@
 
                                </td>        
                             </tr>
-                            <tr>            
-                                <td colspan="2">
-                                    <br/>
-                                   <input type="submit" value="<%= edicion ? "Confirmar cambios" : "Crear usuario" %>" class="btn btn-primary" href="https://www.templatemonster.com/intense-multipurpose-html-template.html" target="_blank"/>
-                                   <a style="margin-left: 2.5%" href="ServletUsuarioListar">Cancelar</a>
-                                </td>
+                            
+                            
+                            <tr>
+                                <td><a class="btn btn-danger mt-5" href="ServletUsuarioListar">Cancelar</a></td>
+                                <td><input type="submit" class="btn btn-primary btn-block mt-5" value="<%= edicion ? "Confirmar cambios" : "Crear usuario" %>" /></td>
+                                
                             </tr>
+                            
+                            
                         </table>
                     </form>
                 </div>
