@@ -4,6 +4,7 @@
     Author     : josie
 --%>
 
+<%@page import="entity.Usuario"%>
 <%--
     if (!(request.getSession().getAttribute("logged-user") instanceof Administrador)) {
         response.sendRedirect("about-us.html");
@@ -29,6 +30,14 @@
     <script src="components/base/core.js"></script>
     <script src="components/base/script.js"></script>
   </head>
+  <%
+        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
+        boolean usuarioLogeado = false;
+        if(u!=null)
+            usuarioLogeado = true;
+  %>
+  
+  
   <body>
     <div class="page">
       <!--RD Navbar-->
@@ -38,15 +47,22 @@
       <!-- Intro-->
       <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
         <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7 col-xxl-6" data-animate='{"class":"fadeInUp"}'>
-              <img style="background-color: white; padding: 20px; border-radius: 30px;" src="images/EventbookLogoOscuro.svg"/>
-              <p>Tu web de gestión de eventos.</p>
-              <div class="offset-md group-30">
-                  <a class="btn btn-lg btn-primary" href="usuario-iniciar-sesion.jsp">¿Ya tienes una cuenta?</a>
-                  <a class="btn btn-lg btn-secondary" href="usuario-registrar.jsp">¡Únete a nosotros!</a></div>
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7 col-xxl-6" data-animate='{"class":"fadeInUp"}'>
+                    <img style="background-color: white; padding: 20px; border-radius: 30px;" src="images/EventbookLogoOscuro.svg"/>
+                    <p>Tu web de gestión de eventos.</p>
+                    <%
+                        if(!usuarioLogeado){
+                    %>
+                            <div class="offset-md group-30">
+                                <a class="btn btn-lg btn-primary" href="usuario-iniciar-sesion.jsp">¿Ya tienes una cuenta?</a>
+                                <a class="btn btn-lg btn-secondary" href="usuario-registrar.jsp">¡Únete a nosotros!</a>
+                            </div>
+                    <%
+                          }
+                    %>
+                </div>
             </div>
-          </div>
         </div>
       </section>
       <!-- Novi-->

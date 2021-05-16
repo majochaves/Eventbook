@@ -35,38 +35,38 @@
                 <!-- Esto deberá comprobar en un futuro si el usuario logeado es Admin o Analista -->
                 <%
                     if (Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)) {
-                        %>
+                %>
                         <li class="navbar-navigation-root-item <%= (nav.equals("analisis") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServeltAnalisisIndex">Análisis</a>
                         </li>
-                        <%
+                <%
                     }
                     if (Autenticacion.tieneRol(request, response, Administrador.class)) {
-                        %>
+                %>
                     <li class="navbar-navigation-root-item <%= (nav.equals("administracion") ? "active" : "") %>" ><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Administración</a>
                     </li>
-                        <%
+                <%
                     }
-                    %>
+                %>
                     
                     <!--<li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ENDESARROLLO">Mis reservas</a></li>-->
                     
                     <li class="navbar-navigation-root-item <%= (nav.equals("eventos") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
                     </li>
-                    <%
+                <%
                     if (!Autenticacion.estaLogeado(request, response)) {
-                        %>
+                %>
                         <li class="navbar-navigation-root-item <%= (nav.equals("iniciar") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="usuario-iniciar-sesion.jsp">Iniciar sesión</a>
                         </li>
                         <li class="navbar-navigation-root-item <%= (nav.equals("registrar") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="usuario-registrar.jsp">Registrarse</a>
                         </li>
-                        <%
+                <%
                     } else {
-                        %>
+                %>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletChatListar">Soporte Técnico</a>
                         </li>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioCerrarSesion">Cerrar sesión</a>
                         </li>
-                        <%
+                <%
                     }
                 %>
               </ul>
