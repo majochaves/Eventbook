@@ -30,19 +30,21 @@
 
     %>
     <body>
-        <jsp:include page="header.jsp" />
-        <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
-            <div class="container">
-                <form action="ServletMessageEditar" method="POST">
-                    <input type="hidden" id="userID" name="userID" value="<%= request.getParameter("userID") %>">
-                    <input type="hidden" id="msgId" name="msgId" value="<%= request.getParameter("msgId") %>">
-                    <div class="form-group-sm">
-                            Contenido:<input type="text" class="form-control" name="newContenido" value="<%= request.getAttribute("contenido") %>"><br/><br/>
-                    </div>
-                    <div class="align-middle text-center">
-                            <input type="submit" class="btn btn-primary" value="Modificar"/>
+        <div class="page">
+            <jsp:include page="header.jsp" />
+            <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
+                <div class="container">
+                    <form action="ServletMessageEditar" method="POST">
+                        <input type="hidden" id="userID" name="userID" value="<%= request.getParameter("userID") %>">
+                        <input type="hidden" id="msgId" name="msgId" value="<%= request.getParameter("msgId") %>">
+                        <div class="form-group-sm">
+                                Contenido:<input type="text" class="form-control" name="newContenido" value="<%= request.getAttribute("contenido") %>"><br/><br/>
                         </div>
-                </form>
+                        <div class="align-middle text-center">
+                                <input type="submit" class="btn btn-primary" value="Modificar"/>
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
     </body>

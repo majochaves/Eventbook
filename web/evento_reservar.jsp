@@ -36,39 +36,39 @@
         
     %>
     <body>
-      <div class="page">
-      <!--RD Navbar-->
-      <jsp:include page="header.jsp" />
-      <!-- Intro-->
-      <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
-        <div class="container-fluid">
-            <% if(evento != null){
-            %>
-                <h1><%=evento.getTitulo()%></h1>
-                <% if(error != null){ %>
-                    <p><%=error%></p>
-                <% } %>
-                <form method="POST" action="ServletEventoReservar">
-                    <table>
-                        <tr>
-                            <td>Numero de Entradas </td>
-                            <td><input type="text" name="numEntradas" value="" /><%=maxentradas%></td>
-                            <input type="hidden" name="id" value="<%= evento.getId() %>" />
-                        </tr>
-                       
-                    </table>
-                    <input type="submit" class="btn btn-secondary" value="Aceptar" />
-                </form>
-            <%
-            }
-            %>
+        <div class="page">
+            <jsp:include page="header.jsp" />
+            
+            <!-- Intro-->
+            <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
+              <div class="container-fluid">
+                  <% if(evento != null){
+                  %>
+                      <h1><%=evento.getTitulo()%></h1>
+                      <% if(error != null){ %>
+                          <p><%=error%></p>
+                      <% } %>
+                      <form method="POST" action="ServletEventoReservar">
+                          <table>
+                              <tr>
+                                  <td>Numero de Entradas </td>
+                                  <td><input type="text" name="numEntradas" value="" /><%=maxentradas%></td>
+                                  <input type="hidden" name="id" value="<%= evento.getId() %>" />
+                              </tr>
+
+                          </table>
+                          <input type="submit" class="btn btn-secondary" value="Aceptar" />
+                      </form>
+                  <%
+                  }
+                  %>
+              </div>
+            </section>
+
+              
+            <jsp:include page="footer.jsp" />
         </div>
-      </section>
-      
-      <!-- Footer default extended-->
-      <jsp:include page="footer.jsp" />
-    </div>
-    <div class="to-top int-arrow-up"></div>
+        <div class="to-top int-arrow-up"></div>
     </body>
 </html>
 

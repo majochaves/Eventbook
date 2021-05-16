@@ -3,21 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Analisis;
 
-import clases.Autenticacion;
-import dao.AnalisisFacade;
-import entity.Administrador;
-import entity.Analisis;
-import entity.Analista;
-import entity.Campoanalisis;
+import dao.TipoanalisisFacade;
 import entity.Tipoanalisis;
-import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Merli
  */
-@WebServlet(name = "ServeltAnalisisVer", urlPatterns = {"/ServeltAnalisisVer"})
-public class ServeltAnalisisVer extends HttpServlet {
+@WebServlet(name = "ServletTipoanalisisVer", urlPatterns = {"/ServletTipoanalisisVer"})
+public class ServletTipoanalisisVer extends HttpServlet {
 
     @EJB
-    private AnalisisFacade analisisFacade;
+    private TipoanalisisFacade tipoanalisisFacade;
     
     
     /**
@@ -48,39 +39,14 @@ public class ServeltAnalisisVer extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Integer id = Integer.parseInt(request.getParameter("id"));
         
-        Integer idAnalisis = null;
+        Tipoanalisis tipoAnalisis = tipoanalisisFacade.find(id);
         
-        try {
-            idAnalisis = Integer.parseInt(request.getParameter("id"));
-        } catch(RuntimeException ex){
-            Autenticacion.error(request, response, "ID del Análisis escrito incorrectamente");
-        }
+        request.setAttribute("tipoAnalisis", tipoAnalisis);
         
-        
-        if(idAnalisis != null){
-            Analisis thisAnalisis = analisisFacade.find(idAnalisis);
-            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
-            
-            //Para un Analisis en concreto solo podran acceder el propetario de dicho Analisis o un Administrador
-            if(thisAnalisis!= null && thisUsuario!= null && 
-                    (thisAnalisis.getAnalistaUsuarioId().getUsuarioId().equals(thisUsuario.getId()) || 
-                    Autenticacion.tieneRol(request, response, Administrador.class))){
-                
-                List<Tipoanalisis> listaTiposAnalisis = thisAnalisis.getTipoanalisisList();
-
-                request.setAttribute("descripcionAnalisis", thisAnalisis.getDescripcion());
-                request.setAttribute("idAnalisis", idAnalisis);
-                request.setAttribute("listaTiposAnalisis", listaTiposAnalisis);
-
-                RequestDispatcher rd = request.getRequestDispatcher("analisisVer.jsp");
-                rd.forward(request, response);
-            } else {
-                Autenticacion.error(request, response, "No estás logeado, no tienes suficientes permisos o el análisis no ha sido encontrado.");
-            }
-            
-        }
-        
+        RequestDispatcher rd = request.getRequestDispatcher("tipoAnalisisEditar.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

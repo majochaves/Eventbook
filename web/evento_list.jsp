@@ -13,7 +13,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Eventos</title>
@@ -34,59 +34,58 @@
 
     %>
     <body>
-      <div class="page">
-      <!--RD Navbar-->
-      <jsp:include page="header.jsp">
-            <jsp:param name="nav" value="eventos"/>  
-        </jsp:include>
-      <!-- Intro-->
-      <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
-        <div class="container-fluid">
-            <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
-            Eventos
-            </h1>
+        <div class="page">
+          <jsp:include page="header.jsp">
+                <jsp:param name="nav" value="eventos"/>  
+            </jsp:include>
+          <!-- Intro-->
+          <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
+            <div class="container-fluid">
+                <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
+                Eventos
+                </h1>
 
-            <!-- <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a> -->
-            <form align="right" action="ServletEventoListar">
-                <table>
-                    <tr>
-                        <td>Filtrar</td>
-                        <td>
-                            <select name="fechaFiltrado">
-                                <option <%= (filtro != null && filtro.equalsIgnoreCase("reciente") ? "selected" : " ")%> value="reciente">Fecha más reciente</option>
-                                <option <%= (filtro != null && filtro.equalsIgnoreCase("noReciente") ? "selected" : " ")%> value="noReciente">Fecha menos reciente</option>
-                                
-                            </select>
-                        </td>
-                        <td><input type="submit" value="OK" class="btn btn-secondary"/></td>
-                    </tr>
-                </table>
-            </form>            
+                <!-- <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a> -->
+                <form align="right" action="ServletEventoListar">
+                    <table>
+                        <tr>
+                            <td>Filtrar</td>
+                            <td>
+                                <select name="fechaFiltrado">
+                                    <option <%= (filtro != null && filtro.equalsIgnoreCase("reciente") ? "selected" : " ")%> value="reciente">Fecha más reciente</option>
+                                    <option <%= (filtro != null && filtro.equalsIgnoreCase("noReciente") ? "selected" : " ")%> value="noReciente">Fecha menos reciente</option>
 
-            <% if(puedeCrear){%><a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a><%}%>
+                                </select>
+                            </td>
+                            <td><input type="submit" value="OK" class="btn btn-secondary"/></td>
+                        </tr>
+                    </table>
+                </form>            
 
-            <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
-                <% if(eventos != null){
-                    for(Evento e : eventos){
-                %>
-                <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
-                        <!-- Layout-->
-                        <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="ServletEventoVer?id=<%= e.getId() %>"><img src="images/calendar.svg" alt="" width="336" height="450"/></a>
-                            <div class="layout-title h6"><a class="layout-title-link" href="ServletEventoVer?id=<%= e.getId() %>"><%=e.getTitulo()%></a>
-                          </div>
-                        </article>
-                </div>
-                <%
+                <% if(puedeCrear){%><a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a><%}%>
+
+                <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
+                    <% if(eventos != null){
+                        for(Evento e : eventos){
+                    %>
+                    <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
+                            <!-- Layout-->
+                            <article class="layout"><a class="layout-figure thumbnail-up-shadow" href="ServletEventoVer?id=<%= e.getId() %>"><img src="images/calendar.svg" alt="" width="336" height="450"/></a>
+                                <div class="layout-title h6"><a class="layout-title-link" href="ServletEventoVer?id=<%= e.getId() %>"><%=e.getTitulo()%></a>
+                              </div>
+                            </article>
+                    </div>
+                    <%
+                        }
                     }
-                }
-                %>
+                    %>
+                </div>
             </div>
-        </div>
-      </section>
-      
-      <!-- Footer default extended-->
-      <jsp:include page="footer.jsp" />
-    </div>
-    <div class="to-top int-arrow-up"></div>
-    </body>
+          </section>
 
+
+          <jsp:include page="footer.jsp" />
+        </div>
+        <div class="to-top int-arrow-up"></div>
+    </body>
+</html>

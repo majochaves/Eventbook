@@ -25,60 +25,65 @@
         <title>Registro</title>
     </head>
     <body>
-        <jsp:include page="header.jsp">
-            <jsp:param name="nav" value="registrar"/>  
-        </jsp:include>
-                <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1>Registro de usuario</h1>
+        <div class="page">
+            <jsp:include page="header.jsp">
+                <jsp:param name="nav" value="registrar"/>  
+            </jsp:include>
+            <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1>Registro de usuario</h1>
+                        </div>
                     </div>
+                    
+                    <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
+                    <img style="float: right; margin-right: 15%; margin-top: 0%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
+                    
+                    <form action="ServletRegistrarUsuario" method="POST">
+                        <table>
+                            <tr>
+                                <td>Usuario<span style="color: #ec5482;">*</span></td>
+                                <td><input class="textf" type="text" name="usuario" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            <tr>
+                                <td>Contraseña<span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
+                                <td><input class="textf" type="password" name="pass" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            <tr>
+                                <td>Repetir Contraseña<span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
+                                <td><input class="textf" type="password" name="pass1" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            <tr>
+                                <td>Nombre<span style="color: #ec5482;">*</span></td>
+                                <td><input class="textf" type="text" name="nombre" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            <tr>
+                                <td>Apellidos<span style="color: #ec5482;">*</span></td>
+                                <td><input class="textf" type="text" name="apellidos" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            <tr>
+                                <td>Domicilio<span style="color: #ec5482;">*</span></td>
+                                <td><input class="textf" type="text" name="domicilio" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            <tr>
+                                <td>Ciudad de Residencia<span style="color: #ec5482;">*</span></td>
+                                <td><input class="textf" type="text" name="ciudad" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            <tr>
+                                <td>Sexo<span style="color: #ec5482;">*</span></td>
+                                <td>
+                                    <select class="textf" name="sexo">
+                                        <option>Hombre</option>
+                                        <option>Mujer</option>
+                                    </select>
+                            </tr>
+                        </table>    
+                        <input class="btn btn-primary" type="submit" value="Siguiente">
+                        <a style="margin-left: 2%" href="index.jsp">Cancelar</a>          
+                    </form>
                 </div>
-                <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
-                <img style="float: right; margin-right: 15%; margin-top: 0%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
-                <form action="ServletRegistrarUsuario" method="POST">
-                <table>
-                    <tr>
-                        <td>Usuario<span style="color: #ec5482;">*</span></td>
-                        <td><input class="textf" type="text" name="usuario" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Contraseña<span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
-                        <td><input class="textf" type="password" name="pass" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Repetir Contraseña<span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
-                        <td><input class="textf" type="password" name="pass1" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Nombre<span style="color: #ec5482;">*</span></td>
-                        <td><input class="textf" type="text" name="nombre" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Apellidos<span style="color: #ec5482;">*</span></td>
-                        <td><input class="textf" type="text" name="apellidos" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Domicilio<span style="color: #ec5482;">*</span></td>
-                        <td><input class="textf" type="text" name="domicilio" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Ciudad de Residencia<span style="color: #ec5482;">*</span></td>
-                        <td><input class="textf" type="text" name="ciudad" maxlength="50" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Sexo<span style="color: #ec5482;">*</span></td>
-                        <td>
-                            <select class="textf" name="sexo">
-                                <option>Hombre</option>
-                                <option>Mujer</option>
-                            </select>
-                    </tr>
-                </table>    
-                <input class="btn btn-primary" type="submit" value="Siguiente">
-                <a style="margin-left: 2%" href="index.jsp">Cancelar</a>           
-            </form>
+            </div>
         </div>
     </body>
 </html>

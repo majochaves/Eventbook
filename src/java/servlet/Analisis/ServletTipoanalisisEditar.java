@@ -3,42 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Analisis;
 
-import clases.Autenticacion;
-import dao.AnalisisFacade;
-import dao.AnalistaFacade;
-import dao.UsuarioFacade;
-import entity.Administrador;
-import entity.Analista;
-import entity.Usuario;
+import dao.CampoanalisisFacade;
+import dao.TipoanalisisFacade;
+import entity.Campoanalisis;
+import entity.CampoanalisisPK;
+import entity.Tipoanalisis;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Merli
  */
-@WebServlet(name = "ServeltAnalisisIndex", urlPatterns = {"/ServeltAnalisisIndex"})
-public class ServeltAnalisisIndex extends HttpServlet {
+@WebServlet(name = "ServletTipoanalisisEditar", urlPatterns = {"/ServletTipoanalisisEditar"})
+public class ServletTipoanalisisEditar extends HttpServlet {
 
     @EJB
-    private UsuarioFacade usuarioFacade;
+    private TipoanalisisFacade tipoanalisisFacade;
 
     @EJB
-    private AnalisisFacade analisisFacade;
-
-    @EJB
-    private AnalistaFacade analistaFacade;
-    
+    private CampoanalisisFacade campoanalisisFacade;
     
     
     /**
@@ -53,20 +47,33 @@ public class ServeltAnalisisIndex extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        //Si solo tiene rol de administrador no podra acceder. Debe tener tambien rol de analista
-        //Esto se debe a que los analisis tienen relacion con la tabla Analista y no con con la tabla Administrador
-        if(Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)){
-            //Cambiar en un futuro: Mostrar el ultimo analisis realizado
-            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
-            
-            Analista thisAnalista = thisUsuario.getAnalista();
-            
-            RequestDispatcher rd = request.getRequestDispatcher("analisisIndex.jsp");
-            rd.forward(request, response);
-        } else {
-            //Este metodo ya hace el requestDispatcher.forward()
-            Autenticacion.error(request, response, "No estas logeado o no tienes suficientes permisos");
+        Integer idTipoAnalisis = Integer.parseInt(request.getParameter("id"));
+        
+        Tipoanalisis thisTipoanalisis = tipoanalisisFacade.find(idTipoAnalisis);
+        
+        String [] conjuntoNombres = request.getParameterValues("nombres");
+        String [] conjuntoValores = request.getParameterValues("valores");
+        
+        campoanalisisFacade.deleteCampoanalisisByTipoanalisisId(idTipoAnalisis);
+        
+        List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
+        for(int i=0;i<conjuntoNombres.length; i++){
+            CampoanalisisPK capk = new CampoanalisisPK();
+            capk.setNombre(conjuntoNombres[i]);
+            capk.setTipoanalisisId(idTipoAnalisis);
+            Campoanalisis nuevoCampoanalisis = new Campoanalisis();
+            nuevoCampoanalisis.setCampoanalisisPK(capk);
+            nuevoCampoanalisis.setTipoanalisis(thisTipoanalisis);
+            nuevoCampoanalisis.setValor(new Double(conjuntoValores[i]));
+            campoanalisisFacade.create(nuevoCampoanalisis);
+            listaCampoanalisis.add(nuevoCampoanalisis);
         }
+        
+        thisTipoanalisis.setCampoanalisisList(listaCampoanalisis);
+        tipoanalisisFacade.edit(thisTipoanalisis);
+        
+        
+        response.sendRedirect("ServeltAnalisisVer?id=" + thisTipoanalisis.getAnalisisId().getId());
         
         
     }

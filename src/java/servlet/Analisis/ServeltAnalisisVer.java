@@ -3,16 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Analisis;
 
 import clases.Autenticacion;
 import dao.AnalisisFacade;
 import entity.Administrador;
 import entity.Analisis;
+import entity.Analista;
+import entity.Campoanalisis;
+import entity.Tipoanalisis;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,12 +30,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Merli
  */
-@WebServlet(name = "ServeltAnalisisBorrar", urlPatterns = {"/ServeltAnalisisBorrar"})
-public class ServeltAnalisisBorrar extends HttpServlet {
+@WebServlet(name = "ServeltAnalisisVer", urlPatterns = {"/ServeltAnalisisVer"})
+public class ServeltAnalisisVer extends HttpServlet {
 
     @EJB
     private AnalisisFacade analisisFacade;
-
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,10 +51,10 @@ public class ServeltAnalisisBorrar extends HttpServlet {
         
         Integer idAnalisis = null;
         
-        try{
+        try {
             idAnalisis = Integer.parseInt(request.getParameter("id"));
-        } catch(Exception ex){
-            
+        } catch(RuntimeException ex){
+            Autenticacion.error(request, response, "ID del Análisis escrito incorrectamente");
         }
         
         
@@ -54,20 +62,24 @@ public class ServeltAnalisisBorrar extends HttpServlet {
             Analisis thisAnalisis = analisisFacade.find(idAnalisis);
             Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
             
-            if(thisAnalisis != null && thisUsuario != null && 
+            //Para un Analisis en concreto solo podran acceder el propetario de dicho Analisis o un Administrador
+            if(thisAnalisis!= null && thisUsuario!= null && 
                     (thisAnalisis.getAnalistaUsuarioId().getUsuarioId().equals(thisUsuario.getId()) || 
                     Autenticacion.tieneRol(request, response, Administrador.class))){
-            
-                analisisFacade.remove(thisAnalisis);
+                
+                List<Tipoanalisis> listaTiposAnalisis = thisAnalisis.getTipoanalisisList();
 
-                response.sendRedirect("ServeltAnalisisListar");
+                request.setAttribute("descripcionAnalisis", thisAnalisis.getDescripcion());
+                request.setAttribute("idAnalisis", idAnalisis);
+                request.setAttribute("listaTiposAnalisis", listaTiposAnalisis);
+
+                RequestDispatcher rd = request.getRequestDispatcher("analisisVer.jsp");
+                rd.forward(request, response);
             } else {
                 Autenticacion.error(request, response, "No estás logeado, no tienes suficientes permisos o el análisis no ha sido encontrado.");
             }
- 
             
         }
-        
         
     }
 

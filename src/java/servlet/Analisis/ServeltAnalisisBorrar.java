@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlet;
+package servlet.Analisis;
 
-import dao.TipoanalisisFacade;
-import entity.Tipoanalisis;
+import clases.Autenticacion;
+import dao.AnalisisFacade;
+import entity.Administrador;
+import entity.Analisis;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,13 +23,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Merli
  */
-@WebServlet(name = "ServletTipoanalisisVer", urlPatterns = {"/ServletTipoanalisisVer"})
-public class ServletTipoanalisisVer extends HttpServlet {
+@WebServlet(name = "ServeltAnalisisBorrar", urlPatterns = {"/ServeltAnalisisBorrar"})
+public class ServeltAnalisisBorrar extends HttpServlet {
 
     @EJB
-    private TipoanalisisFacade tipoanalisisFacade;
-    
-    
+    private AnalisisFacade analisisFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,14 +40,35 @@ public class ServletTipoanalisisVer extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer id = Integer.parseInt(request.getParameter("id"));
         
-        Tipoanalisis tipoAnalisis = tipoanalisisFacade.find(id);
+        Integer idAnalisis = null;
         
-        request.setAttribute("tipoAnalisis", tipoAnalisis);
+        try{
+            idAnalisis = Integer.parseInt(request.getParameter("id"));
+        } catch(Exception ex){
+            
+        }
         
-        RequestDispatcher rd = request.getRequestDispatcher("tipoAnalisisEditar.jsp");
-        rd.forward(request, response);
+        
+        if(idAnalisis != null){
+            Analisis thisAnalisis = analisisFacade.find(idAnalisis);
+            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            
+            if(thisAnalisis != null && thisUsuario != null && 
+                    (thisAnalisis.getAnalistaUsuarioId().getUsuarioId().equals(thisUsuario.getId()) || 
+                    Autenticacion.tieneRol(request, response, Administrador.class))){
+            
+                analisisFacade.remove(thisAnalisis);
+
+                response.sendRedirect("ServeltAnalisisListar");
+            } else {
+                Autenticacion.error(request, response, "No estás logeado, no tienes suficientes permisos o el análisis no ha sido encontrado.");
+            }
+ 
+            
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
