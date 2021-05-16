@@ -74,9 +74,7 @@ public class ServletChatGuardar extends HttpServlet {
     //         teleoperador.setChatList(teleoperador.getChatList().add(current)););
             // usuario.setchatlist(usuario.listchat.append)
 
-            RequestDispatcher rd = request.getRequestDispatcher("ServletChatListar");
-            request.setAttribute("chatID", chat.getChatPK().getTeleoperadorId());
-            rd.forward(request, response);
+            response.sendRedirect("ServletChatListar");
         } catch (Exception e) {
             request.setAttribute("error", "Hemos encontrado un error");
             request.getRequestDispatcher("error.jsp").forward(request, response);
