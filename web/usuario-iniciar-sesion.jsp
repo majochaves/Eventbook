@@ -25,32 +25,39 @@
         <title>Inicio de sesión</title>
     </head>
     <body>
-        <jsp:include page="header.jsp">
-            <jsp:param name="nav" value="iniciar"/>  
-        </jsp:include>
-        <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1>Inicio de sesión</h1>
+        <div class="page">
+            <jsp:include page="header.jsp">
+                <jsp:param name="nav" value="iniciar"/>  
+            </jsp:include>
+            <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1>Inicio de sesión</h1>
+                        </div>
                     </div>
+                    <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
+                    <img style="float: right; margin-right: 15%; margin-top: -10%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
+                    <form action="ServletUsuarioIniciarSesion" method="POST">
+                        <table>
+                            <tr>
+                                <td>Usuario</td>
+                                <td><input class="textf" type="text" name="usuario" maxlength="30" size="30" minlength="1" required="required" autocomplete="on" /></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Contraseña&nbsp&nbsp</td>
+                                <td><input class="textf" type="password" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><a class="btn btn-danger mt-5" href="index.jsp">Volver</a></td>
+                                <td><input class="btn btn-primary btn-block mt-5" type="submit" value="Iniciar sesión"></td>
+                            </tr>
+                        <table/>
+                        
+                    </form>
                 </div>
-                <p style="color: #ec5482;"> <%= request.getAttribute("error") == null ? "" : request.getAttribute("error") %> </p>
-                <img style="float: right; margin-right: 15%; margin-top: -10%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
-                <form action="ServletUsuarioIniciarSesion" method="POST">
-                    <table>
-                    <tr>
-                        <td>Usuario</td>
-                        <td><input class="textf" type="text" name="usuario" maxlength="30" size="30" minlength="1" required="required" autocomplete="on" /></td>
-                    </tr>
-                    <tr>
-                        <td>Contraseña&nbsp&nbsp</td>
-                        <td><input class="textf" type="password" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
-                    </tr>
-                    <table/>
-                    <input class="btn btn-primary" type="submit" value="Iniciar sesión"> 
-                    <a style="margin-left: 2%" href="index.jsp">Cancelar</a>
-                </form>
             </div>
         </div>
     </body>

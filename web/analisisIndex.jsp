@@ -33,9 +33,9 @@
             </jsp:include>
             
 
-            <b>EN DESARROLLO</b><br/>
+            <!--<b>EN DESARROLLO</b><br/>-->
 
-            Aun no has creado estadisticas! <a href="analisisGenerar.jsp">Empezar a crear una estadística</a><br/><br/>
+            <a href="analisisGenerar.jsp">Empezar a crear una estadística</a><br/><br/>
             <a href="ServeltAnalisisListar">Ver mi lista de análisis</a>
         </div>
     </body>

@@ -26,23 +26,25 @@
         <title>Error</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        <div class="section section-lg d-flex align-items-center min-vh-100">
-            <div class="container">
-                <br/>
-                <h1>Lo sentimos... :(</h1>
-                <%
-                    if (error != null)
-                        %>
-                        <p style="color: #ec5482;"> <%= error %> </p>
-                        <%
-                %>
+        <div class="page">
+            <jsp:include page="header.jsp" />
+            <div class="section section-lg d-flex align-items-center min-vh-100">
+                <div class="container">
+                    <br/>
+                    <h1>Lo sentimos... :(</h1>
+                    <%
+                        if (error != null)
+                            %>
+                            <p style="color: #ec5482;"> <%= error %> </p>
+                            <%
+                    %>
 
-                <img style="float: right; margin-right: 10%; width: 30%; max-width: 499px;" src="images/monke.png"/>
+                    <img style="float: right; margin-right: 10%; width: 30%; max-width: 499px;" src="images/monke.png"/>
 
-                <br/><br/>
+                    <br/><br/>
 
-                <a class="btn btn-lg btn-secondary" href="index.jsp">Volver...<a>
+                    <a class="btn btn-lg btn-secondary" href="index.jsp">Volver...</a>
+                </div>
             </div>
         </div>
     </body>
