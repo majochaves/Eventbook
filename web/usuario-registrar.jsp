@@ -78,9 +78,13 @@
                                         <option>Mujer</option>
                                     </select>
                             </tr>
-                        </table>    
-                        <input class="btn btn-primary" type="submit" value="Siguiente">
-                        <a style="margin-left: 2%" href="index.jsp">Cancelar</a>          
+                            
+                            <tr>
+                                <td><a class="btn btn-danger mt-5" href="index.jsp">Cancelar</a></td>
+                                <td><input class="btn btn-primary btn-block mt-5" type="submit" value="Siguiente"></td>
+                            </tr>
+                        </table>
+                        
                     </form>
                 </div>
             </div>
