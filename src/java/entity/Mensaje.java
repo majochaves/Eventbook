@@ -49,12 +49,10 @@ public class Mensaje implements Serializable {
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Size(max = 500)
-    @Column(name = "CONTENIDO")
+    @Column(name = "CONTENIDO", length = 500)
     private String contenido;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "USUARIO_EMISOR_ID")
+    @Column(name = "USUARIO_EMISOR_ID", nullable = false)
     private int usuarioEmisorId;
     @JoinColumns({
         @JoinColumn(name = "CHAT_TELEOPERADOR_ID", referencedColumnName = "TELEOPERADOR_ID")
