@@ -34,9 +34,17 @@
             
 
             <!--<b>EN DESARROLLO</b><br/>-->
-
-            <a href="analisisGenerar.jsp">Empezar a crear una estadística</a><br/><br/>
-            <a href="ServeltAnalisisListar">Ver mi lista de análisis</a>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-4">
+                        <a class="btn btn-secondary btn-block mt-5" href="ServeltAnalisisListar"><i class="fa-chevron-left"></i>&nbsp; Ver mi lista de análisis</a>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-primary btn-block mt-5" href="analisisGenerar.jsp">Empezar a crear una estadística &nbsp;<i class="fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </body>
 </html>
