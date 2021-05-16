@@ -67,6 +67,8 @@
                         <%
                     } else {
                         %>
+                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletChatListar">Soporte Técnico</a>
+                        </li>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioCerrarSesion">Cerrar sesión</a>
                         </li>
                         <%
