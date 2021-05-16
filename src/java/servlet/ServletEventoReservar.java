@@ -63,8 +63,7 @@ public class ServletEventoReservar extends HttpServlet {
             request.setAttribute("reservas", e.getReservaList());
             RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
             rd.forward(request, response);
-        }
-        if(e.asientosDisponibles() < numAsientos){
+        } else if(e.asientosDisponibles() < numAsientos){
             String error = "Error: Sólo hay " + e.asientosDisponibles() + " asientos disponibles. ";
             request.setAttribute("error", error);
             request.setAttribute("evento", e);
