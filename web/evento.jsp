@@ -156,8 +156,16 @@
                                   <input class="form-control" type="number" name="num_asientos_fila" value="<%=(numAsientosFila == -1) ? "": numAsientosFila %>"/>
                               </div>
                           </div>
-                          <input class="btn btn-lg btn-primary" type="submit" value="<%= evento != null ? "Confirmar cambios" : "Crear evento" %>"/>
-                          <a style="margin-left: 2.5%" href="ServletEventoListar">Cancelar</a>
+                              
+                          <div class="row">
+                                <div class="col-4">
+                                    <a class="btn btn-danger" href="ServletEventoListar">Cancelar</a>
+                                </div>
+                                <div class="col-8">
+                                    <input class="btn btn-primary btn-block" type="submit" value="<%= evento != null ? "Confirmar cambios" : "Crear evento" %>"/>
+                                </div>
+                            
+                          </div>
                       </form>
                   </div>
                 </div>
