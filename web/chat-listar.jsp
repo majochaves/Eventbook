@@ -57,7 +57,7 @@
             <div style="float:left; margin-bottom: 1%;">
                 <p><%= allMessages %></p>
                 <% if (esTeleoperador) { %>
-                <a href="ServletChatListarTeleoperador">Mostrar todos los chats.</a>
+                <a href="ServletChatListarTeleoperador">Mostrar todos los chats</a>
                 <% } %>
             </div>
             
