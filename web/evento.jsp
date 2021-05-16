@@ -4,6 +4,9 @@
     Author     : majochaves
 --%>
 
+<%@page import="entity.Creadoreventos"%>
+<%@page import="entity.Administrador"%>
+<%@page import="clases.Autenticacion"%>
 <%@page import="entity.Usuario"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="entity.Evento"%>
@@ -31,10 +34,14 @@
         String strError = (String) request.getAttribute("strError");
         
         Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
-        
+
         String id="", titulo = "", descripcion = "", fecha = "", fecha_limite= "", asientosFijosNoChecked = "checked", asientosFijosSiChecked ="", showConfig="none";
         Double costeEntrada = -1.0;
         int aforo = -1, maxEntradas = -1, numFilas = -1, numAsientosFila = -1;
+        
+        if(!(Autenticacion.tieneRol(request, response, Administrador.class) || (Autenticacion.tieneRol(request, response, Creadoreventos.class) && evento.getCreadoreventosId().equals(Autenticacion.getUsuarioLogeado(request, response).getCreadoreventos())))) {
+            Autenticacion.error(request, response, Autenticacion.PERMISOS);
+        }
         
         if(evento != null){
             id = evento.getId().toString();

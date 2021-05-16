@@ -89,7 +89,7 @@
                       <p>Número de asientos por fila: <%=evento.getNumAsientosFila()%></p>
                       <%
                       }
-                      if(Autenticacion.tieneRol(request, response, Creadoreventos.class, Administrador.class)){
+                      if(Autenticacion.tieneRol(request, response, Administrador.class) || (Autenticacion.tieneRol(request, response, Creadoreventos.class) && evento.getCreadoreventosId().equals(Autenticacion.getUsuarioLogeado(request, response).getCreadoreventos()))){
                       %>
 
                           <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-warning">Editar</a>
