@@ -47,14 +47,9 @@
                         <%
                     }
                     %>
-                    <% 
-                    if (Autenticacion.tieneRol(request, response, Usuarioeventos.class, Administrador.class)) {
-                    %>
-                    <li class="navbar-navigation-root-item <%= (nav.equals("reservas") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletUsuarioListar">Mis reservas</a>
-                        </li>
-                    <%
-                    }
-                    %>
+                    
+                    <!--<li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ENDESARROLLO">Mis reservas</a></li>-->
+                    
                     <li class="navbar-navigation-root-item <%= (nav.equals("eventos") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
                     </li>
                     <%
