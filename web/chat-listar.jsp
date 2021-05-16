@@ -38,6 +38,7 @@
         List<Chat> chats = (List)request.getAttribute("chats");
         
         String allMessages = (String) request.getAttribute("allMessages");
+        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         
     %>
     <body>
@@ -122,8 +123,19 @@
                        <td><%= new SimpleDateFormat("dd-M-yyyy hh:mm").format(chat.getFecha())  %></td>
                        <td><%= tele.getUsuario().getNombre() %></td>
                        <td><%= usuario.getNombre() %></td>
-                       <td class="align-middle text-center"> <a href="ServletChatUI?userID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn" >Chat</a> </td>
-                       <td class="align-middle text-center"> <a href="ServletChatBorrar?userID=<%= chat.getChatPK().getUsuarioId() %>&opID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
+                       
+                       <%
+                           Integer otherID;
+                           if(!thisUsuario.getId().equals(chat.getChatPK().getTeleoperadorId())){
+                               otherID = chat.getChatPK().getTeleoperadorId();
+                           } else {
+                               otherID = chat.getChatPK().getUsuarioId();
+                           }
+                        
+                       %>
+                       
+                       <td class="align-middle text-center"> <a href="ServletChatUI?userID=<%= otherID %>" class="btn" >Chat</a> </td>
+                       <td class="align-middle text-center"> <a href="ServletChatBorrar?userID=<%= chat.getChatPK().getUsuarioId() %>&opID=<%= otherID %>" class="btn btn-danger" >X</a> </td>
                    </tr>     
                 </tbody>
                 <%
