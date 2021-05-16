@@ -11,3 +11,4 @@ build-impl.xml
 genfiles.properties
 
 *.class
+nbproject/project.properties
