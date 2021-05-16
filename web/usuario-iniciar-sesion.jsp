@@ -17,15 +17,17 @@
         <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
         <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
         <meta property="og:url" content="http://digipunk.netii.net">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
         
         <title>Inicio de sesión</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="header.jsp">
+            <jsp:param name="nav" value="iniciar"/>  
+        </jsp:include>
         <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
             <div class="container">
                 <div class="row">

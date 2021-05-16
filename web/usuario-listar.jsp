@@ -17,7 +17,7 @@
         <title>Listado de usuarios</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <link rel="stylesheet" href="components/base/tablas.css">
         <link rel="stylesheet" href="components/base/modal.css">
@@ -35,7 +35,9 @@
         List<Usuario> usuarios = (List)request.getAttribute("usuarios");
     %>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="header.jsp">
+            <jsp:param name="nav" value="administracion"/>  
+        </jsp:include>
     <div class="section section-lg bg-transparent">
         <div class="container">
             <br/>

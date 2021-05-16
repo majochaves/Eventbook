@@ -5,13 +5,14 @@
  */
 package servlet;
 
-import dao.EtiquetaFacade;
+import clases.Autenticacion;
 import dao.EventoFacade;
-import entity.Etiqueta;
+import dao.ReservaFacade;
 import entity.Evento;
+import entity.Reserva;
+import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -25,13 +26,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author majochaves
  */
-@WebServlet(name = "ServletEventoEditar", urlPatterns = {"/ServletEventoEditar"})
-public class ServletEventoEditar extends HttpServlet {
-    @EJB
-    private EtiquetaFacade etiquetaFacade;
+@WebServlet(name = "ServletEventoReservarAsientos", urlPatterns = {"/ServletEventoReservarAsientos"})
+public class ServletEventoReservarAsientos extends HttpServlet {
     
     @EJB
     private EventoFacade eventoFacade;
+    
+    @EJB
+    private ReservaFacade reservaFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,15 +46,25 @@ public class ServletEventoEditar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        Evento e = this.eventoFacade.find(Integer.parseInt(id));
+        Integer id = new Integer(request.getParameter("eventoId"));
+        Integer numAsientos = new Integer(request.getParameter("numAsientos"));
+        String[] asientosSeleccionados = request.getParameterValues("asientosSeleccionados");
         
-        List<Etiqueta> listaEtiquetas = this.etiquetaFacade.findAll();
+        Usuario user = Autenticacion.getUsuarioLogeado(request, response);
+        Evento e = this.eventoFacade.find(id);
         
-        request.setAttribute("listaEtiquetas", listaEtiquetas);
-        
-        request.setAttribute("evento", e);
-        request.getRequestDispatcher("evento.jsp").forward(request, response);
+        for(int i = 0; i < numAsientos; i++){
+            String filaAsiento = asientosSeleccionados[i];
+            String fila = filaAsiento.substring( 0, filaAsiento.indexOf(":"));
+            String asiento = filaAsiento.substring(filaAsiento.indexOf(":")+1, filaAsiento.length());
+            Reserva reserva = new Reserva(new Integer(fila), new Integer(asiento), e.getId());
+            reserva.setFecha(new Date());
+            reserva.setUsuarioeventosId(user.getUsuarioeventos());
+            this.reservaFacade.create(reserva);
+            e.getReservaList().add(reserva);
+            this.eventoFacade.edit(e);
+        }
+        response.sendRedirect("ServletEventoListar");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

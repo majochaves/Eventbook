@@ -39,7 +39,21 @@ public class ServletEventoListar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Evento> lista = this.eventoFacade.findAll();
+        
+        String fechaFiltrado = request.getParameter("fechaFiltrado");
+        List<Evento> lista = null;
+        
+        if(fechaFiltrado == null){
+            lista = this.eventoFacade.findAll();
+        } else if(fechaFiltrado.equalsIgnoreCase("reciente")){
+            lista = this.eventoFacade.findEventByMostRecent();
+            request.setAttribute("filtro", fechaFiltrado);
+        } else if (fechaFiltrado.equalsIgnoreCase("noReciente")){
+            lista = this.eventoFacade.findEventByLeastRecent();
+            request.setAttribute("filtro", fechaFiltrado);
+        } else {
+            lista = this.eventoFacade.findAll();
+        } 
         
         request.setAttribute("lista", lista);
         

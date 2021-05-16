@@ -64,36 +64,25 @@ public class ServletUsuarioFiltrar extends HttpServlet {
         if(rolesStr.contains("analistas"))
             roles[i++] = Analista.class;
         
-        // FILTRO ROL
-        query = query.stream().filter(u -> {
-            try {
-                return Autenticacion.tieneRol(u, roles);
-            } catch (ServletException ex) {
-                Logger.getLogger(ServletUsuarioFiltrar.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ServletUsuarioFiltrar.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return false;
-        }).collect(Collectors.toList());
-        
-        // FILTRO SEXO
-        query = query.stream().filter(u -> sexos.contains(u.getSexo())).collect(Collectors.toList());
-        
-        // FILTRO NOMBRE DE USUARIO
-        query = query.stream().filter(u -> u.getUsername().toLowerCase().contains(username.toLowerCase())).collect(Collectors.toList());
-        
-        // FILTRO NOMBRE
-        query = query.stream().filter(u -> u.getNombre().toLowerCase().contains(nombre.toLowerCase())).collect(Collectors.toList());
-        
-        // FILTRO APELLIDOS
-        query = query.stream().filter(u -> u.getApellidos().toLowerCase().contains(apellidos.toLowerCase())).collect(Collectors.toList());
-        
-        // FILTRO DOMICILIO
-        query = query.stream().filter(u -> u.getDomicilio().toLowerCase().contains(domicilio.toLowerCase())).collect(Collectors.toList());
-        
-        // FILTRO CIUDAD
-        query = query.stream().filter(u -> u.getCiudadResidencia().toLowerCase().contains(ciudad.toLowerCase())).collect(Collectors.toList());        
-        
+        query = query.stream()
+                .filter(u -> {                                                                              // FILTRO ROL
+                        try {
+                            return Autenticacion.tieneRol(u, roles);
+                        } catch (ServletException ex) {
+                            Logger.getLogger(ServletUsuarioFiltrar.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(ServletUsuarioFiltrar.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        return false;
+                })
+                .filter(u -> sexos.contains(u.getSexo()))                                                   // FILTRO SEXO
+                .filter(u -> u.getUsername().toLowerCase().contains(username.toLowerCase()))                // FILTRO NOMBRE DE USUARIO
+                .filter(u -> u.getNombre().toLowerCase().contains(nombre.toLowerCase()))                    // FILTRO NOMBRE
+                .filter(u -> u.getApellidos().toLowerCase().contains(apellidos.toLowerCase()))              // FILTRO APELLIDOS
+                .filter(u -> u.getDomicilio().toLowerCase().contains(domicilio.toLowerCase()))              // FILTRO DOMICILIO
+                .filter(u -> u.getCiudadResidencia().toLowerCase().contains(ciudad.toLowerCase()))          // FILTRO CIUDAD
+                .collect(Collectors.toList());
+                
         request.setAttribute("usuarios", query);
         request.getRequestDispatcher("usuario-listar.jsp").forward(request, response);
     }

@@ -20,15 +20,13 @@ public class ReservaPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FILA")
+    @Column(name = "FILA", nullable = false)
     private int fila;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "ASIENTO")
+    @Column(name = "ASIENTO", nullable = false)
     private int asiento;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "EVENTO_ID")
+    @Column(name = "EVENTO_ID", nullable = false)
     private int eventoId;
 
     public ReservaPK() {

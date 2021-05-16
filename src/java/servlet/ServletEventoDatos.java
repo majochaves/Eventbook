@@ -5,16 +5,15 @@
  */
 package servlet;
 
-import dao.EtiquetaFacade;
 import dao.EventoFacade;
-import entity.Etiqueta;
+import dao.ReservaFacade;
 import entity.Evento;
+import entity.ReservaPK;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,15 +22,17 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author majochaves
+ * @author fcode
  */
-@WebServlet(name = "ServletEventoEditar", urlPatterns = {"/ServletEventoEditar"})
-public class ServletEventoEditar extends HttpServlet {
+@WebServlet(name = "ServletEventoDatos", urlPatterns = {"/ServletEventoDatos"})
+public class ServletEventoDatos extends HttpServlet {
+
     @EJB
-    private EtiquetaFacade etiquetaFacade;
-    
+    private ReservaFacade reservaFacade;
+
     @EJB
     private EventoFacade eventoFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,15 +44,16 @@ public class ServletEventoEditar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String id = request.getParameter("id");
         Evento e = this.eventoFacade.find(Integer.parseInt(id));
-        
-        List<Etiqueta> listaEtiquetas = this.etiquetaFacade.findAll();
-        
-        request.setAttribute("listaEtiquetas", listaEtiquetas);
+        List<ReservaPK> reservas = this.reservaFacade.findReservaPKById(e.getId());
         
         request.setAttribute("evento", e);
-        request.getRequestDispatcher("evento.jsp").forward(request, response);
+        request.setAttribute("reservas", reservas);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

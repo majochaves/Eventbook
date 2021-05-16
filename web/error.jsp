@@ -19,7 +19,7 @@
         <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
         <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
         <meta property="og:url" content="http://digipunk.netii.net">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <script src="components/base/core.js"></script>
         <script src="components/base/script.js"></script>
@@ -27,21 +27,23 @@
     </head>
     <body>
         <jsp:include page="header.jsp" />
-        <div style="margin-left: 1%;">
-            <br/>
-            <h1>Lo sentimos... :(</h1>
-            <%
-                if (error != null)
-                    %>
-                    <p style="color: #ec5482;"> <%= error %> </p>
-                    <%
-            %>
-            
-            <img style="float: right; margin-right: 15%; width: 20%; max-width: 499px;" src="images/monke.png"/>
+        <div class="section section-lg d-flex align-items-center min-vh-100">
+            <div class="container">
+                <br/>
+                <h1>Lo sentimos... :(</h1>
+                <%
+                    if (error != null)
+                        %>
+                        <p style="color: #ec5482;"> <%= error %> </p>
+                        <%
+                %>
 
-            <br/><br/>
+                <img style="float: right; margin-right: 10%; width: 30%; max-width: 499px;" src="images/monke.png"/>
 
-            <a class="btn btn-lg btn-secondary" href="index.jsp">Volver...<a>
+                <br/><br/>
+
+                <a class="btn btn-lg btn-secondary" href="index.jsp">Volver...<a>
+            </div>
         </div>
     </body>
 </html>

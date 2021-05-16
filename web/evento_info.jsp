@@ -4,6 +4,15 @@
     Author     : majochaves
 --%>
 
+
+<%@page import="entity.Usuarioeventos"%>
+<%@page import="entity.Administrador"%>
+<%@page import="entity.Creadoreventos"%>
+<%@page import="clases.Autenticacion"%>
+<%@page import="entity.Administrador"%>
+<%@page import="clases.Autenticacion"%>
+<%@page import="entity.Usuario"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="entity.Evento"%>
 <%@page import="entity.Etiqueta"%>
@@ -14,7 +23,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ver Evento</title>
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="components/base/base.css">
         <script src="components/eventos/eventos.js"></script>
         <script src="components/base/core.js"></script>
@@ -23,6 +32,7 @@
     </head>
     <%
         Evento evento = (Evento)request.getAttribute("evento");
+        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
     %>
     <body>
       <div class="page">
@@ -40,14 +50,12 @@
                     <p><%=evento.getDescripcion()%></p>
                 <%
                 }
-                Date d = evento.getFecha();
                 %>
-                <p>Fecha: <%=d.toString()%></p>
+                <p>Fecha: <%=new SimpleDateFormat("dd/MM/yyyy").format(evento.getFecha())%></p>
                 <%
                 if(evento.getFechaLimite() != null){
-                    Date fL = evento.getFechaLimite();
                 %>
-                    <p>Fecha limite: <%=fL.toString()%></p>
+                    <p>Fecha limite: <%=new SimpleDateFormat("dd/MM/yyyy").format(evento.getFechaLimite())%></p>
                 <%
                 }
                 if(evento.getCosteEntrada() != null){
@@ -62,7 +70,7 @@
                 }
                 if(evento.getMaxEntradas() != null){
                 %>
-                    <p>Aforo: <%=evento.getMaxEntradas()%></p>
+                    <p>Máximo número de entradas por usuario: <%=evento.getMaxEntradas()%></p>
                 <%
                 }
                 // SÓLO VISIBLE PARA CREADOR O ADMINISTRADOR
@@ -82,10 +90,18 @@
                 <p>Número de asientos por fila: <%=evento.getNumAsientosFila()%></p>
                 <%
                 }
+                if(Autenticacion.tieneRol(request, response, Creadoreventos.class, Administrador.class)){
                 %>
-                <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
-                <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
-            <%
+
+                    <a href="ServletEventoEditar?id=<%=evento.getId()%>" class="btn btn-secondary">Editar</a>
+                    <a href="ServletEventoBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Borrar</a>
+                <%
+                } 
+                if(Autenticacion.tieneRol(request, response, Administrador.class, Usuarioeventos.class, Administrador.class)){
+                %>
+                    <a href="ServletEventoDatos?id=<%=evento.getId()%>" class="btn btn-secondary">Reservar</a>
+                <%
+                }
             }
             %>
         </div>
