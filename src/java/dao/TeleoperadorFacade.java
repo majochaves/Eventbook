@@ -38,7 +38,6 @@ public class TeleoperadorFacade extends AbstractFacade<Teleoperador> {
         List<Teleoperador> teleops = q.getResultList();
         
         return teleops.get(0);
-        
     }
     
     

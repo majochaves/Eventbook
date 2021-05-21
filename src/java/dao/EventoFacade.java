@@ -55,6 +55,48 @@ public class EventoFacade extends AbstractFacade<Evento> {
         else return lista;
         
     }
+
+    public List<Evento> findEventosReservadosBy(Integer usuarioId) {
+        
+        Query q;
+        List<Evento> lista;
+        
+        q = em.createQuery("SELECT DISTINCT e FROM Evento e, Reserva r WHERE e.id = r.evento.id AND r.usuarioeventosId.usuarioId = :usuarioId");
+        q.setParameter("usuarioId", usuarioId);
+        lista = q.getResultList();
+        
+        if(lista == null) return null;
+        else return lista;
+        
+    }
+    
+    public List<Evento> findEventosReservadosByMostRecent(Integer usuarioId) {
+        
+        Query q;
+        List<Evento> lista;
+        
+        q = em.createQuery("SELECT DISTINCT e FROM Evento e, Reserva r WHERE e.id = r.evento.id AND r.usuarioeventosId.usuarioId = :usuarioId ORDER BY e.fecha asc");
+        q.setParameter("usuarioId", usuarioId);
+        lista = q.getResultList();
+        
+        if(lista == null) return null;
+        else return lista;
+        
+    }
+    
+    public List<Evento> findEventosReservadosByLeastRecent(Integer usuarioId) {
+        
+        Query q;
+        List<Evento> lista;
+        
+        q = em.createQuery("SELECT DISTINCT e FROM Evento e, Reserva r WHERE e.id = r.evento.id AND r.usuarioeventosId.usuarioId = :usuarioId ORDER BY e.fecha desc");
+        q.setParameter("usuarioId", usuarioId);
+        lista = q.getResultList();
+        
+        if(lista == null) return null;
+        else return lista;
+        
+    }
     
     
     

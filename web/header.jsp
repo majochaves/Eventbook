@@ -46,10 +46,12 @@
                     </li>
                 <%
                     }
+                    if (Autenticacion.tieneRol(request, response, Administrador.class, Usuarioeventos.class)) {
                 %>
-                    
-                    <!--<li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ENDESARROLLO">Mis reservas</a></li>-->
-                    
+                    <li class="navbar-navigation-root-item <%= (nav.equals("reserva") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletReservasListar">Mis reservas</a></li>
+                <%
+                    }
+                %>
                     <li class="navbar-navigation-root-item <%= (nav.equals("eventos") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
                     </li>
                 <%
@@ -62,7 +64,7 @@
                 <%
                     } else {
                 %>
-                        <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletChatListar">Soporte Técnico</a>
+                        <li class="navbar-navigation-root-item <%= (nav.equals("chat") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletChatListar">Soporte Técnico</a>
                         </li>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="ServletUsuarioCerrarSesion">Cerrar sesión</a>
                         </li>

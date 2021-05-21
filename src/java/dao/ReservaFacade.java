@@ -45,5 +45,35 @@ public class ReservaFacade extends AbstractFacade<Reserva> {
         else return reservas;
         
     }
+
+    public Integer findNumEntradas(Integer usuarioId, Integer id) {
+        Query q;
+        List<Reserva> reservas;
+        
+        q = em.createQuery("SELECT r FROM Reserva r WHERE r.usuarioeventosId.usuarioId = :usuarioId AND r.evento.id = :id");
+        q.setParameter("id", id);
+        q.setParameter("usuarioId", usuarioId);
+        
+        reservas = q.getResultList();
+        if(reservas == null || reservas.isEmpty()) return 0;
+        else return reservas.size();
+        
+        
+        
+    }
+
+    public List<Reserva> findReservasUser(Integer usuarioId, Integer idEvento) {
+        Query q;
+        List<Reserva> reservas;
+        
+        q = em.createQuery("SELECT r FROM Reserva r WHERE r.usuarioeventosId.usuarioId = :usuarioId AND r.evento.id = :idEvento");
+        q.setParameter("usuarioId", usuarioId);
+        q.setParameter("idEvento", idEvento);
+        
+        reservas = q.getResultList();
+        if(reservas == null) return null;
+        else return reservas;
+        
+    }
     
 }

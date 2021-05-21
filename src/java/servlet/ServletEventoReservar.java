@@ -9,10 +9,12 @@ package servlet;
 import clases.Autenticacion;
 import dao.EventoFacade;
 import dao.ReservaFacade;
+import dao.UsuarioeventosFacade;
 import entity.Evento;
 import entity.Reserva;
 import entity.ReservaPK;
 import entity.Usuario;
+import entity.Usuarioeventos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -33,6 +35,9 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletEventoReservar extends HttpServlet {
 
     @EJB
+    private UsuarioeventosFacade usuarioeventosFacade;
+
+    @EJB
     private EventoFacade eventoFacade;
     
     @EJB
@@ -49,14 +54,31 @@ public class ServletEventoReservar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String editar = (String) request.getParameter("editar");
+        if(editar == null) editar = "";
         Integer id = new Integer(request.getParameter("id"));
         Integer numAsientos = new Integer(request.getParameter("numEntradas"));
-        
         Usuario user = Autenticacion.getUsuarioLogeado(request, response);
+        Usuarioeventos uE = this.usuarioeventosFacade.findByID(user.getId());
         Evento e = this.eventoFacade.find(id);
         int entradasReservadas = e.getEntradasReservadas(user);
-        if(numAsientos > e.getMaxEntradas() || entradasReservadas >= e.getMaxEntradas()){
+        
+        
+        if(editar.equalsIgnoreCase("editar") && numAsientos == 0){
+            request.setAttribute("id", id);
+             RequestDispatcher rd = request.getRequestDispatcher("ServletReservaBorrar");
+            rd.forward(request, response);
+        } else if(editar.equalsIgnoreCase("editar") && numAsientos > e.getMaxEntradas()){
+            int entradasPosibles = e.getMaxEntradas()-entradasReservadas;
+            String error = "Error: Ya ha reservado "+entradasReservadas+" solo podría reservar "+entradasPosibles+" entradas más.";
+            request.setAttribute("error", error);
+            request.setAttribute("editar", editar);
+            request.setAttribute("numEntradas", entradasReservadas);
+            request.setAttribute("evento", e);
+            request.setAttribute("reservas", e.getReservaList());
+            RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
+            rd.forward(request, response);
+        } else if(numAsientos > e.getMaxEntradas() || entradasReservadas >= e.getMaxEntradas()){
             String error = "Error: Sólo se pueden reservar " + e.getMaxEntradas() + " por usuario.";
             request.setAttribute("error", error);
             request.setAttribute("evento", e);
@@ -80,20 +102,34 @@ public class ServletEventoReservar extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("seleccionar_asientos.jsp");
                 rd.forward(request, response);
             }else{
-                for(int i = 0; i < numAsientos; i++){
-                    List<Reserva> listaReservas = e.getReservaList();
-                    int numAsiento = 0;
-                    if(listaReservas != null){
-                        numAsiento = listaReservas.size() + 1;
+                List<Reserva> listaReservas = e.getReservaList();
+                Integer numEntradas = this.reservaFacade.findNumEntradas(user.getUsuarioeventos().getUsuarioId(), id);
+                if(editar.equalsIgnoreCase("editar") && numAsientos - numEntradas < 0){
+                    int entradasEliminar = numEntradas - numAsientos;
+                    int entradas = listaReservas.size();
+                    for(int i = 1; i <= entradasEliminar; i++){
+                        Reserva aux = listaReservas.get(entradas - i);
+                        e.getReservaList().remove(aux);
+                        this.reservaFacade.remove(aux);
                     }
-                    Reserva reserva = new Reserva(1, numAsiento, e.getId());
-                    reserva.setFecha(new Date());
-                    reserva.setUsuarioeventosId(user.getUsuarioeventos());
-                    this.reservaFacade.create(reserva);
-                    e.getReservaList().add(reserva);
                     this.eventoFacade.edit(e);
+                } else {
+                    numAsientos = numAsientos-entradasReservadas;
+                    for(int i = 0; i < numAsientos; i++){
+                    
+                        int numAsiento = 0;
+                        if(listaReservas != null){
+                            numAsiento = listaReservas.size() + 1;
+                        }
+                        Reserva reserva = new Reserva(1, numAsiento, e.getId());
+                        reserva.setFecha(new Date());
+                        reserva.setUsuarioeventosId(user.getUsuarioeventos());
+                        this.reservaFacade.create(reserva);
+                        e.getReservaList().add(reserva);
+                        this.eventoFacade.edit(e);
+                    }
                 }
-                response.sendRedirect("ServletEventoListar");
+                response.sendRedirect("ServletReservasListar");
             }
         }
         
