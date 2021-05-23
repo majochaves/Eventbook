@@ -64,7 +64,7 @@
                           <%
                               if(editar.equalsIgnoreCase("editar")){
                           %>
-                                <input type="submit" class="btn btn-secondary" value="Editar" />
+                                <input type="submit" class="btn btn-secondary" value="Editar" /> 
                                 <a href="ServletReservaBorrar?id=<%=evento.getId()%>" class="btn btn-danger">Eliminar</a>
                           <%
                               } else {

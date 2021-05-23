@@ -56,18 +56,15 @@ public class ServletReservaMostrar extends HttpServlet {
         Integer id = new Integer(request.getParameter("id"));
         Evento evento = this.eventoFacade.find(id);
         Integer numEntradas = this.reservaFacade.findNumEntradas(uE.getUsuarioId(), id);
+        String url = "evento_reservar.jsp";
         
-        
-        if(evento.getAsientosFijos().equals('n')){
-            request.setAttribute("numEntradas", numEntradas);
-        } else {
-            
-        }
-        
+        request.setAttribute("numEntradas", numEntradas);
         request.setAttribute("editar", "editar");
         request.setAttribute("evento", evento);
         
-        RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
+        
+        
+        RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
         
         

@@ -24,7 +24,9 @@
         Evento evento = (Evento)request.getAttribute("evento");
         int[][] matrizAsientos = (int[][])request.getAttribute("matrizAsientos");
         Integer numAsientos = (Integer)request.getAttribute("numAsientos");
-        
+        String editar = (String) request.getAttribute("editar");
+        if(editar == null) editar = "";
+        int asientos = 0;
     %>
     <body>
         <div class="page">
@@ -35,7 +37,18 @@
             <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
                 <div class="container-fluid">
                         <h1>Selección de asientos para <%=evento.getTitulo()%></h1>
-                        <p>Numero de entradas: <%=numAsientos%></p>
+                        <%
+                            if(editar.equalsIgnoreCase("editar")){
+                        %>
+                                <p>Numero de entradas finales: <%=numAsientos%>, tiene que eliminar <%= asientos%> asientos.</p>
+                        <%
+                            } else {
+                        %>        
+                                <p>Numero de entradas: <%=numAsientos%></p>
+                        <%        
+                            }
+                        %>    
+                        
                         <form method="POST" action="ServletEventoReservarAsientos">
                             <input type="hidden" name="eventoId" value="<%=evento.getId()%>"/>
                             <input type="hidden" id="numAsientos" name="numAsientos" value="<%=new Integer(numAsientos)%>"/>

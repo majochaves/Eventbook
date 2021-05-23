@@ -78,7 +78,7 @@ public class ServletEventoReservar extends HttpServlet {
             request.setAttribute("reservas", e.getReservaList());
             RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
             rd.forward(request, response);
-        } else if(numAsientos > e.getMaxEntradas() || entradasReservadas >= e.getMaxEntradas()){
+        } else if(numAsientos > e.getMaxEntradas() || entradasReservadas > e.getMaxEntradas()){
             String error = "Error: Sólo se pueden reservar " + e.getMaxEntradas() + " por usuario.";
             request.setAttribute("error", error);
             request.setAttribute("evento", e);
@@ -116,7 +116,6 @@ public class ServletEventoReservar extends HttpServlet {
                 } else {
                     numAsientos = numAsientos-entradasReservadas;
                     for(int i = 0; i < numAsientos; i++){
-                    
                         int numAsiento = 0;
                         if(listaReservas != null){
                             numAsiento = listaReservas.size() + 1;
