@@ -1,2 +1,0 @@
-.thumbnail-up-shadow {	display: block;	transition: all 0.2s ease-in-out;}.thumbnail-up-shadow > img {	width: 100%;}.thumbnail-up-shadow:hover, .thumbnail-up-shadow:focus {	transform: translateY(-10px);	box-shadow: 5px 8px 28px rgba(23, 23, 36, 0.1);}
-/*# sourceMappingURL=thumbnail-up-shadow.css.map */
