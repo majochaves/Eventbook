@@ -234,7 +234,7 @@ public class Evento implements Serializable {
         int[][] asientos = new int[this.numFilas][this.numAsientosFila];
         inicializar(asientos);
         this.reservaList.forEach((r) -> {
-            asientos[r.getReservaPK().getFila()-1][r.getReservaPK().getAsiento()-1] = 1;
+            asientos[r.getReservaPK().getFila()-1][r.getReservaPK().getAsiento()-1] = r.getUsuarioeventosId().getUsuarioId();
         });
         return asientos;
     }
