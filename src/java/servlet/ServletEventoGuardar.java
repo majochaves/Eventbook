@@ -60,6 +60,7 @@ public class ServletEventoGuardar extends HttpServlet {
         
         String id = request.getParameter("id");
         String usuarioId = request.getParameter("usuarioId");
+        boolean editar = id != null;
         String error;
         
         Evento e;
@@ -92,12 +93,17 @@ public class ServletEventoGuardar extends HttpServlet {
         
         String[] etiquetas = request.getParameterValues("etiquetas");
         
+        String strTo = "ServletEventoCrear";
+        if(editar){
+            request.setAttribute("evento", e);
+            strTo = "ServletEventoEditar";
+        }
         
         
         if(titulo.isEmpty() || fecha.isEmpty()){
             error = "Error: por favor rellene todos los campos obligatorios.";
             request.setAttribute("strError", error);
-            RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+            RequestDispatcher rd = request.getRequestDispatcher(strTo);
             rd.forward(request, response);
         }else{
             //TITULO - Obligatorio
@@ -120,7 +126,7 @@ public class ServletEventoGuardar extends HttpServlet {
                     existeError = true;
                     error = "Error: fecha límite para comprar entradas tiene que ser anterior a la fecha del evento.";
                     request.setAttribute("strError", error);
-                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    RequestDispatcher rd = request.getRequestDispatcher(strTo);
                     rd.forward(request, response);
                 }
             }
@@ -130,7 +136,7 @@ public class ServletEventoGuardar extends HttpServlet {
                     existeError = true;
                     error = "Error: campos numéricos deben ser positivos.";
                     request.setAttribute("strError", error);
-                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    RequestDispatcher rd = request.getRequestDispatcher(strTo);
                     rd.forward(request, response);
                 }
                 e.setCosteEntrada(new Double(costeEntrada));
@@ -142,7 +148,7 @@ public class ServletEventoGuardar extends HttpServlet {
                     existeError = true;
                     error = "Error: campos numéricos deben ser positivos.";
                     request.setAttribute("strError", error);
-                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    RequestDispatcher rd = request.getRequestDispatcher(strTo);
                     rd.forward(request, response);
                 }
                 e.setAforo(new Integer(aforo));
@@ -154,7 +160,7 @@ public class ServletEventoGuardar extends HttpServlet {
                     existeError = true;
                     error = "Error: campos numéricos deben ser positivos.";
                     request.setAttribute("strError", error);
-                    RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                    RequestDispatcher rd = request.getRequestDispatcher(strTo);
                     rd.forward(request, response);
                 }
                 if(!aforo.isEmpty()){
@@ -162,7 +168,7 @@ public class ServletEventoGuardar extends HttpServlet {
                         existeError = true;
                         error = "Error: máximo número de entradas por usuario debe ser menor que el aforo.";
                         request.setAttribute("strError", error);
-                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        RequestDispatcher rd = request.getRequestDispatcher(strTo);
                         rd.forward(request, response);
                     }
                 }
@@ -187,7 +193,7 @@ public class ServletEventoGuardar extends HttpServlet {
                         existeError = true;
                         error = "Error: campos numéricos deben ser positivos.";
                         request.setAttribute("strError", error);
-                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        RequestDispatcher rd = request.getRequestDispatcher(strTo);
                         rd.forward(request, response);
                     }
                     e.setNumFilas(new Integer(numFilas));
@@ -199,7 +205,7 @@ public class ServletEventoGuardar extends HttpServlet {
                         existeError = true;
                         error = "Error: campos numéricos deben ser positivos.";
                         request.setAttribute("strError", error);
-                        RequestDispatcher rd = request.getRequestDispatcher("ServletEventoCrear");
+                        RequestDispatcher rd = request.getRequestDispatcher(strTo);
                         rd.forward(request, response);
                     }
                     e.setNumAsientosFila(Integer.parseInt(numAsientosFila));

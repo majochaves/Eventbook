@@ -31,6 +31,7 @@
         Evento evento = (Evento)request.getAttribute("evento");
         Integer numMaxEntradas = evento.getMaxEntradas();
         String maxentradas = " "+"máximo "+numMaxEntradas+" entradas.";
+        if(evento.getMaxEntradas() == null) { maxentradas = "";}
         List<ReservaPK> reservas = (List) request.getAttribute("reservas");
         String error = (String)request.getAttribute("error");
         Integer numEntradas = (Integer)request.getAttribute("numEntradas");

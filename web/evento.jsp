@@ -129,7 +129,7 @@
                                   <%
                                       for(Etiqueta et: etiquetas){
                                           String strSelected = "";
-                                          if(evento.getEtiquetaList().contains(et)){
+                                          if(evento != null && evento.getEtiquetaList().contains(et)){
                                               strSelected = "selected";
                                           }
                                   %>
