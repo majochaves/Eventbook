@@ -257,7 +257,7 @@
                             console.log("Size", "<%= mensajes.size() %>");
                             <% for (Pair<Integer, Mensaje> msg : mensajes){ %>
                                 console.log("IMP MENSAJE");
-                                console.log("<%= msg.getValue().getContenido() %>");
+                                console.log("<%= msg.getValue().getContenido().trim() %>");
                                 console.log("<%= msg.getValue().getUsuarioEmisorId() %>");
                                 console.log("<%= msg.getKey() %>");
                                 
@@ -265,7 +265,7 @@
                                     console.log(<%= thisUsuario.getId() %>);
                                 
                                 var data = {
-                                    messageOutput: "<%= msg.getValue().getContenido() %>",
+                                    messageOutput: "<%= msg.getValue().getContenido().trim() %>",
                                     id: "<%= msg.getValue().getId() %>",
                                     time: "<%= new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(msg.getValue().getFecha()) %>"
                                 }; 

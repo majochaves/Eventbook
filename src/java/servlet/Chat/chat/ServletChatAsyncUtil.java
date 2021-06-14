@@ -70,7 +70,7 @@ public class ServletChatAsyncUtil extends HttpServlet {
         Usuario recibe = new Usuario();
         recibe.setNombre("error");
         
-        String message = request.getParameter("message");
+        String message = request.getParameter("message").trim();
         String userTo = request.getParameter("userTo");
         
         String htmlMessage;
