@@ -6,14 +6,17 @@
 package servlet.Chat.chat;
 
 import clases.Autenticacion;
+import dao.ChatFacade;
 import dao.MensajeFacade;
 import dao.TeleoperadorFacade;
 import dao.UsuarioFacade;
+import entity.Chat;
 import entity.Mensaje;
 import entity.Teleoperador;
 import entity.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javafx.util.Pair;
@@ -40,6 +43,9 @@ public class ServletChatUI extends HttpServlet {
 
     @EJB
     private TeleoperadorFacade teleoperadorFacade;
+    
+    @EJB
+    private ChatFacade chatFacade;
 
     
     
@@ -51,8 +57,12 @@ public class ServletChatUI extends HttpServlet {
             request.setAttribute("error", "¿Has iniciado sesión?");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        
-        List<Teleoperador> teleoperadores = this.teleoperadorFacade.findAll();
+       
+        // Get teleoperadores of chats we have
+        List<Teleoperador> teleoperadores = new ArrayList();
+        for (Chat chat : chatFacade.findChatsByUserID(thisUsuario.getId())){
+            teleoperadores.add(chat.getTeleoperador());
+        }
         request.setAttribute("teleoperadores", teleoperadores);
         
         String userID = request.getParameter("userID");
