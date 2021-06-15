@@ -41,18 +41,21 @@ public class ServletMessageBorrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String userID = request.getParameter("userID");
-        Integer msgID = new Integer(request.getParameter("msgId"));
-        Mensaje msg = this.mensajeFacade.getMessageByID(msgID);
+
         
         //Solo un teleoperador o un Administrador podrá editar un mensaje
         Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         if(thisUsuario != null && 
                 (Autenticacion.tieneRol(request, response, Administrador.class) || 
                 (Autenticacion.tieneRol(request, response, Teleoperador.class)))){
+            
+                    
+            String userID = request.getParameter("userID");
+            Integer msgID = new Integer(request.getParameter("msgId"));
+            Mensaje msg = this.mensajeFacade.getMessageByID(msgID);
 
             this.mensajeFacade.remove(msg);
+
 
             response.sendRedirect("ServletChatUI?userID=" + userID);
         } else {

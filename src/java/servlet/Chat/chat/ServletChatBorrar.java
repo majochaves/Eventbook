@@ -7,9 +7,11 @@ package servlet.Chat.chat;
 
 import clases.Autenticacion;
 import dao.ChatFacade;
+import dao.UsuarioFacade;
 import java.io.IOException;
 import entity.Chat;
 import entity.Usuario;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletChatBorrar", urlPatterns = {"/ServletChatBorrar"})
 public class ServletChatBorrar extends HttpServlet {
+
+    @EJB
+    private UsuarioFacade usuarioFacade;
 
     @EJB
     private ChatFacade chatFacade;
@@ -57,6 +62,10 @@ public class ServletChatBorrar extends HttpServlet {
 
             Chat chat = this.chatFacade.findByChatPK(userID, opID);
             this.chatFacade.remove(chat);
+            
+            List<Chat> chatsUsuario = thisUsuario.getChatList();
+            chatsUsuario.remove(chat);
+            this.usuarioFacade.edit(thisUsuario);
 
             response.sendRedirect("ServletChatListar");
             

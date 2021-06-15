@@ -35,7 +35,7 @@
                     <%
                         if (error != null)
                             %>
-                            <p style="color: #ec5482;"> <%= error %> </p>
+                            <p id="errorMsg" style="color: #ec5482;"> <%= error %> </p>
                             <%
                     %>
 

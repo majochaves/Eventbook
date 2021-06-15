@@ -43,6 +43,12 @@ public class ServletMessageEditar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+        if (thisUsuario == null){
+            request.setAttribute("error", "¿Has iniciado sesión?");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+        
         String userID = request.getParameter("userID");
         
         Integer msgID = new Integer(request.getParameter("msgId"));

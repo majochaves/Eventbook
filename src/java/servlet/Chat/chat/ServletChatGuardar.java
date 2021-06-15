@@ -76,7 +76,7 @@ public class ServletChatGuardar extends HttpServlet {
 
             response.sendRedirect("ServletChatListar");
         } catch (Exception e) {
-            request.setAttribute("error", "Hemos encontrado un error");
+            request.setAttribute("error", "Hemos encontrado un error, ¿Existe ya el chat?");
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         

@@ -5,9 +5,11 @@
  */
 package servlet.Chat.chat;
 
+import clases.Autenticacion;
 import dao.TeleoperadorFacade;
 import java.io.IOException;
 import entity.Teleoperador;
+import entity.Usuario;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -37,6 +39,12 @@ public class ServletChatCrear extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+        if (thisUsuario == null){
+            request.setAttribute("error", "¿Has iniciado sesión?");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
         
         List<Teleoperador> listaOperadores = this.teleoperadorFacade.findAll();
         
