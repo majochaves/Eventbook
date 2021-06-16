@@ -3,14 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package com.eventbookspring.eventbookspring.clases;
 
-import entity.Administrador;
-import entity.Analista;
-import entity.Creadoreventos;
-import entity.Teleoperador;
-import entity.Usuario;
-import entity.Usuarioeventos;
+import com.eventbookspring.eventbookspring.entity.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -24,9 +19,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Autenticacion {
     
-    public static Usuario getUsuarioLogeado(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
+    public static Usuario getUsuarioLogeado(HttpServletRequest request, HttpServletResponse response) {
         return (Usuario) request.getSession().getAttribute("logged-user");
+    }
+
+    public static void login(HttpServletRequest request, Usuario u) {
+        request.getSession().setAttribute("logged-user", u);
+    }
+
+    public static void logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("logged-user");
     }
     
     public static final String PERMISOS = "Parece que no dispones de los permisos necesarios para acceder a esta página.";

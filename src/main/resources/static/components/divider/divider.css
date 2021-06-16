@@ -1,0 +1,2 @@
+* + .divider,.divider + * {	margin-top: 2.5rem;}.row + .divider {	margin-top: 3.75rem;}.btn + .divider {	margin-top: 3.125rem;}.divider-dark {	border-color: #171724;}.divider-sm {	border-top-width: 1px;}.divider-lg {	border-top-width: 3px;}.divider-xl {	border-top-width: 4px;}.context-dark .divider {	border-color: #fff;}.bg-800 .divider,.bg-900 .divider {	border-color: #393944;}@media (min-width: 992px) {	.row + .divider {		margin-top: 4.6875rem;	}}
+/*# sourceMappingURL=divider.css.map */

@@ -1,0 +1,2 @@
+.live-anchor {	font-size: 1.875rem;	font-weight: 400;	opacity: .3;	color: inherit;	transition: .2s;}.live-anchor.active {	opacity: 1;	font-size: 2.25rem;}.live-anchor:hover {	opacity: 1;	color: inherit;}.context-dark .live-anchor {	color: #fff;}@media (min-width: 1200px) {	.live-anchor {		font-size: 2.25rem;	}	.live-anchor.active {		font-size: 2.875rem;	}}@media (min-width: 1600px) {	.live-anchor {		font-size: 2.875rem;	}	.live-anchor.active {		font-size: 4.125rem;	}}
+/*# sourceMappingURL=live-anchor.css.map */
