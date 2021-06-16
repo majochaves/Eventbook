@@ -52,6 +52,7 @@ public class ServletChatUI extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        // Usuario autenticado?
         Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
         if (thisUsuario == null){
             request.setAttribute("error", "¿Has iniciado sesión?");
@@ -59,11 +60,12 @@ public class ServletChatUI extends HttpServlet {
         }
        
         // Get teleoperadores of chats we have
-        List<Teleoperador> teleoperadores = new ArrayList();
-        for (Chat chat : chatFacade.findChatsByUserID(thisUsuario.getId())){
-            teleoperadores.add(chat.getTeleoperador());
-        }
-        request.setAttribute("teleoperadores", teleoperadores);
+//        List<Teleoperador> teleoperadores = new ArrayList();
+//        for (Chat chat : chatFacade.findChatsByUserID(thisUsuario.getId())){
+//            teleoperadores.add(chat.getTeleoperador());
+//        }
+//        request.setAttribute("teleoperadores", teleoperadores);
+        request.setAttribute("chats", chatFacade.findChatsByUserID(thisUsuario.getId()));
         
         String userID = request.getParameter("userID");
         Usuario user = this.usuarioFacade.getUserByID(userID);

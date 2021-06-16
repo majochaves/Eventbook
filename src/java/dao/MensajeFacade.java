@@ -5,6 +5,7 @@
  */
 package dao;
 
+import static clases.Reversed.reversed;
 import entity.Mensaje;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,14 +54,14 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
         q.setParameter("usuarioEmisorIdB", from);
         
         List<Mensaje> mensajes = q.getResultList();
-        
-        mensajes.forEach((msg) -> {
+        // Utilizar iterator inverso porque ASC y DESC no funciona
+        for (Mensaje msg : reversed(mensajes)) {
             if (to == msg.getUsuarioEmisorId()){
                 res.add(new Pair(to, msg));
             } else {
                 res.add(new Pair(from, msg));
             }
-        });
+        }
         
         return res;
     }

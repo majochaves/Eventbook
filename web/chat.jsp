@@ -4,6 +4,7 @@
     Author     : guzman
 --%>
 
+<%@page import="entity.Chat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="javafx.util.Pair"%>
 <%@page import="entity.Mensaje"%>
@@ -33,7 +34,7 @@
             Autenticacion.autenticar(request, response, Autenticacion.PERMISOS, Usuario.class);
 
             // Lista de teleoperadores;
-            List<Teleoperador> teleoperadores = (List<Teleoperador>) request.getAttribute("teleoperadores");
+            List<Chat> chats = (List<Chat>) request.getAttribute("chats");
             Usuario usuarioChat = (Usuario) request.getAttribute("usuarioChat");
 
             Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
@@ -68,11 +69,18 @@
                         <i class="fa fa-search"></i>
                     </div>
                     <ul class="list">
-                        <% for (Teleoperador op : teleoperadores) {%>
+                        <% for (Chat chat : chats) {
+                                Usuario usuario;
+                            if (adminPriviledges){
+                                usuario = chat.getUsuario();
+                            } else {
+                                usuario = chat.getTeleoperador().getUsuario();
+                            }
+                        %>
                         <li class="clearfix">
                             <div class="about">
-                                <a href="ServletChatUI?userID=<%= op.getUsuario().getId() %>">
-                                <div class="name"><%= op.getUsuario().getNombre()%></div>
+                                <a href="ServletChatUI?userID=<%= usuario.getId() %>">
+                                <div class="name"><%= usuario.getNombre()%></div>
                                 <div class="status">
                                     <i class="fa fa-circle online"></i> online
                                 </div>
