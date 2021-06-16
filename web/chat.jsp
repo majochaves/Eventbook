@@ -168,6 +168,7 @@
                     var messagesWaiting = false;
                     var chat = {
                         messageToSend: '',
+                        idMsg: 0,
                         init: function () {
                             this.cacheDOM();
                             this.bindEvents();
@@ -206,15 +207,34 @@
                                         HTMLMessage = document.implementation.createHTMLDocument("HTMLMessage");
                                         HTMLMessage.documentElement.innerHTML = xmlhttp.responseText;
                                         sender = HTMLMessage.children[0].getElementsByTagName("li")[0].getAttribute("userid");
+                                        var idOfMsg =  HTMLMessage.children[0].getElementsByTagName("li")[0].getAttribute("id");
+                                        
                                         
                                         // Evitar hacer render de los mensajes que el usuario envía dos veces
                                         if (sender !== "<%= thisUsuario.getId() %>"){
                                              $('.chat-history').find('ul').append(xmlhttp.responseText);
-                                            // TODO ARREGLAR ESTO NO FUNCIONA
-                                            // this.scrollToBottom();
+  
+                                        } else {
+                                            console.log(idOfMsg);
+                                            var message = $('#message-to-send').val().trim();
+                                            if (message !== '') {
+                                                var template = Handlebars.compile($("#message-template").html());
+                                                
+                                                var context = {
+                                                    messageOutput: message,
+                                                    id: idOfMsg,
+                                                    time: new Date().toLocaleString().replace(/,/, "")
+                                                };
+
+
+                                                $('.chat-history').find('ul').append(template(context));
+//                                                this.scrollToBottom();
+                                                $('#message-to-send').val('');
+                                            }
                                         }
                                         
-                                        
+                                        // Scroll to bottom
+                                        $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
                                     }
                                 };
                                 xmlhttp.open("GET", "ServletChat", true);
@@ -225,12 +245,13 @@
                             this.scrollToBottom();
                             if (this.messageToSend.trim() !== '') {
                                 var template = Handlebars.compile($("#message-template").html());
+                                
                                 var context = {
                                     messageOutput: this.messageToSend,
+                                    id: this.idMsg,
                                     time: this.getCurrentTime()
                                 };
-
-                                this.sendMessageToBackend(context);
+                                
                                 this.$chatHistoryList.append(template(context));
                                 this.scrollToBottom();
                                 this.$textarea.val('');
@@ -240,7 +261,14 @@
 
                         addMessage: function () {
                             this.messageToSend = this.$textarea.val();
-                            this.render();
+                            var context = {
+                                messageOutput: this.messageToSend,
+                                id: this.idMsg,
+                                time: this.getCurrentTime()
+                            };
+
+                            this.sendMessageToBackend(context);
+//                            this.render();
                         },
                         addMessageEnter: function (event) {
                             // enter was pressed
@@ -252,25 +280,16 @@
                             this.$chatHistory.scrollTop(this.$chatHistory[0].scrollHeight);
                         },
                         getCurrentTime: function () {
-                            return new Date().toLocaleString().
-                                    replace(/,/, "");
+                            return new Date().toLocaleString().replace(/,/, "");
                         },
-                        getRandomItem: function (arr) {
-                            return arr[Math.floor(Math.random() * arr.length)];
-                        },
+//                        getRandomItem: function (arr) {
+//                            return arr[Math.floor(Math.random() * arr.length)];
+//                        },
                         initHistorial: function(){
                             var templateEnviar = Handlebars.compile($("#message-template").html());
                             var templateResponse = Handlebars.compile( $("#message-response-template").html());
                             
-                            console.log("Size", "<%= mensajes.size() %>");
                             <% for (Pair<Integer, Mensaje> msg : mensajes){ %>
-                                console.log("IMP MENSAJE");
-                                console.log("<%= msg.getValue().getContenido().trim() %>");
-                                console.log("<%= msg.getValue().getUsuarioEmisorId() %>");
-                                console.log("<%= msg.getKey() %>");
-                                
-                                console.log("this usuario id");
-                                    console.log(<%= thisUsuario.getId() %>);
                                 
                                 var data = {
                                     messageOutput: "<%= msg.getValue().getContenido().trim() %>",
