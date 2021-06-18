@@ -80,7 +80,7 @@
                         <li class="clearfix">
                             <div class="about">
                                 <a href="ServletChatUI?userID=<%= usuario.getId() %>">
-                                <div class="name"><%= usuario.getNombre()%></div>
+                                <div class="name"><%= usuario.getUsername()%></div>
                                 <div class="status">
                                     <i class="fa fa-circle online"></i> online
                                 </div>
@@ -97,8 +97,8 @@
 
 
                         <div class="chat-about">
-                            <div class="chat-with"><%= usuarioChat.getNombre()%> </div>
-                            <div class="chat-num-messages">already 1 902 messages</div>
+                            <div class="chat-with"><%= usuarioChat.getUsername()%> </div>
+                            <div class="chat-num-messages"><%= usuarioChat.getNombre()%>, <%= usuarioChat.getApellidos()%></div>
                         </div>
                         <i class="fa fa-star"></i>
                     </div> <!-- end chat-header -->
@@ -206,16 +206,30 @@
                                         // Benchmark of this only took 0.14 milliseconds lol
                                         HTMLMessage = document.implementation.createHTMLDocument("HTMLMessage");
                                         HTMLMessage.documentElement.innerHTML = xmlhttp.responseText;
-                                        sender = HTMLMessage.children[0].getElementsByTagName("li")[0].getAttribute("userid");
-                                        var idOfMsg =  HTMLMessage.children[0].getElementsByTagName("li")[0].getAttribute("id");
+                                        var messageElement = HTMLMessage.children[0].getElementsByTagName("li")[0];
+                                        sender = messageElement.getAttribute("userid");
+                                        var idOfMsg =  messageElement.getAttribute("id");
                                         
+//                                        console.log(messageElement);
+                                        
+                                        
+                                        // Change data according to receiver or sender
+                                        messageElement.getElementsByClassName("message-data-name")[0].innerHTML = "<i class='fa fa-circle online'></i>"+ "<%= usuarioChat.getNombre() %>";
+                                        <% if (adminPriviledges){ %>
+                                            var innerHtml = `<span class="message-data-edit"><a href="ServletMessageEditar?msgId=`+ idOfMsg +`&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span><span class="message-data-edit"><a href="ServletMessageBorrar?msgId=`+ idOfMsg +`&userID=<%= request.getParameter("userID") %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>`;
+                                            console.log(innerHtml);
+                                            messageElement.getElementsByClassName("message-data")[0].innerHTML += innerHtml;
+                                        <% } %>
+                                        
+                                      
                                         
                                         // Evitar hacer render de los mensajes que el usuario envía dos veces
                                         if (sender !== "<%= thisUsuario.getId() %>"){
-                                             $('.chat-history').find('ul').append(xmlhttp.responseText);
+//                                             $('.chat-history').find('ul').append(xmlhttp.responseText);
+                                             $('.chat-history').find('ul').append(messageElement);
   
                                         } else {
-                                            console.log(idOfMsg);
+                                            
                                             var message = $('#message-to-send').val().trim();
                                             if (message !== '') {
                                                 var template = Handlebars.compile($("#message-template").html());
