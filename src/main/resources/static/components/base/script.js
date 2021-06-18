@@ -5,12 +5,12 @@ let components = window.components = {};
 
 components.fontAwesome = {
 	selector: '[class*="fa-"]',
-	styles: './components/font-awesome/font-awesome.css'
+	styles: '/components/font-awesome/font-awesome.css'
 };
 
 components.mdi = {
 	selector: '[class*="mdi-"]',
-	styles: './components/mdi/mdi.css'
+	styles: '/components/mdi/mdi.css'
 };
 
 components.pageReveal = {
@@ -41,60 +41,60 @@ components.pageReveal = {
 
 components.grid = {
 	selector: '.container, .container-fluid, .row, [class*="col-"]',
-	styles: './components/grid/grid.css'
+	styles: '/components/grid/grid.css'
 };
 
 components.section = {
 	selector: 'section',
-	styles: './components/section/section.css'
+	styles: '/components/section/section.css'
 };
 
 components.footer = {
 	selector: 'footer',
-	styles: './components/footer/footer.css'
+	styles: '/components/footer/footer.css'
 };
 
 components.button = {
 	selector: '.btn',
-	styles: './components/button/button.css'
+	styles: '/components/button/button.css'
 };
 
 components.link = {
 	selector: '.link',
-	styles: './components/link/link.css'
+	styles: '/components/link/link.css'
 };
 
 components.input = {
 	selector: '.form-group, .input-group, .form-check, .custom-control, .form-control',
-	styles: './components/input/input.css'
+	styles: '/components/input/input.css'
 };
 
 components.figure = {
 	selector: '.figure',
-	styles: './components/figure/figure.css'
+	styles: '/components/figure/figure.css'
 };
 
 components.position = {
 	selector: '[class*="position-"], [class*="fixed-"], [class*="sticky-"]',
-	styles: './components/position/position.css'
+	styles: '/components/position/position.css'
 };
 
 components.code = {
 	selector: 'code',
 	styles: [
-		'./components/code/code.css',
+		'/components/code/code.css',
 		'https://fonts.googleapis.com/css?family=IBM+Plex+Mono:500&display=swap'
 	]
 };
 
 components.effect = {
 	selector: '.effect',
-	styles: './components/effect/effect.css'
+	styles: '/components/effect/effect.css'
 };
 
 components.dropCap = {
 	selector: '.drop-cap',
-	styles: './components/drop-cap/drop-cap.css'
+	styles: '/components/drop-cap/drop-cap.css'
 };
 
 components.fontHeebo = {
@@ -104,29 +104,29 @@ components.fontHeebo = {
 
 components.intenseIcons = {
 	selector: '[class*="int-"]',
-	styles: './components/intense-icons/intense-icons.css'
+	styles: '/components/intense-icons/intense-icons.css'
 };
 
 components.intenseThin = {
 	selector: '[class*="ith-"]',
-	styles: './components/intense-thin/intense-thin.css'
+	styles: '/components/intense-thin/intense-thin.css'
 };
 
 components.currentDevice = {
 	selector: 'html',
-	script: './components/current-device/current-device.min.js'
+	script: '/components/current-device/current-device.min.js'
 };
 
 components.rdNavbar = {
 	selector: '.rd-navbar',
 	styles: [
-		'./components/rd-navbar/rd-navbar.css'
+		'/components/rd-navbar/rd-navbar.css'
 	],
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/util/util.min.js',
-		'./components/current-device/current-device.min.js',
-		'./components/rd-navbar/rd-navbar.min.js'
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/util/util.min.js',
+		'/components/current-device/current-device.min.js',
+		'/components/rd-navbar/rd-navbar.min.js'
 	],
 	dependencies: 'currentDevice',
 	init: function ( nodes ) {
@@ -219,10 +219,10 @@ components.rdNavbar = {
 
 components.regula = {
 	selector: '[data-constraints]',
-	styles: './components/regula/regula.css',
+	styles: '/components/regula/regula.css',
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/regula/regula.min.js'
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/regula/regula.min.js'
 	],
 	init: function ( nodes ) {
 		let elements = $( nodes );
@@ -293,14 +293,14 @@ components.regula = {
 components.rdMailform = {
 	selector: '.rd-mailform',
 	styles: [
-		'./components/rd-mailform/rd-mailform.css',
-		'./components/intense-icons/intense-icons.css',
-		'./components/font-awesome/font-awesome.css',
-		'./components/mdi/mdi.css'
+		'/components/rd-mailform/rd-mailform.css',
+		'/components/intense-icons/intense-icons.css',
+		'/components/font-awesome/font-awesome.css',
+		'/components/mdi/mdi.css'
 	],
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/rd-mailform/rd-mailform.min.js',
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/rd-mailform/rd-mailform.min.js',
 	],
 	init: function ( nodes ) {
 		let i, j, k,
@@ -580,8 +580,8 @@ components.rdMailform = {
 
 components.campaignMonitor = {
 	selector: '.campaign-mailform',
-	styles: './components/rd-mailform/rd-mailform.css',
-	script: './components/jquery/jquery-3.4.1.min.js',
+	styles: '/components/rd-mailform/rd-mailform.css',
+	script: '/components/jquery/jquery-3.4.1.min.js',
 	init: function ( nodes ) {
 		/**
 		 * @desc Check if all elements pass validation
@@ -678,8 +678,8 @@ components.campaignMonitor = {
 
 components.mailchimp = {
 	selector: '.mailchimp-mailform',
-	styles: './components/rd-mailform/rd-mailform.css',
-	script: './components/jquery/jquery-3.4.1.min.js',
+	styles: '/components/rd-mailform/rd-mailform.css',
+	script: '/components/jquery/jquery-3.4.1.min.js',
 	init: function ( nodes ) {
 		let $nodes = $( nodes );
 
@@ -772,10 +772,10 @@ components.mailchimp = {
 
 components.multiswitch = {
 	selector: '[data-multi-switch]',
-	styles: './components/multiswitch/multiswitch.css',
+	styles: '/components/multiswitch/multiswitch.css',
 	script: [
-		'./components/current-device/current-device.min.js',
-		'./components/multiswitch/multiswitch.js'
+		'/components/current-device/current-device.min.js',
+		'/components/multiswitch/multiswitch.js'
 	],
 	dependencies: 'rdNavbar',
 	init: function ( nodes ) {
@@ -797,11 +797,11 @@ components.multiswitch = {
 
 components.owl = {
 	selector: '.owl-carousel',
-	styles: './components/owl-carousel/owl.carousel.css',
+	styles: '/components/owl-carousel/owl.carousel.css',
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/owl-carousel/owl.carousel.min.js',
-		'./components/util/util.min.js'
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/owl-carousel/owl.carousel.min.js',
+		'/components/util/util.min.js'
 	],
 	init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
@@ -827,10 +827,10 @@ components.owl = {
 
 components.slick = {
 	selector: '.slick-slider',
-	styles: './components/slick/slick.css',
+	styles: '/components/slick/slick.css',
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/slick/slick.min.js'
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/slick/slick.min.js'
 	],
 		init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
@@ -855,10 +855,10 @@ components.slick = {
 
 components.counter = {
 	selector: '[data-counter]',
-	styles: './components/counter/counter.css',
+	styles: '/components/counter/counter.css',
 	script: [
-		'./components/util/util.min.js',
-		'./components/counter/counter.min.js',
+		'/components/util/util.min.js',
+		'/components/counter/counter.min.js',
 	],
 	init: function ( nodes ) {
 		let observer = new IntersectionObserver( function ( entries, observer ) {
@@ -888,8 +888,8 @@ components.counter = {
 
 components.animate = {
 	selector: '[data-animate]',
-	styles: './components/animate/animate.css',
-	script: './components/current-device/current-device.min.js',
+	styles: '/components/animate/animate.css',
+	script: '/components/current-device/current-device.min.js',
 	init: function ( nodes ) {
 		if ( window.xMode || device.macos() ) {
 			nodes.forEach( function ( node ) {
@@ -924,10 +924,10 @@ components.animate = {
 
 components.spinner = {
 	selector: '[data-spinner]',
-	styles: './components/spinner/spinner.css',
+	styles: '/components/spinner/spinner.css',
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/jquery/jquery-ui.min.js'
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/jquery/jquery-ui.min.js'
 	],
 	init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
@@ -945,51 +945,51 @@ components.spinner = {
 
 components.icon = {
 	selector: '.icon',
-	styles: './components/icon/icon.css'
+	styles: '/components/icon/icon.css'
 };
 
 components.logo = {
 	selector: '.logo',
-	styles: './components/logo/logo.css'
+	styles: '/components/logo/logo.css'
 };
 
 components.badge = {
 	selector: '.badge',
-	styles: './components/badge/badge.css'
+	styles: '/components/badge/badge.css'
 };
 
 components.bradcrumb = {
 	selector: '.breadcrumb',
-	styles: './components/breadcrumb/breadcrumb.css'
+	styles: '/components/breadcrumb/breadcrumb.css'
 };
 
 components.thumbnailSmall = {
 	selector: '.thumbnail-small',
-	styles: './components/thumbnail-small/thumbnail-small.css'
+	styles: '/components/thumbnail-small/thumbnail-small.css'
 };
 
 components.thumbnailUpShadow = {
 	selector: '.thumbnail-up-shadow',
-	styles: './components/thumbnail-up-shadow/thumbnail-up-shadow.css'
+	styles: '/components/thumbnail-up-shadow/thumbnail-up-shadow.css'
 };
 
 components.snackbar = {
 	selector: '.snackbar',
-	styles: './components/snackbar/snackbar.css'
+	styles: '/components/snackbar/snackbar.css'
 };
 
 components.rights = {
 	selector: '.rights',
-	styles: './components/rights/rights.css'
+	styles: '/components/rights/rights.css'
 };
 
 components.nav = {
 	selector: '.nav',
-	styles: './components/nav/nav.css',
+	styles: '/components/nav/nav.css',
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/bootstrap/js/popper.js',
-		'./components/bootstrap/js/bootstrap.min.js'
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/bootstrap/js/popper.js',
+		'/components/bootstrap/js/bootstrap.min.js'
 	],
 	init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
@@ -1007,8 +1007,8 @@ components.nav = {
 
 components.parallaxJs = {
 	selector: '.parallax-js',
-	styles: './components/mouse-parallax/parallax-js.css',
-	script: './components/mouse-parallax/parallax-js.min.js',
+	styles: '/components/mouse-parallax/parallax-js.css',
+	script: '/components/mouse-parallax/parallax-js.min.js',
 	init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
 			new Parallax( node );
@@ -1018,72 +1018,72 @@ components.parallaxJs = {
 
 components.tab = {
 	selector: '.tab',
-	styles: './components/tab/tab.css'
+	styles: '/components/tab/tab.css'
 };
 
 components.divider = {
 	selector: '.divider',
-	styles: './components/divider/divider.css'
+	styles: '/components/divider/divider.css'
 };
 
 components.blurb = {
 	selector: '.blurb',
 	styles: [
-		'./components/media/media.css',
-		'./components/blurb/blurb.css'
+		'/components/media/media.css',
+		'/components/blurb/blurb.css'
 	]
 };
 
 components.person = {
 	selector: '.person',
-	styles: './components/person/person.css'
+	styles: '/components/person/person.css'
 };
 
 components.rating = {
 	selector: '.rating',
-	styles: './components/rating/rating.css'
+	styles: '/components/rating/rating.css'
 };
 
 components.quote = {
 	selector: '.quote',
 	styles: [
-		'./components/media/media.css',
-		'./components/quote/quote.css'
+		'/components/media/media.css',
+		'/components/quote/quote.css'
 	]
 };
 
 components.layout = {
 	selector: '.layout',
-	styles: './components/layout/layout.css'
+	styles: '/components/layout/layout.css'
 };
 
 components.review = {
 	selector: '.review',
-	styles: './components/review/review.css'
+	styles: '/components/review/review.css'
 };
 
 components.partner = {
 	selector: '.partner',
-	styles: './components/partner/partner.css'
+	styles: '/components/partner/partner.css'
 };
 
 components.list = {
 	selector: '.list',
 	styles: [
-		'./components/list/list.css',
-		'./components/intense-icons/intense-icons.css'
+		'/components/list/list.css',
+		'/components/intense-icons/intense-icons.css'
 	]
 };
 
 components.media = {
 	selector: '.media',
-	styles: './components/media/media.css'
+	styles: '/components/media/media.css'
 };
 
 components.toTop = {
 	selector: '.to-top',
-	styles: './components/to-top/to-top.css',
-	script: './components/jquery/jquery-3.4.1.min.js',
+	styles: '/components/to-top/to-top.css',
+	script: '/components/jquery/jquery-3.4.1.min.js',
 	init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
 			node.addEventListener( 'mousedown', function () {
@@ -1111,7 +1111,7 @@ components.toTop = {
 
 components.anchorLink = {
 	selector: '[data-anchor-link]',
-	script: './components/jquery/jquery-3.4.1.min.js',
+	script: '/components/jquery/jquery-3.4.1.min.js',
 	init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
 			let
@@ -1129,10 +1129,10 @@ components.anchorLink = {
 
 components.liveAnchor = {
 	selector: '[data-live-anchor]',
-	styles: './components/live-anchor/live-anchor.css',
+	styles: '/components/live-anchor/live-anchor.css',
 	script: [
-		'./components/jquery/jquery-3.4.1.min.js',
-		'./components/live-anchor/live-anchor.js'
+		'/components/jquery/jquery-3.4.1.min.js',
+		'/components/live-anchor/live-anchor.js'
 	],
 	init: function ( nodes ) {
 		nodes.forEach( function ( node ) {
@@ -1147,5 +1147,5 @@ components.liveAnchor = {
 
 components.banner = {
 	selector: '.section-banner',
-	styles: './components/banner/banner.css'
+	styles: '/components/banner/banner.css'
 };

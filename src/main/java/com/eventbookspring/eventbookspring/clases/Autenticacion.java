@@ -6,12 +6,16 @@
 package com.eventbookspring.eventbookspring.clases;
 
 import com.eventbookspring.eventbookspring.entity.*;
+import com.sun.istack.NotNull;
+import org.springframework.ui.Model;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,6 +26,8 @@ public class Autenticacion {
     public static Usuario getUsuarioLogeado(HttpServletRequest request, HttpServletResponse response) {
         return (Usuario) request.getSession().getAttribute("logged-user");
     }
+
+
 
     public static void login(HttpServletRequest request, Usuario u) {
         request.getSession().setAttribute("logged-user", u);
@@ -39,8 +45,7 @@ public class Autenticacion {
     }
     
             
-    public static boolean tieneRol(Usuario u, Class... roles) 
-            throws ServletException, IOException {
+    public static boolean tieneRol(Usuario u, Class... roles) {
         
         boolean resultado = false;
         List<Class> rolesList = Arrays.asList(roles);
@@ -70,8 +75,9 @@ public class Autenticacion {
 
         return estaLogeado(request, response) && tieneRol(loggedUser, roles);
     }
-    
-    
+
+
+
     public static void autenticar(HttpServletRequest request, HttpServletResponse response, String errorMsg, Class... roles) 
             throws ServletException, IOException {
         
@@ -83,5 +89,25 @@ public class Autenticacion {
         
             request.setAttribute("error", errorMsg);
             request.getRequestDispatcher("error.jsp").forward(request, response);        
+    }
+
+
+    //HACIENDO USO SOLO DE SESSION
+    public static Usuario getUsuarioLogeado(HttpSession session) {
+        return (Usuario) session.getAttribute("logged-user");
+    }
+
+    public static boolean tieneRol(HttpSession session, Class... roles){
+
+        boolean resultado = false;
+        List<Class> rolesList = Arrays.asList(roles);
+        Usuario loggedUser = (Usuario) session.getAttribute("logged-user");
+
+        return loggedUser!=null && tieneRol(loggedUser, roles);
+    }
+
+    public static String getErrorJsp(Model model, String errorMsg){
+        model.addAttribute("error", errorMsg);
+        return "error";
     }
 }

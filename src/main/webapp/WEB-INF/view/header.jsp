@@ -23,7 +23,7 @@
             <div class="navbar-cell">
               <div class="navbar-panel">
                 <button class="navbar-switch int-hamburger novi-icon" data-multi-switch='{"targets":".rd-navbar","scope":".rd-navbar","isolate":"[data-multi-switch]"}'></button>
-                <div class="navbar-logo"><a class="navbar-logo-link" href="index.jsp"><img class="navbar-logo-default" src="images/EventbookLogoOscuro.svg" alt="Intense" width="161" height="27"/><img class="navbar-logo-inverse" src="images/EventbookLogoClaro.svg" alt="Intense" width="161" height="27"/></a></div>
+                <div class="navbar-logo"><a class="navbar-logo-link" href="index.jsp"><img class="navbar-logo-default" src="/images/EventbookLogoOscuro.svg" alt="Intense" width="161" height="27"/><img class="navbar-logo-inverse" src="/images/EventbookLogoClaro.svg" alt="Intense" width="161" height="27"/></a></div>
               </div>
             </div>
             <div class="navbar-cell navbar-spacer"></div>
@@ -36,7 +36,7 @@
                 <%
                     if (Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)) {
                 %>
-                        <li class="navbar-navigation-root-item <%= (nav.equals("analisis") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServeltAnalisisIndex">Análisis</a>
+                        <li class="navbar-navigation-root-item <%= (nav.equals("analisis") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="/analisis">Análisis</a>
                         </li>
                 <%
                     }
