@@ -12,11 +12,27 @@ package com.eventbookspring.eventbookspring.clases;
 public class Tupla<T, K> {
     private T primerElem;
     private K segundoElem;
-    
+
+    public Tupla(){
+        primerElem = null;
+        segundoElem = null;
+    }
+
     public Tupla(T p, K q){
         primerElem = p;
         segundoElem = q;
     }
+
+    public Tupla(T p, T p2, K q){
+        if(p instanceof Integer){
+            Integer pInt = (Integer) p;
+            Integer pInt2 = (Integer) p2;
+            primerElem = (T) (pInt.toString() + "/" + pInt2.toString());
+            segundoElem = q;
+        }
+
+    }
+
 
     public T getPrimerElem() {
         return primerElem;

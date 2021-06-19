@@ -36,7 +36,7 @@
                 <%
                     if (Autenticacion.tieneRol(request, response, Administrador.class, Analista.class)) {
                 %>
-                        <li class="navbar-navigation-root-item <%= (nav.equals("analisis") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="/analisis">Análisis</a>
+                        <li class="navbar-navigation-root-item <%= (nav.equals("analisis") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="/analisis/">Análisis</a>
                         </li>
                 <%
                     }

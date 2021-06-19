@@ -2,9 +2,13 @@ package com.eventbookspring.eventbookspring.service;
 
 import com.eventbookspring.eventbookspring.clases.Par;
 import com.eventbookspring.eventbookspring.clases.Tupla;
-import com.eventbookspring.eventbookspring.entity.Usuario;
+import com.eventbookspring.eventbookspring.dto.AnalisisDTO;
+import com.eventbookspring.eventbookspring.dto.CampoanalisisDTO;
+import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
+import com.eventbookspring.eventbookspring.entity.*;
+import com.eventbookspring.eventbookspring.repository.AnalisisRepository;
+import com.eventbookspring.eventbookspring.repository.TipoanalisisRepository;
 import com.eventbookspring.eventbookspring.repository.UsuarioRepository;
-import com.eventbookspring.eventbookspring.repository.UsuarioeventosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,16 +39,31 @@ public class AnalistaService {
 
     private UsuarioRepository usuarioRepository;
 
+    private AnalisisRepository analisisRepository;
+    private TipoanalisisRepository tipoanalisisRepository;
+
+
     @Autowired
     public void setUsuarioRepository(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Map<String, Map<String, Double>> generarAnalisis(
+    @Autowired
+    public void setAnalisisRepository(AnalisisRepository analisisRepository) {
+        this.analisisRepository = analisisRepository;
+    }
+
+    @Autowired
+    public void setTipoanalisisRepository(TipoanalisisRepository tipoanalisisRepository) {
+        this.tipoanalisisRepository = tipoanalisisRepository;
+    }
+
+    public List<TipoanalisisDTO> generarAnalisis(
             List<String> tipoUsuario,
             List<String> tipoFiltro,
             String cadenaFechaInicial,
-            String cadenaFechaFinal) throws ParseException {
+            String cadenaFechaFinal,
+            Par<String, String> autoGenerado) throws ParseException {
 
 
         //------------FECHA-----------
@@ -64,86 +83,132 @@ public class AnalistaService {
 
         //---------OBTENER USUARIOS----------
         Set<Usuario> listaUsuarios = new HashSet<>();//Evitamos repeticiones
-        if(tipoUsuario.contains(ADMINISTRADORES))
+        String autoGeneradoAnalisisDe = "";
+        String autoGeneradoTiposFiltros = "";
+        if(tipoUsuario.contains(ADMINISTRADORES)){
             listaUsuarios.addAll(this.usuarioRepository.getUsuariosAdministradores(fechaInicial, fechaFinal));
-        if(tipoUsuario.contains(ANALISTAS))
+            autoGeneradoAnalisisDe+=" Administradores,";
+        }
+        if(tipoUsuario.contains(ANALISTAS)){
             listaUsuarios.addAll(this.usuarioRepository.getUsuariosAnalistas(fechaInicial, fechaFinal));
-        if(tipoUsuario.contains(USUARIOEVENTOS))
+            autoGeneradoAnalisisDe+=" Analistas,";
+        }
+        if(tipoUsuario.contains(USUARIOEVENTOS)){
             listaUsuarios.addAll(this.usuarioRepository.getUsuariosEventos(fechaInicial, fechaFinal));
-        if(tipoUsuario.contains(CREADOREVENTOS))
+            autoGeneradoAnalisisDe+=" Usuario Eventos,";
+        }
+        if(tipoUsuario.contains(CREADOREVENTOS)){
             listaUsuarios.addAll(this.usuarioRepository.getUsuariosCreadoresEventos(fechaInicial, fechaFinal));
-        if(tipoUsuario.contains(TELEOPERADORES))
+            autoGeneradoAnalisisDe+=" Creadores de Eventos,";
+        }
+        if(tipoUsuario.contains(TELEOPERADORES)){
             listaUsuarios.addAll(this.usuarioRepository.getUsuariosTeleoperadores(fechaInicial, fechaFinal));
+            autoGeneradoAnalisisDe+=" Teleoperadores,";
+        }
+        autoGeneradoAnalisisDe = autoGeneradoAnalisisDe.substring(0, autoGeneradoAnalisisDe.lastIndexOf(","));
 
 
 
 
         //--------BUSQUEDA POR FILTROS---------
         Map<String, Map<String, Double>> listaTablas = new HashMap<>();
+        List<TipoanalisisDTO> listaTipos = new ArrayList<>();
         if(tipoFiltro.contains(FILTRONUMUSUARIOS)){
-            Map<String, Double> m = new HashMap<>();
-            m.put("Num", (double) listaUsuarios.size());
-            listaTablas.put("Numero de Usuarios", m);
+
+            List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
+            CampoanalisisDTO caDto = new CampoanalisisDTO("Num", (double)listaUsuarios.size());
+            caDtoLista.add(caDto);
+            TipoanalisisDTO taDto = new TipoanalisisDTO("Numero de Usuarios", caDtoLista);
+            listaTipos.add(taDto);
+
+            autoGeneradoTiposFiltros+=" numero de usuarios totales,";
         }
 
         if(tipoFiltro.contains(FILTROSEXO)){
-            List<Par> listaPar = this.usuarioRepository.getNumUsuariosGroupBySexo(listaUsuarios);
-            Map<String, Double> m = new HashMap<>();
-            for(Par p : listaPar){
-                m.put(p.getCadena(), (double) p.getValor());
-            }
-            listaTablas.put("Sexo", m);
+            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupBySexo(listaUsuarios);
+            anyadirEnListaTipos(listaTipos, listaPar, "Sexo");
+
+            autoGeneradoTiposFiltros+=" sexos, ";
         }
 
         if(tipoFiltro.contains(FILTROCIUDAD)){
-            List<Par> listaPar = this.usuarioRepository.getNumUsuariosGroupByCities(listaUsuarios);
-            Map<String, Double> m = new HashMap<>();
-            for(Par p : listaPar){
-                m.put(p.getCadena(), (double) p.getValor());
-            }
-            listaTablas.put("Ciudad", m);
+            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCities(listaUsuarios);
+            anyadirEnListaTipos(listaTipos, listaPar, "Ciudad");
+
+            autoGeneradoTiposFiltros+=" ciudades, ";
         }
 
         if(tipoFiltro.contains(FILTRONOMBRE)){
-            List<Par> listaPar = this.usuarioRepository.getNumUsuariosGroupByName(listaUsuarios);
-            Map<String, Double> m = new HashMap<>();
-            for(Par p : listaPar){
-                m.put(p.getCadena(), (double) p.getValor());
-            }
-            listaTablas.put("Nombre", m);
+            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByName(listaUsuarios);
+            anyadirEnListaTipos(listaTipos, listaPar, "Nombre");
+
+            autoGeneradoTiposFiltros+=" nombres, ";
         }
 
         if(tipoFiltro.contains(FILTROAPELLIDO)){
-            List<Par> listaPar = this.usuarioRepository.getNumUsuariosGroupByLastName(listaUsuarios);
-            Map<String, Double> m = new HashMap<>();
-            for(Par p : listaPar){
-                m.put(p.getCadena(), (double) p.getValor());
-            }
-            listaTablas.put("Apellido", m);
+            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByLastName(listaUsuarios);
+            anyadirEnListaTipos(listaTipos, listaPar, "Apellido");
+            autoGeneradoTiposFiltros+=" apellidos, ";
         }
 
         if(tipoFiltro.contains(FILTROFECHAPORANYOS)){
-            List<Tupla<String, Double>> listaTupla = this.usuarioRepository.getNumUsuariosGroupByCreatedYear(listaUsuarios);
-            Map<String, Double> m = new HashMap<>();
-            sdt = new SimpleDateFormat("yyyy");
-            for(Tupla<String, Double> t : listaTupla){
-                m.put(sdt.format(t.getPrimerElem()), t.getSegundoElem());
-            }
-            listaTablas.put("Fecha Creacion (Año)", m);
+            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCreatedYear(listaUsuarios);
+            anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion (Año)");
+            autoGeneradoTiposFiltros+=" fecha por años, ";
         }
 
         if(tipoFiltro.contains(FILTROFECHAPORMES)){
-            List<Tupla<String, Double>> listaTupla = this.usuarioRepository.getNumUsuariosGroupByCreatedMonthYear(listaUsuarios);
-            Map<String, Double> m = new HashMap<>();
-            for(Tupla<String, Double> t : listaTupla){
-                m.put(t.getPrimerElem(), t.getSegundoElem());
-            }
-            listaTablas.put("Fecha Creacion (Mes - Año)", m);
+            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCreatedMonthYear(listaUsuarios);
+            anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion (Mes / Año)");
+            autoGeneradoTiposFiltros+=" fecha por meses-años, ";
         }
 
-        return listaTablas;
+        autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(","));
+        autoGenerado.setPrimerElem(autoGeneradoAnalisisDe);
+        autoGenerado.setSegundoElem(autoGeneradoTiposFiltros);
 
+        return listaTipos;
     }
 
+    private void anyadirEnListaTipos(List<TipoanalisisDTO> listaTipos, List<Par<?,?>> listaPar, String nombreTabla) {
+        List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
+        for(Par<?,?> p : listaPar){
+            CampoanalisisDTO caDto = new CampoanalisisDTO(p.getPrimerElemYExtraElemLikeString(), p.getSegundoElemLikeDouble());
+            caDtoLista.add(caDto);
+        }
+        TipoanalisisDTO taDto = new TipoanalisisDTO(nombreTabla, caDtoLista);
+        listaTipos.add(taDto);
+    }
 
+    public void guardarAnalisis(List<TipoanalisisDTO> listaTablas, String descripcion, Analista thisAnalista){
+        Analisis nuevoAnalisis = new Analisis();
+        nuevoAnalisis.setDescripcion(descripcion);
+        nuevoAnalisis.setAnalistaUsuarioId(thisAnalista);
+        this.analisisRepository.save(nuevoAnalisis);
+
+        List<Tipoanalisis> listaTiposAnalisis = new ArrayList<>();
+        for(TipoanalisisDTO thisTipoAnalisisDto : listaTablas){
+            Tipoanalisis nuevoTipoAnalisis = new Tipoanalisis();
+            nuevoTipoAnalisis.setNombre(thisTipoAnalisisDto.getNombre());
+            nuevoTipoAnalisis.setAnalisisId(nuevoAnalisis);
+            this.tipoanalisisRepository.save(nuevoTipoAnalisis);
+            List<Campoanalisis> listaCamposAnalisis = new ArrayList<>();
+            for(CampoanalisisDTO thisCampoAnalisisDto : thisTipoAnalisisDto.getCampoanalisisList()){
+                CampoanalisisPK capk = new CampoanalisisPK();
+                capk.setNombre(thisCampoAnalisisDto.getNombre());
+                capk.setTipoanalisisId(nuevoTipoAnalisis.getId());
+
+                Campoanalisis nuevoCampoanalisis = new Campoanalisis();
+                nuevoCampoanalisis.setCampoanalisisPK(capk);
+                nuevoCampoanalisis.setValor(thisCampoAnalisisDto.getValor());
+                nuevoCampoanalisis.setTipoanalisis(nuevoTipoAnalisis);
+                listaCamposAnalisis.add(nuevoCampoanalisis);
+            }
+            nuevoTipoAnalisis.setCampoanalisisList(listaCamposAnalisis);
+            this.tipoanalisisRepository.save(nuevoTipoAnalisis);
+            listaTiposAnalisis.add(nuevoTipoAnalisis);
+        }
+        nuevoAnalisis.setTipoanalisisList(listaTiposAnalisis);
+        this.analisisRepository.save(nuevoAnalisis);
+    }
 }

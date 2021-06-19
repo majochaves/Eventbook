@@ -2,6 +2,9 @@ package com.eventbookspring.eventbookspring.controller;
 
 
 import com.eventbookspring.eventbookspring.clases.Autenticacion;
+import com.eventbookspring.eventbookspring.clases.Par;
+import com.eventbookspring.eventbookspring.clases.Tupla;
+import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
 import com.eventbookspring.eventbookspring.entity.Analista;
 import com.eventbookspring.eventbookspring.entity.Usuario;
 import com.eventbookspring.eventbookspring.service.AnalistaService;
@@ -23,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/analisis")
 public class AnalistaController {
 
 
@@ -33,7 +37,9 @@ public class AnalistaController {
         this.analistaService = analistaService;
     }
 
-    @GetMapping("/analisis")
+
+
+    @GetMapping("/")
     public String index(Model model, HttpSession session){
         Analista thisAnalista = obtenerAnalistaLogeado(session);
         if(thisAnalista != null) {
@@ -44,7 +50,7 @@ public class AnalistaController {
 
     }
 
-    @GetMapping("/analisis/crear/mostrar")
+    @GetMapping("/crear/mostrar")
     public String  mostrarCrearAnalisis(Model model, HttpSession session){
         Analista thisAnalista = obtenerAnalistaLogeado(session);
         if(thisAnalista != null) {
@@ -54,7 +60,7 @@ public class AnalistaController {
         }
     }
 
-    @PostMapping("/analisis/crear/generar")
+    @PostMapping("/crear/generar")
     public String generarResultadosAnalisis(
             Model model,
             HttpSession session,
@@ -70,10 +76,17 @@ public class AnalistaController {
                 model.addAttribute("muestraError", true);
                 dest = "analisisMostrarCrear";  //Vuelve a la misma pagina con error lanzado
             } else {
-                Map<String, Map<String, Double>> listaTablas = this.analistaService.generarAnalisis(tipoUsuario, tipoFiltro, cadenaFechaInicial, cadenaFechaFinal);
+                Par<String, String> autoGenerado = new Par<>("", "");
+                List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
+                        tipoFiltro,
+                        cadenaFechaInicial,
+                        cadenaFechaFinal,
+                        autoGenerado);
+
+                session.setAttribute("listaTablas", listaTablas);
                 model.addAttribute("listaTablas", listaTablas);
-                model.addAttribute("AutoGeneradoAnalisisDe", "aunNada");
-                model.addAttribute("AutoGeneradoTiposFiltros", "aunNada");
+                model.addAttribute("AutoGeneradoAnalisisDe", autoGenerado.getPrimerElem());
+                model.addAttribute("AutoGeneradoTiposFiltros", autoGenerado.getSegundoElem());
                 dest = "analisisMostrarResultadosGenerados";
             }
 
@@ -83,6 +96,23 @@ public class AnalistaController {
         }
     }
 
+
+    @PostMapping("/crear/guardar")
+    public String guardarResultadosAnalisis(
+            HttpSession session,
+            Model model,
+            @RequestParam("descripcion") String descripcion){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+            List<TipoanalisisDTO> listaTablas =  (List<TipoanalisisDTO>) session.getAttribute("listaTablas");
+            analistaService.guardarAnalisis(listaTablas, descripcion,thisAnalista);
+            return "redirect:/";
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+
+    }
 
 
     private Analista obtenerAnalistaLogeado(HttpSession session){

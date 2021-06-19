@@ -7,6 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="java.util.Map"%>
+<%@ page import="com.eventbookspring.eventbookspring.dto.TipoanalisisDTO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.eventbookspring.eventbookspring.dto.CampoanalisisDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +19,8 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
     <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="components/base/tablas.css">
-    <link rel="stylesheet" href="components/base/modal.css">
+    <link rel="stylesheet" href="/components/base/tablas.css">
+    <link rel="stylesheet" href="/components/base/modal.css">
     <link rel="stylesheet" href="/components/base/base.css">
     <!-- Esto esta roto <script src="/components/jquery/jquery-3.4.1.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -27,6 +30,10 @@
     <script src="/components/base/core.js"></script>
     <script src="/components/base/script.js"></script>
 </head>
+<%
+    List<TipoanalisisDTO> listaTablas = (List<TipoanalisisDTO>) request.getAttribute("listaTablas");
+%>
+
 <body>
 <div class="page">
     <jsp:include page="header.jsp" />
@@ -48,41 +55,34 @@
 
             <div class="row">
                 <%
-                    Map<String, Map<String, Double>> listaTablas = (Map<String, Map<String, Double>>) request.getAttribute("listaTablas");
-                    if(listaTablas != null){
-                        HttpSession sesion = request.getSession(false);
-                        sesion.setAttribute("analisislistaTablas", listaTablas);
-                        for(String nombreColumna : listaTablas.keySet()){
+                    for(TipoanalisisDTO thisTipoAnalisis : listaTablas){
                 %>
-                <div class="col-sm-6 pb-4">
-                    <table class="table table-hover table-bordered">
-                        <thead>
-                        <tr class="table-secondary">
-                            <th cope="col"><%=nombreColumna%></th>
-                            <th scope="col">Valor</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <%
-                            Map<String, Double> conjuntoDeFilas = listaTablas.get(nombreColumna);
-                            for(String key : conjuntoDeFilas.keySet()){
-                        %>
-                        <tr>
-                            <td><%=key%></td>
-                            <td><%=conjuntoDeFilas.get(key)%></td>
-                        </tr>
-                        <%
-                            }
-                        %>
-                        </tbody>
-                    </table>
-                </div>
-                <br/>
+                    <div class="col-sm-6 pb-4">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr class="table-secondary">
+                                <th cope="col"><%=thisTipoAnalisis.getNombre()%></th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    for(CampoanalisisDTO thisCampoAnalisis : thisTipoAnalisis.getCampoanalisisList()){
+                                %>
+                                    <tr>
+                                        <td><%=thisCampoAnalisis.getNombre()%></td>
+                                        <td><%=thisCampoAnalisis.getValor()%></td>
+                                    </tr>
+                                <%
+                                    }
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
                 <%
                         }
-                    } else {
-                        response.sendRedirect("/analisis/crear/mostrar");
-                    }
+
                 %>
 
             </div>
@@ -101,7 +101,7 @@
 
     <div class="modal fade" id="abrirDialogoGuardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="ServletAnalisisGuardar">
+            <form method="POST" action="/analisis/crear/guardar">
                 <div class="modal-content">
 
                     <div class="modal-header">

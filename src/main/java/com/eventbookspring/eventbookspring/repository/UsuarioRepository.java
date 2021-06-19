@@ -35,31 +35,33 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(u.sexo, COUNT(u.sexo))" +
             " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY u.sexo")
-    public List<Par> getNumUsuariosGroupBySexo(Set<Usuario> listaUsuarios);
+    public List<Par<?, ?>> getNumUsuariosGroupBySexo(Set<Usuario> listaUsuarios);
 
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(UPPER(u.ciudadResidencia), COUNT(u.ciudadResidencia))" +
             " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY UPPER(u.ciudadResidencia)")
-    public List<Par> getNumUsuariosGroupByCities(Set<Usuario> listaUsuarios);
+    public List<Par<?, ?>> getNumUsuariosGroupByCities(Set<Usuario> listaUsuarios);
 
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(UPPER(u.nombre), COUNT(u.nombre))" +
             " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY UPPER(u.nombre)")
-    public List<Par> getNumUsuariosGroupByName(Set<Usuario> listaUsuarios);
+    public List<Par<?, ?>> getNumUsuariosGroupByName(Set<Usuario> listaUsuarios);
 
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(UPPER(u.apellidos), COUNT(u.apellidos))" +
             " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY UPPER(u.apellidos)")
-    public List<Par> getNumUsuariosGroupByLastName(Set<Usuario> listaUsuarios);
+    public List<Par<?,?>> getNumUsuariosGroupByLastName(Set<Usuario> listaUsuarios);
 
 
-    @Query("SELECT new com.eventbookspring.eventbookspring.clases.Tupla(u.fechaCreacion, COUNT(u.fechaCreacion))" +
-            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY EXTRACT(YEAR FROM u.fechaCreacion)")
-    public List<Tupla<String, Double>> getNumUsuariosGroupByCreatedYear(Set<Usuario> listaUsuarios);
+    @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(YEAR(u.fechaCreacion), COUNT(u.fechaCreacion))" +
+            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY YEAR(u.fechaCreacion)")
+    public List<Par<?, ?>> getNumUsuariosGroupByCreatedYear(Set<Usuario> listaUsuarios);
 
-    @Query("SELECT new com.eventbookspring.eventbookspring.clases.Tupla(u.fechaCreacion, COUNT(u.fechaCreacion))" +
-            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY u.fechaCreacion")
-    public List<Tupla<String, Double>> getNumUsuariosGroupByCreatedMonthYear(Set<Usuario> listaUsuarios);
+    @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(MONTH(u.fechaCreacion), YEAR(u.fechaCreacion), COUNT(*))" +
+            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY MONTH(u.fechaCreacion), YEAR(u.fechaCreacion)")
+    public List<Par<?, ?>> getNumUsuariosGroupByCreatedMonthYear(Set<Usuario> listaUsuarios);
+
+
 
 
 }

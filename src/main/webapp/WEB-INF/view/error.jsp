@@ -35,7 +35,7 @@
                             <%
                     %>
 
-                    <img style="float: right; margin-right: 10%; width: 30%; max-width: 499px;" src="images/monke.png"/>
+                    <img style="float: right; margin-right: 10%; width: 30%; max-width: 499px;" src="/images/monke.png"/>
 
                     <br/><br/>
 
