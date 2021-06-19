@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import entity.Usuario;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -103,6 +105,7 @@ public class ServletChatAsyncUtil extends HttpServlet {
             
             // Compose message from data
             Mensaje msg = new Mensaje();
+//            msg.setFecha(currentTime);
             msg.setFecha(currentTime);
             msg.setContenido(message);
             msg.setUsuarioEmisorId(envia.getId());

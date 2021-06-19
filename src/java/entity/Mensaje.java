@@ -6,6 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -40,15 +42,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Mensaje.findByUsuarioEmisorId", query = "SELECT m FROM Mensaje m WHERE m.usuarioEmisorId = :usuarioEmisorId")})
 public class Mensaje implements Serializable {
 
+    @Column(name = "FECHA")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Column(name = "FECHA")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
     @Column(name = "CONTENIDO", length = 500)
     private String contenido;
     @Basic(optional = false)
@@ -80,13 +83,7 @@ public class Mensaje implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 
     public String getContenido() {
         return contenido;
@@ -136,5 +133,15 @@ public class Mensaje implements Serializable {
     public String toString() {
         return "entity.Mensaje[ id=" + id + " ]";
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+   
     
 }

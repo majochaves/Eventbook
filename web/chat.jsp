@@ -237,7 +237,7 @@
                                                 var context = {
                                                     messageOutput: message,
                                                     id: idOfMsg,
-                                                    time: new Date().toLocaleString().replace(/,/, "")
+                                                    time: new Date().toLocaleString('en-US', { hour12: true }).replace(/,/, "")
                                                 };
 
 
@@ -294,7 +294,7 @@
                             this.$chatHistory.scrollTop(this.$chatHistory[0].scrollHeight);
                         },
                         getCurrentTime: function () {
-                            return new Date().toLocaleString().replace(/,/, "");
+                            return new Date().toLocaleString('en-US', { hour12: true }).replace(/,/, "");
                         },
 //                        getRandomItem: function (arr) {
 //                            return arr[Math.floor(Math.random() * arr.length)];
