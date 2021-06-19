@@ -12,10 +12,7 @@ import com.eventbookspring.eventbookspring.service.AnalistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
@@ -108,7 +105,7 @@ public class AnalistaController {
         if(thisAnalista != null) {
             List<TipoanalisisDTO> listaTablas =  (List<TipoanalisisDTO>) session.getAttribute("listaTablas");
             analistaService.guardarAnalisis(listaTablas, descripcion,thisAnalista);
-            return "redirect:/";
+            return "redirect:/analisis/";
         } else {
             return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
         }
@@ -117,9 +114,7 @@ public class AnalistaController {
 
 
     @GetMapping("/listar")
-    public String listarAnalisis(
-            Model model,
-            HttpSession session){
+    public String listarAnalisis(Model model, HttpSession session){
 
         Analista thisAnalista = obtenerAnalistaLogeado(session);
         if(thisAnalista != null) {
@@ -128,6 +123,23 @@ public class AnalistaController {
             model.addAttribute("listaAnalisis", listaAnalisis);
 
             return "analisisListar";
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarAnalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+            try{
+                this.analistaService.eliminarAnalisis(thisAnalista, id);
+            } catch (RuntimeException ex){
+                return Autenticacion.getErrorJsp(model, ex.getMessage());
+            }
+
+            return "redirect:/analisis/listar";
         } else {
             return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
         }

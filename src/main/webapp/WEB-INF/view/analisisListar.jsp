@@ -68,7 +68,7 @@
                             </td>
 
                             <td class="align-middle text-center"><a
-                                    href="ServeltAnalisisBorrar?id=<%=thisAnalisis.getId()%>"
+                                    href="/analisis/eliminar/<%=thisAnalisis.getId()%>"
                                     class="shadow-sm btn btn-danger">Eliminar</a></td>
                         </tr>
                         <%
