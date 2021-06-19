@@ -4,6 +4,7 @@ package com.eventbookspring.eventbookspring.controller;
 import com.eventbookspring.eventbookspring.clases.Autenticacion;
 import com.eventbookspring.eventbookspring.clases.Par;
 import com.eventbookspring.eventbookspring.clases.Tupla;
+import com.eventbookspring.eventbookspring.dto.AnalisisDTO;
 import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
 import com.eventbookspring.eventbookspring.entity.Analista;
 import com.eventbookspring.eventbookspring.entity.Usuario;
@@ -113,6 +114,25 @@ public class AnalistaController {
         }
 
     }
+
+
+    @GetMapping("/listar")
+    public String listarAnalisis(
+            Model model,
+            HttpSession session){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+
+            List<AnalisisDTO> listaAnalisis = this.analistaService.obtenerListaAnalisisLazy(thisAnalista);
+            model.addAttribute("listaAnalisis", listaAnalisis);
+
+            return "analisisListar";
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+    }
+
 
 
     private Analista obtenerAnalistaLogeado(HttpSession session){

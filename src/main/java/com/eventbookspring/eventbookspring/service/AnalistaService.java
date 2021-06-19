@@ -38,7 +38,6 @@ public class AnalistaService {
 
 
     private UsuarioRepository usuarioRepository;
-
     private AnalisisRepository analisisRepository;
     private TipoanalisisRepository tipoanalisisRepository;
 
@@ -57,6 +56,8 @@ public class AnalistaService {
     public void setTipoanalisisRepository(TipoanalisisRepository tipoanalisisRepository) {
         this.tipoanalisisRepository = tipoanalisisRepository;
     }
+
+
 
     public List<TipoanalisisDTO> generarAnalisis(
             List<String> tipoUsuario,
@@ -210,5 +211,16 @@ public class AnalistaService {
         }
         nuevoAnalisis.setTipoanalisisList(listaTiposAnalisis);
         this.analisisRepository.save(nuevoAnalisis);
+    }
+
+    public List<AnalisisDTO> obtenerListaAnalisisLazy(Analista thisAnalista){
+        List<Analisis> listaAnalisis = this.analisisRepository.findAnalisisByAnalistaUsuarioId(thisAnalista);
+        List<AnalisisDTO> listaAnalisisDto = new ArrayList<>();
+        for(Analisis a : listaAnalisis){
+            listaAnalisisDto.add(a.getAnalisisDtoLazy());
+        }
+
+        return listaAnalisisDto;
+
     }
 }
