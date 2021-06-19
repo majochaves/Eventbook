@@ -16,6 +16,8 @@ public class CampoanalisisDTO {
     private Double valor;
     //    private TipoanalisisDTO tipoanalisis;
 
+    public CampoanalisisDTO(){
+    }
 
     public CampoanalisisDTO(String nombre, Double valor){
         this.nombre = nombre;

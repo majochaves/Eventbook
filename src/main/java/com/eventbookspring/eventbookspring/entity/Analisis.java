@@ -6,8 +6,10 @@
 package com.eventbookspring.eventbookspring.entity;
 
 import com.eventbookspring.eventbookspring.dto.AnalisisDTO;
+import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 //import javax.validation.constraints.Size;
@@ -113,6 +115,20 @@ public class Analisis implements Serializable {
         analisisDTO.setDescripcion(this.descripcion);
         analisisDTO.setId(this.id);
         analisisDTO.setTipoanalisisList(null);
+        return analisisDTO;
+    }
+
+    @Transient
+    public AnalisisDTO getAnalisisDto(){
+        AnalisisDTO analisisDTO = new AnalisisDTO();
+        analisisDTO.setAnalistaUsuarioId(this.analistaUsuarioId);
+        analisisDTO.setDescripcion(this.descripcion);
+        analisisDTO.setId(this.id);
+        List<TipoanalisisDTO> listaTipoAnalisis = new ArrayList<>();
+        for(Tipoanalisis ta : this.tipoanalisisList){
+            listaTipoAnalisis.add(ta.getTipoanalisisDto());
+        }
+        analisisDTO.setTipoanalisisList(listaTipoAnalisis);
         return analisisDTO;
     }
 

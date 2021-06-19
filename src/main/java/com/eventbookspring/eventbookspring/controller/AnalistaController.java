@@ -48,6 +48,7 @@ public class AnalistaController {
 
     }
 
+    //-----------------Creacion de Analisis-----------------
     @GetMapping("/crear/mostrar")
     public String  mostrarCrearAnalisis(Model model, HttpSession session){
         Analista thisAnalista = obtenerAnalistaLogeado(session);
@@ -112,7 +113,7 @@ public class AnalistaController {
 
     }
 
-
+    //-----------------Visualizacion de Analisis-----------------
     @GetMapping("/listar")
     public String listarAnalisis(Model model, HttpSession session){
 
@@ -128,6 +129,22 @@ public class AnalistaController {
         }
     }
 
+    @GetMapping("/ver/{id}")
+    public String verAnalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+
+            AnalisisDTO thisAnalisisDto = this.analistaService.obtenerAnalisis(thisAnalista, id);
+            model.addAttribute("thisAnalisisDto", thisAnalisisDto);
+
+            return "analisisVer";
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+    }
+
+    //-----------------Eliminacion de Analisis-----------------
     @GetMapping("/eliminar/{id}")
     public String eliminarAnalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
 

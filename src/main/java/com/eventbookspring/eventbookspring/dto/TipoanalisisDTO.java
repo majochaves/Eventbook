@@ -11,6 +11,9 @@ public class TipoanalisisDTO {
 //    private Analisis analisisId;
     private List<CampoanalisisDTO> campoanalisisList;
 
+    public TipoanalisisDTO(){
+    }
+
     public TipoanalisisDTO(String nombre, List<CampoanalisisDTO> campoanalisisList){
         this.nombre = nombre;
         this.campoanalisisList = campoanalisisList;

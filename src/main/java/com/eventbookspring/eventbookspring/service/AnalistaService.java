@@ -236,4 +236,17 @@ public class AnalistaService {
             throw new NullPointerException("El analisis especificado no ha sido encontrado");
         }
     }
+
+    public AnalisisDTO obtenerAnalisis(Analista thisAnalista, Integer analisisId){
+        Optional<Analisis> thisAnalisisOpt = this.analisisRepository.findById(analisisId);
+        if(thisAnalisisOpt.isPresent()){
+            Analisis thisAnalisis = thisAnalisisOpt.get();
+            if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
+                throw new RuntimeException("Error: No puedes eliminar un analisis el cual no eres dueño");
+
+            return thisAnalisis.getAnalisisDto();
+        } else{
+            throw new NullPointerException("El analisis especificado no ha sido encontrado");
+        }
+    }
 }

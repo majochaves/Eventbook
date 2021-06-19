@@ -64,7 +64,7 @@
                             </td>
 
                             <td class="align-middle text-center"><a
-                                    href="ServeltAnalisisVer?id=<%=thisAnalisis.getId()%>" class="btn btn-primary">Acceder</a>
+                                    href="/analisis/ver/<%=thisAnalisis.getId()%>" class="btn btn-primary">Acceder</a>
                             </td>
 
                             <td class="align-middle text-center"><a

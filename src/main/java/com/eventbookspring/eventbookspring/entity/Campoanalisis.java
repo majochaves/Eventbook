@@ -5,16 +5,10 @@
  */
 package com.eventbookspring.eventbookspring.entity;
 
+import com.eventbookspring.eventbookspring.dto.CampoanalisisDTO;
+
 import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -99,5 +93,13 @@ public class Campoanalisis implements Serializable {
     public String toString() {
         return "entity.Campoanalisis[ campoanalisisPK=" + campoanalisisPK + " ]";
     }
-    
+
+    @Transient
+    public CampoanalisisDTO getCampoanalisisDto(){
+        CampoanalisisDTO campoanalisisDto = new CampoanalisisDTO();
+        campoanalisisDto.setNombre(this.campoanalisisPK.getNombre());
+        campoanalisisDto.setValor(this.valor);
+        campoanalisisDto.setTipoanalisisId(this.campoanalisisPK.getTipoanalisisId());
+        return  campoanalisisDto;
+    }
 }
