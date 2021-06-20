@@ -237,7 +237,7 @@
                                                 var context = {
                                                     messageOutput: message,
                                                     id: idOfMsg,
-                                                    time: new Date().toLocaleString('en-US', { hour12: true }).replace(/,/, "")
+                                                    time: new Date().toLocaleString('en-GB', { hour12: true }).replaceAll("/", "-")
                                                 };
 
 
@@ -294,7 +294,7 @@
                             this.$chatHistory.scrollTop(this.$chatHistory[0].scrollHeight);
                         },
                         getCurrentTime: function () {
-                            return new Date().toLocaleString('en-US', { hour12: true }).replace(/,/, "");
+                            return new Date().toLocaleString('en-GB', { hour12: true }).replaceAll("/", "-");
                         },
 //                        getRandomItem: function (arr) {
 //                            return arr[Math.floor(Math.random() * arr.length)];
@@ -308,7 +308,7 @@
                                 var data = {
                                     messageOutput: "<%= msg.getValue().getContenido().trim() %>",
                                     id: "<%= msg.getValue().getId() %>",
-                                    time: "<%= new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(msg.getValue().getFecha()) %>"
+                                    time: "<%= new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa").format(msg.getValue().getFecha()) %>"
                                 }; 
                                 
                                 
