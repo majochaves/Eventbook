@@ -7,10 +7,12 @@ import com.eventbookspring.eventbookspring.dto.CampoanalisisDTO;
 import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
 import com.eventbookspring.eventbookspring.entity.*;
 import com.eventbookspring.eventbookspring.repository.AnalisisRepository;
+import com.eventbookspring.eventbookspring.repository.CampoanalisisRepository;
 import com.eventbookspring.eventbookspring.repository.TipoanalisisRepository;
 import com.eventbookspring.eventbookspring.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +42,7 @@ public class AnalistaService {
     private UsuarioRepository usuarioRepository;
     private AnalisisRepository analisisRepository;
     private TipoanalisisRepository tipoanalisisRepository;
+    private CampoanalisisRepository campoanalisisRepository;
 
 
     @Autowired
@@ -55,6 +58,11 @@ public class AnalistaService {
     @Autowired
     public void setTipoanalisisRepository(TipoanalisisRepository tipoanalisisRepository) {
         this.tipoanalisisRepository = tipoanalisisRepository;
+    }
+
+    @Autowired
+    public void setCampoanalisisRepository(CampoanalisisRepository campoanalisisRepository) {
+        this.campoanalisisRepository = campoanalisisRepository;
     }
 
 
@@ -263,6 +271,7 @@ public class AnalistaService {
         }
     }
 
+    @Transactional
     public AnalisisDTO editarTipoanalisis(Analista thisAnalista, Integer tipoanalisisId, List<String> listaNombres, List<Double> listaValores){
         Optional<Tipoanalisis> thisTipoanalisisOpt = this.tipoanalisisRepository.findById(tipoanalisisId);
         if(thisTipoanalisisOpt.isPresent()){
@@ -270,6 +279,7 @@ public class AnalistaService {
             if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
                 throw new RuntimeException("Error: No puedes editar un analisis el cual no eres dueño");
 
+            this.campoanalisisRepository.deleteCampoanalisisByTipoanalisis(thisTipoanalisis);
             List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
             for(int i=0;i<listaNombres.size();i++){
                 CampoanalisisPK capk = new CampoanalisisPK();
