@@ -1,4 +1,3 @@
-<%@ page import="com.eventbookspring.eventbookspring.dto.AnalisisDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.TipoanalisisDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.CampoanalisisDTO" %><%--
   Created by IntelliJ IDEA.
@@ -32,6 +31,7 @@
     <script src="/components/base/script.js"></script>
     <script src="/components/propios/valoresNoRepetibles.js" defer></script>
     <script src="/components/propios/anyadirFilaEnUnaTabla.js" defer></script>
+    <script src="/components/propios/eliminarFilaEnUnaTabla.js" defer></script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -69,6 +69,7 @@
                                     <th cope="col"><%=thisTipoanalisisDto.getNombre()%>
                                     </th> <!--Nombre de la columna-->
                                     <th scope="col">Valor</th>
+                                    <th scope="col">Eliminar</th>
                                 </tr>
                                 </thead>
 
@@ -83,13 +84,15 @@
                                     </td>
                                     <td><input class="form-control form-control-sm" type="number" name="valores"
                                                value="<%=thisCampoanalisisDto.getValor()%>"></td>
+                                    <td class="text-center"><button type="button" class="shadow-sm badge badge-danger eliminarFila">Eliminar fila
+                                    </button></td>
                                 </tr>
                                 <%
                                     }
                                 %>
                                 </tbody>
                             </table>
-                            <div class="text-right">
+                            <div class="text-right mr-4">
                                 <button type="button" id="anyadirFila" class="shadow-sm badge badge-info">Añadir fila
                                 </button>
                             </div>

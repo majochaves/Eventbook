@@ -13,10 +13,13 @@ botonAnyadirFila.onclick = function() {
     let fila = tabla.insertRow(tabla.rows.length);
     var celdaNombre = fila.insertCell(0);
     var celdaValor = fila.insertCell(1);
+    var celdaEliminar = fila.insertCell(2);
     celdaNombre.innerHTML = '<input class="form-control form-control-sm textoColumna1" type="text" name="nombres">';
-    celdaValor.innerHTML = '<td><input class="form-control form-control-sm" type="number" name="valores" value="0"></td>';
+    celdaValor.innerHTML = '<input class="form-control form-control-sm" type="number" name="valores" value="0">';
+    celdaEliminar.innerHTML = '<div class="text-center"><button type="button" class="shadow-sm badge badge-danger eliminarFila">Eliminar fila</button></div>';
     let inputs = document.querySelectorAll('[class~="textoColumna1"]');
-    
+    const listaBotonesEliminar =  document.querySelectorAll('[class~="eliminarFila"]');
+
     //Anyadimos el evento al ultimo elemento introducido
     inputs[inputs.length - 1].addEventListener('input', function() {
         listaPalabras = [];
@@ -24,7 +27,13 @@ botonAnyadirFila.onclick = function() {
         colocarInvalidos(inputs);
             
     });
-    
+
+    //Anyadimos el evento de eliminar el elemento
+    listaBotonesEliminar[listaBotonesEliminar.length - 1].addEventListener('click', function (){
+        let fila = listaBotonesEliminar[listaBotonesEliminar.length - 1].parentNode.parentNode;
+        fila.parentNode.removeChild(fila);
+    });
+
     //Lo colocamos invalido
     inputs[inputs.length - 1].className = nombreClassInicial + " is-invalid";
     
