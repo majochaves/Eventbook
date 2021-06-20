@@ -300,4 +300,20 @@ public class AnalistaService {
             throw new NullPointerException("El analisis especificado no ha sido encontrado");
         }
     }
+
+
+    public void editarAnalisis(Analista thisAnalista, AnalisisDTO thisAnalisisDtoEditado){
+        Optional<Analisis> thisAnalisisOpt = this.analisisRepository.findById(thisAnalisisDtoEditado.getId());
+        if(thisAnalisisOpt.isPresent()){
+            Analisis thisAnalisis = thisAnalisisOpt.get();
+            if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
+                throw new RuntimeException("Error: No puedes ver un analisis el cual no eres dueño");
+
+            //Por ahora lo unico modificable es la descripcion
+            thisAnalisis.setDescripcion(thisAnalisisDtoEditado.getDescripcion());
+            this.analisisRepository.save(thisAnalisis);
+        } else{
+            throw new NullPointerException("El analisis especificado no ha sido encontrado");
+        }
+    }
 }

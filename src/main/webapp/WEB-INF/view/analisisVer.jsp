@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.AnalisisDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.TipoanalisisDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.CampoanalisisDTO" %><%--
@@ -108,7 +109,9 @@
     <div class="modal fade" id="abrirDialogoEditar" tabindex="-1" role="dialog" aria-labelledby="ventanaEditar"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="ServletAnalisisEditar?id=<%=thisAnalisisDto.getId()%>">
+            <form:form modelAttribute="thisAnalisisDto" action="/analisis/editar/analisis" method="POST">
+<%--            <form method="POST" action="ServletAnalisisEditar?id=<%=thisAnalisisDto.getId()%>">--%>
+                <form:hidden path="id"/>
                 <div class="modal-content">
 
                     <div class="modal-header">
@@ -121,7 +124,8 @@
                     <div class="modal-body">
                         <div class="form-group pb-4">
                             <label for="desc" class="col-form-label">Descripción</label>
-                            <textarea class="form-control" name="descripcion"><%=thisAnalisisDto.getDescripcion()%></textarea>
+<%--                            <textarea class="form-control" name="descripcion"><%=thisAnalisisDto.getDescripcion()%></textarea>--%>
+                            <form:textarea path="descripcion" class="form-control" />
                         </div>
 
                         <%
@@ -149,7 +153,8 @@
                     </div>
 
                 </div>
-            </form>
+<%--            </form>--%>
+            </form:form>
         </div>
     </div>
 

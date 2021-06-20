@@ -167,7 +167,7 @@ public class AnalistaController {
         }
     }
 
-    //-----------------Edicion de Analisis-----------------
+    //-----------------Edicion de Tipoanalisis-----------------
     @GetMapping("/editar/tipoanalisis/mostrar/{id}")
     public String mostrarEditarTipoanalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
 
@@ -204,6 +204,29 @@ public class AnalistaController {
             }
 
             return "redirect:/analisis/ver/" + analisisDto.getId();
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+
+    }
+
+    //-----------------Edicion de Analisis-----------------
+    @PostMapping("/editar/analisis")
+    public String editarAnalisis(
+            Model model,
+            HttpSession session,
+            @ModelAttribute("thisAnalisisDto") AnalisisDTO thisAnalisisDto){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+            AnalisisDTO analisisDto = null;
+            try{
+                this.analistaService.editarAnalisis(thisAnalista, thisAnalisisDto);
+            } catch (RuntimeException ex){
+                return Autenticacion.getErrorJsp(model, ex.getMessage());
+            }
+
+            return "redirect:/analisis/ver/" + thisAnalisisDto.getId();
         } else {
             return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
         }
