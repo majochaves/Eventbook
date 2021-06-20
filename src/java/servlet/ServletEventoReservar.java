@@ -64,36 +64,27 @@ public class ServletEventoReservar extends HttpServlet {
         int entradasReservadas = e.getEntradasReservadas(user);
         
         
-        if(editar.equalsIgnoreCase("editar")){
-            if(numAsientos == 0){
-                request.setAttribute("id", id);
-                RequestDispatcher rd = request.getRequestDispatcher("ServletReservaBorrar");
-                rd.forward(request, response);
-            }
-            if(e.getMaxEntradas() != null){
-                if(numAsientos > e.getMaxEntradas()){
-                    int entradasPosibles = e.getMaxEntradas()-entradasReservadas;
-                    String error = "Error: Ya ha reservado "+entradasReservadas+" solo podría reservar "+entradasPosibles+" entradas más.";
-                    request.setAttribute("error", error);
-                    request.setAttribute("editar", editar);
-                    request.setAttribute("numEntradas", entradasReservadas);
-                    request.setAttribute("evento", e);
-                    request.setAttribute("reservas", e.getReservaList());
-                    RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
-                    rd.forward(request, response);
-                }
-            }
-   
-        } else if(e.getMaxEntradas() != null){
-            if(numAsientos > e.getMaxEntradas() || entradasReservadas > e.getMaxEntradas()){
-                String error = "Error: Sólo se pueden reservar " + e.getMaxEntradas() + " por usuario.";
-                request.setAttribute("error", error);
-                request.setAttribute("evento", e);
-                request.setAttribute("reservas", e.getReservaList());
-                RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
-                rd.forward(request, response);
-            }
-            
+        if(editar.equalsIgnoreCase("editar") && numAsientos == 0){
+            request.setAttribute("id", id);
+            RequestDispatcher rd = request.getRequestDispatcher("ServletReservaBorrar");
+            rd.forward(request, response);
+        } else if(editar.equalsIgnoreCase("editar") && numAsientos > e.getMaxEntradas()){
+            int entradasPosibles = e.getMaxEntradas()-entradasReservadas;
+            String error = "Error: Ya ha reservado "+entradasReservadas+" solo podría reservar "+entradasPosibles+" entradas más.";
+            request.setAttribute("error", error);
+            request.setAttribute("editar", editar);
+            request.setAttribute("numEntradas", entradasReservadas);
+            request.setAttribute("evento", e);
+            request.setAttribute("reservas", e.getReservaList());
+            RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
+            rd.forward(request, response);
+        } else if(numAsientos > e.getMaxEntradas() || entradasReservadas > e.getMaxEntradas()){
+            String error = "Error: Sólo se pueden reservar " + e.getMaxEntradas() + " por usuario.";
+            request.setAttribute("error", error);
+            request.setAttribute("evento", e);
+            request.setAttribute("reservas", e.getReservaList());
+            RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
+            rd.forward(request, response);
         } else if(e.asientosDisponibles() < numAsientos){
             String error = "Error: Sólo hay " + e.asientosDisponibles() + " asientos disponibles. ";
             request.setAttribute("error", error);
@@ -102,11 +93,12 @@ public class ServletEventoReservar extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("evento_reservar.jsp");
             rd.forward(request, response);
         }else{
-            if(e.getAsientosFijos() == 's'){
+            if(e.getAsientosFijos() == 's'){ // ELEGIR ASIENTOS
                 int[][] matrizAsientos = e.matrizAsientos();
                 request.setAttribute("matrizAsientos", matrizAsientos);
                 request.setAttribute("evento", e);
-                request.setAttribute("numAsientos", numAsientos);
+                request.setAttribute("numAsientos", (numAsientos-entradasReservadas));
+                request.setAttribute("editar", "editar");
                 request.setAttribute("usuario", user);
                 RequestDispatcher rd = request.getRequestDispatcher("seleccionar_asientos.jsp");
                 rd.forward(request, response);
@@ -125,6 +117,7 @@ public class ServletEventoReservar extends HttpServlet {
                 } else {
                     numAsientos = numAsientos-entradasReservadas;
                     for(int i = 0; i < numAsientos; i++){
+                    
                         int numAsiento = 0;
                         if(listaReservas != null){
                             numAsiento = listaReservas.size() + 1;
