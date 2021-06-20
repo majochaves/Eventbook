@@ -5,6 +5,7 @@
  */
 package com.eventbookspring.eventbookspring.clases;
 
+import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
 import com.eventbookspring.eventbookspring.entity.*;
 import com.sun.istack.NotNull;
 import org.springframework.ui.Model;
@@ -23,13 +24,13 @@ import javax.servlet.http.HttpSession;
  */
 public class Autenticacion {
     
-    public static Usuario getUsuarioLogeado(HttpServletRequest request, HttpServletResponse response) {
-        return (Usuario) request.getSession().getAttribute("logged-user");
+    public static UsuarioDTO getUsuarioLogeado(HttpServletRequest request, HttpServletResponse response) {
+        return (UsuarioDTO) request.getSession().getAttribute("logged-user");
     }
 
 
 
-    public static void login(HttpServletRequest request, Usuario u) {
+    public static void login(HttpServletRequest request, UsuarioDTO u) {
         request.getSession().setAttribute("logged-user", u);
     }
 
@@ -39,13 +40,11 @@ public class Autenticacion {
     
     public static final String PERMISOS = "Parece que no dispones de los permisos necesarios para acceder a esta página.";
     
-    public static boolean estaLogeado(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public static boolean estaLogeado(HttpServletRequest request, HttpServletResponse response) {
         return getUsuarioLogeado(request, response) != null;
     }
-    
-            
-    public static boolean tieneRol(Usuario u, Class... roles) {
+
+    public static boolean tieneRol(UsuarioDTO u, Class... roles) {
         
         boolean resultado = false;
         List<Class> rolesList = Arrays.asList(roles);
@@ -66,19 +65,15 @@ public class Autenticacion {
         return resultado;
     }
         
-    public static boolean tieneRol(HttpServletRequest request, HttpServletResponse response, Class... roles) 
-            throws ServletException, IOException {
-        
+    public static boolean tieneRol(HttpServletRequest request, HttpServletResponse response, Class... roles) {
         boolean resultado = false;
         List<Class> rolesList = Arrays.asList(roles);
-        Usuario loggedUser = (Usuario) request.getSession().getAttribute("logged-user");
+        UsuarioDTO loggedUser = (UsuarioDTO) request.getSession().getAttribute("logged-user");
 
         return estaLogeado(request, response) && tieneRol(loggedUser, roles);
     }
 
-
-
-    public static void autenticar(HttpServletRequest request, HttpServletResponse response, String errorMsg, Class... roles) 
+    public static void autenticar(HttpServletRequest request, HttpServletResponse response, String errorMsg, Class... roles)
             throws ServletException, IOException {
         
         if (!tieneRol(request, response, roles)) error(request, response, errorMsg);
@@ -87,21 +82,21 @@ public class Autenticacion {
     public static void error(HttpServletRequest request, HttpServletResponse response, String errorMsg)
             throws ServletException, IOException {
         
-            request.setAttribute("error", errorMsg);
-            request.getRequestDispatcher("error.jsp").forward(request, response);        
+        request.setAttribute("error", errorMsg);
+        request.getRequestDispatcher("error.jsp").forward(request, response);
     }
 
 
     //HACIENDO USO SOLO DE SESSION
-    public static Usuario getUsuarioLogeado(HttpSession session) {
-        return (Usuario) session.getAttribute("logged-user");
+    public static UsuarioDTO getUsuarioLogeado(HttpSession session) {
+        return (UsuarioDTO) session.getAttribute("logged-user");
     }
 
     public static boolean tieneRol(HttpSession session, Class... roles){
 
         boolean resultado = false;
         List<Class> rolesList = Arrays.asList(roles);
-        Usuario loggedUser = (Usuario) session.getAttribute("logged-user");
+        UsuarioDTO loggedUser = getUsuarioLogeado(session);
 
         return loggedUser!=null && tieneRol(loggedUser, roles);
     }

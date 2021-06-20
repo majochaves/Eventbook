@@ -46,7 +46,7 @@ public class AutenticacionController {
             u = q.iterator().next();
             if (u.getPassword().equals(password)) {
                 // Se autentica al usuario
-                Autenticacion.login(request, u);
+                Autenticacion.login(request, u.getDTO());
 
                 return "redirect:/";
             }

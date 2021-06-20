@@ -81,7 +81,7 @@ public class Teleoperador implements Serializable {
             return false;
         }
         Teleoperador other = (Teleoperador) object;
-        if ((this.usuarioId == null && other.usuarioId != null) || (this.usuarioId != null && !this.usuarioId.equals(other.usuarioId))) {
+        if ((this.usuarioId == null && other.usuarioId != null) || (this.usuarioId != null && !this.usuarioId.equals(other.getUsuarioId()))) {
             return false;
         }
         return true;

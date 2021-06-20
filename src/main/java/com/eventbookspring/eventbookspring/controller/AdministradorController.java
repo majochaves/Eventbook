@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
@@ -82,63 +83,23 @@ public class AdministradorController {
     }
 
     @GetMapping("/administracion")
-    public String administracion(Model model) {
-        model.addAttribute("usuarios", usuarioRepository.findAll().stream().map(Usuario::getDTO).collect(Collectors.toList()));
+    public String administracion(Model model, HttpSession session) {
 
-        return "usuario-listar";
+        if (Autenticacion.tieneRol(session, Administrador.class)) {
+            model.addAttribute("usuarios", usuarioRepository.findAll().stream().map(Usuario::getDTO).collect(Collectors.toList()));
+
+            return "usuario-listar";
+        }
+
+        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 
     @GetMapping("/usuario-crear")
-    public String usuarioCrear(Model model) {
-        model.addAttribute("usuarioDTO", new UsuarioDTO());
+    public String usuarioCrear(Model model, HttpSession session) {
 
-        List<String> sexos = new LinkedList<>();
-        sexos.add("hombre");
-        sexos.add("mujer");
-        model.addAttribute("sexos", sexos);
+        if (Autenticacion.tieneRol(session, Administrador.class)) {
+            model.addAttribute("usuarioDTO", new UsuarioDTO());
 
-        return "usuario-crear";
-    }
-
-    @GetMapping("/usuario-editar/{id}")
-    public String usuarioEditar(Model model, @PathVariable("id") String id) {
-        model.addAttribute("usuarioDTO", usuarioRepository.getById(Integer.parseInt(id)).getDTO());
-
-        List<String> sexos = new LinkedList<>();
-        sexos.add("hombre");
-        sexos.add("mujer");
-        model.addAttribute("sexos", sexos);
-
-        return "usuario-crear";
-    }
-
-    @GetMapping("/usuario-borrar/{id}")
-    public String usuarioBorrar(HttpServletRequest request, HttpServletResponse response, Model model, @PathVariable("id") String id) {
-        Optional<Usuario> u = usuarioRepository.findById(Integer.parseInt(id));
-
-        if (u.isPresent()) {
-            usuarioRepository.delete(u.get());
-
-            if (u.get().equals(Autenticacion.getUsuarioLogeado(request, response)))
-                return "redirect:/logout";
-        }
-
-        return "redirect:/administracion";
-    }
-
-    @PostMapping("/usuario-guardar")
-    public String usuarioGuardar(
-            Model model,
-            @ModelAttribute("dto") UsuarioDTO dto,
-            @RequestParam(value = "rol", required = false) String rol
-    ) {
-        boolean edicion = dto != null && dto.getId() != null;
-
-        UsuarioDTO resultado = service.guardarUsuario(dto, rol, edicion);
-
-        if (resultado == null) {
-            model.addAttribute("error", "El nombre de usuario '" + dto.getUsername() +  "' ya está en uso");
-            model.addAttribute("usuarioDTO", dto);
             List<String> sexos = new LinkedList<>();
             sexos.add("hombre");
             sexos.add("mujer");
@@ -147,11 +108,78 @@ public class AdministradorController {
             return "usuario-crear";
         }
 
-        return "redirect:administracion";
+        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
+    }
+
+    @GetMapping("/usuario-editar/{id}")
+    public String usuarioEditar(Model model, HttpSession session, @PathVariable("id") String id) {
+
+        if (Autenticacion.tieneRol(session, Administrador.class)) {
+            model.addAttribute("usuarioDTO", usuarioRepository.getById(Integer.parseInt(id)).getDTO());
+
+            List<String> sexos = new LinkedList<>();
+            sexos.add("hombre");
+            sexos.add("mujer");
+            model.addAttribute("sexos", sexos);
+
+            return "usuario-crear";
+        }
+
+        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
+    }
+
+    @GetMapping("/usuario-borrar/{id}")
+    public String usuarioBorrar(HttpSession session, Model model, @PathVariable("id") String id) {
+
+        if (Autenticacion.tieneRol(session, Administrador.class)) {
+            Optional<Usuario> u = usuarioRepository.findById(Integer.parseInt(id));
+
+            if (u.isPresent()) {
+                usuarioRepository.delete(u.get());
+
+                if (u.get().equals(Autenticacion.getUsuarioLogeado(session)))
+                    return "redirect:/logout";
+            }
+
+            return "redirect:/administracion";
+        }
+
+        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
+    }
+
+    @PostMapping("/usuario-guardar")
+    public String usuarioGuardar(
+            Model model,
+            HttpSession session,
+            @ModelAttribute("dto") UsuarioDTO dto,
+            @RequestParam(value = "rol", required = false) String rol
+    ) {
+
+        if (Autenticacion.tieneRol(session, Administrador.class)) {
+            boolean edicion = dto != null && dto.getId() != null;
+
+            UsuarioDTO resultado = service.guardarUsuario(dto, rol, edicion);
+
+            if (resultado == null) {
+                model.addAttribute("error", "El nombre de usuario '" + dto.getUsername() +  "' ya está en uso");
+                model.addAttribute("usuarioDTO", dto);
+                List<String> sexos = new LinkedList<>();
+                sexos.add("hombre");
+                sexos.add("mujer");
+                model.addAttribute("sexos", sexos);
+
+                return "usuario-crear";
+            }
+
+            return "redirect:administracion";
+        }
+
+        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 
     @GetMapping("/usuario-filtrar")
     public String usuarioFiltrar(Model model,
+                                 HttpSession session,
          @RequestParam(value = "rol", defaultValue = "") List<String> rolesStr,
          @RequestParam(value = "sexo", defaultValue = "") List<String> sexos,
          @RequestParam(defaultValue = "") String username,
@@ -160,43 +188,46 @@ public class AdministradorController {
          @RequestParam(value = "domicilio", defaultValue = "") String domicilio,
          @RequestParam(value = "ciudad", defaultValue = "") String ciudad
      ) {
+        if (Autenticacion.tieneRol(session, Administrador.class)) {
+            model.addAttribute("usuarios", usuarioRepository.findAll());
 
-        model.addAttribute("usuarios", usuarioRepository.findAll());
+            List<Usuario> query = usuarioRepository.findAll();
 
-        List<Usuario> query = usuarioRepository.findAll();
+            Class[] roles = new Class[5];
+            int i = 0;
+            if(rolesStr.contains("administradores"))
+                roles[i++] = Administrador.class;
+            if(rolesStr.contains("usuarioEventos"))
+                roles[i++] = Usuarioeventos.class;
+            if(rolesStr.contains("creadorEventos"))
+                roles[i++] = Creadoreventos.class;
+            if(rolesStr.contains("teleoperadores"))
+                roles[i++] = Teleoperador.class;
+            if(rolesStr.contains("analistas"))
+                roles[i++] = Analista.class;
 
-        Class[] roles = new Class[5];
-        int i = 0;
-        if(rolesStr.contains("administradores"))
-            roles[i++] = Administrador.class;
-        if(rolesStr.contains("usuarioEventos"))
-            roles[i++] = Usuarioeventos.class;
-        if(rolesStr.contains("creadorEventos"))
-            roles[i++] = Creadoreventos.class;
-        if(rolesStr.contains("teleoperadores"))
-            roles[i++] = Teleoperador.class;
-        if(rolesStr.contains("analistas"))
-            roles[i++] = Analista.class;
+            query = query.stream()
+                    .filter(u -> {                                                                              // FILTRO ROL
+                        try {
+                            return Autenticacion.tieneRol(u.getDTO(), roles);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                        return false;
+                    })
+                    .filter(u -> sexos.contains(u.getSexo()))                                                   // FILTRO SEXO
+                    .filter(u -> u.getUsername().toLowerCase().contains(username.toLowerCase()))                // FILTRO NOMBRE DE USUARIO
+                    .filter(u -> u.getNombre().toLowerCase().contains(nombre.toLowerCase()))                    // FILTRO NOMBRE
+                    .filter(u -> u.getApellidos().toLowerCase().contains(apellidos.toLowerCase()))              // FILTRO APELLIDOS
+                    .filter(u -> u.getDomicilio().toLowerCase().contains(domicilio.toLowerCase()))              // FILTRO DOMICILIO
+                    .filter(u -> u.getCiudadResidencia().toLowerCase().contains(ciudad.toLowerCase()))          // FILTRO CIUDAD
+                    .collect(Collectors.toList());
 
-        query = query.stream()
-                .filter(u -> {                                                                              // FILTRO ROL
-                    try {
-                        return Autenticacion.tieneRol(u, roles);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                    return false;
-                })
-                .filter(u -> sexos.contains(u.getSexo()))                                                   // FILTRO SEXO
-                .filter(u -> u.getUsername().toLowerCase().contains(username.toLowerCase()))                // FILTRO NOMBRE DE USUARIO
-                .filter(u -> u.getNombre().toLowerCase().contains(nombre.toLowerCase()))                    // FILTRO NOMBRE
-                .filter(u -> u.getApellidos().toLowerCase().contains(apellidos.toLowerCase()))              // FILTRO APELLIDOS
-                .filter(u -> u.getDomicilio().toLowerCase().contains(domicilio.toLowerCase()))              // FILTRO DOMICILIO
-                .filter(u -> u.getCiudadResidencia().toLowerCase().contains(ciudad.toLowerCase()))          // FILTRO CIUDAD
-                .collect(Collectors.toList());
+            model.addAttribute("usuarios", query.stream().map(Usuario::getDTO).collect(Collectors.toList()));
 
-        model.addAttribute("usuarios", query.stream().map(Usuario::getDTO).collect(Collectors.toList()));
+            return "usuario-listar";
+        }
 
-        return "usuario-listar";
+        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 }

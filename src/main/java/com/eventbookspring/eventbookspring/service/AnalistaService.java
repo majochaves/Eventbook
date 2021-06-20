@@ -250,8 +250,10 @@ public class AnalistaService {
         Optional<Analisis> thisAnalisisOpt = this.analisisRepository.findById(analisisId);
         if(thisAnalisisOpt.isPresent()){
             Analisis thisAnalisis = thisAnalisisOpt.get();
-            if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
+            if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista)) {
+                System.out.println("EL ANALISTA DEL ANALISIS ES: "+ thisAnalisis.getAnalistaUsuarioId().getUsuarioId());
                 throw new RuntimeException("Error: No puedes ver un analisis el cual no eres dueño");
+            }
 
             return thisAnalisis.getAnalisisDto();
         } else{
@@ -265,6 +267,7 @@ public class AnalistaService {
             Tipoanalisis thisTipoanalisis = thisTipoanalisisOpt.get();
             if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
                 throw new RuntimeException("Error: No puedes mostrar el menú de edición un analisis el cual no eres dueño");
+
 
             return thisTipoanalisis.getTipoanalisisDto();
         } else{

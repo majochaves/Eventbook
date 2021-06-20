@@ -6,8 +6,10 @@ import com.eventbookspring.eventbookspring.clases.Par;
 import com.eventbookspring.eventbookspring.clases.Tupla;
 import com.eventbookspring.eventbookspring.dto.AnalisisDTO;
 import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
+import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
 import com.eventbookspring.eventbookspring.entity.Analista;
 import com.eventbookspring.eventbookspring.entity.Usuario;
+import com.eventbookspring.eventbookspring.repository.AnalistaRepository;
 import com.eventbookspring.eventbookspring.service.AnalistaService;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import java.util.Map;
 @RequestMapping("/analisis")
 public class AnalistaController {
 
+    private AnalistaRepository analistaRepository;
 
     private AnalistaService analistaService;
 
@@ -36,7 +39,10 @@ public class AnalistaController {
         this.analistaService = analistaService;
     }
 
-
+    @Autowired
+    public void setAnalistaRepository(AnalistaRepository analistaRepository) {
+        this.analistaRepository = analistaRepository;
+    }
 
     @GetMapping("/")
     public String index(Model model, HttpSession session){
@@ -264,8 +270,8 @@ public class AnalistaController {
     private Analista obtenerAnalistaLogeado(HttpSession session){
         Analista thisAnalista = null;
         if(Autenticacion.tieneRol(session, Analista.class)){
-            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(session);
-            thisAnalista = thisUsuario.getAnalista();
+            UsuarioDTO thisUsuario = Autenticacion.getUsuarioLogeado(session);
+            thisAnalista = analistaRepository.getById(thisUsuario.getAnalista());
         }
         return thisAnalista;
     }

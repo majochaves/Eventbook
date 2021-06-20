@@ -81,7 +81,7 @@ public class Creadoreventos implements Serializable {
             return false;
         }
         Creadoreventos other = (Creadoreventos) object;
-        if ((this.usuarioId == null && other.usuarioId != null) || (this.usuarioId != null && !this.usuarioId.equals(other.usuarioId))) {
+        if ((this.usuarioId == null && other.usuarioId != null) || (this.usuarioId != null && !this.usuarioId.equals(other.getUsuarioId()))) {
             return false;
         }
         return true;

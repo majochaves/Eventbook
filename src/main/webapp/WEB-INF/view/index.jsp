@@ -13,6 +13,8 @@
 
 
 <%@page import="com.eventbookspring.eventbookspring.entity.Administrador"%>
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
+<%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +34,7 @@
     <script src="components/base/script.js"></script>
   </head>
   <%
-        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
+        UsuarioDTO u = Autenticacion.getUsuarioLogeado(session);
         boolean usuarioLogeado = false;
         if(u!=null)
             usuarioLogeado = true;

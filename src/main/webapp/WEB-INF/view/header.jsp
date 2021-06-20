@@ -10,9 +10,11 @@
 <%@page import="com.eventbookspring.eventbookspring.clases.Autenticacion"%>
 <%@page import="com.eventbookspring.eventbookspring.entity.Usuario"%>
 <%@page import="com.eventbookspring.eventbookspring.entity.Administrador"%>
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
 
 <%
-    Usuario loggedUser = (Usuario) request.getSession().getAttribute("logged-user");
+    UsuarioDTO loggedUser = Autenticacion.getUsuarioLogeado(session);
+
     String nav = (String) request.getParameter("nav");
     if(nav == null) nav = "";
 %>

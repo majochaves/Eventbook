@@ -68,7 +68,7 @@ public class Administrador implements Serializable {
             return false;
         }
         Administrador other = (Administrador) object;
-        if ((this.usuarioId == null && other.usuarioId != null) || (this.usuarioId != null && !this.usuarioId.equals(other.usuarioId))) {
+        if ((this.usuarioId == null && other.usuarioId != null) || (this.usuarioId != null && !this.usuarioId.equals(other.getUsuarioId()))) {
             return false;
         }
         return true;
