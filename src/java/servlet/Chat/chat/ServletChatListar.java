@@ -45,7 +45,12 @@ public class ServletChatListar extends HttpServlet {
                 request.getRequestDispatcher("error.jsp").forward(request, response);
             }
 
-            request.setAttribute("allMessages", "Modo Usuario: mostrando tus chats");
+            if (thisUsuario.getTeleoperador() != null || thisUsuario.getAdministrador() != null){
+                request.setAttribute("allMessages", "Modo Usuario: mostrando tus chats - <a href='ServletChatListarTeleoperador'>Modo Operador</a>");
+            } else {
+                request.setAttribute("allMessages", "Modo Usuario: mostrando tus chats.");
+            }
+            
             request.setAttribute("chats", chatFacade.findChatsByUserID(thisUsuario.getId()));
             request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
         } catch (Exception e) {

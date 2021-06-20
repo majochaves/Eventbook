@@ -55,7 +55,8 @@ public class MensajeFacade extends AbstractFacade<Mensaje> {
         
         List<Mensaje> mensajes = q.getResultList();
         // Utilizar iterator inverso porque ASC y DESC no funciona
-        for (Mensaje msg : reversed(mensajes)) {
+//        for (Mensaje msg : reversed(mensajes)) {
+        for (Mensaje msg : mensajes) {
             if (to == msg.getUsuarioEmisorId()){
                 res.add(new Pair(to, msg));
             } else {

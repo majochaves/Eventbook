@@ -46,7 +46,12 @@ public class ServletChatCrear extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         
+        
         List<Teleoperador> listaOperadores = this.teleoperadorFacade.findAll();
+        if (thisUsuario.getTeleoperador() != null || thisUsuario.getAdministrador() != null){
+            listaOperadores.remove(thisUsuario.getTeleoperador());
+        }
+        
         
        request.setAttribute("listaOperadores", listaOperadores);
        request.getRequestDispatcher("chat-crear.jsp").forward(request, response);

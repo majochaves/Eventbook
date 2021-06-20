@@ -50,7 +50,7 @@ public class ServletChatListarTeleoperador extends HttpServlet {
         
         if(esTeleoperador){
             request.setAttribute("chats", chatFacade.findAll());
-            request.setAttribute("allMessages", "Modo Operador: mostrando todos los chats");
+            request.setAttribute("allMessages", "Modo Operador: mostrando todos los chats - <a href='ServletChatListar'>Modo normal</a>");
             request.getRequestDispatcher("chat-listar.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "Solo los teleoperadores pueden ver esta página.");
