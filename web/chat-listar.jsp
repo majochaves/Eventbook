@@ -53,12 +53,14 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <h1>Chats abiertos</h1>
+                            
                         </div>
                     </div>
                     <hr class="divider divider-sm mt-0" />
                     <br/>
                     <div style="float:left; margin-bottom: 1%;">
                         <p><%= allMessages %></p>
+                        
                     </div>
 
                     <div style="float:right; margin-bottom: 1%;">
