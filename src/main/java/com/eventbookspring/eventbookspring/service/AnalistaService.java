@@ -242,9 +242,50 @@ public class AnalistaService {
         if(thisAnalisisOpt.isPresent()){
             Analisis thisAnalisis = thisAnalisisOpt.get();
             if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
-                throw new RuntimeException("Error: No puedes eliminar un analisis el cual no eres dueño");
+                throw new RuntimeException("Error: No puedes ver un analisis el cual no eres dueño");
 
             return thisAnalisis.getAnalisisDto();
+        } else{
+            throw new NullPointerException("El analisis especificado no ha sido encontrado");
+        }
+    }
+
+    public TipoanalisisDTO obtenerTipoanalisis(Analista thisAnalista, Integer tipoanalisisId){
+        Optional<Tipoanalisis> thisTipoanalisisOpt = this.tipoanalisisRepository.findById(tipoanalisisId);
+        if(thisTipoanalisisOpt.isPresent()){
+            Tipoanalisis thisTipoanalisis = thisTipoanalisisOpt.get();
+            if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
+                throw new RuntimeException("Error: No puedes mostrar el menú de edición un analisis el cual no eres dueño");
+
+            return thisTipoanalisis.getTipoanalisisDto();
+        } else{
+            throw new NullPointerException("El analisis especificado no ha sido encontrado");
+        }
+    }
+
+    public AnalisisDTO editarTipoanalisis(Analista thisAnalista, Integer tipoanalisisId, List<String> listaNombres, List<Double> listaValores){
+        Optional<Tipoanalisis> thisTipoanalisisOpt = this.tipoanalisisRepository.findById(tipoanalisisId);
+        if(thisTipoanalisisOpt.isPresent()){
+            Tipoanalisis thisTipoanalisis = thisTipoanalisisOpt.get();
+            if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
+                throw new RuntimeException("Error: No puedes editar un analisis el cual no eres dueño");
+
+            List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
+            for(int i=0;i<listaNombres.size();i++){
+                CampoanalisisPK capk = new CampoanalisisPK();
+                capk.setTipoanalisisId(tipoanalisisId);
+                capk.setNombre(listaNombres.get(i));
+                Campoanalisis ca = new Campoanalisis();
+                ca.setValor(listaValores.get(i));
+                ca.setCampoanalisisPK(capk);
+                ca.setTipoanalisis(thisTipoanalisis);
+                listaCampoanalisis.add(ca);
+            }
+            thisTipoanalisis.setCampoanalisisList(listaCampoanalisis);
+            this.tipoanalisisRepository.save(thisTipoanalisis);
+
+            return thisTipoanalisis.getAnalisisId().getAnalisisDto();
+
         } else{
             throw new NullPointerException("El analisis especificado no ha sido encontrado");
         }

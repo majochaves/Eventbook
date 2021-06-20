@@ -132,7 +132,7 @@
                                 <%=thisTipoanalisisDto.getNombre()%>
                             </div>
                             <div class="col-6 text-right">
-                                <a href="ServletTipoanalisisVer?id=<%=thisTipoanalisisDto.getId()%>"
+                                <a href="/analisis/editar/tipoanalisis/mostrar/<%=thisTipoanalisisDto.getId()%>"
                                    class="shadow-none badge badge-warning">Editar tabla</a>
                             </div>
                         </div>

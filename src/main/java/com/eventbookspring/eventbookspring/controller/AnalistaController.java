@@ -9,6 +9,7 @@ import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
 import com.eventbookspring.eventbookspring.entity.Analista;
 import com.eventbookspring.eventbookspring.entity.Usuario;
 import com.eventbookspring.eventbookspring.service.AnalistaService;
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +29,9 @@ import java.util.Map;
 public class AnalistaController {
 
 
-    @Autowired
     private AnalistaService analistaService;
 
+    @Autowired
     public void setAnalistaService(AnalistaService analistaService) {
         this.analistaService = analistaService;
     }
@@ -134,8 +135,12 @@ public class AnalistaController {
 
         Analista thisAnalista = obtenerAnalistaLogeado(session);
         if(thisAnalista != null) {
-
-            AnalisisDTO thisAnalisisDto = this.analistaService.obtenerAnalisis(thisAnalista, id);
+            AnalisisDTO thisAnalisisDto = null;
+            try {
+                thisAnalisisDto = this.analistaService.obtenerAnalisis(thisAnalista, id);
+            } catch (RuntimeException ex){
+                return Autenticacion.getErrorJsp(model, ex.getMessage());
+            }
             model.addAttribute("thisAnalisisDto", thisAnalisisDto);
 
             return "analisisVer";
@@ -162,6 +167,48 @@ public class AnalistaController {
         }
     }
 
+    //-----------------Edicion de Analisis-----------------
+    @GetMapping("/editar/tipoanalisis/mostrar/{id}")
+    public String mostrarEditarTipoanalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+            TipoanalisisDTO thisTipoanalisisDto = null;
+            try{
+                thisTipoanalisisDto = this.analistaService.obtenerTipoanalisis(thisAnalista, id);
+            } catch (RuntimeException ex){
+                return Autenticacion.getErrorJsp(model, ex.getMessage());
+            }
+            model.addAttribute("thisTipoanalisisDto", thisTipoanalisisDto);
+            return "analisisEditarTipoanalisis";
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+    }
+
+    @PostMapping("/editar/tipoanalisis/{id}")
+    public String editarTipoanalisis(
+            Model model,
+            HttpSession session,
+            @PathVariable("id") Integer id,
+            @RequestParam("nombres") List<String> listaNombres,
+            @RequestParam("valores") List<Double> listaValores){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+            AnalisisDTO analisisDto = null;
+            try{
+                analisisDto = this.analistaService.editarTipoanalisis(thisAnalista, id, listaNombres, listaValores);
+            } catch (RuntimeException ex){
+                return Autenticacion.getErrorJsp(model, ex.getMessage());
+            }
+
+            return "redirect:/analisis/ver/" + analisisDto.getId();
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+
+    }
 
 
     private Analista obtenerAnalistaLogeado(HttpSession session){
