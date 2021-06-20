@@ -79,12 +79,12 @@ public class AnalistaService {
         Date fechaInicial, fechaFinal;
         SimpleDateFormat sdt = new SimpleDateFormat("yyyy/MM/dd");
         if(cadenaFechaInicial == null || cadenaFechaInicial.isEmpty())
-            fechaInicial  = sdt.parse("01/01/0001");
+            fechaInicial  = sdt.parse("0001/01/01");
         else
             fechaInicial = sdt.parse(cadenaFechaInicial.replace("-", "/"));
 
         if(cadenaFechaFinal == null || cadenaFechaFinal.isEmpty())
-            fechaFinal  = sdt.parse("31/12/9999");
+            fechaFinal  = sdt.parse("9999/12/31");
         else
             fechaFinal = sdt.parse(cadenaFechaFinal.replace("-", "/"));
 

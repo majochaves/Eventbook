@@ -13,18 +13,19 @@ import java.util.Set;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-    //Consultas para obtencion de usuarios
+    //Consultas para obtencion de usuarios. Nota: Los administradores poseen todos los roles, por eso debemos descartar a los usuarios
+    //que poseen rol de administrador
 
-    @Query("SELECT u FROM Analista a, Usuario u WHERE a.usuarioId=u.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
+    @Query("SELECT u FROM Analista a, Usuario u WHERE a.usuarioId=u.id AND a.usuario NOT IN (SELECT u FROM Usuario u, Administrador a WHERE a.usuarioId=u.id) AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
     public Collection<Usuario> getUsuariosAnalistas(Date fechaInicial, Date fechaFinal);
 
-    @Query("SELECT u FROM Usuarioeventos ua, Usuario u WHERE ua.usuarioId=u.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
+    @Query("SELECT u FROM Usuarioeventos ua, Usuario u WHERE ua.usuarioId=u.id AND ua.usuario NOT IN (SELECT u FROM Usuario u, Administrador a WHERE a.usuarioId=u.id) AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
     public Collection<Usuario> getUsuariosEventos(Date fechaInicial, Date fechaFinal);
 
-    @Query("SELECT u FROM Creadoreventos c, Usuario u WHERE c.usuarioId=u.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
+    @Query("SELECT u FROM Creadoreventos c, Usuario u WHERE c.usuarioId=u.id AND c.usuario NOT IN (SELECT u FROM Usuario u, Administrador a WHERE a.usuarioId=u.id) AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
     public Collection<Usuario> getUsuariosCreadoresEventos(Date fechaInicial, Date fechaFinal);
 
-    @Query("SELECT u FROM Teleoperador t, Usuario u WHERE t.usuarioId=u.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
+    @Query("SELECT u FROM Teleoperador t, Usuario u WHERE t.usuarioId=u.id AND t.usuario NOT IN (SELECT u FROM Usuario u, Administrador a WHERE a.usuarioId=u.id) AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
     public Collection<Usuario> getUsuariosTeleoperadores(Date fechaInicial, Date fechaFinal);
 
     @Query("SELECT u FROM Administrador a, Usuario u WHERE a.usuarioId=u.id AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
