@@ -137,7 +137,7 @@
             let cajaDescripcion = document.getElementById('desc');
             let botonAutog = document.getElementById('botonAutogenerar');
             botonAutog.onclick = function() {
-                cajaDescripcion.value = 'Analisis de:<%=(String)request.getAttribute("AutoGeneradoAnalisisDe")%>; Usando un tipo de filtro:<%=(String)request.getAttribute("AutoGeneradoTiposFiltros")%>';
+                cajaDescripcion.value = 'Análisis de:<%=(String)request.getAttribute("AutoGeneradoAnalisisDe")%>; Usando un tipo de filtro:<%=(String)request.getAttribute("AutoGeneradoTiposFiltros")%>';
             };
         });
     </script>

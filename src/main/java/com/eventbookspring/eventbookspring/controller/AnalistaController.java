@@ -77,17 +77,22 @@ public class AnalistaController {
                 dest = "analisisMostrarCrear";  //Vuelve a la misma pagina con error lanzado
             } else {
                 Par<String, String> autoGenerado = new Par<>("", "");
-                List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
-                        tipoFiltro,
-                        cadenaFechaInicial,
-                        cadenaFechaFinal,
-                        autoGenerado);
+                try{
+                    List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
+                            tipoFiltro,
+                            cadenaFechaInicial,
+                            cadenaFechaFinal,
+                            autoGenerado);
 
-                session.setAttribute("listaTablas", listaTablas);
-                model.addAttribute("listaTablas", listaTablas);
-                model.addAttribute("AutoGeneradoAnalisisDe", autoGenerado.getPrimerElem());
-                model.addAttribute("AutoGeneradoTiposFiltros", autoGenerado.getSegundoElem());
-                dest = "analisisMostrarResultadosGenerados";
+                    session.setAttribute("listaTablas", listaTablas);
+                    model.addAttribute("listaTablas", listaTablas);
+                    model.addAttribute("AutoGeneradoAnalisisDe", autoGenerado.getPrimerElem());
+                    model.addAttribute("AutoGeneradoTiposFiltros", autoGenerado.getSegundoElem());
+                    dest = "analisisMostrarResultadosGenerados";
+                }catch (NullPointerException ex){
+                    return Autenticacion.getErrorJsp(model, ex.getMessage());
+                }
+
             }
 
             return dest;
@@ -227,6 +232,28 @@ public class AnalistaController {
             }
 
             return "redirect:/analisis/ver/" + thisAnalisisDto.getId();
+        } else {
+            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        }
+
+    }
+
+    @PostMapping("/duplicar")
+    public String duplicarAnalisis(
+            Model model,
+            HttpSession session,
+            @ModelAttribute("thisAnalisisDto") AnalisisDTO thisAnalisisDto){
+
+        Analista thisAnalista = obtenerAnalistaLogeado(session);
+        if(thisAnalista != null) {
+            AnalisisDTO analisisDto = null;
+            try{
+                this.analistaService.duplicarAnalisis(thisAnalista, thisAnalisisDto);
+            } catch (RuntimeException ex){
+                return Autenticacion.getErrorJsp(model, ex.getMessage());
+            }
+
+            return "redirect:/analisis/listar";
         } else {
             return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
         }

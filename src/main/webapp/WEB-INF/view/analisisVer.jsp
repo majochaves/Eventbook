@@ -164,7 +164,9 @@
     <div class="modal fade" id="abrirDialogoDuplicar" tabindex="-1" role="dialog" aria-labelledby="ventanaDuplicar"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="ServletAnalisisDuplicar?id=<%=thisAnalisisDto.getId()%>">
+            <form:form modelAttribute="thisAnalisisDto" action="/analisis/duplicar" method="POST">
+                <form:hidden path="id"/>
+<%--            <form method="POST" action="ServletAnalisisDuplicar?id=<%=thisAnalisisDto.getId()%>">--%>
                 <div class="modal-content">
 
                     <div class="modal-header">
@@ -177,7 +179,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="desc" class="col-form-label">Nombre y/o descripción</label>
-                            <textarea class="form-control" id="desc" name="descripcion"></textarea>
+<%--                            <textarea class="form-control" id="desc" name="descripcion"></textarea>--%>
+                            <form:textarea path="descripcion" id="desc" class="form-control" />
                         </div>
                         <div class="text-right">
                             <a href="#" class="badge badge-success" id="botonAutogenerar">Autogenerar descripción</a>
@@ -190,7 +193,8 @@
                     </div>
 
                 </div>
-            </form>
+<%--            </form>--%>
+            </form:form>
         </div>
     </div>
 

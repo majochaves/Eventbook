@@ -77,16 +77,16 @@ public class AnalistaService {
 
         //------------FECHA-----------
         Date fechaInicial, fechaFinal;
-        SimpleDateFormat sdt = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdt = new SimpleDateFormat("yyyy/MM/dd");
         if(cadenaFechaInicial == null || cadenaFechaInicial.isEmpty())
             fechaInicial  = sdt.parse("01/01/0001");
         else
-            fechaInicial = sdt.parse(cadenaFechaInicial);
+            fechaInicial = sdt.parse(cadenaFechaInicial.replace("-", "/"));
 
         if(cadenaFechaFinal == null || cadenaFechaFinal.isEmpty())
             fechaFinal  = sdt.parse("31/12/9999");
         else
-            fechaFinal = sdt.parse(cadenaFechaFinal);
+            fechaFinal = sdt.parse(cadenaFechaFinal.replace("-", "/"));
 
 
 
@@ -116,7 +116,8 @@ public class AnalistaService {
         }
         autoGeneradoAnalisisDe = autoGeneradoAnalisisDe.substring(0, autoGeneradoAnalisisDe.lastIndexOf(","));
 
-
+        if(listaUsuarios.isEmpty())
+            throw new NullPointerException("No se han encontrado usuarios para realizar un análisis. Prueba otro filtro o en otra fecha.");
 
 
         //--------BUSQUEDA POR FILTROS---------
@@ -127,10 +128,10 @@ public class AnalistaService {
             List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
             CampoanalisisDTO caDto = new CampoanalisisDTO("Num", (double)listaUsuarios.size());
             caDtoLista.add(caDto);
-            TipoanalisisDTO taDto = new TipoanalisisDTO("Numero de Usuarios", caDtoLista);
+            TipoanalisisDTO taDto = new TipoanalisisDTO("Número de Usuarios", caDtoLista);
             listaTipos.add(taDto);
 
-            autoGeneradoTiposFiltros+=" numero de usuarios totales,";
+            autoGeneradoTiposFiltros+=" número de usuarios totales,";
         }
 
         if(tipoFiltro.contains(FILTROSEXO)){
@@ -307,13 +308,18 @@ public class AnalistaService {
         if(thisAnalisisOpt.isPresent()){
             Analisis thisAnalisis = thisAnalisisOpt.get();
             if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
-                throw new RuntimeException("Error: No puedes ver un analisis el cual no eres dueño");
+                throw new RuntimeException("Error: No puedes ver un análisis el cual no eres dueño");
 
             //Por ahora lo unico modificable es la descripcion
             thisAnalisis.setDescripcion(thisAnalisisDtoEditado.getDescripcion());
             this.analisisRepository.save(thisAnalisis);
         } else{
-            throw new NullPointerException("El analisis especificado no ha sido encontrado");
+            throw new NullPointerException("El análisis especificado no ha sido encontrado");
         }
+    }
+
+    public void duplicarAnalisis(Analista thisAnalista, AnalisisDTO thisAnalisisDtoDuplicado){
+        AnalisisDTO analisisDtoOriginal = this.obtenerAnalisis(thisAnalista, thisAnalisisDtoDuplicado.getId());
+        this.guardarAnalisis(analisisDtoOriginal.getTipoanalisisList(), thisAnalisisDtoDuplicado.getDescripcion(), thisAnalista);
     }
 }
