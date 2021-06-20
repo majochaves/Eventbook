@@ -1,5 +1,6 @@
-<%-- 
-    Document   : usuario-crear
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%--
+    Document   : usuarioDTO-crear
     Created on : 13-Apr-2021, 15:53:34
     Author     : josie
 --%>
@@ -7,6 +8,8 @@
 <%@page import="com.eventbookspring.eventbookspring.clases.Autenticacion"%>
 <%@page import="com.eventbookspring.eventbookspring.entity.Administrador"%>
 <%@page import="com.eventbookspring.eventbookspring.entity.Usuario"%>
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,29 +24,31 @@
         <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
         <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
         <meta property="og:url" content="http://digipunk.netii.net">
-        <link rel="icon" href="images/calendar-favicon.png" type="image/x-icon">
-        <link rel="stylesheet" href="components/base/base.css">
-        <script src="components/base/core.js"></script>
-        <script src="components/base/script.js"></script>
+        <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="/components/base/base.css">
+        <script src="/components/base/core.js"></script>
+        <script src="/components/base/script.js"></script>
     </head>
     <%
         // AUTENTICACION
         Autenticacion.autenticar(request, response, Autenticacion.PERMISOS, Administrador.class);
         
         String error = (String) request.getAttribute("error");
-        Usuario usuarioEditar = (Usuario) request.getAttribute("usuarioEditar");
-        boolean edicion = usuarioEditar != null;
+        UsuarioDTO usuarioDTO = (UsuarioDTO) request.getAttribute("usuarioDTO");
+        List<String> sexos = (List<String>) request.getAttribute("sexos");
+
+        boolean edicion = usuarioDTO != null && usuarioDTO.getId() != null;
         String rol = "";
         if (edicion) {
-            if (usuarioEditar.getAdministrador() != null) {
+            if (usuarioDTO.getAdministrador() != null) {
                 rol = "Administrador";
-            } else if (usuarioEditar.getAnalista()!= null) {
+            } else if (usuarioDTO.getAnalista()!= null) {
                 rol = "Analista";
-            } else if (usuarioEditar.getTeleoperador()!= null) {
+            } else if (usuarioDTO.getTeleoperador()!= null) {
                 rol = "Teleoperador";
-            } else if (usuarioEditar.getUsuarioeventos() != null) {
+            } else if (usuarioDTO.getUsuarioeventos() != null) {
                 rol = "Usuario de eventos";
-            } else if (usuarioEditar.getCreadoreventos()!= null) {
+            } else if (usuarioDTO.getCreadoreventos()!= null) {
                 rol = "Creador de eventos";
             }
         }
@@ -52,67 +57,65 @@
         <div class="page">
             
             <jsp:include page="header.jsp" />
-            
+
             <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
                 <div class="container">
-                    <form action="/usuario-guardar" method="POST">
                         <div class="row">
                             <div class="col-sm-12">
-                                <h1><%= edicion ? "Editar usuario: " + usuarioEditar.getUsername() : "Nuevo usuario" %></h1>
+                                <h1><%= edicion ? "Editar usuario: " + usuarioDTO.getUsername() : "Nuevo usuario" %></h1>
                             </div>
                         </div>
-                        <img style="float: right; margin-right: 15%; width: 25%; max-width: 499px;" src="images/agregar-usuario.svg"/>
+                        <img style="float: right; margin-right: 15%; width: 25%; max-width: 499px;" src="/images/agregar-usuario.svg"/>
                         <br/>
-                        <% 
-                            if (error != null || "".equals(error)) {
-                                %>
-                                <p style="color: #ec5482;"> <%= error %> </p>
-                                <%
-                            }
+                        <%
+                        if (error != null) {
+                            %>
+                            <p style="color: #ec5482;"> <%= error %> </p>
+                            <%
+                        }
                         %>
+
+                    <form:form modelAttribute="usuarioDTO" action="/usuario-guardar" method="POST">
+                        <form:hidden path="id" class="textf"/>
+
                         <table>
                             <tr>
                                 <td <%= edicion ? "" : "hidden" %>>ID <span style="color: #ec5482;">*</span></td>
-                                <td><input type="text" class="textf" name="id-disabled" maxlength="30" size="30" minlength="1" <%= edicion ? "disabled" : "" %> <%= edicion ? "" : "hidden" %> value="<%= edicion ? usuarioEditar.getId() : "" %>"/></td>
-                                <td><input type="text" class="textf" name="id" maxlength="30" size="30" minlength="1" hidden value="<%= edicion ? usuarioEditar.getId() : "" %>"/></td>
+                                <td><input type="text" class="textf" name="id" disabled value="<%= edicion ? usuarioDTO.getId() : "" %>" <%=edicion ? "" : "hidden"%>/></td>
                             </tr>
                             <tr>
                                 <td>Usuario <span style="color: #ec5482;">*</span></td>
-                                <td><input type="text" class="textf" name="usuario" maxlength="30" size="30" minlength="1" required="required" value="<%= edicion ? usuarioEditar.getUsername() : "" %>"/></td>
+                                <td><form:input path="username" class="textf" required="required" autocomplete="false"/></td>
                             </tr>
                             <tr>
                                 <td>Contraseña <span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
-                                <td><input type="password" class="textf" name="contrasena" maxlength="30" size="30" required="required" minlength="1"/></td>
+                                <td><form:password path="password" class="textf" required="required" autocomplete="false"/></td>
                             </tr>
                             <tr>
-                                <td>Nombre <span style="color: #ec5482;">*</span></td>
-                                <td><input type="text" class="textf" name="nombre" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getNombre(): "" %>"/></td>
+                                <td>Nombre  <span style="color: #ec5482;">*</span></td>
+                                <td><form:input path="nombre" class="textf" required="required"/></td>
                             </tr>
                             <tr>
                                 <td>Apellidos <span style="color: #ec5482;">*</span></td>
-                                <td><input type="text" class="textf" name="apellidos" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getApellidos(): "" %>"/></td>
+                                <td><form:input path="apellidos" class="textf" required="required"/></td>
                             </tr>
                             <tr>
                                 <td>Sexo <span style="color: #ec5482;">*</span></td>
-
-                                <td>
-                                    <input type="radio" id="male" name="sexo" value="hombre" checked="checked">
-                                    <label for="male">Hombre</label><br>
-                                    <input type="radio" id="female" name="sexo" value="mujer" <%= edicion && usuarioEditar.getSexo().equalsIgnoreCase("mujer") ? "checked" : "" %> >
-                                    <label for="female">Mujer</label><br/>
+                                <td style="text-transform: capitalize;">
+                                    <form:radiobuttons cssStyle="margin-left: 15px;" path="sexo" items="${sexos}" required="required"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Domicilio<span style="color: #ec5482;">*</span></td>
-                                <td><input type="text" class="textf" name="domicilio" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getDomicilio(): "" %>"/> </td>
+                                <td>Domicilio <span style="color: #ec5482;">*</span></td>
+                                <td><form:input path="domicilio" class="textf" required="required"/></td>
                             </tr>
                             <tr>
-                                <td>Ciudad<span style="color: #ec5482;">*</span></td>
-                                <td><input type="text" class="textf" name="ciudad" maxlength="30" size="30" required="required" value="<%= edicion ? usuarioEditar.getCiudadResidencia(): "" %>"/> </td>
+                                <td>Ciudad <span style="color: #ec5482;">*</span></td>
+                                <td><form:input path="ciudadResidencia" class="textf" required="required"/></td>
                             </tr>
                             <tr>
                                 <td>Rol <span style="color: #ec5482;">*</span></td>
-                                <td>                
+                                <td>
                                     <%
                                     if (edicion) {
                                         %>
@@ -132,18 +135,16 @@
                                     }
                                     %>
 
-                               </td>        
+                               </td>
                             </tr>
                             
                             
                             <tr>
                                 <td><a class="btn btn-danger mt-5" href="/administracion">Cancelar</a></td>
                                 <td><input type="submit" class="btn btn-primary btn-block mt-5" value="<%= edicion ? "Confirmar cambios" : "Crear usuario" %>" /></td>
-                                
                             </tr>
-
                         </table>
-                    </form>
+                    </form:form>
                 </div>
             </div>
                                    

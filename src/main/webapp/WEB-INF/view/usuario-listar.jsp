@@ -8,6 +8,7 @@
 <%@page import="com.eventbookspring.eventbookspring.clases.Autenticacion"%>
 <%@page import="com.eventbookspring.eventbookspring.entity.Usuario"%>
 <%@page import="java.util.List"%>
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@
         Autenticacion.autenticar(request, response, Autenticacion.PERMISOS, Administrador.class);
         
         boolean filtrado = request.getParameter("username") != null;
-        List<Usuario> usuarios = (List)request.getAttribute("usuarios");
+        List<UsuarioDTO> usuarios = (List)request.getAttribute("usuarios");
     %>
     <body>
         <div class="page">
@@ -136,7 +137,7 @@
                         </thead>
 
                         <%
-                            for (Usuario u : usuarios) {
+                            for (UsuarioDTO u : usuarios) {
 
                                 String rol = "???";
                                 if (u.getAdministrador() != null) {
@@ -157,8 +158,8 @@
                                    <td><%= u.getUsername() %></td>
                                    <td><%= u.getNombre() %></td>
                                    <td><%= rol %></td>
-                                   <td class="align-middle text-center"> <a href="/usuario-editar?id=<%= u.getId() %>" class="btn btn-primary">Editar</a> </td>
-                                   <td class="align-middle text-center"> <a href="/usuario-borrar?id=<%= u.getId() %>" class="btn btn-danger" ><i class="fas fa-trash"></i></a> </td>
+                                   <td class="align-middle text-center"> <a href="/usuario-editar/<%= u.getId() %>" class="btn btn-primary">Editar</a> </td>
+                                   <td class="align-middle text-center"> <a href="/usuario-borrar/<%= u.getId() %>" class="btn btn-danger" ><i class="fas fa-trash"></i></a> </td>
                                </tr>     
                             </tbody>
                         <%
