@@ -5,30 +5,15 @@
  */
 package com.eventbookspring.eventbookspring.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
+import com.eventbookspring.eventbookspring.dto.EventoDTO;
+
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -289,6 +274,30 @@ public class Evento implements Serializable {
     @Override
     public String toString() {
         return "entity.Evento[ id=" + id + " ]";
+    }
+
+    public static String formatDateTime(Date dateOrNull) {
+        return (dateOrNull == null ? null : new SimpleDateFormat("yyyy-MM-dd").format(dateOrNull));
+    }
+
+    @Transient
+    public EventoDTO getDTO() {
+        EventoDTO dto = new EventoDTO();
+        dto.setId(id);
+        dto.setTitulo(titulo);
+        dto.setDescripcion(descripcion);
+        dto.setFecha(formatDateTime(fecha));
+        dto.setFechaLimite(formatDateTime(fechaLimite));
+        dto.setCosteEntrada(costeEntrada);
+        dto.setAforo(aforo);
+        dto.setMaxEntradas(maxEntradas);
+        dto.setAsientosFijos(asientosFijos);
+        dto.setNumFilas(numFilas);
+        dto.setNumAsientosFila(numAsientosFila);
+        dto.setEtiquetaList(etiquetaList);
+        dto.setCreadoreventos(creadoreventosId);
+        dto.setReservaList(reservaList);
+        return dto;
     }
     
 }
