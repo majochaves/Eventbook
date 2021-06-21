@@ -65,6 +65,7 @@
                       %>
                           <p>Máximo número de entradas por usuario: <%=evento.getMaxEntradas()%></p>
                       <%
+
                       }
                       // SÓLO VISIBLE PARA CREADOR O ADMINISTRADOR
                       if(evento.getAsientosFijos() != null){
