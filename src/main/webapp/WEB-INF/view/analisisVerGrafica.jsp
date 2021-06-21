@@ -35,14 +35,8 @@
         }
     </style>
     <script>
-        let idTipoanalisis;
-        let listaItems;
-        let listaValores;
-        let listaColores, red, green, blue;
-        let data;
-        let config;
-        let myChart;
-        const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+        let randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+        let listaItems = [];
     </script>
 </head>
 <%
@@ -53,76 +47,43 @@
         <jsp:include page="./header.jsp">
             <jsp:param name="nav" value="analisis"/>
         </jsp:include>
-
-        <%
-            for (TipoanalisisDTO thisTipoanalisisDto : thisAnalisisDto.getTipoanalisisList()) {
-        %>
-            <div class="chart-container">
-                <canvas id="myChart<%=thisTipoanalisisDto.getId()%>"></canvas>
-            </div>
-
-            <script>
-                idTipoanalisis = <%=thisTipoanalisisDto.getId()%>;
-                listaItems = [];
-                listaValores = [];
-                listaColores = [];
+            <div class="row">
                 <%
-                    for(CampoanalisisDTO thisCampoanalisisDto : thisTipoanalisisDto.getCampoanalisisList()){
+                    for (TipoanalisisDTO thisTipoanalisisDto : thisAnalisisDto.getTipoanalisisList()) {
                 %>
-                    listaItems.push('<%=thisCampoanalisisDto.getNombre()%>');
-                    listaValores.push(<%=thisCampoanalisisDto.getValor()%>);
-                    red = randomBetween(0, 255);
-                    green = randomBetween(0, 255);
-                    blue = randomBetween(0, 255);
-                    rgb = `rgb(` + red + `, ` + green + `, ` + blue + `)`;
-                    listaColores.push(rgb);
+
+                    <div class="col-md-6 mb-5">
+                        <canvas id="myChart<%=thisTipoanalisisDto.getId()%>"></canvas>
+                    </div>
+
+                    <script>
+                        listaItems.push({
+                            idTipoanalisis: <%=thisTipoanalisisDto.getId()%>,
+                            nombreTipoanalisis: '<%=thisTipoanalisisDto.getNombre()%>',
+                            items: [],
+                            valores: [],
+                            listaColores: []
+                        });
+
+                        <%
+                            for(CampoanalisisDTO thisCampoanalisisDto : thisTipoanalisisDto.getCampoanalisisList()){
+                        %>
+                            listaItems[listaItems.length - 1].items.push('<%=thisCampoanalisisDto.getNombre()%>');
+                            listaItems[listaItems.length - 1].valores.push(<%=thisCampoanalisisDto.getValor()%>);
+                            red = randomBetween(0, 255);
+                            green = randomBetween(0, 255);
+                            blue = randomBetween(0, 255);
+                            rgb = `rgba(` + red + `, ` + green + `, ` + blue + `, 0.6)`;
+                            listaItems[listaItems.length - 1].listaColores.push(rgb);
+                        <%
+                            }
+                        %>
+                    </script>
                 <%
                     }
                 %>
-
-                data = {
-                    labels: listaItems,
-                    datasets: [{
-                        label: '<%=thisTipoanalisisDto.getNombre()%>',
-                        backgroundColor: listaColores,
-                        data: listaValores,
-                    }]
-                };
-
-                config = {
-                    type: 'line',
-                    data,
-                    options: {}
-                };
-
-                config = {
-                    type: 'doughnut',
-                    data: data,
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: '<%=thisTipoanalisisDto.getNombre()%>'
-                            }
-                        }
-                    },
-                };
-
-                 myChart = new Chart(
-                    document.getElementById('myChart<%=thisTipoanalisisDto.getId()%>'),
-                    config
-                );
-
-            </script>
-        <%
-            }
-        %>
-
+            </div>
+        <script src="/components/propios/generarGraficasAnalisis.js"></script>
     </div>
 </body>
 </html>
