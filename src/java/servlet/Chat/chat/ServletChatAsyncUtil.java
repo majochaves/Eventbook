@@ -112,9 +112,16 @@ public class ServletChatAsyncUtil extends HttpServlet {
             msg.setChat(chat);
             mensajeFacade.create(msg);
             
+            int idUserTo;
+            if (msg.getChat().getTeleoperador().getUsuarioId() == msg.getUsuarioEmisorId()){
+                idUserTo = msg.getChat().getUsuario().getId();
+            } else {
+                idUserTo = msg.getChat().getTeleoperador().getUsuarioId();
+            }
+             
             
             // HTML to be appended to the chat
-            htmlMessage = "<li id=\""+ msg.getId() +"\" userid=\""+ msg.getUsuarioEmisorId()+"\"><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
+            htmlMessage = "<li id=\""+ msg.getId() +"\" useridTo=\""+ idUserTo +"\" userid=\""+ msg.getUsuarioEmisorId()+"\"><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
             
             
             // Add message to chat

@@ -209,15 +209,18 @@
                                         var messageElement = HTMLMessage.children[0].getElementsByTagName("li")[0];
                                         sender = messageElement.getAttribute("userid");
                                         var idOfMsg =  messageElement.getAttribute("id");
+                                        var idUserTo =  messageElement.getAttribute("useridTo");
                                         
 //                                        console.log(messageElement);
+//                                        console.log(idUserTo);
+//                                        console.log("<%= thisUsuario.getId() %>");
                                         
                                         
                                         // Change data according to receiver or sender
                                         messageElement.getElementsByClassName("message-data-name")[0].innerHTML = "<i class='fa fa-circle online'></i>"+ "<%= usuarioChat.getNombre() %>";
                                         <% if (adminPriviledges){ %>
                                             var innerHtml = `<span class="message-data-edit"><a href="ServletMessageEditar?msgId=`+ idOfMsg +`&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span><span class="message-data-edit"><a href="ServletMessageBorrar?msgId=`+ idOfMsg +`&userID=<%= request.getParameter("userID") %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>`;
-                                            console.log(innerHtml);
+                                            
                                             messageElement.getElementsByClassName("message-data")[0].innerHTML += innerHtml;
                                         <% } %>
                                         
@@ -226,7 +229,12 @@
                                         // Evitar hacer render de los mensajes que el usuario envía dos veces
                                         if (sender !== "<%= thisUsuario.getId() %>"){
 //                                             $('.chat-history').find('ul').append(xmlhttp.responseText);
-                                             $('.chat-history').find('ul').append(messageElement);
+
+                                            // It belongs to this chat!
+                                            if (idUserTo === "<%= thisUsuario.getId() %>" && sender === "<%= usuarioChat.getId() %>"){
+                                                $('.chat-history').find('ul').append(messageElement);
+                                            }
+                                             
   
                                         } else {
                                             
