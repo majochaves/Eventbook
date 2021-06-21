@@ -2,35 +2,24 @@ package com.eventbookspring.eventbookspring.controller;
 
 
 import com.eventbookspring.eventbookspring.clases.Autenticacion;
+import com.eventbookspring.eventbookspring.clases.AutenticacionException;
 import com.eventbookspring.eventbookspring.clases.Par;
-import com.eventbookspring.eventbookspring.clases.Tupla;
 import com.eventbookspring.eventbookspring.dto.AnalisisDTO;
 import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
-import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
-import com.eventbookspring.eventbookspring.entity.Analista;
-import com.eventbookspring.eventbookspring.entity.Usuario;
-import com.eventbookspring.eventbookspring.repository.AnalistaRepository;
 import com.eventbookspring.eventbookspring.service.AnalistaService;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/analisis")
 public class AnalistaController {
-
-    private AnalistaRepository analistaRepository;
 
     private AnalistaService analistaService;
 
@@ -39,31 +28,30 @@ public class AnalistaController {
         this.analistaService = analistaService;
     }
 
-    @Autowired
-    public void setAnalistaRepository(AnalistaRepository analistaRepository) {
-        this.analistaRepository = analistaRepository;
-    }
+
 
     @GetMapping("/")
     public String index(Model model, HttpSession session){
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
+        try {
+            this.analistaService.comprobarLogeadoYConRolAnalista(session);
             return "analisisIndex";
-        } else{
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch (AutenticacionException ex) {
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
 
     }
+
 
     //-----------------Creacion de Analisis-----------------
     @GetMapping("/crear/mostrar")
     public String  mostrarCrearAnalisis(Model model, HttpSession session){
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
+        try {
+            this.analistaService.comprobarLogeadoYConRolAnalista(session);
             return "analisisMostrarCrear";
-        } else{
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch (AutenticacionException ex) {
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
+
     }
 
     @PostMapping("/crear/generar")
@@ -75,38 +63,33 @@ public class AnalistaController {
             @RequestParam("fechaInicial") String cadenaFechaInicial,
             @RequestParam("fechaFinal") String cadenaFechaFinal) throws ParseException {
 
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
         String dest;
-        if(thisAnalista != null) {
-            if((tipoUsuario==null || tipoUsuario.isEmpty()) && (tipoFiltro==null || tipoFiltro.isEmpty())){
-                model.addAttribute("muestraError", true);
-                dest = "analisisMostrarCrear";  //Vuelve a la misma pagina con error lanzado
-            } else {
-                Par<String, String> autoGenerado = new Par<>("", "");
-                try{
-                    List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
-                            tipoFiltro,
-                            cadenaFechaInicial,
-                            cadenaFechaFinal,
-                            autoGenerado);
+        if((tipoUsuario==null || tipoUsuario.isEmpty()) && (tipoFiltro==null || tipoFiltro.isEmpty())){
+            model.addAttribute("muestraError", true);
+            dest = "analisisMostrarCrear";  //Vuelve a la misma pagina con error lanzado
+        } else {
+            Par<String, String> autoGenerado = new Par<>("", "");
+            try{
+                this.analistaService.comprobarLogeadoYConRolAnalista(session);
+                List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
+                        tipoFiltro,
+                        cadenaFechaInicial,
+                        cadenaFechaFinal,
+                        autoGenerado);
 
-                    session.setAttribute("listaTablas", listaTablas);
-                    model.addAttribute("listaTablas", listaTablas);
-                    model.addAttribute("AutoGeneradoAnalisisDe", autoGenerado.getPrimerElem());
-                    model.addAttribute("AutoGeneradoTiposFiltros", autoGenerado.getSegundoElem());
-                    dest = "analisisMostrarResultadosGenerados";
-                }catch (NullPointerException ex){
-                    return Autenticacion.getErrorJsp(model, ex.getMessage());
-                }
-
+                session.setAttribute("listaTablas", listaTablas);
+                model.addAttribute("listaTablas", listaTablas);
+                model.addAttribute("AutoGeneradoAnalisisDe", autoGenerado.getPrimerElem());
+                model.addAttribute("AutoGeneradoTiposFiltros", autoGenerado.getSegundoElem());
+                dest = "analisisMostrarResultadosGenerados";
+            }catch (AutenticacionException  | NullPointerException ex){
+                return Autenticacion.getErrorJsp(model, ex.getMessage());
             }
 
-            return dest;
-        } else{
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
         }
-    }
 
+        return dest;
+    }
 
     @PostMapping("/crear/guardar")
     public String guardarResultadosAnalisis(
@@ -114,87 +97,70 @@ public class AnalistaController {
             Model model,
             @RequestParam("descripcion") String descripcion){
 
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-            List<TipoanalisisDTO> listaTablas =  (List<TipoanalisisDTO>) session.getAttribute("listaTablas");
-            analistaService.guardarAnalisis(listaTablas, descripcion,thisAnalista);
+        try {
+            List<TipoanalisisDTO> listaTablas = (List<TipoanalisisDTO>) session.getAttribute("listaTablas");
+            analistaService.guardarAnalisis(listaTablas, descripcion, session);
             return "redirect:/analisis/";
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch(AutenticacionException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
 
     }
+
+
 
     //-----------------Visualizacion de Analisis-----------------
     @GetMapping("/listar")
     public String listarAnalisis(Model model, HttpSession session){
-
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-
-            List<AnalisisDTO> listaAnalisis = this.analistaService.obtenerListaAnalisisLazy(thisAnalista);
+        try {
+            List<AnalisisDTO> listaAnalisis = this.analistaService.obtenerListaAnalisisLazy(session);
             model.addAttribute("listaAnalisis", listaAnalisis);
-
             return "analisisListar";
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+
+        } catch (AutenticacionException ex) {
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
+
     }
 
     @GetMapping("/ver/{id}")
     public String verAnalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
-
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-            AnalisisDTO thisAnalisisDto = null;
-            try {
-                thisAnalisisDto = this.analistaService.obtenerAnalisis(thisAnalista, id);
-            } catch (RuntimeException ex){
-                return Autenticacion.getErrorJsp(model, ex.getMessage());
-            }
+        try {
+            AnalisisDTO thisAnalisisDto = this.analistaService.obtenerAnalisis(session, id);
             model.addAttribute("thisAnalisisDto", thisAnalisisDto);
-
             return "analisisVer";
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+
+        } catch (AutenticacionException | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
+
     }
+
 
     //-----------------Eliminacion de Analisis-----------------
     @GetMapping("/eliminar/{id}")
     public String eliminarAnalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
-
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-            try{
-                this.analistaService.eliminarAnalisis(thisAnalista, id);
-            } catch (RuntimeException ex){
-                return Autenticacion.getErrorJsp(model, ex.getMessage());
-            }
-
+        try{
+            this.analistaService.eliminarAnalisis(session, id);
             return "redirect:/analisis/listar";
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch (AutenticacionException | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
     }
+
+
 
     //-----------------Edicion de Tipoanalisis-----------------
     @GetMapping("/editar/tipoanalisis/mostrar/{id}")
     public String mostrarEditarTipoanalisis(Model model, HttpSession session, @PathVariable("id") Integer id){
-
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-            TipoanalisisDTO thisTipoanalisisDto = null;
-            try{
-                thisTipoanalisisDto = this.analistaService.obtenerTipoanalisis(thisAnalista, id);
-            } catch (RuntimeException ex){
-                return Autenticacion.getErrorJsp(model, ex.getMessage());
-            }
+        try{
+            TipoanalisisDTO thisTipoanalisisDto = this.analistaService.obtenerTipoanalisis(session, id);
             model.addAttribute("thisTipoanalisisDto", thisTipoanalisisDto);
             return "analisisEditarTipoanalisis";
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch (AutenticacionException | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
+
     }
 
     @PostMapping("/editar/tipoanalisis/{id}")
@@ -205,21 +171,15 @@ public class AnalistaController {
             @RequestParam("nombres") List<String> listaNombres,
             @RequestParam("valores") List<Double> listaValores){
 
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-            AnalisisDTO analisisDto = null;
-            try{
-                analisisDto = this.analistaService.editarTipoanalisis(thisAnalista, id, listaNombres, listaValores);
-            } catch (RuntimeException ex){
-                return Autenticacion.getErrorJsp(model, ex.getMessage());
-            }
-
+        try{
+            AnalisisDTO analisisDto = this.analistaService.editarTipoanalisis(session, id, listaNombres, listaValores);
             return "redirect:/analisis/ver/" + analisisDto.getId();
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch (AutenticacionException | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
-
     }
+
+
 
     //-----------------Edicion de Analisis-----------------
     @PostMapping("/editar/analisis")
@@ -228,18 +188,11 @@ public class AnalistaController {
             HttpSession session,
             @ModelAttribute("thisAnalisisDto") AnalisisDTO thisAnalisisDto){
 
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-            AnalisisDTO analisisDto = null;
-            try{
-                this.analistaService.editarAnalisis(thisAnalista, thisAnalisisDto);
-            } catch (RuntimeException ex){
-                return Autenticacion.getErrorJsp(model, ex.getMessage());
-            }
-
+        try{
+            this.analistaService.editarAnalisis(session, thisAnalisisDto);
             return "redirect:/analisis/ver/" + thisAnalisisDto.getId();
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch (AutenticacionException | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
 
     }
@@ -250,30 +203,15 @@ public class AnalistaController {
             HttpSession session,
             @ModelAttribute("thisAnalisisDto") AnalisisDTO thisAnalisisDto){
 
-        Analista thisAnalista = obtenerAnalistaLogeado(session);
-        if(thisAnalista != null) {
-            AnalisisDTO analisisDto = null;
-            try{
-                this.analistaService.duplicarAnalisis(thisAnalista, thisAnalisisDto);
-            } catch (RuntimeException ex){
-                return Autenticacion.getErrorJsp(model, ex.getMessage());
-            }
-
+        try{
+            this.analistaService.duplicarAnalisis(session, thisAnalisisDto);
             return "redirect:/analisis/listar";
-        } else {
-            return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Analista");
+        } catch (AutenticacionException | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
 
     }
 
 
-    private Analista obtenerAnalistaLogeado(HttpSession session){
-        Analista thisAnalista = null;
-        if(Autenticacion.tieneRol(session, Analista.class)){
-            UsuarioDTO thisUsuario = Autenticacion.getUsuarioLogeado(session);
-            thisAnalista = analistaRepository.getById(thisUsuario.getAnalista());
-        }
-        return thisAnalista;
-    }
 
 }

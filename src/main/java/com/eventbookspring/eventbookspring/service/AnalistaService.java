@@ -1,19 +1,20 @@
 package com.eventbookspring.eventbookspring.service;
 
+import com.eventbookspring.eventbookspring.clases.Autenticacion;
+import com.eventbookspring.eventbookspring.clases.AutenticacionException;
 import com.eventbookspring.eventbookspring.clases.Par;
 import com.eventbookspring.eventbookspring.clases.Tupla;
 import com.eventbookspring.eventbookspring.dto.AnalisisDTO;
 import com.eventbookspring.eventbookspring.dto.CampoanalisisDTO;
 import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
+import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
 import com.eventbookspring.eventbookspring.entity.*;
-import com.eventbookspring.eventbookspring.repository.AnalisisRepository;
-import com.eventbookspring.eventbookspring.repository.CampoanalisisRepository;
-import com.eventbookspring.eventbookspring.repository.TipoanalisisRepository;
-import com.eventbookspring.eventbookspring.repository.UsuarioRepository;
+import com.eventbookspring.eventbookspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -43,6 +44,7 @@ public class AnalistaService {
     private AnalisisRepository analisisRepository;
     private TipoanalisisRepository tipoanalisisRepository;
     private CampoanalisisRepository campoanalisisRepository;
+    private AnalistaRepository analistaRepository;
 
 
     @Autowired
@@ -63,6 +65,11 @@ public class AnalistaService {
     @Autowired
     public void setCampoanalisisRepository(CampoanalisisRepository campoanalisisRepository) {
         this.campoanalisisRepository = campoanalisisRepository;
+    }
+
+    @Autowired
+    public void setAnalistaRepository(AnalistaRepository analistaRepository) {
+        this.analistaRepository = analistaRepository;
     }
 
 
@@ -190,7 +197,8 @@ public class AnalistaService {
         listaTipos.add(taDto);
     }
 
-    public void guardarAnalisis(List<TipoanalisisDTO> listaTablas, String descripcion, Analista thisAnalista){
+    public void guardarAnalisis(List<TipoanalisisDTO> listaTablas, String descripcion, HttpSession session) throws AutenticacionException {
+        Analista thisAnalista = this.obtenerAnalistaLogeado(session);
         Analisis nuevoAnalisis = new Analisis();
         nuevoAnalisis.setDescripcion(descripcion);
         nuevoAnalisis.setAnalistaUsuarioId(thisAnalista);
@@ -222,7 +230,9 @@ public class AnalistaService {
         this.analisisRepository.save(nuevoAnalisis);
     }
 
-    public List<AnalisisDTO> obtenerListaAnalisisLazy(Analista thisAnalista){
+    public List<AnalisisDTO> obtenerListaAnalisisLazy(HttpSession session) throws AutenticacionException {
+        Analista thisAnalista = this.obtenerAnalistaLogeado(session);
+
         List<Analisis> listaAnalisis = this.analisisRepository.findAnalisisByAnalistaUsuarioId(thisAnalista);
         List<AnalisisDTO> listaAnalisisDto = new ArrayList<>();
         for(Analisis a : listaAnalisis){
@@ -230,99 +240,106 @@ public class AnalistaService {
         }
 
         return listaAnalisisDto;
+    }
+
+    public void eliminarAnalisis(HttpSession session, Integer analisisId) throws AutenticacionException {
+        Analista thisAnalista = this.obtenerAnalistaLogeado(session);
+
+        Analisis thisAnalisis = this.comprobarOptional(this.analisisRepository.findById(analisisId));
+        if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
+            throw new AutenticacionException("Error: No puedes eliminar un análisis el cual no eres dueño");
+
+        this.analisisRepository.delete(thisAnalisis);
 
     }
 
-    public void eliminarAnalisis(Analista thisAnalista, Integer analisisId){
-        Optional<Analisis> thisAnalisisOpt = this.analisisRepository.findById(analisisId);
-        if(thisAnalisisOpt.isPresent()){
-            Analisis thisAnalisis = thisAnalisisOpt.get();
-            if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
-                throw new RuntimeException("Error: No puedes eliminar un analisis el cual no eres dueño");
+    public AnalisisDTO obtenerAnalisis(HttpSession session, Integer analisisId) throws AutenticacionException {
+        Analista thisAnalista = this.obtenerAnalistaLogeado(session);
 
-            this.analisisRepository.delete(thisAnalisis);
-        } else{
-            throw new NullPointerException("El analisis especificado no ha sido encontrado");
-        }
+        Analisis thisAnalisis = this.comprobarOptional(this.analisisRepository.findById(analisisId));
+        if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
+            throw new AutenticacionException("Error: No puedes ver un análisis el cual no eres dueño");
+
+        return thisAnalisis.getAnalisisDto();
     }
 
-    public AnalisisDTO obtenerAnalisis(Analista thisAnalista, Integer analisisId){
-        Optional<Analisis> thisAnalisisOpt = this.analisisRepository.findById(analisisId);
-        if(thisAnalisisOpt.isPresent()){
-            Analisis thisAnalisis = thisAnalisisOpt.get();
-            if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista)) {
-                System.out.println("EL ANALISTA DEL ANALISIS ES: "+ thisAnalisis.getAnalistaUsuarioId().getUsuarioId());
-                throw new RuntimeException("Error: No puedes ver un analisis el cual no eres dueño");
-            }
+    public TipoanalisisDTO obtenerTipoanalisis(HttpSession session, Integer tipoanalisisId) throws AutenticacionException {
+        Analista thisAnalista = this.obtenerAnalistaLogeado(session);
 
-            return thisAnalisis.getAnalisisDto();
-        } else{
-            throw new NullPointerException("El analisis especificado no ha sido encontrado");
-        }
-    }
+        Tipoanalisis thisTipoanalisis = this.comprobarOptional(this.tipoanalisisRepository.findById(tipoanalisisId));
+        if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
+            throw new AutenticacionException("Error: No puedes mostrar el menú de edición un analisis el cual no eres dueño");
 
-    public TipoanalisisDTO obtenerTipoanalisis(Analista thisAnalista, Integer tipoanalisisId){
-        Optional<Tipoanalisis> thisTipoanalisisOpt = this.tipoanalisisRepository.findById(tipoanalisisId);
-        if(thisTipoanalisisOpt.isPresent()){
-            Tipoanalisis thisTipoanalisis = thisTipoanalisisOpt.get();
-            if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
-                throw new RuntimeException("Error: No puedes mostrar el menú de edición un analisis el cual no eres dueño");
+        return thisTipoanalisis.getTipoanalisisDto();
 
-
-            return thisTipoanalisis.getTipoanalisisDto();
-        } else{
-            throw new NullPointerException("El analisis especificado no ha sido encontrado");
-        }
     }
 
     @Transactional
-    public AnalisisDTO editarTipoanalisis(Analista thisAnalista, Integer tipoanalisisId, List<String> listaNombres, List<Double> listaValores){
-        Optional<Tipoanalisis> thisTipoanalisisOpt = this.tipoanalisisRepository.findById(tipoanalisisId);
-        if(thisTipoanalisisOpt.isPresent()){
-            Tipoanalisis thisTipoanalisis = thisTipoanalisisOpt.get();
-            if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
-                throw new RuntimeException("Error: No puedes editar un analisis el cual no eres dueño");
+    public AnalisisDTO editarTipoanalisis(HttpSession session, Integer tipoanalisisId, List<String> listaNombres, List<Double> listaValores) throws AutenticacionException {
+        Analista thisAnalista = this.obtenerAnalistaLogeado(session);
 
-            this.campoanalisisRepository.deleteCampoanalisisByTipoanalisis(thisTipoanalisis);
-            List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
-            for(int i=0;i<listaNombres.size();i++){
-                CampoanalisisPK capk = new CampoanalisisPK();
-                capk.setTipoanalisisId(tipoanalisisId);
-                capk.setNombre(listaNombres.get(i));
-                Campoanalisis ca = new Campoanalisis();
-                ca.setValor(listaValores.get(i));
-                ca.setCampoanalisisPK(capk);
-                ca.setTipoanalisis(thisTipoanalisis);
-                listaCampoanalisis.add(ca);
-            }
-            thisTipoanalisis.setCampoanalisisList(listaCampoanalisis);
-            this.tipoanalisisRepository.save(thisTipoanalisis);
+        Tipoanalisis thisTipoanalisis = this.comprobarOptional(this.tipoanalisisRepository.findById(tipoanalisisId));
+        if(!thisTipoanalisis.getAnalisisId().getAnalistaUsuarioId().equals(thisAnalista))
+            throw new AutenticacionException("Error: No puedes editar los datos de un análisis el cual no eres dueño");
 
-            return thisTipoanalisis.getAnalisisId().getAnalisisDto();
-
-        } else{
-            throw new NullPointerException("El analisis especificado no ha sido encontrado");
+        this.campoanalisisRepository.deleteCampoanalisisByTipoanalisis(thisTipoanalisis);
+        List<Campoanalisis> listaCampoanalisis = new ArrayList<>();
+        for(int i=0;i<listaNombres.size();i++){
+            CampoanalisisPK capk = new CampoanalisisPK();
+            capk.setTipoanalisisId(tipoanalisisId);
+            capk.setNombre(listaNombres.get(i));
+            Campoanalisis ca = new Campoanalisis();
+            ca.setValor(listaValores.get(i));
+            ca.setCampoanalisisPK(capk);
+            ca.setTipoanalisis(thisTipoanalisis);
+            listaCampoanalisis.add(ca);
         }
+        thisTipoanalisis.setCampoanalisisList(listaCampoanalisis);
+        this.tipoanalisisRepository.save(thisTipoanalisis);
+
+        return thisTipoanalisis.getAnalisisId().getAnalisisDto();
+
     }
 
 
-    public void editarAnalisis(Analista thisAnalista, AnalisisDTO thisAnalisisDtoEditado){
-        Optional<Analisis> thisAnalisisOpt = this.analisisRepository.findById(thisAnalisisDtoEditado.getId());
-        if(thisAnalisisOpt.isPresent()){
-            Analisis thisAnalisis = thisAnalisisOpt.get();
-            if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
-                throw new RuntimeException("Error: No puedes ver un análisis el cual no eres dueño");
+    public void editarAnalisis(HttpSession session, AnalisisDTO thisAnalisisDtoEditado) throws AutenticacionException {
+        Analista thisAnalista = this.obtenerAnalistaLogeado(session);
 
-            //Por ahora lo unico modificable es la descripcion
-            thisAnalisis.setDescripcion(thisAnalisisDtoEditado.getDescripcion());
-            this.analisisRepository.save(thisAnalisis);
+        Analisis thisAnalisis = this.comprobarOptional(this.analisisRepository.findById(thisAnalisisDtoEditado.getId()));
+        if(!thisAnalisis.getAnalistaUsuarioId().equals(thisAnalista))
+            throw new AutenticacionException("Error: No puedes editer un análisis el cual no eres dueño");
+
+        //Por ahora lo unico modificable es la descripcion
+        thisAnalisis.setDescripcion(thisAnalisisDtoEditado.getDescripcion());
+        this.analisisRepository.save(thisAnalisis);
+    }
+
+    public void duplicarAnalisis(HttpSession session, AnalisisDTO thisAnalisisDtoDuplicado) throws AutenticacionException {
+        AnalisisDTO analisisDtoOriginal = this.obtenerAnalisis(session, thisAnalisisDtoDuplicado.getId());
+        this.guardarAnalisis(analisisDtoOriginal.getTipoanalisisList(), thisAnalisisDtoDuplicado.getDescripcion(), session);
+    }
+
+
+    private <T> T comprobarOptional(Optional<T> valorOptional){
+        if(valorOptional.isPresent()){
+            return valorOptional.get();
         } else{
             throw new NullPointerException("El análisis especificado no ha sido encontrado");
         }
     }
 
-    public void duplicarAnalisis(Analista thisAnalista, AnalisisDTO thisAnalisisDtoDuplicado){
-        AnalisisDTO analisisDtoOriginal = this.obtenerAnalisis(thisAnalista, thisAnalisisDtoDuplicado.getId());
-        this.guardarAnalisis(analisisDtoOriginal.getTipoanalisisList(), thisAnalisisDtoDuplicado.getDescripcion(), thisAnalista);
+
+    private Analista obtenerAnalistaLogeado(HttpSession session) throws AutenticacionException {
+        //Propaga una excepcion
+        this.comprobarLogeadoYConRolAnalista(session);
+
+        UsuarioDTO thisUsuario = Autenticacion.getUsuarioLogeado(session);
+        return this.analistaRepository.getById(thisUsuario.getId());
     }
+
+    public void comprobarLogeadoYConRolAnalista(HttpSession session) throws AutenticacionException {
+        if(!Autenticacion.tieneRol(session, Analista.class))
+            throw new AutenticacionException("Error: Necesitas estar logeado y/o poseer rol de Analista.");
+    }
+
 }
