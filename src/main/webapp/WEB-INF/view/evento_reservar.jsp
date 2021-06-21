@@ -52,7 +52,7 @@
                           <p><%=error%></p>
                       <% } %>
                   <%
-                    if(!editar.isEmpty()){
+                    if(!editar.isEmpty() && evento.getAsientosFijos() == 'S'){
                   %>
                   <h3>Información de tu reserva</h3>
                   <p>Asientos reservados: <%=evento.getEntradasReservadas(usuario)%> </p>
