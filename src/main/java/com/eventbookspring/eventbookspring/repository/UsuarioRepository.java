@@ -13,7 +13,7 @@ import java.util.Set;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
-    //Consultas para obtencion de usuarios. Nota: Los administradores poseen todos los roles, por eso debemos descartar a los usuarios
+    //Analisis: Consultas para obtencion de usuarios. Nota: Los administradores poseen todos los roles, por eso debemos descartar a los usuarios
     //que poseen rol de administrador
 
     @Query("SELECT u FROM Analista a, Usuario u WHERE a.usuarioId=u.id AND a.usuario NOT IN (SELECT u FROM Usuario u, Administrador a WHERE a.usuarioId=u.id) AND u.fechaCreacion>= :fechaInicial AND u.fechaCreacion<= :fechaFinal")
@@ -32,7 +32,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     public Collection<Usuario> getUsuariosAdministradores(Date fechaInicial, Date fechaFinal);
 
 
-    //Consultas para filtrar un conjunto de usuarios
+    //Analisis: Consultas para filtrar un conjunto de usuarios
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(u.sexo, COUNT(u.sexo))" +
             " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY u.sexo")
@@ -63,6 +63,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     public List<Par<?, ?>> getNumUsuariosGroupByCreatedMonthYear(Set<Usuario> listaUsuarios);
 
 
+
+    //Autenticacion
+    public Usuario getUsuarioByUsernameLike(String username);
 
 
 }
