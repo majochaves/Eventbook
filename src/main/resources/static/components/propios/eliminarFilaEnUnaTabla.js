@@ -1,5 +1,5 @@
 
-const listaBotonesEliminar =  document.querySelectorAll('[class~="eliminarFila"]');
+let listaBotonesEliminar =  document.querySelectorAll('[class~="eliminarFila"]');
 
 
 for(let i=0; i<listaBotonesEliminar.length; i++){
