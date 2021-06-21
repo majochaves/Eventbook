@@ -4,7 +4,8 @@
 <%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
 <%@ page import="com.eventbookspring.eventbookspring.entity.Administrador" %>
 <%@ page import="com.eventbookspring.eventbookspring.entity.Creadoreventos" %>
-<%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %><%--
+<%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %><%--
     Document   : evento_list
     Created on : 20-Apr-2021, 12:09:51
     Author     : majochaves
@@ -28,9 +29,7 @@
 
         String filtro = (String) request.getAttribute("filtro");
 
-        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
         boolean puedeCrear = Autenticacion.tieneRol(request, response, Administrador.class, Creadoreventos.class);
-
     %>
     <body>
         <div class="page">
