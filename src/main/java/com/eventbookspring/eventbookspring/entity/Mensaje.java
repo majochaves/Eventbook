@@ -47,7 +47,7 @@ public class Mensaje implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Column(name = "FECHA")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @Column(name = "CONTENIDO", length = 500)
     private String contenido;

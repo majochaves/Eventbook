@@ -41,7 +41,7 @@ public class Chat implements Serializable {
     @EmbeddedId
     protected ChatPK chatPK;
     @Column(name = "FECHA")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @JoinColumn(name = "TELEOPERADOR_ID", referencedColumnName = "USUARIO_ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
