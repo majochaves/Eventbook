@@ -5,7 +5,7 @@
  */
 
 $(document).ready(function() {
-    var limit = $('#numAsientos').val();
+    var limit = $('#numEntradas').val();
     console.log(limit);
     $('input[type=checkbox]').on('change', function (e) {
         if ($('input[type=checkbox]:checked').length > limit) {
