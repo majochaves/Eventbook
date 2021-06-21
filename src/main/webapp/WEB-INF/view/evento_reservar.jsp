@@ -90,6 +90,7 @@
                           <%
                               if(editar.equalsIgnoreCase("editar")){
                           %>
+                                <p>Nota*: Si pulsas editar, se borrará tu reserva actual y no podrás volver atrás. </p>
                                 <input type="submit" class="btn btn-secondary" value="Editar" /> 
                                 <a href="/eliminarReserva//<%=evento.getId() + "/"+ usuario.getId()%>" class="btn btn-danger">Eliminar</a>
                           <%
