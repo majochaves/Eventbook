@@ -11,6 +11,7 @@
 <%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.entity.*" %>
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,7 @@
     </head>
     <%
         EventoDTO evento = (EventoDTO)request.getAttribute("evento");
-        Usuario u = (Usuario)request.getSession().getAttribute("logged-user");
+        UsuarioDTO u = Autenticacion.getUsuarioLogeado(session);
     %>
     <body>
         <div class="page">
@@ -84,7 +85,7 @@
                       <p>Número de asientos por fila: <%=evento.getNumAsientosFila()%></p>
                       <%
                       }
-                      if(Autenticacion.tieneRol(request, response, Administrador.class) || (Autenticacion.tieneRol(request, response, Creadoreventos.class) && evento.getCreadoreventos().equals(Autenticacion.getUsuarioLogeado(request, response).getCreadoreventos()))){
+                      if(Autenticacion.tieneRol(request, response, Administrador.class) || (Autenticacion.tieneRol(request, response, Creadoreventos.class) && evento.getCreadoreventos().getUsuarioId().equals(u.getCreadoreventos()))){
                       %>
 
                           <a href="/editarEvento/<%=evento.getId()%>" class="btn btn-warning">Editar</a>
