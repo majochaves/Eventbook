@@ -44,7 +44,9 @@
 %>
 <body>
     <div class="page">
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="./header.jsp">
+            <jsp:param name="nav" value="analisis"/>
+        </jsp:include>
         <div class="section section-lg bg-transparent">
             <div class="container">
 

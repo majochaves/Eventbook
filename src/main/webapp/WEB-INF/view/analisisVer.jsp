@@ -23,7 +23,9 @@
     <link rel="stylesheet" href="/components/base/modal.css">
 
     <!-- Esto esta roto <script src="/components/jquery/jquery-3.4.1.min.js"></script>-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
     <script src="/components/bootstrap/js/popper.js"></script>
     <script src="/components/bootstrap/js/bootstrap.min.js"></script>
     <script src="/components/base/core.js"></script>
@@ -34,7 +36,9 @@
 %>
 <body>
 <div class="page">
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="./header.jsp">
+        <jsp:param name="nav" value="analisis"/>
+    </jsp:include>
     <div class="section section-lg bg-transparent">
         <div class="container">
 
@@ -60,6 +64,8 @@
                     <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal"
                             data-target="#abrirDialogoEditar">Modificar
                     </button>
+                    <a href="/analisis/ver/graficas/<%=thisAnalisisDto.getId()%>" class="shadow-sm badge badge-info">Ver
+                        gráficas</a>
                 </div>
             </div>
 
@@ -110,7 +116,7 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form:form modelAttribute="thisAnalisisDto" action="/analisis/editar/analisis" method="POST">
-<%--            <form method="POST" action="ServletAnalisisEditar?id=<%=thisAnalisisDto.getId()%>">--%>
+                <%--            <form method="POST" action="ServletAnalisisEditar?id=<%=thisAnalisisDto.getId()%>">--%>
                 <form:hidden path="id"/>
                 <div class="modal-content">
 
@@ -124,8 +130,8 @@
                     <div class="modal-body">
                         <div class="form-group pb-4">
                             <label for="desc" class="col-form-label">Descripción</label>
-<%--                            <textarea class="form-control" name="descripcion"><%=thisAnalisisDto.getDescripcion()%></textarea>--%>
-                            <form:textarea path="descripcion" class="form-control" />
+                                <%--                            <textarea class="form-control" name="descripcion"><%=thisAnalisisDto.getDescripcion()%></textarea>--%>
+                            <form:textarea path="descripcion" class="form-control"/>
                         </div>
 
                         <%
@@ -153,7 +159,7 @@
                     </div>
 
                 </div>
-<%--            </form>--%>
+                <%--            </form>--%>
             </form:form>
         </div>
     </div>
@@ -166,7 +172,7 @@
         <div class="modal-dialog" role="document">
             <form:form modelAttribute="thisAnalisisDto" action="/analisis/duplicar" method="POST">
                 <form:hidden path="id"/>
-<%--            <form method="POST" action="ServletAnalisisDuplicar?id=<%=thisAnalisisDto.getId()%>">--%>
+                <%--            <form method="POST" action="ServletAnalisisDuplicar?id=<%=thisAnalisisDto.getId()%>">--%>
                 <div class="modal-content">
 
                     <div class="modal-header">
@@ -179,8 +185,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="desc" class="col-form-label">Nombre y/o descripción</label>
-<%--                            <textarea class="form-control" id="desc" name="descripcion"></textarea>--%>
-                            <form:textarea path="descripcion" id="desc" class="form-control" />
+                                <%--                            <textarea class="form-control" id="desc" name="descripcion"></textarea>--%>
+                            <form:textarea path="descripcion" id="desc" class="form-control"/>
                         </div>
                         <div class="text-right">
                             <a href="#" class="badge badge-success" id="botonAutogenerar">Autogenerar descripción</a>
@@ -193,7 +199,7 @@
                     </div>
 
                 </div>
-<%--            </form>--%>
+                <%--            </form>--%>
             </form:form>
         </div>
     </div>

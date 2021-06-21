@@ -132,6 +132,17 @@ public class AnalistaController {
 
     }
 
+    @GetMapping("/ver/graficas/{id}")
+    public String verAnalisisGrafica(Model model, HttpSession session, @PathVariable("id") Integer id){
+        try {
+            AnalisisDTO thisAnalisisDto = this.analistaService.obtenerAnalisis(session, id);
+            model.addAttribute("thisAnalisisDto", thisAnalisisDto);
+            return "analisisVerGrafica";
+
+        } catch (AutenticacionException | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
+        }
+    }
 
     //-----------------Eliminacion de Analisis-----------------
     @GetMapping("/eliminar/{id}")
