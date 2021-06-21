@@ -68,12 +68,10 @@ public class EventoController {
             strTo = "evento";
             strError = "Error: Por favor rellene todos los campos obligatorios.";
             model.addAttribute("strError", strError);
-        }else if(evento.getFechaLimite() != null && !evento.getFechaLimite().isEmpty()){
-            if(new SimpleDateFormat("yyyy-MM-dd").parse(evento.getFechaLimite()).compareTo(new SimpleDateFormat("yyyy-MM-dd").parse(evento.getFecha())) == 1){
-                strError = "Error: La fecha límite para comprar entradas debe ser anterior a la fecha del evento.";
-                model.addAttribute("strError", strError);
-                strTo = "evento";
-            }
+        }else if(evento.getFechaLimite() != null && !evento.getFechaLimite().isEmpty() && (new SimpleDateFormat("yyyy-MM-dd").parse(evento.getFechaLimite()).compareTo(new SimpleDateFormat("yyyy-MM-dd").parse(evento.getFecha())) == 1)){
+            strError = "Error: La fecha límite para comprar entradas debe ser anterior a la fecha del evento.";
+            model.addAttribute("strError", strError);
+            strTo = "evento";
         }else if((evento.getAforo() != null && evento.getAforo() < 0) ||
                 (evento.getCosteEntrada() != null && evento.getCosteEntrada() < 0) ||
                 (evento.getMaxEntradas() != null && evento.getMaxEntradas() < 0) ||

@@ -10,6 +10,8 @@ $(document).ready(function() {
        }
        else {
             $('#configuracionAsientos').hide();
+            $('#numFilas').val("");
+            $('#numAsientosFila').val("");
        }
    });
 });
