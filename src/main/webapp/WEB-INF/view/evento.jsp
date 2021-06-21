@@ -59,7 +59,7 @@
                       <%}%>
                       <form:form method="POST" action="/eventoGuardar" modelAttribute="evento">
                           <form:hidden path="id"/>
-                          <input type="hidden" name="creadorEventosId" value="<%=Autenticacion.getUsuarioLogeado(request, response).getCreadoreventos()%>"/>
+                          <input type="hidden" name="creadorEventosId" value="<%=Autenticacion.getUsuarioLogeado(session).getCreadoreventos()%>"/>
                           <div class="form-group">
                               <label for="titulo">Título:*</label>
                               <form:input path="titulo" class="form-control"/>

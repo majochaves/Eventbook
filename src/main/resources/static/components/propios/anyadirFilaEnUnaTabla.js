@@ -1,13 +1,10 @@
-/*
- * Uso:
- * 1. Colocar el boton de añadir filas el id="anyadirFila"
- * 2. Colocar en la tabla la cual se desea añadir dicha fila id="tablaAnyadirFila"
- * 3. OBLIGATORIO: Añadir en el html el import de este script
- * 4. OBLIGATORIO: Añadir en el html el import de valoresNoRepetibles.js
- * 5. Recomendado: Añadir en el html el import de eliminarFilaEnUnaTabla.js
- *
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-
+//Uso: Poner en un boton el id="anyadirFila", en la tabla la cual se desea anyadir el id="tablaAnyadirFila" e importar dicho script en el html.
+//OBLIGATORIO: REQUIERE USO DE valoresNoRepetibles.js en el propio HTML ANTES DE ESTE SCRIPT
 
 const botonAnyadirFila = document.getElementById('anyadirFila');
 const tabla = document.getElementById('tablaAnyadirFila');
@@ -20,28 +17,21 @@ botonAnyadirFila.onclick = function() {
     celdaNombre.innerHTML = '<input class="form-control form-control-sm textoColumna1" type="text" name="nombres">';
     celdaValor.innerHTML = '<input class="form-control form-control-sm" type="number" name="valores" value="0">';
     celdaEliminar.innerHTML = '<div class="text-center"><button type="button" class="shadow-sm badge badge-danger eliminarFila">Eliminar fila</button></div>';
-    inputs = document.querySelectorAll('[class~="textoColumna1"]');
-    let listaBotonesEliminar2 =  document.querySelectorAll('[class~="eliminarFila"]');
+    let inputs = document.querySelectorAll('[class~="textoColumna1"]');
+    const listaBotonesEliminar =  document.querySelectorAll('[class~="eliminarFila"]');
 
     //Anyadimos el evento al ultimo elemento introducido
     inputs[inputs.length - 1].addEventListener('input', function() {
-        restablecerListaPalabras();
-        restablecerListaInputs();
-        realizarConteo();
-        colocarInvalidos();
+        listaPalabras = [];
+        realizarConteo(inputs);
+        colocarInvalidos(inputs);
             
     });
 
     //Anyadimos el evento de eliminar el elemento
-    listaBotonesEliminar2[listaBotonesEliminar2.length - 1].addEventListener('click', function (){
-        let fila = listaBotonesEliminar2[listaBotonesEliminar2.length - 1].parentNode.parentNode.parentNode;
+    listaBotonesEliminar[listaBotonesEliminar.length - 1].addEventListener('click', function (){
+        let fila = listaBotonesEliminar[listaBotonesEliminar.length - 1].parentNode.parentNode;
         fila.parentNode.removeChild(fila);
-
-        restablecerListaPalabras();
-        restablecerListaInputs();
-        realizarConteo();
-        colocarInvalidos();
-
     });
 
     //Lo colocamos invalido

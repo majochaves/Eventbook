@@ -52,7 +52,7 @@
                           <p><%=error%></p>
                       <% } %>
                   <%
-                    if(!editar.isEmpty()){
+                    if(!editar.isEmpty() && evento.getAsientosFijos() == 'S'){
                   %>
                   <h3>Información de tu reserva</h3>
                   <p>Asientos reservados: <%=evento.getEntradasReservadas(usuario)%> </p>
@@ -90,6 +90,7 @@
                           <%
                               if(editar.equalsIgnoreCase("editar")){
                           %>
+                                <p>Nota*: Si pulsas editar, se borrará tu reserva actual y no podrás volver atrás. </p>
                                 <input type="submit" class="btn btn-secondary" value="Editar" /> 
                                 <a href="/eliminarReserva//<%=evento.getId() + "/"+ usuario.getId()%>" class="btn btn-danger">Eliminar</a>
                           <%

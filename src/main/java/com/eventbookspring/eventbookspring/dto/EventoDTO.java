@@ -44,7 +44,7 @@ public class EventoDTO {
         int reservas = 0;
         if(!this.reservaList.isEmpty()){
             for(Reserva r: this.reservaList){
-                if(r.getUsuarioeventosId().getUsuarioId() == u.getId()){
+                if(r.getUsuarioeventosId().getUsuarioId() == u.getUsuarioeventos().getUsuarioId()){
                     reservas++;
                 }
             }
