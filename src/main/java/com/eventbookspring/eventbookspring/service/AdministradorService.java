@@ -1,5 +1,6 @@
 package com.eventbookspring.eventbookspring.service;
 
+import com.eventbookspring.eventbookspring.clases.Autenticacion;
 import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
 import com.eventbookspring.eventbookspring.entity.*;
 import com.eventbookspring.eventbookspring.repository.*;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +65,20 @@ public class AdministradorService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    public String borrarUsuario(HttpSession session, Integer id) {
+        Optional<Usuario> u = usuarioRepository.findById(id);
+
+        if (u.isPresent()) {
+            usuarioRepository.delete(u.get());
+
+            if (u.get().equals(Autenticacion.getUsuarioLogeado(session)))
+                return "redirect:/logout";
+        }
+
+        return "redirect:/administracion";
+    }
+
+    // GUARDAR USUARIO GENERAL
     public UsuarioDTO guardarUsuario(UsuarioDTO dto, String rol, boolean edicion) {
         UsuarioDTO result = null;
         if (edicion)
@@ -138,6 +154,7 @@ public class AdministradorService {
         return result;
     }
 
+    // ----- CREACION DE ROLES -----
     public void crearAdministrador(Usuario u) {
         Administrador administrador = new Administrador(u.getId());
         u.setAdministrador(administrador);
@@ -184,6 +201,7 @@ public class AdministradorService {
         teleoperadorRepository.save(teleoperador);
     }
 
+    // COMPROBAR SI EL USUARIO CREADO/EDITADO TIENE UN USERNAME UNICO
     public boolean esUnico(String nombreUsuario, Integer id, boolean edicion) {
         boolean resultado = true;
         List<Usuario> q = em

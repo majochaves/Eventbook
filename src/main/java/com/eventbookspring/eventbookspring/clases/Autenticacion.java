@@ -72,6 +72,11 @@ public class Autenticacion {
         return estaLogeado(request, response) && tieneRol(getUsuarioLogeado(request.getSession()), roles);
     }
 
+    public static void tieneRolExcepcion(HttpSession session, String errorMsg, Class... roles) throws AutenticacionException {
+        if (!tieneRol(session, roles))
+            throw new AutenticacionException(errorMsg);
+    }
+
     public static void autenticar(HttpServletRequest request, HttpServletResponse response, String errorMsg, Class... roles)
             throws ServletException, IOException {
         

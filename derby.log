@@ -1,67 +1,11 @@
 ----------------------------------------------------------------
-Mon Jun 21 04:09:35 CEST 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017a-2c54-87d5-00000d63e2b0 
-on database directory F:\UMA\Tercero\Segundo Semestre\Tecnologia de Aplicaciones web\workspaceIntelliJ\Eventbook\Eventbook with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 
-Loaded from file:/C:/Users/Merli/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Oracle Corporation
-java.runtime.version=11.0.4+10-LTS
-user.dir=F:\UMA\Tercero\Segundo Semestre\Tecnologia de Aplicaciones web\workspaceIntelliJ\Eventbook
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Mon Jun 21 04:16:13 CEST 2021:
-Shutting down instance a816c00e-017a-2c54-87d5-00000d63e2b0 on database directory F:\UMA\Tercero\Segundo Semestre\Tecnologia de Aplicaciones web\workspaceIntelliJ\Eventbook\Eventbook with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 
-Mon Jun 21 04:16:14 CEST 2021 Thread[Thread-21,5,main] Cleanup action starting
-ERROR XBM0I: Directory eventbook cannot be removed.
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.iapi.services.monitor.Monitor.removePersistentService(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection$6.run(Unknown Source)
-	at java.base/java.security.AccessController.doPrivileged(Native Method)
-	at org.apache.derby.impl.jdbc.EmbedConnection.removePersistentService(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at java.base/java.security.AccessController.doPrivileged(Native Method)
-	at org.apache.derby.jdbc.InternalDriver.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
-	at java.base/java.lang.Thread.run(Thread.java:834)
-Cleanup action completed
-Mon Jun 21 04:16:14 CEST 2021 Thread[Thread-21,5,main] Cleanup action starting
-ERROR XBM0I: Directory eventbook cannot be removed.
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.iapi.services.monitor.Monitor.removePersistentService(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection$6.run(Unknown Source)
-	at java.base/java.security.AccessController.doPrivileged(Native Method)
-	at org.apache.derby.impl.jdbc.EmbedConnection.removePersistentService(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at java.base/java.security.AccessController.doPrivileged(Native Method)
-	at org.apache.derby.jdbc.InternalDriver.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
-	at java.base/java.lang.Thread.run(Thread.java:834)
-Cleanup action completed
-----------------------------------------------------------------
-Mon Jun 21 04:16:15 CEST 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 09324032-017a-2c54-87d5-00000d63e2b0 
-on database directory F:\UMA\Tercero\Segundo Semestre\Tecnologia de Aplicaciones web\workspaceIntelliJ\Eventbook\Eventbook with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 
-Loaded from file:/C:/Users/Merli/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Oracle Corporation
-java.runtime.version=11.0.4+10-LTS
-user.dir=F:\UMA\Tercero\Segundo Semestre\Tecnologia de Aplicaciones web\workspaceIntelliJ\Eventbook
+Mon Jun 21 11:20:07 CEST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017a-2dde-b227-0000076f6828 
+on database directory C:\Users\josie\Workspace\Eventbook\eventbook with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/C:/Users/josie/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=OpenLogic-OpenJDK
+java.runtime.version=1.8.0-262-b10
+user.dir=C:\Users\josie\Workspace\Eventbook
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0

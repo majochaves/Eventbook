@@ -1,6 +1,7 @@
 package com.eventbookspring.eventbookspring.controller;
 
 import com.eventbookspring.eventbookspring.clases.Autenticacion;
+import com.eventbookspring.eventbookspring.clases.AutenticacionException;
 import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
 import com.eventbookspring.eventbookspring.entity.*;
 import com.eventbookspring.eventbookspring.repository.*;
@@ -28,53 +29,11 @@ public class AdministradorController {
 
     private UsuarioRepository usuarioRepository;
 
-    private AdministradorRepository administradorRepository;
-
-    private AnalistaRepository analistaRepository;
-
-    private UsuarioeventosRepository usuarioeventosRepository;
-
-    private CreadoreventosRepository creadoreventosRepository;
-
-    private TeleoperadorRepository teleoperadorRepository;
-
     private AdministradorService service;
-
-    private EntityManager em;
-
-    @Autowired
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
 
     @Autowired
     public void setService(AdministradorService service) {
         this.service = service;
-    }
-
-    @Autowired
-    public void setAdministradorRepository(AdministradorRepository administradorRepository) {
-        this.administradorRepository = administradorRepository;
-    }
-
-    @Autowired
-    public void setAnalistaRepository(AnalistaRepository analistaRepository) {
-        this.analistaRepository = analistaRepository;
-    }
-
-    @Autowired
-    public void setCreadoreventosRepository(CreadoreventosRepository creadoreventosRepository) {
-        this.creadoreventosRepository = creadoreventosRepository;
-    }
-
-    @Autowired
-    public void setTeleoperadorRepository(TeleoperadorRepository teleoperadorRepository) {
-        this.teleoperadorRepository = teleoperadorRepository;
-    }
-
-    @Autowired
-    public void setUsuarioeventosRepository(UsuarioeventosRepository usuarioeventosRepository) {
-        this.usuarioeventosRepository = usuarioeventosRepository;
     }
 
     @Autowired
@@ -84,20 +43,22 @@ public class AdministradorController {
 
     @GetMapping("/administracion")
     public String administracion(Model model, HttpSession session) {
+        try {
+            Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-        if (Autenticacion.tieneRol(session, Administrador.class)) {
             model.addAttribute("usuarios", usuarioRepository.findAll().stream().map(Usuario::getDTO).collect(Collectors.toList()));
 
             return "usuario-listar";
+        } catch (AutenticacionException e) {
+            return Autenticacion.getErrorJsp(model, e.getMessage());
         }
-
-        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 
     @GetMapping("/usuario-crear")
     public String usuarioCrear(Model model, HttpSession session) {
+        try {
+            Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-        if (Autenticacion.tieneRol(session, Administrador.class)) {
             model.addAttribute("usuarioDTO", new UsuarioDTO());
 
             List<String> sexos = new LinkedList<>();
@@ -106,15 +67,16 @@ public class AdministradorController {
             model.addAttribute("sexos", sexos);
 
             return "usuario-crear";
+        } catch (AutenticacionException e) {
+            return Autenticacion.getErrorJsp(model, e.getMessage());
         }
-
-        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 
     @GetMapping("/usuario-editar/{id}")
     public String usuarioEditar(Model model, HttpSession session, @PathVariable("id") String id) {
+        try {
+            Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-        if (Autenticacion.tieneRol(session, Administrador.class)) {
             model.addAttribute("usuarioDTO", usuarioRepository.getById(Integer.parseInt(id)).getDTO());
 
             List<String> sexos = new LinkedList<>();
@@ -123,28 +85,20 @@ public class AdministradorController {
             model.addAttribute("sexos", sexos);
 
             return "usuario-crear";
+        } catch (AutenticacionException e) {
+            return Autenticacion.getErrorJsp(model, e.getMessage());
         }
-
-        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 
     @GetMapping("/usuario-borrar/{id}")
     public String usuarioBorrar(HttpSession session, Model model, @PathVariable("id") String id) {
+        try {
+            Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-        if (Autenticacion.tieneRol(session, Administrador.class)) {
-            Optional<Usuario> u = usuarioRepository.findById(Integer.parseInt(id));
-
-            if (u.isPresent()) {
-                usuarioRepository.delete(u.get());
-
-                if (u.get().equals(Autenticacion.getUsuarioLogeado(session)))
-                    return "redirect:/logout";
-            }
-
-            return "redirect:/administracion";
+            return service.borrarUsuario(session, Integer.parseInt(id));
+        } catch (AutenticacionException e) {
+            return Autenticacion.getErrorJsp(model, e.getMessage());
         }
-
-        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 
     @PostMapping("/usuario-guardar")
@@ -154,10 +108,10 @@ public class AdministradorController {
             @ModelAttribute("dto") UsuarioDTO dto,
             @RequestParam(value = "rol", required = false) String rol
     ) {
+        try {
+            Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-        if (Autenticacion.tieneRol(session, Administrador.class)) {
             boolean edicion = dto != null && dto.getId() != null;
-
             UsuarioDTO resultado = service.guardarUsuario(dto, rol, edicion);
 
             if (resultado == null) {
@@ -172,9 +126,9 @@ public class AdministradorController {
             }
 
             return "redirect:administracion";
+        } catch (AutenticacionException e) {
+            return Autenticacion.getErrorJsp(model, e.getMessage());
         }
-
-        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 
     @GetMapping("/usuario-filtrar")
@@ -188,9 +142,10 @@ public class AdministradorController {
          @RequestParam(value = "domicilio", defaultValue = "") String domicilio,
          @RequestParam(value = "ciudad", defaultValue = "") String ciudad
      ) {
-        if (Autenticacion.tieneRol(session, Administrador.class)) {
-            model.addAttribute("usuarios", usuarioRepository.findAll());
+        try {
+            Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
+            model.addAttribute("usuarios", usuarioRepository.findAll());
             List<Usuario> query = usuarioRepository.findAll();
 
             Class[] roles = new Class[5];
@@ -223,11 +178,12 @@ public class AdministradorController {
                     .filter(u -> u.getCiudadResidencia().toLowerCase().contains(ciudad.toLowerCase()))          // FILTRO CIUDAD
                     .collect(Collectors.toList());
 
+            // Lista de los DTOs de los usuarios filtrados
             model.addAttribute("usuarios", query.stream().map(Usuario::getDTO).collect(Collectors.toList()));
 
             return "usuario-listar";
+        } catch (AutenticacionException e) {
+            return Autenticacion.getErrorJsp(model, e.getMessage());
         }
-
-        return Autenticacion.getErrorJsp(model, "Necesitas estar logeado y poseer rol de Administrador");
     }
 }
