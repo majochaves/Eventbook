@@ -82,7 +82,7 @@ public class EventoService {
         evento.setFechaLimite(dto.getFechaLimite().isEmpty() ? null : new SimpleDateFormat("yyyy-MM-dd").parse(dto.getFechaLimite()));
         evento.setCosteEntrada(dto.getCosteEntrada());
         evento.setAforo(dto.getAforo());
-        evento.setAsientosFijos(dto.getAsientosFijos() == null ? 'N' : 'S');
+        evento.setAsientosFijos(dto.getAsientosFijos() == null || dto.getAsientosFijos() == 'N' ? 'N' : 'S');
         evento.setMaxEntradas(dto.getMaxEntradas());
         evento.setNumFilas(dto.getNumFilas());
         evento.setNumAsientosFila(dto.getNumAsientosFila());

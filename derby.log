@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Jun 21 11:20:07 CEST 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017a-2dde-b227-0000076f6828 
-on database directory C:\Users\josie\Workspace\Eventbook\eventbook with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
-Loaded from file:/C:/Users/josie/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=OpenLogic-OpenJDK
-java.runtime.version=1.8.0-262-b10
-user.dir=C:\Users\josie\Workspace\Eventbook
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
+Mon Jun 21 12:56:21 CEST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017a-2e36-cad4-000001f8d528 
+on database directory /Users/majochaves/Downloads/TAW/Eventbook/eventbook with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Loaded from file:/Users/majochaves/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=13.0.1+9
+user.dir=/Users/majochaves/Downloads/TAW/Eventbook
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.16
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
