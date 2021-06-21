@@ -68,9 +68,8 @@ public class Autenticacion {
     public static boolean tieneRol(HttpServletRequest request, HttpServletResponse response, Class... roles) {
         boolean resultado = false;
         List<Class> rolesList = Arrays.asList(roles);
-        UsuarioDTO loggedUser = (UsuarioDTO) request.getSession().getAttribute("logged-user");
 
-        return estaLogeado(request, response) && tieneRol(loggedUser, roles);
+        return estaLogeado(request, response) && tieneRol(getUsuarioLogeado(request.getSession()), roles);
     }
 
     public static void autenticar(HttpServletRequest request, HttpServletResponse response, String errorMsg, Class... roles)

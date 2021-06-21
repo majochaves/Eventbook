@@ -50,12 +50,12 @@
                     }
                     if (Autenticacion.tieneRol(request, response, Administrador.class, Usuarioeventos.class)) {
                 %>
-                    <li class="navbar-navigation-root-item <%= (nav.equals("reserva") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletReservasListar">Mis reservas</a></li>
+                  <li class="navbar-navigation-root-item <%= (nav.equals("reserva") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="/verReservas/<%=Autenticacion.getUsuarioLogeado(request,response).getId()%>">Mis reservas</a></li>
                 <%
                     }
                 %>
-                    <li class="navbar-navigation-root-item <%= (nav.equals("eventos") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletEventoListar">Eventos</a>
-                    </li>
+                  <li class="navbar-navigation-root-item <%= (nav.equals("eventos") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="/eventos">Eventos</a>
+                  </li>
                 <%
                     if (!Autenticacion.estaLogeado(request, response)) {
                 %>
