@@ -36,6 +36,10 @@
             // Lista de teleoperadores;
             List<Chat> chats = (List<Chat>) request.getAttribute("chats");
             Usuario usuarioChat = (Usuario) request.getAttribute("usuarioChat");
+            Usuario usuarioChat2 = (Usuario) request.getAttribute("usuarioChat2");
+            
+            int userId1 = new Integer(request.getParameter("userID") );
+            int userId2 =  new Integer(request.getParameter("user2ID")) ;
 
             Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
             Boolean adminPriviledges = (thisUsuario.getTeleoperador() != null) || (thisUsuario.getAdministrador() != null);
@@ -79,7 +83,7 @@
                         %>
                         <li class="clearfix">
                             <div class="about">
-                                <a href="ServletChatUI?userID=<%= usuario.getId() %>">
+                                <a href="ServletChatUI?userID=<%= usuario.getId() %>&user2ID=<%= userId2 %>">
                                 <div class="name"><%= usuario.getUsername()%></div>
                                 <div class="status">
                                     <i class="fa fa-circle online"></i> online
@@ -130,11 +134,11 @@
                 <div class="message-data align-right">
                 
                 <span class="message-data-time" >{{time}}</span> &nbsp; &nbsp;
-                <span class="message-data-name" ><%= thisUsuario.getNombre()%></span> <i class="fa fa-circle me"></i>
+                <span class="message-data-name" ><%= usuarioChat2.getNombre()%></span> <i class="fa fa-circle me"></i>
                 
                 <% if (adminPriviledges){ %>
-                <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
-                <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
+                <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
+                <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
                     <% } %>
                 </div>
                 <div class="message other-message float-right">
@@ -147,8 +151,8 @@
                 <li id="{{id}}">
                 <div class="message-data">
                 <% if (adminPriviledges){ %>
-                    <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
-                        <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
+                    <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
+                        <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
                 <% } %>
                 
                 <span class="message-data-name"><i class="fa fa-circle online"></i><%= usuarioChat.getNombre() %></span>
@@ -170,11 +174,16 @@
                         messageToSend: '',
                         idMsg: 0,
                         init: function () {
+                            
+                            <% if (thisUsuario.getId() != userId1 && thisUsuario.getId() != userId2){%>
+                                $('#message-to-send').attr('disabled', true);
+                            <%} %>
                             this.cacheDOM();
                             this.bindEvents();
                             this.render();
                             this.initHistorial();
                             setInterval(this.getMessages, 1000);
+                            
                         },
                         cacheDOM: function () {
                             this.$chatHistory = $('.chat-history');
@@ -210,7 +219,13 @@
                                         sender = messageElement.getAttribute("userid");
                                         var idOfMsg =  messageElement.getAttribute("id");
                                         var idUserTo =  messageElement.getAttribute("useridTo");
-                                        
+                                        var mensajeTxt = "";
+                                        try {
+                                            mensajeTxt= messageElement.getElementsByClassName("my-message")[0].innerText.trim();
+                                        } catch (error) {
+                                            console.error(error);
+                                            
+                                        }
 //                                        console.log(messageElement);
 //                                        console.log(idUserTo);
 //                                        console.log("<%= thisUsuario.getId() %>");
@@ -234,7 +249,29 @@
                                             if (idUserTo === "<%= thisUsuario.getId() %>" && sender === "<%= usuarioChat.getId() %>"){
                                                 $('.chat-history').find('ul').append(messageElement);
                                             }
-                                             
+                                            
+                                            const userId1 = <%= request.getParameter("userID") %>;
+                                            const userId2 = <%= request.getParameter("user2ID") %>;                          
+                                            if (idUserTo == userId2 && sender == userId1){ // Usuario izq
+                                                console.log(messageElement);
+                                                $('.chat-history').find('ul').append(messageElement);
+                                            } else if(idUserTo == userId1 && sender == userId2){ // Usuario drcha
+                                                console.log("mensaje2", messageElement);
+                                                var template = Handlebars.compile($("#message-template").html());
+                                                
+                                                var context = {
+                                                    messageOutput: mensajeTxt,
+                                                    id: idOfMsg,
+                                                    time: new Date().toLocaleString('en-GB', { hour12: true }).replaceAll("/", "-")
+                                                };
+
+                                                // Add message
+                                                $('.chat-history').find('ul').append(template(context));
+                                                // scroll to bottom
+                                                $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+                                                
+                                                
+                                            }
   
                                         } else {
                                             
@@ -320,9 +357,10 @@
                                 }; 
                                 
                                 
-                            <% if (msg.getKey().equals(thisUsuario.getId())){ %>  
+                            
+                            <% if (msg.getKey().equals(userId2)){ %>  
                                     this.$chatHistoryList.append(templateEnviar(data));            
-                                <% } else {%>   
+                                <% } else if (msg.getKey().equals(userId1)){%>   
                                     this.$chatHistoryList.append(templateResponse(data));    
                                 <% } %>
                                 this.scrollToBottom();

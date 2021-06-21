@@ -36,6 +36,7 @@
                 <div class="container">
                     <form action="ServletMessageEditar" method="POST">
                         <input type="hidden" id="userID" name="userID" value="<%= request.getParameter("userID") %>">
+                        <input type="hidden" id="user2ID" name="user2ID" value="<%= request.getParameter("user2ID") %>">
                         <input type="hidden" id="msgId" name="msgId" value="<%= request.getParameter("msgId") %>">
                         <div class="form-group-sm">
                                 Contenido:<input type="text" class="form-control" name="newContenido" value="<%= request.getAttribute("contenido") %>"><br/><br/>

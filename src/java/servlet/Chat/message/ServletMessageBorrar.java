@@ -51,13 +51,17 @@ public class ServletMessageBorrar extends HttpServlet {
             
                     
             String userID = request.getParameter("userID");
+            String userId2 = request.getParameter("user2ID");
             Integer msgID = new Integer(request.getParameter("msgId"));
-            Mensaje msg = this.mensajeFacade.getMessageByID(msgID);
+            
+            try{
+              Mensaje msg = this.mensajeFacade.getMessageByID(msgID);
+              this.mensajeFacade.remove(msg);  
+            } catch(Exception e){} // El mensaje ya había sido borrado
+            
 
-            this.mensajeFacade.remove(msg);
 
-
-            response.sendRedirect("ServletChatUI?userID=" + userID);
+            response.sendRedirect("ServletChatUI?userID=" + userID+ "&user2ID="+ userId2);
         } else {
             Autenticacion.error(request, response, "No estás logeado, no tienes suficientes permisos o el mensaje no ha sido encontrado.");
         }

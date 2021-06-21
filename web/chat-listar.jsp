@@ -132,17 +132,19 @@
                                        <td><%= usuario.getNombre() %></td>
 
                                        <%
+                                           Integer oneID;
                                            Integer otherID;
                                            if(!thisUsuario.getId().equals(chat.getChatPK().getTeleoperadorId())){
-                                               
+                                               oneID = chat.getChatPK().getUsuarioId();
                                                otherID = chat.getChatPK().getTeleoperadorId();
                                            } else {
+                                               oneID = chat.getChatPK().getTeleoperadorId();
                                                otherID = chat.getChatPK().getUsuarioId();
                                            }
 
                                        %>
 
-                                       <td class="align-middle text-center"> <a href="ServletChatUI?userID=<%= otherID %>" class="btn" >Chat</a> </td>
+                                       <td class="align-middle text-center"> <a href="ServletChatUI?userID=<%= otherID %>&user2ID=<%= oneID %>" class="btn" >Chat</a> </td>
                                        <td class="align-middle text-center"> <a href="ServletChatBorrar?userID=<%= chat.getChatPK().getUsuarioId() %>&opID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
                                    </tr>     
                                 </tbody>

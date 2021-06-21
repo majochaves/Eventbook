@@ -71,8 +71,11 @@ public class ServletChatUI extends HttpServlet {
         Usuario user = this.usuarioFacade.getUserByID(userID);
         request.setAttribute("usuarioChat", user);
        
-        
-        List<Pair<Integer, Mensaje>> mensajes = this.mensajeFacade.getListOfMensajesByIDs(new Integer(userID), thisUsuario.getId());
+        String user2ID = request.getParameter("user2ID");
+        Usuario user2 = this.usuarioFacade.getUserByID(user2ID);
+        request.setAttribute("usuarioChat2", user2);
+
+        List<Pair<Integer, Mensaje>> mensajes = this.mensajeFacade.getListOfMensajesByIDs(new Integer(userID), new Integer(user2ID));
         System.out.println(mensajes);
         request.setAttribute("mensajesHistorial", mensajes);
         

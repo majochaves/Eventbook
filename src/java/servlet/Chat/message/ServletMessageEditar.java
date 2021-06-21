@@ -50,13 +50,14 @@ public class ServletMessageEditar extends HttpServlet {
         }
         
         String userID = request.getParameter("userID");
+        String userId2 = request.getParameter("user2ID");
         
         Integer msgID = new Integer(request.getParameter("msgId"));
         Mensaje msg = this.mensajeFacade.getMessageByID(msgID);
         
         request.setAttribute("contenido", msg.getContenido());
         
-        request.getRequestDispatcher("mensaje-editar.jsp?userID="+ userID).forward(request, response);
+        request.getRequestDispatcher("mensaje-editar.jsp?userID="+ userID+ "&user2ID="+ userId2 ).forward(request, response);
         
     }
 
@@ -73,6 +74,7 @@ public class ServletMessageEditar extends HttpServlet {
             throws ServletException, IOException {
         
         String userID = request.getParameter("userID");
+        String userId2 = request.getParameter("user2ID");
         String newContenido = request.getParameter("newContenido");
         
         Integer msgID = new Integer(request.getParameter("msgId"));
@@ -88,7 +90,7 @@ public class ServletMessageEditar extends HttpServlet {
             msg.setContenido(newContenido);
             this.mensajeFacade.edit(msg);
 
-            response.sendRedirect("ServletChatUI?userID=" + userID);
+            response.sendRedirect("ServletChatUI?userID=" + userID+ "&user2ID="+ userId2 );
         } else {
             Autenticacion.error(request, response, "No estás logeado, no tienes suficientes permisos o el mensaje no ha sido encontrado.");
         }
