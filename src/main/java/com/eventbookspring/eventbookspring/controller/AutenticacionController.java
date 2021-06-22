@@ -52,35 +52,19 @@ public class AutenticacionController {
     }
 
     @PostMapping("/login")
-    public String doLogin(HttpServletRequest request,
-            @RequestParam("usuario") String username, @RequestParam("contrasena") String password) {
-
-//        Usuario u = null;
-//
-//        List<Usuario> q = em
-//                .createNamedQuery("Usuario.findByUsername")
-//                .setParameter("username", username)
-//                .getResultList();
-//
-//        if (!q.isEmpty()) {
-//            u = q.iterator().next();
-//            if (u.getPassword().equals(password)) {
-//                // Se autentica al usuario
-//                Autenticacion.login(request, u.getDTO());
-//
-//                return "redirect:/";
-//            }
-//        }
-
+    public String doLogin(
+            HttpServletRequest request,
+            @RequestParam("usuario") String username,
+            @RequestParam("contrasena") String password
+    ) {
         try{
             UsuarioDTO thisUsuarioDto = this.autenticacionService.getUsuarioDto(username, password);
             Autenticacion.login(request, thisUsuarioDto);
             return "redirect:/";
-        } catch (AutenticacionException ex){
-            request.setAttribute("error", ex.getMessage());
+        } catch (AutenticacionException | NullPointerException ex){
+            request.setAttribute("error", "El usuario o contraseña proporcionados son incorrectos");
             return "usuario-iniciar-sesion";
         }
-
     }
 
     @GetMapping("/logout")
