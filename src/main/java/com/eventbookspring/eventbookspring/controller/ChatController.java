@@ -7,10 +7,7 @@ import com.eventbookspring.eventbookspring.clases.Par;
 import com.eventbookspring.eventbookspring.dto.MensajeDTO;
 import com.eventbookspring.eventbookspring.dto.TeleoperadorDTO;
 import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
-import com.eventbookspring.eventbookspring.entity.Administrador;
-import com.eventbookspring.eventbookspring.entity.Chat;
-import com.eventbookspring.eventbookspring.entity.Mensaje;
-import com.eventbookspring.eventbookspring.entity.Teleoperador;
+import com.eventbookspring.eventbookspring.entity.*;
 import com.eventbookspring.eventbookspring.service.ChatService;
 import com.eventbookspring.eventbookspring.service.MensajeService;
 import com.eventbookspring.eventbookspring.service.TeleoperadorService;
@@ -20,7 +17,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.AsyncContext;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -36,7 +44,6 @@ public class ChatController {
     public void setUsuarioService(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-
 
     @Autowired
     public void setMensajeService(MensajeService mensajeService) {
@@ -57,6 +64,7 @@ public class ChatController {
              __            ___
             /  ` |__|  /\   |
             \__, |  | /~~\  |
+            - Load chat from db -
      */
     @GetMapping("/{userID}/{user2ID}")
     public String chatUI(Model model, HttpSession session, @PathVariable("userID") Integer userID, @PathVariable("user2ID") Integer user2ID){
@@ -81,6 +89,113 @@ public class ChatController {
             return "chat";
         } catch(AutenticacionException ex){
             return Autenticacion.getErrorJsp(model, ex.getMessage());
+        }
+    }
+
+    /*
+              __            __      __            ___
+         /\  /__` \ / |\ | /  `    /  ` |__|  /\   |
+        /~~\ .__/  |  | \| \__,    \__, |  | /~~\  |
+        - Async Chat -
+     */
+
+    // AsyncContext for message in real time
+    private List<AsyncContext> contexts = new LinkedList<>();
+    @GetMapping("/getMsg/{userID}/{user2ID}")
+    public void sendMessage(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        final AsyncContext asyncContext = request.startAsync(request, response);
+        asyncContext.setTimeout(10 * 60 * 1000);
+        contexts.add(asyncContext);
+    }
+
+    @PostMapping("/sendMsg/{userID}/{user2ID}")
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<AsyncContext> asyncContexts = new ArrayList<>(this.contexts);
+        this.contexts.clear();
+        ServletContext application = request.getServletContext();
+
+        Chat chat;
+        UsuarioDTO envia;
+        UsuarioDTO recibe = new UsuarioDTO();
+        recibe.setNombre("error");
+
+        String message = request.getParameter("message").trim();
+        String userTo = request.getParameter("userTo");
+
+        String htmlMessage;
+
+        // Message contains data
+        if (!(message == null || message.contentEquals(""))) {
+
+            // Current time
+            Date currentTime = new Date();
+
+            // Usuario envia es el logueado
+            envia = Autenticacion.getUsuarioLogeado(request, response);
+
+            // Usuario que recibe se consigue con request XHR
+//            TODO antes era esto, quizás posible error - recibe = this.usuarioService.getUserByID(userTo);
+            recibe = this.usuarioService.findUsuarioByID(Integer.valueOf(userTo));
+
+            // Find if chat already exists
+            chat = null;
+            try {
+                chat = this.chatService.findByChatPK(envia.getId(), recibe.getId());
+                if(chat == null){ // El chat no existe
+                    throw(new Exception());
+                }
+            } catch (Exception e) {
+                throw new ServletException(e.getMessage());
+            }
+
+
+            // Compose message from data
+            MensajeDTO msg = this.mensajeService.addMessage(currentTime, message, envia.getId(), chat);
+
+
+            int idUserTo;
+            if (msg.getChat().getTeleoperador().getUsuarioId() == msg.getUsuarioEmisorId()){
+                idUserTo = msg.getChat().getUsuario().getId();
+            } else {
+                idUserTo = msg.getChat().getTeleoperador().getUsuarioId();
+            }
+
+
+            // HTML to be appended to the chat
+            htmlMessage = "<li id=\""+ msg.getId() +"\" useridTo=\""+ idUserTo +"\" userid=\""+ msg.getUsuarioEmisorId()+"\"><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
+
+
+            // Add message to chat
+            boolean add = this.chatService.addMsg(msg, chat);
+
+            if (!add){
+                throw new ServletException("No se pudo añadir el mensaje");
+            }
+
+
+        } else { // Message had an error
+            htmlMessage = "";
+        }
+
+        if (application.getAttribute("messages") == null) {
+            application.setAttribute("messages", htmlMessage);
+        } else {
+            String currentMessages = (String) application.getAttribute("messages");
+            application.setAttribute("messages", htmlMessage + currentMessages);
+        }
+
+        for (AsyncContext asyncContext : asyncContexts) {
+            try (PrintWriter writer = asyncContext.getResponse().getWriter()) {
+                // Add message to website
+                writer.println(htmlMessage);
+                writer.flush();
+                asyncContext.complete();
+
+
+            } catch (Exception ex) {
+                throw new ServletException(ex.getMessage());
+            }
         }
     }
 
@@ -187,11 +302,7 @@ public class ChatController {
         }
     }
 
-/*
-             __   __       ___  ___
-       |  | |__) |  \  /\   |  |__
-       \__/ |    |__/ /~~\  |  |___
-*/
+
 /*
         __   ___       ___ ___  ___
        |  \ |__  |    |__   |  |__

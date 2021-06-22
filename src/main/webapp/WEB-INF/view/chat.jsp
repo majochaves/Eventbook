@@ -59,7 +59,7 @@
             <div class="container">
                 <!-- Breadcrumb-->
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="ServletChatListar">Chats</a></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="/chat/">Chats</a></li>
                     <li class="breadcrumb-item"><span class="breadcrumb-text breadcrumb-active">Chat con <%= usuarioChat.getNombre() %></span></li>
                 </ul>
             </div>
@@ -83,7 +83,7 @@
                         %>
                         <li class="clearfix">
                             <div class="about">
-                                <a href="ServletChatUI?userID=<%= usuario.getId() %>&user2ID=<%= userId2 %>">
+                                <a href="/chat/<%= usuario.getId() %>/<%= userId2 %>">
                                 <div class="name"><%= usuario.getUsername()%></div>
                                 <div class="status">
                                     <i class="fa fa-circle online"></i> online
@@ -197,7 +197,7 @@
                         },
                         sendMessageToBackend: function (context) {
                             var xmlhttp = new XMLHttpRequest();
-                            xmlhttp.open("POST", "ServletChat", false);
+                            xmlhttp.open("POST", "/chat/sendMsg/<%= userId1%>/<%= userId2%>", false);
                             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                             xmlhttp.send("message=" + context.messageOutput + "&userTo=<%= usuarioChat.getId() %>");
                         },
@@ -296,7 +296,7 @@
                                         $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
                                     }
                                 };
-                                xmlhttp.open("GET", "ServletChat", true);
+                                xmlhttp.open("GET", "/chat/getMsg/", true);
                                 xmlhttp.send();
                             }
                         },

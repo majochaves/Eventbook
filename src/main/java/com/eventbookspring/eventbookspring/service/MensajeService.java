@@ -1,12 +1,15 @@
 package com.eventbookspring.eventbookspring.service;
 
 import com.eventbookspring.eventbookspring.clases.Par;
+import com.eventbookspring.eventbookspring.dto.MensajeDTO;
+import com.eventbookspring.eventbookspring.entity.Chat;
 import com.eventbookspring.eventbookspring.entity.Mensaje;
 import com.eventbookspring.eventbookspring.repository.MensajeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,4 +36,17 @@ public class MensajeService {
         return res;
 
     }
+
+    public MensajeDTO addMessage(Date currentTime, String message, Integer id, Chat chat) {
+        Mensaje msg = new Mensaje();
+        msg.setFecha(currentTime);
+        msg.setContenido(message);
+        msg.setUsuarioEmisorId(id);
+        msg.setChat(chat);
+        this.mensajeRepository.save(msg);
+
+        return msg.getDTO();
+
+    }
+
 }

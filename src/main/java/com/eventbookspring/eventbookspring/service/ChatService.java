@@ -1,9 +1,7 @@
 package com.eventbookspring.eventbookspring.service;
 
-import com.eventbookspring.eventbookspring.entity.Chat;
-import com.eventbookspring.eventbookspring.entity.ChatPK;
-import com.eventbookspring.eventbookspring.entity.Teleoperador;
-import com.eventbookspring.eventbookspring.entity.Usuario;
+import com.eventbookspring.eventbookspring.dto.MensajeDTO;
+import com.eventbookspring.eventbookspring.entity.*;
 import com.eventbookspring.eventbookspring.repository.ChatRepository;
 import com.eventbookspring.eventbookspring.repository.TeleoperadorRepository;
 import com.eventbookspring.eventbookspring.repository.UsuarioRepository;
@@ -63,5 +61,30 @@ public class ChatService {
     public void borrarChat(Integer userID, Integer opID) {
         Chat chat = this.chatRepository.getByChatPK(userID, opID);
         this.chatRepository.delete(chat);
+    }
+
+    public Chat findByChatPK(Integer id, Integer id1) {
+        return this.chatRepository.getByChatPK(id, id1);
+    }
+
+    public boolean addMsg(MensajeDTO msgDTO, Chat chat) {
+        try {
+            // Compose message
+            Mensaje msg = new Mensaje();
+            msg.setFecha(msgDTO.getFecha());
+            msg.setContenido(msgDTO.getContenido());
+            msg.setUsuarioEmisorId(msgDTO.getId());
+            msg.setChat(chat);
+
+            // Add message to chat
+            chat.getMensajeList().add(msg);
+
+            // Save entity
+            this.chatRepository.save(chat);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
