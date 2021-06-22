@@ -25,15 +25,6 @@
     <script src="/components/base/core.js"></script>
     <script src="/components/base/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .chart-container {
-            position: relative;
-            margin: auto;
-            height: 50vh;
-            width: 30%;
-            margin-top: 5em;
-        }
-    </style>
     <script>
         let randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
         let listaItems = [];
@@ -51,8 +42,8 @@
                 <%
                     for (TipoanalisisDTO thisTipoanalisisDto : thisAnalisisDto.getTipoanalisisList()) {
                 %>
-
-                    <div class="col-md-6 mb-5">
+                <div class="col-md-6 mb-5">
+                    <div class="row justify-content-md-center">
                         <canvas id="myChart<%=thisTipoanalisisDto.getId()%>"></canvas>
                     </div>
 
@@ -79,10 +70,47 @@
                             }
                         %>
                     </script>
+
+
+                    <div class="row mb-5">
+                        <div class="col-12 text-center">
+                            <div class="btn-group btn-group-toggle conjuntoBotones" data-toggle="buttons" id="<%=thisTipoanalisisDto.getId()%>">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="ROSQUILLA" autocomplete="off" checked> Rosquilla
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="LINEA" autocomplete="off"> Línea
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="" autocomplete="off"> Otro mas
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="" autocomplete="off"> Otro
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+<%--                    <div class="row">--%>
+<%--                        <div class="col-12">--%>
+<%--                            <div class="btn-toolbar justify-content-center">--%>
+<%--                                <div class="btn-group">--%>
+<%--                                    <button type="button" class="btn btn-secondary" checked>Rosquilla</button>--%>
+<%--                                    <button type="button" class="btn btn-secondary">Línea</button>--%>
+<%--                                    <button type="button" class="btn btn-secondary">Otro mas</button>--%>
+<%--                                    <button type="button" class="btn btn-secondary">Otro</button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+
+                </div>
                 <%
                     }
                 %>
             </div>
+
+
         <script src="/components/propios/generarGraficasAnalisis.js"></script>
     </div>
 </body>
