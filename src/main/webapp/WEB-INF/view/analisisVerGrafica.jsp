@@ -38,12 +38,13 @@
         <jsp:include page="./header.jsp">
             <jsp:param name="nav" value="analisis"/>
         </jsp:include>
+
             <div class="row">
                 <%
                     for (TipoanalisisDTO thisTipoanalisisDto : thisAnalisisDto.getTipoanalisisList()) {
                 %>
                 <div class="col-md-6 mb-5">
-                    <div class="row justify-content-md-center">
+                    <div class="row justify-content-md-center" style="height:400px;">
                         <canvas id="myChart<%=thisTipoanalisisDto.getId()%>"></canvas>
                     </div>
 
@@ -82,10 +83,10 @@
                                     <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="LINEA" autocomplete="off"> Línea
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="" autocomplete="off"> Radar??
+                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="BARRA" autocomplete="off"> Barra
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="" autocomplete="off"> Otro
+                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="RADAR" autocomplete="off"> Radar
                                 </label>
                             </div>
                         </div>
