@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -59,6 +61,23 @@ public class ChatController {
             model.addAttribute("listaOperadores", teleoperadorDTOList);
 
             return "chat-crear";
+        } catch(AutenticacionException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
+        }
+    }
+
+    @PostMapping("/crear/guardar")
+    public String guardarChat(Model model, HttpSession session, @RequestParam("teleoperador") Integer opId){
+        try {
+            UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(session);
+            if (usuarioDTO == null){ // No ha hecho login
+                throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            // Guardar chat
+            this.chatService.guardarChat(usuarioDTO.getId(), opId);
+
+            return "redirect:/chat/";
         } catch(AutenticacionException ex){
             return Autenticacion.getErrorJsp(model, ex.getMessage());
         }

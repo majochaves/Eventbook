@@ -6,6 +6,7 @@
 package com.eventbookspring.eventbookspring.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -75,7 +76,7 @@ public class Chat implements Serializable {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 
@@ -128,5 +129,6 @@ public class Chat implements Serializable {
     public String toString() {
         return "entity.Chat[ chatPK=" + chatPK + " ]";
     }
-    
+
+
 }
