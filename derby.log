@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Tue Jun 22 01:52:14 CEST 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017a-30fd-23c0-00000b3ddf80 
-on database directory F:\UMA\Tercero\Segundo Semestre\Tecnologia de Aplicaciones web\workspaceIntelliJ\Eventbook\Eventbook with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@368239c8 
-Loaded from file:/C:/Users/Merli/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Oracle Corporation
-java.runtime.version=11.0.4+10-LTS
-user.dir=F:\UMA\Tercero\Segundo Semestre\Tecnologia de Aplicaciones web\workspaceIntelliJ\Eventbook
+Tue Jun 22 11:12:01 CEST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017a-32fd-a20b-000006270f60 
+on database directory C:\Users\josie\Workspace\Eventbook\eventbook with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/C:/Users/josie/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=OpenLogic-OpenJDK
+java.runtime.version=1.8.0-262-b10
+user.dir=C:\Users\josie\Workspace\Eventbook
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0

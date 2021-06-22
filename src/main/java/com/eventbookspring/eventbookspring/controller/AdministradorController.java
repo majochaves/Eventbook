@@ -27,8 +27,6 @@ import java.util.stream.Collectors;
 @Controller
 public class AdministradorController {
 
-    private UsuarioRepository usuarioRepository;
-
     private AdministradorService service;
 
     @Autowired
@@ -36,17 +34,12 @@ public class AdministradorController {
         this.service = service;
     }
 
-    @Autowired
-    public void setUsuarioRepository(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
-
     @GetMapping("/administracion")
     public String administracion(Model model, HttpSession session) {
         try {
             Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-            model.addAttribute("usuarios", usuarioRepository.findAll().stream().map(Usuario::getDTO).collect(Collectors.toList()));
+            model.addAttribute("usuarios", service.listarUsuarios());
 
             return "usuario-listar";
         } catch (AutenticacionException e) {
@@ -77,7 +70,7 @@ public class AdministradorController {
         try {
             Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-            model.addAttribute("usuarioDTO", usuarioRepository.getById(Integer.parseInt(id)).getDTO());
+            model.addAttribute("usuarioDTO", service.findUsuarioById(Integer.parseInt(id)));
 
             List<String> sexos = new LinkedList<>();
             sexos.add("hombre");
@@ -145,41 +138,8 @@ public class AdministradorController {
         try {
             Autenticacion.tieneRolExcepcion(session, Autenticacion.PERMISOS, Administrador.class);
 
-            model.addAttribute("usuarios", usuarioRepository.findAll());
-            List<Usuario> query = usuarioRepository.findAll();
-
-            Class[] roles = new Class[5];
-            int i = 0;
-            if(rolesStr.contains("administradores"))
-                roles[i++] = Administrador.class;
-            if(rolesStr.contains("usuarioEventos"))
-                roles[i++] = Usuarioeventos.class;
-            if(rolesStr.contains("creadorEventos"))
-                roles[i++] = Creadoreventos.class;
-            if(rolesStr.contains("teleoperadores"))
-                roles[i++] = Teleoperador.class;
-            if(rolesStr.contains("analistas"))
-                roles[i++] = Analista.class;
-
-            query = query.stream()
-                    .filter(u -> {                                                                              // FILTRO ROL
-                        try {
-                            return Autenticacion.tieneRol(u.getDTO(), roles);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                        return false;
-                    })
-                    .filter(u -> sexos.contains(u.getSexo()))                                                   // FILTRO SEXO
-                    .filter(u -> u.getUsername().toLowerCase().contains(username.toLowerCase()))                // FILTRO NOMBRE DE USUARIO
-                    .filter(u -> u.getNombre().toLowerCase().contains(nombre.toLowerCase()))                    // FILTRO NOMBRE
-                    .filter(u -> u.getApellidos().toLowerCase().contains(apellidos.toLowerCase()))              // FILTRO APELLIDOS
-                    .filter(u -> u.getDomicilio().toLowerCase().contains(domicilio.toLowerCase()))              // FILTRO DOMICILIO
-                    .filter(u -> u.getCiudadResidencia().toLowerCase().contains(ciudad.toLowerCase()))          // FILTRO CIUDAD
-                    .collect(Collectors.toList());
-
             // Lista de los DTOs de los usuarios filtrados
-            model.addAttribute("usuarios", query.stream().map(Usuario::getDTO).collect(Collectors.toList()));
+            model.addAttribute("usuarios", service.filtrar(rolesStr, sexos, username, nombre, apellidos, domicilio, ciudad));
 
             return "usuario-listar";
         } catch (AutenticacionException e) {

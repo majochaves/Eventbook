@@ -75,7 +75,8 @@
                         }
                         %>
 
-                    <form:form modelAttribute="usuarioDTO" action="/usuario-guardar" method="POST">
+                    <form:form modelAttribute="usuarioDTO" action="/usuario-guardar" method="POST" autocomplete="off">
+                        <input autocomplete="false" name="hidden" type="text" style="display:none;">
                         <form:hidden path="id" class="textf"/>
 
                         <table>
@@ -85,11 +86,11 @@
                             </tr>
                             <tr>
                                 <td>Usuario <span style="color: #ec5482;">*</span></td>
-                                <td><form:input path="username" class="textf" required="required" autocomplete="false"/></td>
+                                <td><form:input path="username" class="textf" required="required"/></td>
                             </tr>
                             <tr>
                                 <td>Contraseña <span style="color: #ec5482;">*</span>&nbsp&nbsp</td>
-                                <td><form:password path="password" class="textf" required="required" autocomplete="false"/></td>
+                                <td><form:password path="password" class="textf" required="required"/></td>
                             </tr>
                             <tr>
                                 <td>Nombre  <span style="color: #ec5482;">*</span></td>
