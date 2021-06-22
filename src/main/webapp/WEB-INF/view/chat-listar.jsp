@@ -146,7 +146,7 @@
                                        %>
 
                                        <td class="align-middle text-center"> <a href="ServletChatUI?userID=<%= otherID %>&user2ID=<%= oneID %>" class="btn" >Chat</a> </td>
-                                       <td class="align-middle text-center"> <a href="/chat/borrar?userID=<%= chat.getChatPK().getUsuarioId() %>&opID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
+                                       <td class="align-middle text-center"> <a href="/chat/borrar/<%= chat.getChatPK().getUsuarioId() %>/<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
                                    </tr>     
                                 </tbody>
                             <%
