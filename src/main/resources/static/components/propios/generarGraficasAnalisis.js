@@ -5,6 +5,7 @@
  * 3. Colocar un canvas con id="myChart + ELID". Se debe concatenar el id del Tipoanalisis
  * 4. Crear una variable listaItems que añada los datos necesarios para la creacion de la grafica
  *
+ *
  */
 
 //Configuracion de Chart.js
@@ -98,6 +99,34 @@ function generarGraficaLinea(elItem){
 }
 
 
+function generarGraficaBarras(elItem){
+
+    let data = {
+        labels: elItem.items,
+        datasets: [{
+                label: elItem.nombreTipoanalisis,
+                data: Utils.numbers(NUMBER_CFG),
+                borderColor: Utils.CHART_COLORS.red,
+                backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+            }]
+    };
+    let config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Bar Chart'
+                }
+            }
+        },
+    };
+}
 
 
 

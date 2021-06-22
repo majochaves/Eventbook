@@ -4,6 +4,7 @@
  * 2. Colocar en todos los <input type="text"/> donde no se desea que se repitan valores,  el atributo class="textoColumna1".
  *    La class puede contener mas cosas sin problemas (como propiedades CSS).
  * 3. OBLIGATORIO: Añadir en el html el import de este script
+ *
  */
 
 let inputs = document.querySelectorAll('[class~="textoColumna1"]');

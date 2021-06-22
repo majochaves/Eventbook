@@ -1,4 +1,5 @@
 /*
+ *
  * Uso:
  * 1. Colocar el boton de añadir filas el id="anyadirFila"
  * 2. Colocar en la tabla la cual se desea añadir dicha fila id="tablaAnyadirFila"

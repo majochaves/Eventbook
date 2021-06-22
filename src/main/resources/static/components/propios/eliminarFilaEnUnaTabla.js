@@ -1,4 +1,5 @@
 /*
+ *
  * Uso:
  * 1. Colocar el boton de eliminar una fila, el atributo class ="eliminarFila". La class puede contener mas cosas sin problemas (como propiedades CSS)
  * 2. OBLIGATORIO: Añadir en el html el import de este script

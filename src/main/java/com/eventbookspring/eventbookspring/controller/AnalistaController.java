@@ -225,7 +225,7 @@ public class AnalistaController {
         String nombreVariable = ex.getParameterName();
 
         //Si se trata de un error producido por generarResultadosAnalisis volvemos a mostrar la creacion del analisis
-        //Con el error correspondiente mostrado
+        //con el error correspondiente mostrado
         if(nombreVariable.equalsIgnoreCase("tipoUsuario") || nombreVariable.equalsIgnoreCase("tipoFiltro")){
             model.addAttribute("muestraError", true);
             return "analisisMostrarCrear";
