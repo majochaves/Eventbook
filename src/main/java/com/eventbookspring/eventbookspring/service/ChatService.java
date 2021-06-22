@@ -21,4 +21,8 @@ public class ChatService {
     public List<Chat> findChatsByUserID(Integer id) {
         return this.chatRepository.findChatsByUserID(id);
     }
+
+    public List<Chat> findAll() {
+        return this.chatRepository.findAll();
+    }
 }

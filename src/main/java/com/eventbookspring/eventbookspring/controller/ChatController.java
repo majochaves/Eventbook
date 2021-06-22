@@ -44,7 +44,17 @@ public class ChatController {
 
         try {
             UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(session);
-            checkLoginYPrivilegios(model, session, usuarioDTO);
+            if (usuarioDTO == null){ // No ha hecho login
+                throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            // Mostrar vista con privilegios si los tiene
+            if(Autenticacion.tieneRol(session, Teleoperador.class) || Autenticacion.tieneRol(session, Administrador.class)){
+                model.addAttribute("allMessages", "Modo Usuario: mostrando tus chats - <a href='/chat/teleoperador'>Modo Operador</a>");
+            } else {
+                model.addAttribute("allMessages", "Modo Usuario: mostrando tus chats.");
+            }
+
             model.addAttribute("chats", this.chatService.findChatsByUserID(usuarioDTO.getId()));
 
             return "chat-listar";
@@ -53,17 +63,31 @@ public class ChatController {
         }
     }
 
-    private void checkLoginYPrivilegios(Model model, HttpSession session, UsuarioDTO usuarioDTO) throws AutenticacionException {
-        if (usuarioDTO == null){ // No ha hecho login
-            throw new AutenticacionException("¿Has iniciado sesión?");
-        }
+    @GetMapping("/teleoperador")
+    public String listarTeleoperador(Model model, HttpSession session){
 
-        // Mostrar vista con privilegios si los tiene
-        if(Autenticacion.tieneRol(session, Teleoperador.class) || Autenticacion.tieneRol(session, Administrador.class)){
-            model.addAttribute("allMessages", "Modo Usuario: mostrando tus chats - <a href='ServletChatListarTeleoperador'>Modo Operador</a>");
-        } else {
-            model.addAttribute("allMessages", "Modo Usuario: mostrando tus chats.");
+        try {
+            UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(session);
+            if (usuarioDTO == null){ // No ha hecho login
+                throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            // Mostrar vista con privilegios si los tiene
+            if(Autenticacion.tieneRol(session, Teleoperador.class) || Autenticacion.tieneRol(session, Administrador.class)){
+                model.addAttribute("allMessages", "Modo Teleoperador: mostrando todos los chats - <a href='/chat/'>Modo usuario</a>");
+            } else {
+                throw new AutenticacionException("Solo los teleoperadores pueden ver esta página.");
+            }
+
+            model.addAttribute("chats", this.chatService.findAll());
+
+            return "chat-listar";
+        } catch(AutenticacionException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
+    }
+    private void checkLoginYPrivilegios(Model model, HttpSession session, UsuarioDTO usuarioDTO) throws AutenticacionException {
+
     }
 
 /*
