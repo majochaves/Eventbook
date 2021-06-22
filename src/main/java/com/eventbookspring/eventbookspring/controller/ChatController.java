@@ -12,10 +12,7 @@ import com.eventbookspring.eventbookspring.service.TeleoperadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -138,9 +135,6 @@ public class ChatController {
             return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
     }
-    private void checkLoginYPrivilegios(Model model, HttpSession session, UsuarioDTO usuarioDTO) throws AutenticacionException {
-
-    }
 
 /*
              __   __       ___  ___
@@ -152,4 +146,20 @@ public class ChatController {
        |  \ |__  |    |__   |  |__
        |__/ |___ |___ |___  |  |___
 */
+    @GetMapping("/borrar/{userID}/{opID}")
+    public String borrarChat(Model model, HttpSession session, @PathVariable("userID") Integer userID, @PathVariable("opID") Integer opID){
+        try {
+            UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(session);
+            if (usuarioDTO == null){ // No ha hecho login
+                throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            this.chatService.borrarChat(userID, opID);
+
+            return "redirect:/chat/";
+        } catch(AutenticacionException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
+        }
+
+    }
 }

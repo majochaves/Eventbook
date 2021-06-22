@@ -58,6 +58,10 @@ public class ChatService {
         chat.setUsuario(usuario);
 
         this.chatRepository.save(chat);
-    } 
-    
+    }
+
+    public void borrarChat(Integer userID, Integer opID) {
+        Chat chat = this.chatRepository.getByChatPK(userID, opID);
+        this.chatRepository.delete(chat);
+    }
 }
