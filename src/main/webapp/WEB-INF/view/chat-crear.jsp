@@ -4,11 +4,10 @@
     Author     : memoriasIT
 --%>
 
-<%@page import="entity.Teleoperador"%>
 <%@page import="java.util.List"%>
-<%@page import="clases.Autenticacion"%>
-<%@page import="entity.Administrador"%>
-<%@page import="entity.Usuario"%>
+<%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
+<%@ page import="com.eventbookspring.eventbookspring.entity.Usuario" %>
+<%@ page import="com.eventbookspring.eventbookspring.dto.TeleoperadorDTO" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,15 +22,15 @@
         <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
         <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
         <meta property="og:url" content="http://digipunk.netii.net">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="components/base/base.css">
-        <script src="components/base/core.js"></script>
-        <script src="components/base/script.js"></script>
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/components/base/base.css">
+        <script src="/components/base/core.js"></script>
+        <script src="/components/base/script.js"></script>
     </head>
     <%
         // AUTENTICACION
         Autenticacion.autenticar(request, response, Autenticacion.PERMISOS, Usuario.class);
-        List<Teleoperador> listaTeleoperador = (List<Teleoperador>) request.getAttribute("listaOperadores");
+        List<TeleoperadorDTO> listaTeleoperador = (List<TeleoperadorDTO>) request.getAttribute("listaOperadores");
         String error = (String) request.getAttribute("error");
 
     %>
@@ -40,14 +39,14 @@
             <jsp:include page="header.jsp" />
             <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
                 <div class="container">
-                    <form action="ServletChatGuardar" method="POST">
+                    <form action="/chat/crear/guardar" method="POST">
                         <table>
                             <tr>
                                 <td>Teleoperador <span style="color: #ec5482;">*</span></td>
                                 <td>                
                                     <select class="textf" name="teleoperador">
                                         <% 
-                                            for(Teleoperador teleoperador : listaTeleoperador){
+                                            for(TeleoperadorDTO teleoperador : listaTeleoperador){
                                         %>
                                             <option value="<%= teleoperador.getUsuario().getId() %>"><%= teleoperador.getUsuario().getNombre()%></option>
                                        <%
@@ -61,7 +60,7 @@
                                 <td colspan="2">
                                     <br/>
                                    <input type="submit" class="btn btn-primary" value="Crear Chat con Teleoperador" href="ServletChatGuardar" target="_blank"/>
-                                   <a style="margin-left: 2.5%" href="ServletChatListar">Cancelar</a>
+                                   <a style="margin-left: 2.5%" href="/chat/">Cancelar</a>
                                 </td>
                             </tr>
                         </table>

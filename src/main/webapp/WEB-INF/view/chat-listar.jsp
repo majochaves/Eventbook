@@ -65,7 +65,7 @@
                     </div>
 
                     <div style="float:right; margin-bottom: 1%;">
-                        <a  class="shadow-sm badge badge-info" href="ServletChatCrear">Nuevo chat</a>
+                        <a  class="shadow-sm badge badge-info" href="/chat/crear">Nuevo chat</a>
                         <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal" data-target="#abrirDialogoEditar">Filtrar chat</button>
                     </div>
 
@@ -83,7 +83,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form action="ServletChatListar" method="POST">             
+                                    <form action="/chat/" method="POST">
                                         <div class="form-group-sm">
                                             Nombre de usuario<input type="text" class="form-control" name="username"><br/><br/>
                                         </div>
@@ -146,7 +146,7 @@
                                        %>
 
                                        <td class="align-middle text-center"> <a href="ServletChatUI?userID=<%= otherID %>&user2ID=<%= oneID %>" class="btn" >Chat</a> </td>
-                                       <td class="align-middle text-center"> <a href="ServletChatBorrar?userID=<%= chat.getChatPK().getUsuarioId() %>&opID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
+                                       <td class="align-middle text-center"> <a href="/chat/borrar?userID=<%= chat.getChatPK().getUsuarioId() %>&opID=<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
                                    </tr>     
                                 </tbody>
                             <%
