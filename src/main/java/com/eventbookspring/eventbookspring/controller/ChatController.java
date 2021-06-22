@@ -3,12 +3,18 @@ package com.eventbookspring.eventbookspring.controller;
 
 import com.eventbookspring.eventbookspring.clases.Autenticacion;
 import com.eventbookspring.eventbookspring.clases.AutenticacionException;
+import com.eventbookspring.eventbookspring.clases.Par;
+import com.eventbookspring.eventbookspring.dto.MensajeDTO;
 import com.eventbookspring.eventbookspring.dto.TeleoperadorDTO;
 import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
 import com.eventbookspring.eventbookspring.entity.Administrador;
+import com.eventbookspring.eventbookspring.entity.Chat;
+import com.eventbookspring.eventbookspring.entity.Mensaje;
 import com.eventbookspring.eventbookspring.entity.Teleoperador;
 import com.eventbookspring.eventbookspring.service.ChatService;
+import com.eventbookspring.eventbookspring.service.MensajeService;
 import com.eventbookspring.eventbookspring.service.TeleoperadorService;
+import com.eventbookspring.eventbookspring.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +28,20 @@ import java.util.List;
 public class ChatController {
     private ChatService chatService;
     private TeleoperadorService teleoperadorService;
+    private UsuarioService usuarioService;
+    private MensajeService mensajeService;
+
+
+    @Autowired
+    public void setUsuarioService(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
+
+    @Autowired
+    public void setMensajeService(MensajeService mensajeService) {
+        this.mensajeService = mensajeService;
+    }
 
     @Autowired
     public void setChatService(ChatService chatService) {
@@ -31,6 +51,37 @@ public class ChatController {
     @Autowired
     public void setTeleoperadorService(TeleoperadorService teleoperadorService) {
         this.teleoperadorService = teleoperadorService;
+    }
+
+    /*
+             __            ___
+            /  ` |__|  /\   |
+            \__, |  | /~~\  |
+     */
+    @GetMapping("/{userID}/{user2ID}")
+    public String chatUI(Model model, HttpSession session, @PathVariable("userID") Integer userID, @PathVariable("user2ID") Integer user2ID){
+        try {
+            UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(session);
+            if (usuarioDTO == null){ // No ha hecho login
+                throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            // Coger lista de todos los chats (para mostrar filtro y búsqueda sobre ellos)
+            List<Chat> chatList = this.chatService.findChatsByUserID(usuarioDTO.getId());
+            model.addAttribute("chats", chatList);
+
+            // Anyadir usuarios al modelo
+            model.addAttribute("usuarioChat", this.usuarioService.findUsuarioByID(userID));
+            model.addAttribute("usuarioChat2", this.usuarioService.findUsuarioByID(user2ID));
+
+            // Coger lista de mensajes entre estos usuarios
+            List<Par<Integer, Mensaje>> mensajes = this.mensajeService.getListOfMensajesByIDs(userID, user2ID);
+            model.addAttribute("mensajesHistorial", mensajes);
+
+            return "chat";
+        } catch(AutenticacionException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
+        }
     }
 
     /*

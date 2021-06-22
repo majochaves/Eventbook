@@ -4,30 +4,30 @@
     Author     : guzman
 --%>
 
-<%@page import="entity.Chat"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="javafx.util.Pair"%>
-<%@page import="entity.Mensaje"%>
 <%@page import="java.util.Map"%>
-<%@page import="entity.Teleoperador"%>
 <%@page import="java.util.List"%>
-<%@page import="entity.Usuario"%>
-<%@page import="clases.Autenticacion"%>
+<%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
+<%@ page import="com.eventbookspring.eventbookspring.entity.Usuario" %>
+<%@ page import="com.eventbookspring.eventbookspring.entity.Chat" %>
+<%@ page import="com.eventbookspring.eventbookspring.entity.Mensaje" %>
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
+<%@ page import="com.eventbookspring.eventbookspring.clases.Par" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Chat</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="components/base/base.css">
-        <script src="components/base/core.js"></script>
-        <script src="components/base/script.js"></script>
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/components/base/base.css">
+        <script src="/components/base/core.js"></script>
+        <script src="/components/base/script.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
-        <link rel="stylesheet" href="components/chat/chat.css">
+        <link rel="stylesheet" href="/components/chat/chat.css">
 
         <%
             // AUTENTICACION
@@ -35,16 +35,16 @@
 
             // Lista de teleoperadores;
             List<Chat> chats = (List<Chat>) request.getAttribute("chats");
-            Usuario usuarioChat = (Usuario) request.getAttribute("usuarioChat");
-            Usuario usuarioChat2 = (Usuario) request.getAttribute("usuarioChat2");
+            UsuarioDTO usuarioChat = (UsuarioDTO) request.getAttribute("usuarioChat");
+            UsuarioDTO usuarioChat2 = (UsuarioDTO) request.getAttribute("usuarioChat2");
             
-            int userId1 = new Integer(request.getParameter("userID") );
-            int userId2 =  new Integer(request.getParameter("user2ID")) ;
+            int userId1 = usuarioChat.getId();
+            int userId2 = usuarioChat2.getId();
 
-            Usuario thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
+            UsuarioDTO thisUsuario = Autenticacion.getUsuarioLogeado(request, response);
             Boolean adminPriviledges = (thisUsuario.getTeleoperador() != null) || (thisUsuario.getAdministrador() != null);
             
-            List<Pair<Integer, Mensaje>> mensajes = (List<Pair<Integer, Mensaje>>) request.getAttribute("mensajesHistorial");
+            List<Par<Integer, Mensaje>> mensajes = (List<Par<Integer, Mensaje>>) request.getAttribute("mensajesHistorial");
         %>
 
     </head>
@@ -348,19 +348,19 @@
                             var templateEnviar = Handlebars.compile($("#message-template").html());
                             var templateResponse = Handlebars.compile( $("#message-response-template").html());
                             
-                            <% for (Pair<Integer, Mensaje> msg : mensajes){ %>
+                            <% for (Par<Integer, Mensaje> msg : mensajes){ %>
                                 
                                 var data = {
-                                    messageOutput: "<%= msg.getValue().getContenido().trim() %>",
-                                    id: "<%= msg.getValue().getId() %>",
-                                    time: "<%= new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa").format(msg.getValue().getFecha()) %>"
+                                    messageOutput: "<%= msg.getSegundoElem().getContenido().trim() %>",
+                                    id: "<%= msg.getSegundoElem().getId() %>",
+                                    time: "<%= new SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa").format(msg.getSegundoElem().getFecha()) %>"
                                 }; 
                                 
                                 
                             
-                            <% if (msg.getKey().equals(userId2)){ %>  
+                            <% if (msg.getPrimerElem().equals(userId2)){ %>
                                     this.$chatHistoryList.append(templateEnviar(data));            
-                                <% } else if (msg.getKey().equals(userId1)){%>   
+                                <% } else if (msg.getPrimerElem().equals(userId1)){%>
                                     this.$chatHistoryList.append(templateResponse(data));    
                                 <% } %>
                                 this.scrollToBottom();
