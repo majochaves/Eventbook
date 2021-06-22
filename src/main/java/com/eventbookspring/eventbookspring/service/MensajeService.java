@@ -49,4 +49,17 @@ public class MensajeService {
 
     }
 
+    public void borrarMsg(Integer userID, Integer opID, Integer msgId) {
+        this.mensajeRepository.delete(this.mensajeRepository.getById(msgId));
+    }
+
+    public void editarMsg(Integer msgId, String newContenido) {
+        Mensaje msg = this.mensajeRepository.getById(msgId);
+        msg.setContenido(newContenido);
+        this.mensajeRepository.save(msg);
+    }
+
+    public MensajeDTO getMessageByID(Integer msgId) {
+        return this.mensajeRepository.getById(msgId).getDTO();
+    }
 }
