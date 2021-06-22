@@ -82,7 +82,7 @@
                                     <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="LINEA" autocomplete="off"> Línea
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="" autocomplete="off"> Otro mas
+                                    <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="" autocomplete="off"> Radar??
                                 </label>
                                 <label class="btn btn-secondary">
                                     <input type="radio" name="option<%=thisTipoanalisisDto.getId()%>" value="" autocomplete="off"> Otro
