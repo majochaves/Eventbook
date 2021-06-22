@@ -1,16 +1,26 @@
 /* 
  * Uso:
- * 1. Colocar el boton de enviar con el id="btnEnviar"
- * 2. Colocar en todos los <input type="text"/> el atributo class="... textoColumna1"
+ * 1. Colocar el boton de enviar o aceptar el id="btnEnviar"
+ * 2. Colocar en todos los <input type="text"/> donde no se desea que se repitan valores,  el atributo class="textoColumna1".
+ *    La class puede contener mas cosas sin problemas (como propiedades CSS).
+ * 3. OBLIGATORIO: Añadir en el html el import de este script
+ *
  */
 
-const inputs = document.querySelectorAll('[class~="textoColumna1"]');
+let inputs = document.querySelectorAll('[class~="textoColumna1"]');
 const button = document.getElementById('btnEnviar');
 const nombreClassInicial = inputs[0].className;     //Al menos debe de haber algun elemento o excepcion
 const spanTooltip = document.getElementById('spanTooltip');
 
 let listaPalabras = [];
 
+function restablecerListaPalabras(){
+    listaPalabras = [];
+}
+
+function restablecerListaInputs(){
+    inputs = document.querySelectorAll('[class~="textoColumna1"]');
+}
 
 
 function buscarYAnyadir(cadena, index){
@@ -18,7 +28,6 @@ function buscarYAnyadir(cadena, index){
 
     for(let i=0; i<listaPalabras.length; i++){
         if(listaPalabras[i].texto === cadena){
-            //listaPalabras[i].numVeces = listaPalabras[i].numVeces + 1;
             listaPalabras[i].indexs.push(index);
             existe = true;
         }
@@ -33,13 +42,13 @@ function buscarYAnyadir(cadena, index){
 
 }
 
-function realizarConteo(inputs){
+function realizarConteo(){
     for(let i=0;i<inputs.length; i++){
         buscarYAnyadir(inputs[i].value, i);
     }
 }
 
-function colocarInvalidos(inputs){
+function colocarInvalidos(){
     let existeInvalidos = false;
     for(let i=0;i<listaPalabras.length; i++){
         if(listaPalabras[i].indexs.length >= 2 || listaPalabras[i].texto === ""){
@@ -55,34 +64,23 @@ function colocarInvalidos(inputs){
     }
     if(existeInvalidos){
         button.setAttribute('disabled', '');
-        //spanTooltip.setAttribute('data-toggle', 'tooltip');
-        //spanTooltip.setAttribute('data-original-title', 'Hay elementos repetidos');
         spanTooltip.setAttribute('title', 'Hay elementos repetidos');
     }
-        
+
     else{
         button.removeAttribute('disabled', '');
-        //spanTooltip.removeAttribute('data-toggle', 'tooltip');
-        //spanTooltip.removeAttribute('data-original-title', 'Hay elementos repetidos');
-        //spanTooltip.removeAttribute('data-placement', 'top');
         spanTooltip.removeAttribute('title', 'Hay elementos repetidos');
     }
-        
+
 }
 
 for(let i = 0; i<inputs.length; i++){
 
     inputs[i].addEventListener('input', function() {
-        listaPalabras = [];
-        realizarConteo(inputs);
-        colocarInvalidos(inputs);
-            
+        restablecerListaPalabras();
+        restablecerListaInputs();
+        realizarConteo();
+        colocarInvalidos();
+
     });
 }
-
-/*document.addEventListener("DOMContentLoaded", function(event) {
-    spanTooltip.removeAttribute('data-original-title', 'Hay elementos repetidos');
-    spanTooltip.removeAttribute('data-toggle', 'tooltip');
-    spanTooltip.removeAttribute('title', 'Hay elementos repetidos');
-    console.log('CARGADO');
- });*/
