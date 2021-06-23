@@ -29,7 +29,7 @@ public class AnalistaService {
     private static final String TELEOPERADORES = "teleoperadores";
     private static final String ADMINISTRADORES = "administradores";
 
-    //Tipos de filtro
+    //Tipos de filtro de la tabla usuario
     private static final String FILTRONUMUSUARIOS = "numUsuarios";
     private static final String FILTROSEXO = "sexo";
     private static final String FILTROCIUDAD = "ciudad";
@@ -38,6 +38,14 @@ public class AnalistaService {
     private static final String FILTROFECHAPORMES = "filtroFechaMeses";
     private static final String FILTROFECHAPORANYOS = "filtroFechaAnyos";
 
+    //Tipos de filtro de la tabla evento
+    private static final String FILTRONUMEVENTOS = "numEventos";
+    private static final String FILTROTITULOEVENTO = "tituloEvento";
+    private static final String FILTROFECHAEVENTO = "fechaEvento";
+    private static final String FILTROCOSTEEVENTO ="costeEvento";
+    private static final String FILTROAFOROEVENTO = "aforoEvento";
+    private static final String FILTROMAXENTRADASEVENTO = "maxEntradasEvento";
+    private static final String FILTROASIENTOSFIJOSEVENTO = "asientosFijosEvento";
 
 
     private UsuarioRepository usuarioRepository;
@@ -45,6 +53,7 @@ public class AnalistaService {
     private TipoanalisisRepository tipoanalisisRepository;
     private CampoanalisisRepository campoanalisisRepository;
     private AnalistaRepository analistaRepository;
+    private EventoRepository eventoRepository;
 
 
     @Autowired
@@ -72,11 +81,17 @@ public class AnalistaService {
         this.analistaRepository = analistaRepository;
     }
 
+    @Autowired
+    public void setEventoRepository(EventoRepository eventoRepository) {
+        this.eventoRepository = eventoRepository;
+    }
+
 
 
     public List<TipoanalisisDTO> generarAnalisis(
             List<String> tipoUsuario,
-            List<String> tipoFiltro,
+            List<String> tipoFiltroUsuario,
+            List<String> tipoFiltroEvento,
             String cadenaFechaInicial,
             String cadenaFechaFinal,
             Par<String, String> autoGenerado) throws ParseException {
@@ -127,58 +142,92 @@ public class AnalistaService {
             throw new NullPointerException("No se han encontrado usuarios para realizar un análisis. Prueba otro filtro o en otra fecha.");
 
 
-        //--------BUSQUEDA POR FILTROS---------
-        Map<String, Map<String, Double>> listaTablas = new HashMap<>();
+
         List<TipoanalisisDTO> listaTipos = new ArrayList<>();
-        if(tipoFiltro.contains(FILTRONUMUSUARIOS)){
 
-            List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
-            CampoanalisisDTO caDto = new CampoanalisisDTO("Num", (double)listaUsuarios.size());
-            caDtoLista.add(caDto);
-            TipoanalisisDTO taDto = new TipoanalisisDTO("Número de Usuarios", caDtoLista);
-            listaTipos.add(taDto);
+        //--------BUSQUEDA POR FILTROS DE LA TABLA USUARIO---------
+        if(tipoFiltroUsuario!=null && !tipoFiltroUsuario.isEmpty()){
+            autoGeneradoTiposFiltros+=" (Tabla Usuario) -> ";
+            if(tipoFiltroUsuario.contains(FILTRONUMUSUARIOS)){
 
-            autoGeneradoTiposFiltros+=" número de usuarios totales,";
+                List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
+                CampoanalisisDTO caDto = new CampoanalisisDTO("Num. Usuarios", (double)listaUsuarios.size());
+                caDtoLista.add(caDto);
+                TipoanalisisDTO taDto = new TipoanalisisDTO("Número de Usuarios", caDtoLista);
+                listaTipos.add(taDto);
+
+                autoGeneradoTiposFiltros+=" número de usuarios totales,";
+            }
+
+            if(tipoFiltroUsuario.contains(FILTROSEXO)){
+                List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupBySexo(listaUsuarios);
+                anyadirEnListaTipos(listaTipos, listaPar, "Sexo");
+
+                autoGeneradoTiposFiltros+=" sexos, ";
+            }
+
+            if(tipoFiltroUsuario.contains(FILTROCIUDAD)){
+                List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCities(listaUsuarios);
+                anyadirEnListaTipos(listaTipos, listaPar, "Ciudad");
+
+                autoGeneradoTiposFiltros+=" ciudades, ";
+            }
+
+            if(tipoFiltroUsuario.contains(FILTRONOMBRE)){
+                List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByName(listaUsuarios);
+                anyadirEnListaTipos(listaTipos, listaPar, "Nombre");
+
+                autoGeneradoTiposFiltros+=" nombres, ";
+            }
+
+            if(tipoFiltroUsuario.contains(FILTROAPELLIDO)){
+                List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByLastName(listaUsuarios);
+                anyadirEnListaTipos(listaTipos, listaPar, "Apellido");
+                autoGeneradoTiposFiltros+=" apellidos, ";
+            }
+
+            if(tipoFiltroUsuario.contains(FILTROFECHAPORANYOS)){
+                List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCreatedYear(listaUsuarios);
+                anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion (Año)");
+                autoGeneradoTiposFiltros+=" fecha por años, ";
+            }
+
+            if(tipoFiltroUsuario.contains(FILTROFECHAPORMES)){
+                List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCreatedMonthYear(listaUsuarios);
+                anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion (Mes / Año)");
+                autoGeneradoTiposFiltros+=" fecha por meses-años, ";
+            }
         }
 
-        if(tipoFiltro.contains(FILTROSEXO)){
-            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupBySexo(listaUsuarios);
-            anyadirEnListaTipos(listaTipos, listaPar, "Sexo");
 
-            autoGeneradoTiposFiltros+=" sexos, ";
+
+        //--------BUSQUEDA POR FILTROS DE LA TABLA EVENTOS---------
+        if(tipoFiltroEvento !=null && !tipoFiltroEvento.isEmpty()){
+            autoGeneradoTiposFiltros+=" (Tabla Evento) -> ";
+            if(tipoFiltroEvento.contains(FILTRONUMEVENTOS)){
+                List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
+                CampoanalisisDTO caDto = new CampoanalisisDTO("Num. Eventos", (double)this.eventoRepository.count());
+                caDtoLista.add(caDto);
+                TipoanalisisDTO taDto = new TipoanalisisDTO("Número de Eventos", caDtoLista);
+                listaTipos.add(taDto);
+
+                autoGeneradoTiposFiltros+=" número de eventos totales,";
+            }
+
+            if(tipoFiltroEvento.contains(FILTROTITULOEVENTO)){
+                List<Par<?, ?>> listaPar = this.eventoRepository.getNumEventosGroupByTitulos();
+                anyadirEnListaTipos(listaTipos, listaPar, "Título");
+
+                autoGeneradoTiposFiltros+=" título, ";
+            }
+
+
+
         }
 
-        if(tipoFiltro.contains(FILTROCIUDAD)){
-            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCities(listaUsuarios);
-            anyadirEnListaTipos(listaTipos, listaPar, "Ciudad");
 
-            autoGeneradoTiposFiltros+=" ciudades, ";
-        }
 
-        if(tipoFiltro.contains(FILTRONOMBRE)){
-            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByName(listaUsuarios);
-            anyadirEnListaTipos(listaTipos, listaPar, "Nombre");
 
-            autoGeneradoTiposFiltros+=" nombres, ";
-        }
-
-        if(tipoFiltro.contains(FILTROAPELLIDO)){
-            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByLastName(listaUsuarios);
-            anyadirEnListaTipos(listaTipos, listaPar, "Apellido");
-            autoGeneradoTiposFiltros+=" apellidos, ";
-        }
-
-        if(tipoFiltro.contains(FILTROFECHAPORANYOS)){
-            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCreatedYear(listaUsuarios);
-            anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion (Año)");
-            autoGeneradoTiposFiltros+=" fecha por años, ";
-        }
-
-        if(tipoFiltro.contains(FILTROFECHAPORMES)){
-            List<Par<?, ?>> listaPar = this.usuarioRepository.getNumUsuariosGroupByCreatedMonthYear(listaUsuarios);
-            anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion (Mes / Año)");
-            autoGeneradoTiposFiltros+=" fecha por meses-años, ";
-        }
 
         autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(","));
         autoGenerado.setPrimerElem(autoGeneradoAnalisisDe);

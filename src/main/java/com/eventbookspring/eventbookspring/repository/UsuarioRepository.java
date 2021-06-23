@@ -34,8 +34,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     //Analisis: Consultas para filtrar un conjunto de usuarios
 
-    @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(u.sexo, COUNT(u.sexo))" +
-            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY u.sexo")
+    @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(UPPER(u.sexo), COUNT(u.sexo))" +
+            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY UPPER(u.sexo)")
     public List<Par<?, ?>> getNumUsuariosGroupBySexo(Set<Usuario> listaUsuarios);
 
 
