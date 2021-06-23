@@ -296,7 +296,7 @@
                                         $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
                                     }
                                 };
-                                xmlhttp.open("GET", "/chat/getMsg/", true);
+                                xmlhttp.open("GET", "/chat/getMsg/<%= userId1%>/<%= userId2%>", true);
                                 xmlhttp.send();
                             }
                         },
