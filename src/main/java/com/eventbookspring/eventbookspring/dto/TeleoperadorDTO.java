@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
+import java.util.Objects;
 
 public class TeleoperadorDTO {
     private Integer usuarioId;
@@ -36,5 +37,18 @@ public class TeleoperadorDTO {
 
     public void setChatList(List<Chat> chatList) {
         this.chatList = chatList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TeleoperadorDTO that = (TeleoperadorDTO) o;
+        return usuarioId.equals(that.usuarioId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(usuarioId);
     }
 }

@@ -130,7 +130,7 @@ public class TestChatMessages extends Config {
 	}
 
 	private void crearChat(WebDriver driver) {
-		driver.get("http://localhost:8080/Eventbook/ServletChatCrear");
+		driver.get("http://localhost:8080/chat/crear");
 		Select input =new Select(driver.findElement(By.xpath("/html/body/div/div/div/form/table/tbody/tr[1]/td[2]/select")));
 		WebElement enviar = driver.findElement(By.xpath("/html/body/div/div/div/form/table/tbody/tr[2]/td/input"));
 		
@@ -325,10 +325,11 @@ public class TestChatMessages extends Config {
 		// Provocar error
 		String id = ultMensaje.getAttribute("id");
 		String userid = ultMensaje.getAttribute("userid");
-		driverMain.get("http://localhost:8080/Eventbook/ServletMessageBorrar?msgId="+ id +"&userID="+userid);
+		driverMain.get("http://localhost:8080/mensaje/borrar/0/0/0");
 		
 		// El error se cumple
-		DetectarError("No estás logeado, no tienes suficientes permisos o el mensaje no ha sido encontrado.", driverMain);
+		DetectarError("No tienes permiso para realizar esta acción.", driverMain);
+
 	}
 	
 	
@@ -404,10 +405,10 @@ public class TestChatMessages extends Config {
 		// Provocar error
 		String id = ultMensaje.getAttribute("id");
 		String userid = ultMensaje.getAttribute("userid");
-		driverMain.get("http://localhost:8080/Eventbook/ServletMessageEditar?msgId="+ id +"&userID="+userid);
+		driverMain.get("http://localhost:8080/mensaje/editarMsg/0/0/0");
 		
 		// El error se cumple
-		DetectarError("Parece que no dispones de los permisos necesarios para acceder a esta página.", driverMain);
+		DetectarError("No tienes permiso para realizar esta acción.", driverMain);
 	}
 	
 	

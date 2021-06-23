@@ -36,7 +36,7 @@ public class TestChatLogin extends Config {
 
 	@AfterEach
 	public void tearDown() {
-		driverMain.quit();
+//		driverMain.quit();
 	}
 	
 	public boolean DetectarError(String msgError) {
@@ -51,7 +51,7 @@ public class TestChatLogin extends Config {
 	}
 	
 	private void login(String user, String pw) {
-		driverMain.get("http://localhost:17242/Eventbook/usuario-iniciar-sesion.jsp");
+		driverMain.get("http://localhost:8080/login");
 		WebElement usuario = driverMain.findElement(By.xpath("/html/body/div/div/div/form/table[1]/tbody/tr[1]/td[2]/input"));
 		wait.until(ExpectedConditions.elementToBeClickable(usuario));
 		usuario.sendKeys(user);
@@ -64,7 +64,7 @@ public class TestChatLogin extends Config {
 	}
 	
 	private void crearChat() {
-		driverMain.get("http://localhost:17242/Eventbook/ServletChatCrear");
+		driverMain.get("http://localhost:8080/chat/crear");
     	Select input =new Select(driverMain.findElement(By.xpath("/html/body/div/div/div/form/table/tbody/tr[1]/td[2]/select")));
     	WebElement enviar = driverMain.findElement(By.xpath("/html/body/div/div/div/form/table/tbody/tr[2]/td/input"));
     	
@@ -77,7 +77,7 @@ public class TestChatLogin extends Config {
 	
 	private int checkLista(List<String> chats) {
 		// Cargar la página y obtener la lista de chats
-		driverMain.get("http://localhost:8080/Eventbook/ServletChatListar");
+		driverMain.get("http://localhost:8080/chat/");
 		List<WebElement> teleoperadores = driverMain.findElements(By.xpath("/html/body/div/div/div/table/tbody/tr/td[2]"));
     	wait.until(ExpectedConditions.elementToBeClickable(driverMain.findElement(By.xpath("html/body/div/div/div/div[2]/p"))));
     	
@@ -107,7 +107,7 @@ public class TestChatLogin extends Config {
     	checkLista(chats);
     	
     	// Logout user
-    	driverMain.get("http://localhost:8080/Eventbook/ServletUsuarioCerrarSesion");
+    	driverMain.get("http://localhost:8080/logout");
     	
     	// Login con el otro usuario (Teleoperador)
     	login(strUserTele, strPWTele);
@@ -116,6 +116,7 @@ public class TestChatLogin extends Config {
     	
     }
     
+/* AHORA NO SE LANZA ERROR, SOLO NO SE CREA EL CHAT DUPLICADO
     @Test
     public void ServletChatCrearDuplicado () {
 		login(strUsuario, passUser);
@@ -123,7 +124,8 @@ public class TestChatLogin extends Config {
         crearChat();
         assertTrue(DetectarError("Hemos encontrado un error, ¿Existe ya el chat?"));
     }
-    
+*/
+
     @Test
     public void ServletChatListar() {
 		login(strUsuario, passUser);
@@ -137,14 +139,14 @@ public class TestChatLogin extends Config {
     @Test
     public void ServletChatListarTeleoperadorNoAutorizado() {
 		login(strUsuario, passUser);
-    	driverMain.get("http://localhost:8080/Eventbook/ServletChatListarTeleoperador");
+    	driverMain.get("http://localhost:8080/chat/teleoperador");
     	assertTrue(DetectarError("Solo los teleoperadores pueden ver esta página."));
     	
     }
     
     @Test
     public void ServletChatListarTeleoperadorAutorizado() {
-		login(strUserAdmin, strPWAdmin);
+		login(strUserTele, strPWTele);
     	assertFalse(DetectarError("Solo los teleoperadores pueden ver esta página."));
     	
     	// Se muestran todos los chats globales
@@ -161,14 +163,13 @@ public class TestChatLogin extends Config {
     	
     	List<String> chats = new ArrayList<String>();
     	chats.add(nombreTeleoperador);
-    	chats.add(nombreAdmin);
     	checkLista(chats);
     }
     
     @Test
     public void ServletChatBorrarChats() {
     	login(strUsuario, passUser);
-    	driverMain.get("http://localhost:8080/Eventbook/ServletChatListar");
+    	driverMain.get("http://localhost:8080/chat/");
     	List<WebElement> BotonesBorrar = driverMain.findElements(By.xpath("/html/body/div/div/div/table/tbody[1]/tr/td[5]/a"));
     	wait.until(ExpectedConditions.elementToBeClickable(driverMain.findElement(By.xpath("html/body/div/div/div/div[2]/p"))));
     	
@@ -192,7 +193,7 @@ public class TestChatLogin extends Config {
     @Test
     public void ServletChatBorrarUnChat() {
     	login(strUsuario, passUser);
-    	driverMain.get("http://localhost:8080/Eventbook/ServletChatListar");
+    	driverMain.get("http://localhost:8080/chat/");
     	List<WebElement> BotonesBorrar = driverMain.findElements(By.xpath("/html/body/div/div/div/table/tbody[1]/tr/td[5]/a"));
     	wait.until(ExpectedConditions.elementToBeClickable(driverMain.findElement(By.xpath("html/body/div/div/div/div[2]/p"))));
     	

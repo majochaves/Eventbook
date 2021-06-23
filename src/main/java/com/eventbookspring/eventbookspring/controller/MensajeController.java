@@ -4,6 +4,8 @@ import com.eventbookspring.eventbookspring.clases.Autenticacion;
 import com.eventbookspring.eventbookspring.clases.AutenticacionException;
 import com.eventbookspring.eventbookspring.dto.MensajeDTO;
 import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
+import com.eventbookspring.eventbookspring.entity.Administrador;
+import com.eventbookspring.eventbookspring.entity.Teleoperador;
 import com.eventbookspring.eventbookspring.service.MensajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,10 @@ public class MensajeController {
                 throw new AutenticacionException("¿Has iniciado sesión?");
             }
 
+            if (!Autenticacion.tieneRol(session, Teleoperador.class) && !Autenticacion.tieneRol(session, Administrador.class)){
+                throw new AutenticacionException("No tienes permiso para realizar esta acción.");
+            }
+
             MensajeDTO msg = this.mensajeService.getMessageByID(msgId);
             model.addAttribute("contenido", msg.getContenido());
 
@@ -68,6 +74,10 @@ public class MensajeController {
                 throw new AutenticacionException("¿Has iniciado sesión?");
             }
 
+            if (!Autenticacion.tieneRol(session, Teleoperador.class) && !Autenticacion.tieneRol(session, Administrador.class)){
+                throw new AutenticacionException("No tienes permiso para realizar esta acción.");
+            }
+
             // Modificar mensaje
             this.mensajeService.editarMsg(Integer.valueOf(msgId), newContenido);
 
@@ -93,6 +103,10 @@ public class MensajeController {
             UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(session);
             if (usuarioDTO == null){ // No ha hecho login
                 throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            if (!Autenticacion.tieneRol(session, Teleoperador.class) && !Autenticacion.tieneRol(session, Administrador.class)){
+                throw new AutenticacionException("No tienes permiso para realizar esta acción.");
             }
 
             this.mensajeService.borrarMsg(userID, opID, msgId);
