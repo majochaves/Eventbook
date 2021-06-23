@@ -51,42 +51,42 @@ public class TestChatNoLogin extends Config {
 
     @Test
     public void NotLoggedIn_ServletChatBorrar() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletChatListar", "¿Has iniciado sesión?");
+        NotLoggedIn("http://localhost:8080/chat/borrar/0/0", "¿Has iniciado sesión?");
     }
     
     @Test
     public void NotLoggedIn_ServletChatCrear() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletChatCrear", "¿Has iniciado sesión?");
+        NotLoggedIn("http://localhost:8080/chat/crear", "¿Has iniciado sesión?");
     }
 
-    @Test
-    public void NotLoggedIn_ServletChatGuardar() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletChatGuardar", "¿Has iniciado sesión?");
-    }
+//    @Test
+//    public void NotLoggedIn_ServletChatGuardar() {
+//        NotLoggedIn("http://localhost:8080/Eventbook/chat/guardar", "¿Has iniciado sesión?");
+//    }
     
     @Test
     public void NotLoggedIn_ServletChatListar() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletChatListar", "¿Has iniciado sesión?");
+        NotLoggedIn("http://localhost:8080/chat/", "¿Has iniciado sesión?");
     }
     
     @Test
     public void NotLoggedIn_ServletChatUI() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletChatUI", "¿Has iniciado sesión?");
+        NotLoggedIn("http://localhost:8080/chat/0/0", "¿Has iniciado sesión?");
     }
     
     @Test
     public void NotLoggedIn_ServletChatTeleoperador() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletChatListarTeleoperador", "¿Has iniciado sesión?");
+        NotLoggedIn("http://localhost:8080/chat/teleoperador", "¿Has iniciado sesión?");
     }
     
     @Test
     public void NotLoggedIn_ServletMessageBorrar() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletMessageBorrar", "No estás logeado, no tienes suficientes permisos o el mensaje no ha sido encontrado.");
+        NotLoggedIn("http://localhost:8080/mensaje/borrar/0/0/0", "¿Has iniciado sesión?");
     }
     
     @Test
     public void NotLoggedIn_ServletMessageEditar() {
-        NotLoggedIn("http://localhost:8080/Eventbook/ServletMessageEditar", "¿Has iniciado sesión?");
+        NotLoggedIn("http://localhost:8080/mensaje/editarMsg/0/0/0", "¿Has iniciado sesión?");
     }
 
 
