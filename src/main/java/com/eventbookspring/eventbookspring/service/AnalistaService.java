@@ -139,8 +139,6 @@ public class AnalistaService {
         }
         autoGeneradoAnalisisDe = autoGeneradoAnalisisDe.substring(0, autoGeneradoAnalisisDe.lastIndexOf(","));
 
-        if(listaUsuarios.isEmpty())
-            autoGeneradoTiposFiltros+=" (Tabla Usuario) -> Sin resultados. ";
 
 
 
@@ -149,6 +147,7 @@ public class AnalistaService {
         //--------BUSQUEDA POR FILTROS DE LA TABLA USUARIO---------
 
         if(!listaUsuarios.isEmpty() && tipoFiltroUsuario!=null && !tipoFiltroUsuario.isEmpty()){
+            autoGeneradoTiposFiltros+=" (Tabla Usuario join Tablas de roles) -> ";
             if(tipoFiltroUsuario.contains(FILTRONUMUSUARIOS)){
 
                 List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
@@ -198,7 +197,12 @@ public class AnalistaService {
                 anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion de los Usuarios (Mes / Año)");
                 autoGeneradoTiposFiltros+=" fecha por meses-años, ";
             }
+
+            autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(",")) + ".";
+        } else if(listaUsuarios.isEmpty()){
+            autoGeneradoTiposFiltros+=" (Tabla Usuario join Tablas de roles) -> Sin resultados. ";
         }
+
 
 
 
@@ -267,14 +271,16 @@ public class AnalistaService {
                 autoGeneradoTiposFiltros+=" asientos fijos, ";
             }
 
+            autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(","));
+
 
         }
 
 
 
 
+        System.out.println(autoGeneradoTiposFiltros);
 
-        autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(","));
         autoGenerado.setPrimerElem(autoGeneradoAnalisisDe);
         autoGenerado.setSegundoElem(autoGeneradoTiposFiltros);
 

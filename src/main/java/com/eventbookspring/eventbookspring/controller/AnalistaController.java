@@ -60,7 +60,7 @@ public class AnalistaController {
     public String generarResultadosAnalisis(
             Model model,
             HttpSession session,
-            @RequestParam("tipoUsuario") List<String> tipoUsuario,
+            @RequestParam("tipoUsuario") Optional<List<String>> tipoUsuarioOpt,
             @RequestParam("tipoFiltroUsuario") Optional<List<String>> tipoFiltroUsuarioOpt,
             @RequestParam("tipoFiltroEvento") Optional<List<String>> tipoFiltroEventoOpt,
             @RequestParam("fechaInicial") String cadenaFechaInicial,
@@ -68,14 +68,20 @@ public class AnalistaController {
 
         List<String> tipoFiltroEvento = null;
         List<String> tipoFiltroUsuario = null;
+        List<String> tipoUsuario = null;
 
         if(tipoFiltroEventoOpt.isPresent())
             tipoFiltroEvento = tipoFiltroEventoOpt.get();
         if(tipoFiltroUsuarioOpt.isPresent())
             tipoFiltroUsuario = tipoFiltroUsuarioOpt.get();
+        if(tipoUsuarioOpt.isPresent())
+            tipoUsuario = tipoUsuarioOpt.get();
 
         //Devuelve a la misma pagina con un mensaje de error lanzado
-        if(tipoFiltroEvento==null && tipoFiltroUsuario==null){
+        if(tipoUsuario==null && tipoFiltroUsuario==null && tipoFiltroEvento == null){
+            model.addAttribute("muestraError", true);
+            return "analisisMostrarCrear";
+        } else if((tipoUsuario==null && tipoFiltroUsuario!=null) || (tipoUsuario!=null && tipoFiltroUsuario==null)){
             model.addAttribute("muestraError", true);
             return "analisisMostrarCrear";
         }
@@ -240,15 +246,8 @@ public class AnalistaController {
     public String getMissingRequestParameterException(MissingServletRequestParameterException ex, Model model){
         String nombreVariable = ex.getParameterName();
 
-        //Si se trata de un error producido por generarResultadosAnalisis volvemos a mostrar la creacion del analisis
-        //con el error correspondiente mostrado
-//        if(nombreVariable.equalsIgnoreCase("tipoUsuario") || nombreVariable.equalsIgnoreCase("tipoFiltro")){
-//            model.addAttribute("muestraError", true);
-//            return "analisisMostrarCrear";
-//        } else {
             model.addAttribute("error", "Error: Algún campo esta vacío. Debe completar: " + ex.getParameterName());
             return "error";
-//        }
     }
 
 

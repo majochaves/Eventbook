@@ -35,7 +35,7 @@ public class Analisis implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Column(name = "DESCRIPCION", length = 300, nullable = false)
+    @Column(name = "DESCRIPCION", length = 1000, nullable = false)
     private String descripcion;
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "analisisId", fetch = FetchType.LAZY)
     private List<Tipoanalisis> tipoanalisisList;
