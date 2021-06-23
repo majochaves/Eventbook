@@ -141,8 +141,6 @@ public class ChatController {
         }
     }
 
-
-
 /*
         __   ___       __
        |__) |__   /\  |  \
@@ -185,10 +183,11 @@ public class ChatController {
             // Mostrar vista con privilegios si los tiene
             if(Autenticacion.tieneRol(session, Teleoperador.class) || Autenticacion.tieneRol(session, Administrador.class)){
                 model.addAttribute("allMessages", "Modo Teleoperador: mostrando todos los chats - <a href='/chat/'>Modo usuario</a>");
-            } else {
+            } else { // Solo los teleoperadores tienen permisos
                 throw new AutenticacionException("Solo los teleoperadores pueden ver esta página.");
             }
 
+            // Anyadir lista de chats al modelo
             model.addAttribute("chats", this.chatService.findAll());
 
             return "chat-listar";
