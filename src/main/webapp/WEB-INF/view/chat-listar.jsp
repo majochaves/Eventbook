@@ -23,18 +23,19 @@
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
         <link rel="stylesheet" href="/components/base/tablas.css">
         <link rel="stylesheet" href="/components/base/modal.css">
-<%--        <script src="/components/bootstrap/js/popper.js"></script>--%>
-<%--        <script src="/components/bootstrap/js/bootstrap.min.js"></script>--%>
 
         <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
-        <link rel="stylesheet" href="/components/base/base.css">
         <script src="/components/base/core.js"></script>
         <script src="/components/base/script.js"></script>
 
-<%--        <script src="components/jquery/jquery-3.4.1.min.js"></script>--%>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"
                 integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
                 crossorigin="anonymous"></script>
+        <script src="https://cdn.usebootstrap.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+
+        <link rel="stylesheet" href="/components/base/base.css">
     </head>
     <%
         // AUTENTICACION
@@ -79,7 +80,7 @@
                         <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal" data-target="#abrirDialogoEditar">Filtrar chat</button>
                     </div>
 
-                    
+
                 <!--Dialogo para editar-->
                     <div class="modal fade" id="abrirDialogoEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
