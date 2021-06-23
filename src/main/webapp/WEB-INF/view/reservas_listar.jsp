@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="java.util.List"%>
-<%@ page import="com.eventbookspring.eventbookspring.entity.Evento" %>
 <%@ page import="com.eventbookspring.eventbookspring.entity.Usuario" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
@@ -17,6 +16,7 @@
         <title>Mis Reservas</title>
         <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="/components/base/base.css">
+        <link rel="stylesheet" href="/components/base/tabla.css">
         <script src="/components/eventos/eventos.js"></script>
         <script src="/components/base/core.js"></script>
         <script src="/components/base/script.js"></script>
@@ -37,8 +37,8 @@
           <section class="section section-lg bg-white d-flex min-vh-100">
             <div class="container-fluid">
                 <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>Mis Reservas</h1>
-                <!--
-                <form align="right" action="ServletReservasListar">
+
+                <form action="ServletReservasListar">
                     <table>
                         <tr>
                             <td>Filtrar</td>
@@ -53,32 +53,34 @@
                             </td>
                         </tr>
                     </table>
-                </form> -->
-
-                <table class="table mx-auto">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Nombre del evento</th>
-                        <th scope="col">Numero de asientos</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Acción</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% if(eventos != null){
-                        for(EventoDTO e : eventos){
-                    %>
-                    <tr>
-                        <td><%=e.getTitulo()%></td>
-                        <td><%=e.getEntradasReservadas(usuario)%></td>
-                        <td><%=new SimpleDateFormat("dd/MM/yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(e.getFecha()))%></td>
-                        <td><a href="/editarReserva/<%=e.getId() + "/"+ usuario.getId()%>">Ver</a></td>
-                    </tr>
-                    </tbody>
-                    <%}}else{%>
+                </form>
+                <div class="main-containter">
+                    <table class="table mx-auto tableReserva">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Nombre del evento</th>
+                            <th scope="col">Numero de asientos</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% if(eventos != null){
+                            for(EventoDTO e : eventos){
+                        %>
+                        <tr>
+                            <td><%=e.getTitulo()%></td>
+                            <td><%=e.getEntradasReservadas(usuario)%></td>
+                            <td><%=new SimpleDateFormat("dd/MM/yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(e.getFecha()))%></td>
+                            <td><a href="/editarReserva/<%=e.getId() + "/"+ usuario.getId()%>">Ver</a></td>
+                        </tr>
+                        </tbody>
+                        <%}}else{%>
                         <p>No tiene reservas.</p><br/>
-                    <%}%>
-                </table>
+                        <%}%>
+                    </table>
+                </div>
+
             </div>
           </section>
           <jsp:include page="footer.jsp" />
