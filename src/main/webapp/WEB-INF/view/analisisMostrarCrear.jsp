@@ -16,13 +16,13 @@
         <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="/components/base/alert.css">
         <link rel="stylesheet" href="/components/base/base.css">
-        <!-- Esto esta roto <script src="/components/jquery/jquery-3.4.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="/components/bootstrap/js/popper.js"></script>
         <script src="/components/bootstrap/js/bootstrap.min.js"></script>
 
         <script src="/components/base/core.js"></script>
         <script src="/components/base/script.js"></script>
+        <script src="/components/propios/botonesSeleccionarTodoAnalisis.js"></script>
     </head>
 
     <%
@@ -50,32 +50,53 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <h5>Tipo de usuario</h5>
-                                <div class="form-check">
+                                <button type="button" class="shadow-none badge badge-info mt-2" id="todoTipoUsuarioTablaUsuario">Seleccionar todo</button>
+                                <div class="form-check mt-3">
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoUsuario" value="usuarioEventos" checked="checked" />UsuarioEventos <br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoUsuario" value="creadorEventos" />CreadorEventos<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoUsuario" value="administradores" />Administradores<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoUsuario" value="teleoperadores" />Teleoperadores<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoUsuario" value="analistas" />Analistas<br/><br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoUsuario" value="analistas" />Analistas<br/>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <h5>Tipo de análisis - Tabla Usuario</h5>
-                                <div class="form-check">
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="numUsuarios" checked="checked" />Numero de usuarios totales<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="sexo" />Sexo<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="ciudad" />Ciudad<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="nombre" />Nombre<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="apellido" />Apellido<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="filtroFechaMeses" />Fecha - Por meses<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltro" value="filtroFechaAnyos" />Fecha - Por años<br/>
+                                <button type="button" class="shadow-none badge badge-info mt-2" id="todoTablaUsuario">Seleccionar todo</button>
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="numUsuarios" checked="checked" />Número de usuarios totales<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="sexo" />Sexo<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="ciudad" />Ciudad<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="nombre" />Nombre<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="apellido" />Apellido<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="filtroFechaMeses" />Fecha - Por meses<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="filtroFechaAnyos" />Fecha - Por años<br/>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <h5>Fecha de registro</h5>
+                                <h5>Fecha de registro - Tabla Usuario</h5>
                                 <input type="date" class="textf" name="fechaInicial" min="0001-01-01" max="9999-12-31" /> Fecha Inicial <br />
                                 <input type="date" class="textf" name="fechaFinal" min="0001-01-01" max="9999-12-31" /> Fecha Final <br />
                             </div>
                         </div>
+
+
+                        <div class="row justify-content-center">
+                            <div class="col-sm-4">
+                                <h5>Tipo de análisis - Tabla Evento</h5>
+                                <button type="button" class="shadow-none badge badge-info mt-2" id="todoTablaEvento">Seleccionar todo</button>
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="numEventos" checked="checked" />Número de eventos totales<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="tituloEvento" />Título<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="fechaEvento" />Fecha del evento<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="costeEvento" />Coste de entrada<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="aforoEvento" />Aforo<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="maxEntradasEvento" />Maximo de entradas<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="asientosFijosEvento" />Asientos fijos<br/>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                         <div class="row justify-content-md-center">
                             <div class="col-8">
@@ -102,5 +123,6 @@
                 </div>
             </div>
         </div>
+
     </body>
 </html>

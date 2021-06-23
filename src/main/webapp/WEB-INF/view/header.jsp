@@ -66,7 +66,7 @@
                 <%
                     } else {
                 %>
-                        <li class="navbar-navigation-root-item <%= (nav.equals("chat") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="ServletChatListar">Soporte Técnico</a>
+                        <li class="navbar-navigation-root-item <%= (nav.equals("chat") ? "active" : "") %>"><a class="navbar-navigation-root-link" href="/chat/">Soporte Técnico</a>
                         </li>
                         <li class="navbar-navigation-root-item"><a class="navbar-navigation-root-link" href="/logout">Cerrar sesión</a>
                         </li>

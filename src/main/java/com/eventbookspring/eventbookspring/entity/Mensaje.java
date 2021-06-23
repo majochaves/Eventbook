@@ -5,6 +5,8 @@
  */
 package com.eventbookspring.eventbookspring.entity;
 
+import com.eventbookspring.eventbookspring.dto.MensajeDTO;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -136,5 +138,16 @@ public class Mensaje implements Serializable {
     public String toString() {
         return "entity.Mensaje[ id=" + id + " ]";
     }
-    
+
+    public MensajeDTO getDTO() {
+        MensajeDTO msgDTO = new MensajeDTO();
+
+        msgDTO.setChat(this.getChat());
+        msgDTO.setContenido(this.getContenido());
+        msgDTO.setFecha(this.getFecha());
+        msgDTO.setId(this.getId());
+        msgDTO.setUsuarioEmisorId(this.getUsuarioEmisorId());
+
+        return msgDTO;
+    }
 }

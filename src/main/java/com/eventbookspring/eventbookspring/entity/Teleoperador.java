@@ -5,6 +5,8 @@
  */
 package com.eventbookspring.eventbookspring.entity;
 
+import com.eventbookspring.eventbookspring.dto.TeleoperadorDTO;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
@@ -91,5 +93,13 @@ public class Teleoperador implements Serializable {
     public String toString() {
         return "entity.Teleoperador[ usuarioId=" + usuarioId + " ]";
     }
-    
+
+    public TeleoperadorDTO getDTO() {
+        TeleoperadorDTO teleoperadorDTO = new TeleoperadorDTO();
+        teleoperadorDTO.setUsuarioId(this.getUsuarioId());
+        teleoperadorDTO.setUsuario(this.getUsuario());
+        teleoperadorDTO.setChatList(this.getChatList());
+
+        return teleoperadorDTO;
+    }
 }

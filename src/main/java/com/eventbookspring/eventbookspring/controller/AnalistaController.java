@@ -10,12 +10,14 @@ import com.eventbookspring.eventbookspring.service.AnalistaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/analisis")
@@ -59,36 +61,48 @@ public class AnalistaController {
             Model model,
             HttpSession session,
             @RequestParam("tipoUsuario") List<String> tipoUsuario,
-            @RequestParam("tipoFiltro") List<String> tipoFiltro,
+            @RequestParam("tipoFiltroUsuario") Optional<List<String>> tipoFiltroUsuarioOpt,
+            @RequestParam("tipoFiltroEvento") Optional<List<String>> tipoFiltroEventoOpt,
             @RequestParam("fechaInicial") String cadenaFechaInicial,
             @RequestParam("fechaFinal") String cadenaFechaFinal) throws ParseException {
 
-        String dest;
-        if((tipoUsuario==null || tipoUsuario.isEmpty()) && (tipoFiltro==null || tipoFiltro.isEmpty())){
-            model.addAttribute("muestraError", true);
-            dest = "analisisMostrarCrear";  //Vuelve a la misma pagina con error lanzado
-        } else {
-            Par<String, String> autoGenerado = new Par<>("", "");
-            try{
-                this.analistaService.comprobarLogeadoYConRolAnalista(session);
-                List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
-                        tipoFiltro,
-                        cadenaFechaInicial,
-                        cadenaFechaFinal,
-                        autoGenerado);
+        //Nota: El tratamiento de tipoUsuario y tipoFiltro se realiza automaticamente, lanzando la excepcion correspondiente
+        //y siendo capturada abajo, en getMissingRequestParameterException()
+        List<String> tipoFiltroEvento = null;
+        List<String> tipoFiltroUsuario = null;
 
-                session.setAttribute("listaTablas", listaTablas);
-                model.addAttribute("listaTablas", listaTablas);
-                model.addAttribute("AutoGeneradoAnalisisDe", autoGenerado.getPrimerElem());
-                model.addAttribute("AutoGeneradoTiposFiltros", autoGenerado.getSegundoElem());
-                dest = "analisisMostrarResultadosGenerados";
-            }catch (AutenticacionException  | NullPointerException ex){
-                return Autenticacion.getErrorJsp(model, ex.getMessage());
-            }
+        if(tipoFiltroEventoOpt.isPresent())
+            tipoFiltroEvento = tipoFiltroEventoOpt.get();
+        if(tipoFiltroUsuarioOpt.isPresent())
+            tipoFiltroUsuario = tipoFiltroUsuarioOpt.get();
+
+        if(tipoFiltroEvento==null && tipoFiltroUsuario==null){
+            model.addAttribute("muestraError", true);
+            return "analisisMostrarCrear";
+        }
+
+
+
+        Par<String, String> autoGenerado = new Par<>("", "");
+        try{
+            this.analistaService.comprobarLogeadoYConRolAnalista(session);
+            List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
+                    tipoFiltroUsuario,
+                    tipoFiltroEvento,
+                    cadenaFechaInicial,
+                    cadenaFechaFinal,
+                    autoGenerado);
+
+            session.setAttribute("listaTablas", listaTablas);
+            model.addAttribute("listaTablas", listaTablas);
+            model.addAttribute("AutoGeneradoAnalisisDe", autoGenerado.getPrimerElem());
+            model.addAttribute("AutoGeneradoTiposFiltros", autoGenerado.getSegundoElem());
+            return "analisisMostrarResultadosGenerados";
+        }catch (AutenticacionException  | NullPointerException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
 
         }
 
-        return dest;
     }
 
     @PostMapping("/crear/guardar")
@@ -223,6 +237,20 @@ public class AnalistaController {
 
     }
 
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public String getMissingRequestParameterException(MissingServletRequestParameterException ex, Model model){
+        String nombreVariable = ex.getParameterName();
+
+        //Si se trata de un error producido por generarResultadosAnalisis volvemos a mostrar la creacion del analisis
+        //con el error correspondiente mostrado
+//        if(nombreVariable.equalsIgnoreCase("tipoUsuario") || nombreVariable.equalsIgnoreCase("tipoFiltro")){
+//            model.addAttribute("muestraError", true);
+//            return "analisisMostrarCrear";
+//        } else {
+            model.addAttribute("error", "Error: Algún campo esta vacío. Debe completar: " + ex.getParameterName());
+            return "error";
+//        }
+    }
 
 
 }

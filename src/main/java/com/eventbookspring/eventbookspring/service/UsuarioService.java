@@ -1,5 +1,6 @@
 package com.eventbookspring.eventbookspring.service;
 
+import com.eventbookspring.eventbookspring.dto.UsuarioDTO;
 import com.eventbookspring.eventbookspring.entity.Usuario;
 import com.eventbookspring.eventbookspring.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,9 @@ public class UsuarioService {
 
     public Usuario getUsuarioById(Integer id){
         return this.usuarioRepository.getById(id);
+    }
+
+    public UsuarioDTO findUsuarioByID(Integer userID) {
+        return this.usuarioRepository.getById(userID).getDTO();
     }
 }

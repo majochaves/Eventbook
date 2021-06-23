@@ -5,6 +5,7 @@
  * 3. Colocar un canvas con id="myChart + ELID". Se debe concatenar el id del Tipoanalisis
  * 4. Crear una variable listaItems que añada los datos necesarios para la creacion de la grafica
  *
+ *
  */
 
 //Configuracion de Chart.js
@@ -13,6 +14,8 @@ Chart.defaults.font.size = 19;
 //Constantes de los valores de los radio
 const ROSQUILLA = 'ROSQUILLA';
 const LINEA = 'LINEA';
+const BARRA = 'BARRA';
+const RADAR = 'RADAR';
 
 let conjuntoGraficas = [];
 
@@ -25,7 +28,7 @@ function generarGraficaRosquilla(elItem){
             label: elItem.nombreTipoanalisis,
             backgroundColor: elItem.listaColores,
             hoverBorderWidth: 3,
-            hoverBorderColor: '#000',
+            hoverBorderColor: '#6b39bd',
             data: elItem.valores,
         }]
     };
@@ -84,8 +87,17 @@ function generarGraficaLinea(elItem){
             },
             layout: {
                 padding: {
-                    left: 50,
-                    right: 50
+                    left: 100,
+                    right: 100
+                }
+            },
+            scales: {
+                y: {
+                    suggestedMin: 0,
+                    suggestedMax: 5,
+                    ticks: {
+                        stepSize: 1
+                    }
                 }
             }
         }
@@ -98,16 +110,110 @@ function generarGraficaLinea(elItem){
 }
 
 
+function generarGraficaBarras(elItem){
+
+    let data = {
+        labels: elItem.items,
+        datasets: [{
+                label: elItem.nombreTipoanalisis,
+                data: elItem.valores,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.4)',
+                hoverBorderWidth: 3,
+                hoverBorderColor: 'rgba(255,0,213,0.8)'
+            }]
+    };
+
+    let config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: elItem.nombreTipoanalisis
+                }
+            },
+            layout: {
+                padding: {
+                    left: 100,
+                    right: 100
+                }
+            }
+        },
+    };
+
+    return (new Chart(
+        document.getElementById('myChart' + elItem.idTipoanalisis),
+        config
+    ));
+
+}
 
 
+function generarGraficaRadar(elItem){
 
+
+    let data = {
+        labels: elItem.items,
+        datasets: [{
+            label: elItem.nombreTipoanalisis,
+            data: elItem.valores,
+            borderColor: 'rgb(54, 162, 235)',
+            backgroundColor: 'rgb(54, 162, 235, 0.4)',
+            hoverBorderWidth: 3,
+            hoverBorderColor: 'rgb(7,155,255)',
+        }]
+    };
+
+    let config = {
+        type: 'radar',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: elItem.nombreTipoanalisis
+                }
+            },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 50
+                }
+            },
+            scales: {
+                r: {
+                    suggestedMin: 0,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+
+            }
+        },
+    };
+
+    return myChart = new Chart(
+        document.getElementById('myChart' + elItem.idTipoanalisis),
+        config
+    );
+
+}
 
 
 //---------------------------------Primera ejecucion inicial---------------------------------
 for(let i=0; i < listaItems.length; i++){
 
     let myChart = generarGraficaRosquilla(listaItems[i]);
-
+    // myChart.canvas.parentNode.style.height = '500px';
     conjuntoGraficas.push({
         grafica: myChart,
         id: listaItems[i].idTipoanalisis
@@ -131,10 +237,9 @@ for(let i=0; i<listaConjuntoBotones.length; i++){
                     valor = conjuntoOpciones[q].getAttribute("value");
             }
 
-            console.log(valor);
             mostrarGrafica(valor, idTipoanalisis);
         }, 500);    //Esperamos a que termine el JQuery de Bootstrap
-        console.log('Termina');
+
     });
 }
 
@@ -143,7 +248,6 @@ for(let i=0; i<listaConjuntoBotones.length; i++){
 function mostrarGrafica(tipoGrafica, idTipoanalisis){
 
     let posListaItems, posGrafica;
-    // console.log('idTipoanalisis: ' + idTipoanalisis);
     for(let n=0; n<listaItems.length;n++){
         // console.log('n:' + n + ' -> ' + listaItems[n].idTipoanalisis + ' VS ' + idTipoanalisis);
         if(listaItems[n].idTipoanalisis == idTipoanalisis){
@@ -153,24 +257,33 @@ function mostrarGrafica(tipoGrafica, idTipoanalisis){
             posGrafica = n;
         }
     }
-    // console.log('Valor de posListaItems: ' + posListaItems);
     let myChart;
     switch (tipoGrafica){
         case ROSQUILLA:
             //Destruimos el anterior
             conjuntoGraficas[posGrafica].grafica.destroy();
-
             myChart = generarGraficaRosquilla(listaItems[posListaItems]);
-
             conjuntoGraficas[posGrafica].grafica = myChart;
 
             break;
         case LINEA:
 
             conjuntoGraficas[posGrafica].grafica.destroy();
-
             myChart = generarGraficaLinea(listaItems[posListaItems]);
+            conjuntoGraficas[posGrafica].grafica = myChart;
 
+            break;
+        case BARRA:
+
+            conjuntoGraficas[posGrafica].grafica.destroy();
+            myChart = generarGraficaBarras(listaItems[posListaItems]);
+            conjuntoGraficas[posGrafica].grafica = myChart;
+
+            break;
+        case RADAR:
+
+            conjuntoGraficas[posGrafica].grafica.destroy();
+            myChart = generarGraficaRadar(listaItems[posListaItems]);
             conjuntoGraficas[posGrafica].grafica = myChart;
 
             break;
