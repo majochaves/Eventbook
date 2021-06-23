@@ -1,10 +1,9 @@
-<%-- 
+<%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
+<%@ page import="com.eventbookspring.eventbookspring.entity.Teleoperador" %><%--
     Document   : mensaje-editar
     Created on : 15-may-2021, 13:44:23
     Author     : memoriasIT
 --%>
-<%@page import="entity.Teleoperador"%>
-<%@page import="clases.Autenticacion"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,10 +17,10 @@
         <meta property="og:description" content="brevis, barbatus clabulares aliquando convertam de dexter, peritus capio. devatio clemens habitio est.">
         <meta property="og:image" content="http://digipunk.netii.net/images/radar.gif">
         <meta property="og:url" content="http://digipunk.netii.net">
-        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="components/base/base.css">
-        <script src="components/base/core.js"></script>
-        <script src="components/base/script.js"></script>
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/components/base/base.css">
+        <script src="/components/base/core.js"></script>
+        <script src="/components/base/script.js"></script>
     </head>
     <%
         // AUTENTICACION
@@ -34,10 +33,10 @@
             <jsp:include page="header.jsp" />
             <div class="section section-lg bg-gradient-animated d-flex align-items-center min-vh-100">
                 <div class="container">
-                    <form action="ServletMessageEditar" method="POST">
-                        <input type="hidden" id="userID" name="userID" value="<%= request.getParameter("userID") %>">
-                        <input type="hidden" id="user2ID" name="user2ID" value="<%= request.getParameter("user2ID") %>">
-                        <input type="hidden" id="msgId" name="msgId" value="<%= request.getParameter("msgId") %>">
+                    <form action="/mensaje/editarMsg/guardar" method="POST">
+                        <input type="hidden" id="userID" name="userID" value="<%= request.getAttribute("userID") %>">
+                        <input type="hidden" id="user2ID" name="user2ID" value="<%= request.getAttribute("opID") %>">
+                        <input type="hidden" id="msgId" name="msgId" value="<%= request.getAttribute("msgId") %>">
                         <div class="form-group-sm">
                                 Contenido:<input type="text" class="form-control" name="newContenido" value="<%= request.getAttribute("contenido") %>"><br/><br/>
                         </div>

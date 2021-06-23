@@ -44,7 +44,11 @@ public class MensajeController {
             MensajeDTO msg = this.mensajeService.getMessageByID(msgId);
             model.addAttribute("contenido", msg.getContenido());
 
-            return "mensaje-editar/{userID}/{opID}";
+            model.addAttribute("userID", userID);
+            model.addAttribute("opID", opID);
+            model.addAttribute("msgId", msgId);
+
+            return "mensaje-editar";
         } catch(AutenticacionException ex){
             return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
@@ -52,9 +56,9 @@ public class MensajeController {
 
     @PostMapping("/editarMsg/guardar")
     public String guardarMensajeEditado(Model model, HttpSession session,
-                                        @PathVariable("userID") Integer userID,
-                                        @PathVariable("opID") Integer opID,
-                                        @PathVariable("msgId") Integer msgId,
+                                        @RequestParam("userID") String userID,
+                                        @RequestParam("user2ID") String user2ID,
+                                        @RequestParam("msgId") String msgId,
                                         @RequestParam("newContenido") String newContenido){
 
         try {
@@ -65,10 +69,10 @@ public class MensajeController {
             }
 
             // Modificar mensaje
-            this.mensajeService.editarMsg(msgId, newContenido);
+            this.mensajeService.editarMsg(Integer.valueOf(msgId), newContenido);
 
             // Volver al chat
-            return "redirect:/chat/{userID}/{opID}/";
+            return "redirect:/chat/"+userID+"/"+user2ID+"/";
         } catch(AutenticacionException ex){
             return Autenticacion.getErrorJsp(model, ex.getMessage());
         }
