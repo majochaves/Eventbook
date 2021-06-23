@@ -35,3 +35,4 @@ build/
 ### DB ###
 /eventbook/*
 /eventbook
+derby.log
