@@ -28,7 +28,7 @@ function generarGraficaRosquilla(elItem){
             label: elItem.nombreTipoanalisis,
             backgroundColor: elItem.listaColores,
             hoverBorderWidth: 3,
-            hoverBorderColor: '#000',
+            hoverBorderColor: '#6b39bd',
             data: elItem.valores,
         }]
     };

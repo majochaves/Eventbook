@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="/components/base/tablas.css">
     <link rel="stylesheet" href="/components/base/modal.css">
 
-    <!-- Esto esta roto <script src="/components/jquery/jquery-3.4.1.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
@@ -64,7 +63,7 @@
                     <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal"
                             data-target="#abrirDialogoEditar">Modificar
                     </button>
-                    <a href="/analisis/ver/graficas/<%=thisAnalisisDto.getId()%>" class="shadow-sm badge badge-info">Ver
+                    <a href="/analisis/ver/graficas/<%=thisAnalisisDto.getId()%>" class="shadow-sm badge badge-primary">Ver
                         gráficas</a>
                 </div>
             </div>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/analisis")
@@ -60,7 +61,8 @@ public class AnalistaController {
             Model model,
             HttpSession session,
             @RequestParam("tipoUsuario") List<String> tipoUsuario,
-            @RequestParam("tipoFiltro") List<String> tipoFiltro,
+            @RequestParam("tipoFiltroUsuario") List<String> tipoFiltroUsuario,
+            @RequestParam("tipoFiltroEvento") Optional<String> tipoFiltroEvento,
             @RequestParam("fechaInicial") String cadenaFechaInicial,
             @RequestParam("fechaFinal") String cadenaFechaFinal) throws ParseException {
 
@@ -71,7 +73,7 @@ public class AnalistaController {
         try{
             this.analistaService.comprobarLogeadoYConRolAnalista(session);
             List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
-                    tipoFiltro,
+                    tipoFiltroUsuario,
                     cadenaFechaInicial,
                     cadenaFechaFinal,
                     autoGenerado);
