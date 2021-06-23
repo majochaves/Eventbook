@@ -17,7 +17,6 @@
         <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="/components/base/alert.css">
         <link rel="stylesheet" href="/components/base/base.css">
-        <!-- Esto esta roto <script src="components/jquery/jquery-3.4.1.min.js"></script>-->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="/components/bootstrap/js/popper.js"></script>
         <script src="/components/bootstrap/js/bootstrap.min.js"></script>
@@ -34,18 +33,22 @@
         <jsp:include page="./header.jsp">
             <jsp:param name="nav" value="analisis"/>
         </jsp:include>
-
             <!--<b>EN DESARROLLO</b><br/>-->
-            <div class="container">
-                <div class="row justify-content-md-center">
-                    <div class="col-4">
-                        <a class="btn btn-secondary btn-block mt-5" href="/analisis/listar"><i class="fa-chevron-left"></i>&nbsp; Ver mi lista de análisis</a>
+            <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <img style="background-color: rgba(255,255,255,0.68); padding: 20px; border-radius: 30px;" src="/images/EventBookLogoAnalisis.svg"/>
                     </div>
-                    <div class="col-4">
-                        <a class="btn btn-primary btn-block mt-5" href="/analisis/crear/mostrar">Empezar a crear una estadística &nbsp;<i class="fa-chevron-right"></i></a>
+                    <div class="row justify-content-md-center">
+                        <div class="col-5">
+                            <a class="btn btn-secondary btn-block mt-5" href="/analisis/listar"><i class="fa-chevron-left"></i>&nbsp; Ver mi lista de análisis</a>
+                        </div>
+                        <div class="col-5">
+                            <a class="btn btn-primary btn-block mt-5" href="/analisis/crear/mostrar">Empezar a crear una estadística &nbsp;<i class="fa-chevron-right"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
         </div>
     </body>
