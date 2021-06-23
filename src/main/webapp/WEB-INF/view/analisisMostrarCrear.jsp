@@ -85,7 +85,7 @@
                                 <h5>Tipo de análisis - Tabla Evento</h5>
                                 <button type="button" class="shadow-none badge badge-info mt-2" id="todoTablaEvento">Seleccionar todo</button>
                                 <div class="form-check mt-3">
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="numEvento" checked="checked" />Número de eventos totales<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="numEventos" checked="checked" />Número de eventos totales<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="tituloEvento" />Título<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="fechaEvento" />Fecha del evento<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="costeEvento" />Coste de entrada<br/>

@@ -61,19 +61,34 @@ public class AnalistaController {
             Model model,
             HttpSession session,
             @RequestParam("tipoUsuario") List<String> tipoUsuario,
-            @RequestParam("tipoFiltroUsuario") List<String> tipoFiltroUsuario,
-            @RequestParam("tipoFiltroEvento") Optional<String> tipoFiltroEvento,
+            @RequestParam("tipoFiltroUsuario") Optional<List<String>> tipoFiltroUsuarioOpt,
+            @RequestParam("tipoFiltroEvento") Optional<List<String>> tipoFiltroEventoOpt,
             @RequestParam("fechaInicial") String cadenaFechaInicial,
             @RequestParam("fechaFinal") String cadenaFechaFinal) throws ParseException {
 
         //Nota: El tratamiento de tipoUsuario y tipoFiltro se realiza automaticamente, lanzando la excepcion correspondiente
         //y siendo capturada abajo, en getMissingRequestParameterException()
+        List<String> tipoFiltroEvento = null;
+        List<String> tipoFiltroUsuario = null;
+
+        if(tipoFiltroEventoOpt.isPresent())
+            tipoFiltroEvento = tipoFiltroEventoOpt.get();
+        if(tipoFiltroUsuarioOpt.isPresent())
+            tipoFiltroUsuario = tipoFiltroUsuarioOpt.get();
+
+        if(tipoFiltroEvento==null && tipoFiltroUsuario==null){
+            model.addAttribute("muestraError", true);
+            return "analisisMostrarCrear";
+        }
+
+
 
         Par<String, String> autoGenerado = new Par<>("", "");
         try{
             this.analistaService.comprobarLogeadoYConRolAnalista(session);
             List<TipoanalisisDTO> listaTablas = this.analistaService.generarAnalisis(tipoUsuario,
                     tipoFiltroUsuario,
+                    tipoFiltroEvento,
                     cadenaFechaInicial,
                     cadenaFechaFinal,
                     autoGenerado);
@@ -228,13 +243,13 @@ public class AnalistaController {
 
         //Si se trata de un error producido por generarResultadosAnalisis volvemos a mostrar la creacion del analisis
         //con el error correspondiente mostrado
-        if(nombreVariable.equalsIgnoreCase("tipoUsuario") || nombreVariable.equalsIgnoreCase("tipoFiltro")){
-            model.addAttribute("muestraError", true);
-            return "analisisMostrarCrear";
-        } else {
+//        if(nombreVariable.equalsIgnoreCase("tipoUsuario") || nombreVariable.equalsIgnoreCase("tipoFiltro")){
+//            model.addAttribute("muestraError", true);
+//            return "analisisMostrarCrear";
+//        } else {
             model.addAttribute("error", "Error: Algún campo esta vacío. Debe completar: " + ex.getParameterName());
             return "error";
-        }
+//        }
     }
 
 
