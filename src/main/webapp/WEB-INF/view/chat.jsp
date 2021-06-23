@@ -138,7 +138,7 @@
                 
                 <% if (adminPriviledges){ %>
                 <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
-                <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
+                <span class="message-data-edit"><a href="/mensaje/borrar/<%= userId1 %>/<%= userId2 %>/{{id}}"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
                     <% } %>
                 </div>
                 <div class="message other-message float-right">
@@ -152,7 +152,7 @@
                 <div class="message-data">
                 <% if (adminPriviledges){ %>
                     <span class="message-data-edit"><a href="ServletMessageEditar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span>
-                        <span class="message-data-edit"><a href="ServletMessageBorrar?msgId={{id}}&userID=<%= request.getParameter("userID") %>&user2ID=<%= userId2 %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
+                        <span class="message-data-edit"><a href="/mensaje/borrar/<%= userId1 %>/<%= userId2 %>/{{id}}"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>
                 <% } %>
                 
                 <span class="message-data-name"><i class="fa fa-circle online"></i><%= usuarioChat.getNombre() %></span>
@@ -234,7 +234,7 @@
                                         // Change data according to receiver or sender
                                         messageElement.getElementsByClassName("message-data-name")[0].innerHTML = "<i class='fa fa-circle online'></i>"+ "<%= usuarioChat.getNombre() %>";
                                         <% if (adminPriviledges){ %>
-                                            var innerHtml = `<span class="message-data-edit"><a href="ServletMessageEditar?msgId=`+ idOfMsg +`&userID=<%= request.getParameter("userID") %>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span><span class="message-data-edit"><a href="ServletMessageBorrar?msgId=`+ idOfMsg +`&userID=<%= request.getParameter("userID") %>"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>`;
+                                            var innerHtml = `<span class="message-data-edit"><a href="ServletMessageEditar?msgId=`+ idOfMsg +`&userID=<%= userId1 %>/<%= userId2%>"><i class="far fa-edit" style="padding-right: 4px;"></i>Edit<a></span><span class="message-data-edit"><a href="/mensaje/borrar/<%= userId1 %>/<%= userId2 %>/`+ idOfMsg +`"><i class="far fa-trash" style="padding-right: 4px;"></i>Borrar<a></span>`;
                                             
                                             messageElement.getElementsByClassName("message-data")[0].innerHTML += innerHtml;
                                         <% } %>
