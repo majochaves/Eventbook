@@ -96,6 +96,13 @@
                                 <div class="modal-body">
                                     <form action="/chat/" method="POST">
                                         <div class="form-group-sm">
+                                            A buscar
+                                            <select class="form-control" id="aBuscar">
+                                                <option>Teleoperador</option>
+                                                <option>Usuario</option>
+                                            </select><br/>
+                                        </div>
+                                        <div class="form-group-sm">
                                             Nombre de usuario<input type="text" class="form-control" name="username"><br/><br/>
                                         </div>
 
