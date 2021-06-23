@@ -114,8 +114,8 @@ public class TestChatMessages extends Config {
 		
 		
 		// Abrir lista chats
-		driverMain.get("http://localhost:8080/Eventbook/ServletChatListar");
-		driverAux.get("http://localhost:8080/Eventbook/ServletChatListar");
+		driverMain.get("http://localhost:8080/chat/");
+		driverAux.get("http://localhost:8080/chat/");
 		
 		// Conseguir lista chats
 		By xpathChats = By.xpath("/html/body/div/div/div/table/tbody/tr");
@@ -141,7 +141,7 @@ public class TestChatMessages extends Config {
 	}
 
 	private void login(String user, String pw, WebDriver driver) {
-		driver.get("http://localhost:8080/Eventbook/usuario-iniciar-sesion.jsp");
+		driver.get("http://localhost:8080/login");
 		WebElement usuario = driver.findElement(By.xpath("/html/body/div/div/div/form/table[1]/tbody/tr[1]/td[2]/input"));
 		wait.until(ExpectedConditions.elementToBeClickable(usuario));
 		usuario.sendKeys(user);
@@ -421,7 +421,7 @@ public class TestChatMessages extends Config {
 		
 		
 		// Abrir lista chats
-		driveradmin.get("http://localhost:8080/Eventbook/ServletChatListarTeleoperador");
+		driveradmin.get("http://localhost:8080/chat/");
 	}
 
 }

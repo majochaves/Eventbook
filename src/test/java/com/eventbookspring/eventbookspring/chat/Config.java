@@ -6,8 +6,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Config {
 
 	protected String nombreUsuario = "el";
-	protected String strUsuario = "usuario";
-	protected String passUser = "test";
+	protected String strUsuario = "pepe";
+	protected String passUser = "123";
 	protected String nombreTeleoperador = "Tele";
 	protected String strUserTele = "elTeleop";
 	protected String strPWTele = "test";

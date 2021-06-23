@@ -92,112 +92,7 @@ public class ChatController {
         }
     }
 
-    /*
-              __            __      __            ___
-         /\  /__` \ / |\ | /  `    /  ` |__|  /\   |
-        /~~\ .__/  |  | \| \__,    \__, |  | /~~\  |
-        - Async Chat -
-     */
 
-    // AsyncContext for message in real time
-    private List<AsyncContext> contexts = new LinkedList<>();
-    @GetMapping("/getMsg/{userID}/{user2ID}")
-    public void sendMessage(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        final AsyncContext asyncContext = request.startAsync(request, response);
-        asyncContext.setTimeout(10 * 60 * 1000);
-        contexts.add(asyncContext);
-    }
-
-    @PostMapping("/sendMsg/{userID}/{user2ID}")
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        List<AsyncContext> asyncContexts = new ArrayList<>(this.contexts);
-        this.contexts.clear();
-        ServletContext application = request.getServletContext();
-
-        Chat chat;
-        UsuarioDTO envia;
-        UsuarioDTO recibe = new UsuarioDTO();
-        recibe.setNombre("error");
-
-        String message = request.getParameter("message").trim();
-        String userTo = request.getParameter("userTo");
-
-        String htmlMessage;
-
-        // Message contains data
-        if (!(message == null || message.contentEquals(""))) {
-
-            // Current time
-            Date currentTime = new Date();
-
-            // Usuario envia es el logueado
-            envia = Autenticacion.getUsuarioLogeado(request, response);
-
-            // Usuario que recibe se consigue con request XHR
-//            TODO antes era esto, quizás posible error - recibe = this.usuarioService.getUserByID(userTo);
-            recibe = this.usuarioService.findUsuarioByID(Integer.valueOf(userTo));
-
-            // Find if chat already exists
-            chat = null;
-            try {
-                chat = this.chatService.findByChatPK(envia.getId(), recibe.getId());
-                if(chat == null){ // El chat no existe
-                    throw(new Exception());
-                }
-            } catch (Exception e) {
-                throw new ServletException(e.getMessage());
-            }
-
-
-            // Compose message from data
-            MensajeDTO msg = this.mensajeService.addMessage(currentTime, message, envia.getId(), chat);
-
-
-            int idUserTo;
-            if (msg.getChat().getTeleoperador().getUsuarioId() == msg.getUsuarioEmisorId()){
-                idUserTo = msg.getChat().getUsuario().getId();
-            } else {
-                idUserTo = msg.getChat().getTeleoperador().getUsuarioId();
-            }
-
-
-            // HTML to be appended to the chat
-            htmlMessage = "<li id=\""+ msg.getId() +"\" useridTo=\""+ idUserTo +"\" userid=\""+ msg.getUsuarioEmisorId()+"\"><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
-
-
-            // Add message to chat
-            boolean add = this.chatService.addMsg(msg, chat);
-
-            if (!add){
-                throw new ServletException("No se pudo añadir el mensaje");
-            }
-
-
-        } else { // Message had an error
-            htmlMessage = "";
-        }
-
-        if (application.getAttribute("messages") == null) {
-            application.setAttribute("messages", htmlMessage);
-        } else {
-            String currentMessages = (String) application.getAttribute("messages");
-            application.setAttribute("messages", htmlMessage + currentMessages);
-        }
-
-        for (AsyncContext asyncContext : asyncContexts) {
-            try (PrintWriter writer = asyncContext.getResponse().getWriter()) {
-                // Add message to website
-                writer.println(htmlMessage);
-                writer.flush();
-                asyncContext.complete();
-
-
-            } catch (Exception ex) {
-                throw new ServletException(ex.getMessage());
-            }
-        }
-    }
 
     /*
             __   __   ___      ___  ___
@@ -324,4 +219,114 @@ public class ChatController {
         }
 
     }
+
+
+    /*
+              __            __      __            ___
+         /\  /__` \ / |\ | /  `    /  ` |__|  /\   |
+        /~~\ .__/  |  | \| \__,    \__, |  | /~~\  |
+        - Async Chat -
+     */
+
+    // AsyncContext for message in real time
+    private List<AsyncContext> contexts = new LinkedList<>();
+    @GetMapping("/getMsg/{userID}/{user2ID}")
+    public void sendMessage(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        final AsyncContext asyncContext = request.startAsync(request, response);
+        asyncContext.setTimeout(10 * 60 * 1000);
+        contexts.add(asyncContext);
+    }
+
+    @PostMapping("/sendMsg/{userID}/{user2ID}")
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<AsyncContext> asyncContexts = new ArrayList<>(this.contexts);
+        this.contexts.clear();
+        ServletContext application = request.getServletContext();
+
+        Chat chat;
+        UsuarioDTO envia;
+        UsuarioDTO recibe = new UsuarioDTO();
+        recibe.setNombre("error");
+
+        String message = request.getParameter("message").trim();
+        String userTo = request.getParameter("userTo");
+
+        String htmlMessage;
+
+        // Message contains data
+        if (!(message == null || message.contentEquals(""))) {
+
+            // Current time
+            Date currentTime = new Date();
+
+            // Usuario envia es el logueado
+            envia = Autenticacion.getUsuarioLogeado(request, response);
+
+            // Usuario que recibe se consigue con request XHR
+//            TODO antes era esto, quizás posible error - recibe = this.usuarioService.getUserByID(userTo);
+            recibe = this.usuarioService.findUsuarioByID(Integer.valueOf(userTo));
+
+            // Find if chat already exists
+            chat = null;
+            try {
+                chat = this.chatService.findByChatPK(envia.getId(), recibe.getId());
+                if(chat == null){ // El chat no existe
+                    throw(new Exception());
+                }
+            } catch (Exception e) {
+                throw new ServletException(e.getMessage());
+            }
+
+
+            // Compose message from data
+            MensajeDTO msg = this.mensajeService.addMessage(currentTime, message, envia.getId(), chat);
+
+
+            int idUserTo;
+            if (msg.getChat().getTeleoperador().getUsuarioId() == msg.getUsuarioEmisorId()){
+                idUserTo = msg.getChat().getUsuario().getId();
+            } else {
+                idUserTo = msg.getChat().getTeleoperador().getUsuarioId();
+            }
+
+
+            // HTML to be appended to the chat
+            htmlMessage = "<li id=\""+ msg.getId() +"\" useridTo=\""+ idUserTo +"\" userid=\""+ msg.getUsuarioEmisorId()+"\"><div class='message-data'><span class='message-data-name'><i class='fa fa-circle online'></i>" + recibe.getNombre() + "</span><span class='message-data-time'>"+new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(currentTime)+"</span></div><div class='message my-message'>"+ message +"</div></li>";
+
+
+            // Add message to chat
+//            boolean add = this.chatService.addMsg(msg, chat);
+
+//            if (!add){
+//                throw new ServletException("No se pudo añadir el mensaje");
+//            }
+
+
+        } else { // Message had an error
+            htmlMessage = "";
+        }
+
+        if (application.getAttribute("messages") == null) {
+            application.setAttribute("messages", htmlMessage);
+        } else {
+            String currentMessages = (String) application.getAttribute("messages");
+            application.setAttribute("messages", htmlMessage + currentMessages);
+        }
+
+        for (AsyncContext asyncContext : asyncContexts) {
+            try (PrintWriter writer = asyncContext.getResponse().getWriter()) {
+                // Add message to website
+                writer.println(htmlMessage);
+                writer.flush();
+                asyncContext.complete();
+
+
+            } catch (Exception ex) {
+                throw new ServletException(ex.getMessage());
+            }
+        }
+    }
+
+
 }
