@@ -46,6 +46,24 @@
 
                     <hr class="divider divider-sm mt-0" />
 
+                    <%
+                        if(muestraError!=null && muestraError.booleanValue()){
+                    %>
+                    <div class="row mt-6">
+                        <div class="col-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error!</strong> Intenta seleccionar al menos un tipo de usuario y un tipo de análisis o algo de la tabla Evento.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
                     <form method="POST" action="/analisis/crear/generar">
                         <div class="row">
                             <div class="col-sm-4">
@@ -105,22 +123,7 @@
                             </div>
                         </div>
                     </form>
-                    <%
-                        if(muestraError!=null && muestraError.booleanValue()){
-                    %>
-                    <div class="row mt-6">
-                        <div class="col-12">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Error!</strong> Intenta seleccionar al menos un tipo de usuario y un tipo de análisis
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <%
-                        }
-                    %>
+
                 </div>
             </div>
         </div>

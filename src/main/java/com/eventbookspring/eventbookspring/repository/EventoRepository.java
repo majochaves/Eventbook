@@ -1,9 +1,11 @@
 package com.eventbookspring.eventbookspring.repository;
 
 import com.eventbookspring.eventbookspring.clases.Par;
+import com.eventbookspring.eventbookspring.entity.Etiqueta;
 import com.eventbookspring.eventbookspring.entity.Evento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,6 +14,9 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
     //Por ello, hay algunas funciones que se repite. Un ejemplo de estas funcionalidades limitadas, seria que derby NO PERMITE
     //realizar un CAST de INTEGER a VARCHAR(Segun la documentacion de Apache Derby)
 
+
+    @Query("SELECT et.eventoList FROM Etiqueta et WHERE et = :laEtiqueta")
+    public List<Evento> findByFiltro(Etiqueta laEtiqueta);
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(UPPER(e.titulo), COUNT(e.titulo)) FROM Evento e GROUP BY UPPER(e.titulo)")
     public List<Par<?, ?>> getNumEventosGroupByTitulos();
@@ -51,8 +56,5 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par('-Sin especificar', COUNT(*)) FROM Evento e WHERE e.maxEntradas IS NULL")
     public Par<?, ?> getNumEventosGroupMaxEntradasSinEspecificar();
-
-
-
 
 }

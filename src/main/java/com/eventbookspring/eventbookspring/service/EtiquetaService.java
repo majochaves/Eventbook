@@ -17,6 +17,6 @@ public class EtiquetaService {
     }
 
     public List<Etiqueta> listarEtiquetas() {
-        return this.etiquetaRepository.findAll();
+        return this.etiquetaRepository.findSortedAlphabetically();
     }
 }

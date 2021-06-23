@@ -3,7 +3,6 @@ package com.eventbookspring.eventbookspring.service;
 import com.eventbookspring.eventbookspring.clases.Autenticacion;
 import com.eventbookspring.eventbookspring.clases.AutenticacionException;
 import com.eventbookspring.eventbookspring.clases.Par;
-import com.eventbookspring.eventbookspring.clases.Tupla;
 import com.eventbookspring.eventbookspring.dto.AnalisisDTO;
 import com.eventbookspring.eventbookspring.dto.CampoanalisisDTO;
 import com.eventbookspring.eventbookspring.dto.TipoanalisisDTO;
@@ -96,6 +95,9 @@ public class AnalistaService {
             String cadenaFechaInicial,
             String cadenaFechaFinal,
             Par<String, String> autoGenerado) throws ParseException {
+        //Nota: La tabla de Usuarios realmente realiza un JOIN con los roles seleccionados. Si se seleccionan todos los roles
+        //equivale a no realizar un join. Por otra parte, es posible guardar un analisis que no devuelva datos(quizas el
+        //analista tiene interes de recordad (en un futuro) que en sus filtros aplicados no devolvieron nada).
 
 
         //------------FECHA-----------
@@ -139,8 +141,6 @@ public class AnalistaService {
         }
         autoGeneradoAnalisisDe = autoGeneradoAnalisisDe.substring(0, autoGeneradoAnalisisDe.lastIndexOf(","));
 
-        if(listaUsuarios.isEmpty())
-            autoGeneradoTiposFiltros+=" (Tabla Usuario) -> Sin resultados. ";
 
 
 
@@ -149,6 +149,7 @@ public class AnalistaService {
         //--------BUSQUEDA POR FILTROS DE LA TABLA USUARIO---------
 
         if(!listaUsuarios.isEmpty() && tipoFiltroUsuario!=null && !tipoFiltroUsuario.isEmpty()){
+            autoGeneradoTiposFiltros+=" (Tabla Usuario join Tablas de roles) -> ";
             if(tipoFiltroUsuario.contains(FILTRONUMUSUARIOS)){
 
                 List<CampoanalisisDTO> caDtoLista = new ArrayList<>();
@@ -198,7 +199,12 @@ public class AnalistaService {
                 anyadirEnListaTipos(listaTipos, listaPar, "Fecha Creacion de los Usuarios (Mes / Año)");
                 autoGeneradoTiposFiltros+=" fecha por meses-años, ";
             }
+
+            autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(",")) + ".";
+        } else if(listaUsuarios.isEmpty()){
+            autoGeneradoTiposFiltros+=" (Tabla Usuario join Tablas de roles) -> Sin resultados. ";
         }
+
 
 
 
@@ -267,14 +273,16 @@ public class AnalistaService {
                 autoGeneradoTiposFiltros+=" asientos fijos, ";
             }
 
+            autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(","));
+
 
         }
 
 
 
 
+        System.out.println(autoGeneradoTiposFiltros);
 
-        autoGeneradoTiposFiltros = autoGeneradoTiposFiltros.substring(0, autoGeneradoTiposFiltros.lastIndexOf(","));
         autoGenerado.setPrimerElem(autoGeneradoAnalisisDe);
         autoGenerado.setSegundoElem(autoGeneradoTiposFiltros);
 

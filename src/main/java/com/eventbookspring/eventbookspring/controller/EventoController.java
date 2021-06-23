@@ -224,9 +224,23 @@ public class EventoController {
     public String doVerReservas (@PathVariable("usuarioId") Integer usuarioId, Model model){
         Usuario u = this.usuarioService.getUsuarioById(usuarioId);
         List<EventoDTO> eventosUsuario = this.eventoService.getEventosDeUsuario(u);
+        List<Etiqueta> etiquetaList = this.etiquetaService.listarEtiquetas();
+        model.addAttribute("etiquetaList", etiquetaList);
         model.addAttribute("eventos", eventosUsuario);
         model.addAttribute("usuario", u);
         return "reservas_listar";
+    }
+
+    @GetMapping("verReservasFiltradas/{usuarioId}")
+    public String doVerReservasFiltradas (@PathVariable("usuarioId") Integer usuarioId, @RequestParam("etiqueta") Integer etiqueta, Model model){
+        Usuario u = this.usuarioService.getUsuarioById(usuarioId);
+        List<EventoDTO> eventosUsuario = this.eventoService.getEventosDeUsuarioConFiltro(u, etiqueta);
+        List<Etiqueta> etiquetaList = this.etiquetaService.listarEtiquetas();
+        model.addAttribute("etiquetaList", etiquetaList);
+        model.addAttribute("eventos", eventosUsuario);
+        model.addAttribute("usuario", u);
+        return "reservas_listar";
+
     }
 
     @GetMapping("editarReserva/{eventoId}/{usuarioId}")

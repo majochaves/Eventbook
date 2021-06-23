@@ -1,6 +1,7 @@
 package com.eventbookspring.eventbookspring.service;
 
 import com.eventbookspring.eventbookspring.dto.EventoDTO;
+import com.eventbookspring.eventbookspring.entity.Etiqueta;
 import com.eventbookspring.eventbookspring.entity.Evento;
 import com.eventbookspring.eventbookspring.entity.Reserva;
 import com.eventbookspring.eventbookspring.entity.Usuario;
@@ -13,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventoService {
@@ -49,7 +51,6 @@ public class EventoService {
         Evento e = this.eventoRepository.getById(id);
         return e.getDTO();
     }
-
 
     public List<EventoDTO> listarEventos () {
         List<Evento> lista;
@@ -126,4 +127,34 @@ public class EventoService {
         }
         return eventosUsuario;
     }
+
+    public List<EventoDTO> getEventosDeUsuarioConFiltro(Usuario u, Integer etiqueta){
+        List<EventoDTO> eventosUsuario = new ArrayList<>();
+        List<EventoDTO> eventos = this.listarEventosConFiltro(etiqueta);
+
+        for(EventoDTO e: eventos){
+            boolean usuarioTieneReserva = false;
+            for(Reserva r: e.getReservaList()){
+                if(r.getUsuarioeventosId().equals(u.getUsuarioeventos())){
+                    usuarioTieneReserva = true;
+                }
+            }
+            if(usuarioTieneReserva) eventosUsuario.add(e);
+        }
+        return eventosUsuario;
+    }
+
+    public List<EventoDTO> listarEventosConFiltro (Integer filtro) {
+        List<Evento> lista;
+
+        Optional<Etiqueta> et = this.etiquetaRepository.findById(filtro);
+        Etiqueta etiqueta = null;
+        if(et != null) etiqueta = et.get();
+
+
+        lista = this.eventoRepository.findByFiltro(etiqueta);
+
+        return this.convertirAListaDTO(lista);
+    }
+
 }
