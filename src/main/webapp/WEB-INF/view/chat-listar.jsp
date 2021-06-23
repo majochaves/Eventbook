@@ -21,15 +21,20 @@
         <title>Listado de chats</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="/components/base/base.css">
         <link rel="stylesheet" href="/components/base/tablas.css">
         <link rel="stylesheet" href="/components/base/modal.css">
-        <script src="/components/jquery/jquery-3.4.1.min.js"></script>
-        <script src="/components/bootstrap/js/popper.js"></script>
-        <script src="/components/bootstrap/js/bootstrap.min.js"></script>
+<%--        <script src="/components/bootstrap/js/popper.js"></script>--%>
+<%--        <script src="/components/bootstrap/js/bootstrap.min.js"></script>--%>
+
+        <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="/components/base/base.css">
         <script src="/components/base/core.js"></script>
         <script src="/components/base/script.js"></script>
+
+<%--        <script src="components/jquery/jquery-3.4.1.min.js"></script>--%>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
     </head>
     <%
         // AUTENTICACION
@@ -45,8 +50,13 @@
     %>
     <body>
         <div class="page">
+<%--            <jsp:include page="header.jsp">--%>
+<%--                <jsp:param name="nav" value="chat"/>  --%>
+<%--            </jsp:include>--%>
+
+
             <jsp:include page="header.jsp">
-                <jsp:param name="nav" value="chat"/>  
+                <jsp:param name="nav" value="chat"/>
             </jsp:include>
             <div class="section section-lg bg-transparent">
                 <div class="container">
