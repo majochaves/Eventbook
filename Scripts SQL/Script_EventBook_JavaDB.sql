@@ -45,7 +45,7 @@ ALTER TABLE ANALISTA
 
 CREATE TABLE ANALISIS (
     id                    INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    descripcion           VARCHAR(300),
+    descripcion           VARCHAR(1000),
     analista_usuario_id   INTEGER NOT NULL,
     PRIMARY KEY(id)
 );
