@@ -27,7 +27,7 @@
         
     </head>
     <%
-        EventoDTO evento = (EventoDTO)request.getAttribute("evento");
+        EventoDTO evento = (EventoDTO) request.getAttribute("evento");
         Usuario usuario = (Usuario) request.getAttribute("usuario");
         Integer numMaxEntradas = evento.getMaxEntradas();
         String maxentradas = " "+"máximo "+numMaxEntradas+" entradas.";
