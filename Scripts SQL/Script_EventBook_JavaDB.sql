@@ -86,7 +86,7 @@ ALTER TABLE TELEOPERADOR
 
 
 CREATE TABLE CHAT (
-    fecha                     DATE,
+    fecha                     TIMESTAMP,
     teleoperador_id           INTEGER NOT NULL,
     usuario_id                INTEGER NOT NULL,
     PRIMARY KEY(teleoperador_id, usuario_id)
@@ -100,7 +100,7 @@ ALTER TABLE CHAT
 
 CREATE TABLE MENSAJE (
     id                             INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    fecha                          DATE,
+    fecha                          TIMESTAMP,
     contenido                      VARCHAR(500),
     chat_teleoperador_id           INTEGER NOT NULL,
     chat_usuario_id                INTEGER NOT NULL,
