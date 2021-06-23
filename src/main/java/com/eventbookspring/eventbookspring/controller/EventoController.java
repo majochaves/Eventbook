@@ -240,6 +240,7 @@ public class EventoController {
         model.addAttribute("eventos", eventosUsuario);
         model.addAttribute("usuario", u);
         return "reservas_listar";
+
     }
 
     @GetMapping("editarReserva/{eventoId}/{usuarioId}")

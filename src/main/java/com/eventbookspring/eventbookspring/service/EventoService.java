@@ -151,6 +151,7 @@ public class EventoService {
         Etiqueta etiqueta = null;
         if(et != null) etiqueta = et.get();
 
+
         lista = this.eventoRepository.findByFiltro(etiqueta);
 
         return this.convertirAListaDTO(lista);

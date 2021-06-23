@@ -32,6 +32,7 @@
 %>
 <body>
 <div class="page">
+
     <jsp:include page="header.jsp">
         <jsp:param name="nav" value="<%= nav %>"/>
     </jsp:include>
