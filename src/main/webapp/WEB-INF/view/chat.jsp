@@ -202,9 +202,9 @@
                             xmlhttp.send("message=" + context.messageOutput + "&userTo=<%= usuarioChat.getId() %>");
                         },
                         getMessages: function () {
-                            console.log("get messages");
+                            // console.log("get messages");
                             if (!messagesWaiting) {
-                                console.log("message");
+                                // console.log("message");
                                 messagesWaiting = true;
                                 var xmlhttp = new XMLHttpRequest();
                                 xmlhttp.onreadystatechange = function () {
@@ -253,10 +253,10 @@
                                             const userId1 = <%= request.getParameter("userID") %>;
                                             const userId2 = <%= request.getParameter("user2ID") %>;                          
                                             if (idUserTo == userId2 && sender == userId1){ // Usuario izq
-                                                console.log(messageElement);
+                                                // console.log(messageElement);
                                                 $('.chat-history').find('ul').append(messageElement);
                                             } else if(idUserTo == userId1 && sender == userId2){ // Usuario drcha
-                                                console.log("mensaje2", messageElement);
+                                                // console.log("mensaje2", messageElement);
                                                 var template = Handlebars.compile($("#message-template").html());
                                                 
                                                 var context = {
