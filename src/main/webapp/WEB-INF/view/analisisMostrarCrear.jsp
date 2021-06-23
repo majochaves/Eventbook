@@ -68,7 +68,7 @@
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="ciudad" />Ciudad<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="nombre" />Nombre<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="apellido" />Apellido<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="filtroFechaMeses" />Fecha - Por meses<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="filtroFechaMeses" />Fecha - Por meses y años<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroUsuario" value="filtroFechaAnyos" />Fecha - Por años<br/>
                                 </div>
                             </div>
@@ -87,7 +87,8 @@
                                 <div class="form-check mt-3">
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="numEventos" checked="checked" />Número de eventos totales<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="tituloEvento" />Título<br/>
-                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="fechaEvento" />Fecha del evento<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="fechaEventoMesesyAnyos" />Fecha del evento - Por mes y años<br/>
+                                    <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="fechaEventoAnyos" />Fecha del evento - Por años<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="costeEvento" />Coste de entrada<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="aforoEvento" />Aforo<br/>
                                     <input class="form-check-input mt-2" type="checkbox" name="tipoFiltroEvento" value="maxEntradasEvento" />Maximo de entradas<br/>

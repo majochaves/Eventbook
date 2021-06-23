@@ -59,7 +59,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     public List<Par<?, ?>> getNumUsuariosGroupByCreatedYear(Set<Usuario> listaUsuarios);
 
     @Query("SELECT new com.eventbookspring.eventbookspring.clases.Par(MONTH(u.fechaCreacion), YEAR(u.fechaCreacion), COUNT(*))" +
-            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY MONTH(u.fechaCreacion), YEAR(u.fechaCreacion)")
+            " FROM Usuario AS u WHERE u IN :listaUsuarios GROUP BY YEAR(u.fechaCreacion), MONTH(u.fechaCreacion)")
     public List<Par<?, ?>> getNumUsuariosGroupByCreatedMonthYear(Set<Usuario> listaUsuarios);
 
 

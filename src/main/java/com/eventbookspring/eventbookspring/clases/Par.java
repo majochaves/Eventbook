@@ -42,18 +42,26 @@ public class Par<T, K>{
     }
 
     public Double getSegundoElemLikeDouble(){
-        if(this.segundoElem instanceof Number)
+        if(this.segundoElem == null)
+            return 0.0;
+        else if(this.segundoElem instanceof Number)
             return ((Number) this.segundoElem).doubleValue();
         else
             throw new ClassCastException("El segundo elemento no se puede convertir a Double");
     }
 
     public String getPrimerElemYExtraElemLikeString(){
+//        System.out.println(this.primerElem);
+        if(this.primerElem == null)
+            return "-Sin valores asignados";
+
         if(this.extraTercerElem != null){
             if(this.primerElem instanceof String && this.extraTercerElem instanceof String)
                 return (String) this.primerElem + "/" + (String) this.extraTercerElem;
-            else if(this.primerElem instanceof Number && this.primerElem instanceof Number)
+            else if(this.primerElem instanceof Number && this.extraTercerElem instanceof Number)
                 return (Number) this.primerElem + "/" + (Number)this.extraTercerElem;
+            else if(this.primerElem instanceof Character && this.extraTercerElem instanceof Character)
+                return (Character) this.primerElem + "/" + (Character)this.extraTercerElem;
             else
                 throw new ClassCastException("El primer elemento o el elemento extra no se puede convertir a String");
         } else {
@@ -61,6 +69,8 @@ public class Par<T, K>{
                 return (String) this.primerElem;
             else if(this.primerElem instanceof Number)
                 return ((Number) this.primerElem).toString();
+            else if(this.primerElem instanceof Character)
+                return ((Character) this.primerElem).toString();
             else
                 throw new ClassCastException("El primer elemento no se puede convertir a String");
         }

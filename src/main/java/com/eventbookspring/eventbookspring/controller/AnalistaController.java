@@ -66,8 +66,6 @@ public class AnalistaController {
             @RequestParam("fechaInicial") String cadenaFechaInicial,
             @RequestParam("fechaFinal") String cadenaFechaFinal) throws ParseException {
 
-        //Nota: El tratamiento de tipoUsuario y tipoFiltro se realiza automaticamente, lanzando la excepcion correspondiente
-        //y siendo capturada abajo, en getMissingRequestParameterException()
         List<String> tipoFiltroEvento = null;
         List<String> tipoFiltroUsuario = null;
 
@@ -76,6 +74,7 @@ public class AnalistaController {
         if(tipoFiltroUsuarioOpt.isPresent())
             tipoFiltroUsuario = tipoFiltroUsuarioOpt.get();
 
+        //Devuelve a la misma pagina con un mensaje de error lanzado
         if(tipoFiltroEvento==null && tipoFiltroUsuario==null){
             model.addAttribute("muestraError", true);
             return "analisisMostrarCrear";
