@@ -324,7 +324,7 @@ public class ChatController {
     // AsyncContext for message in real time
     private List<AsyncContext> contexts = new LinkedList<>();
     @GetMapping("/getMsg/{userID}/{user2ID}")
-    public void sendMessage(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    public void sendMessage(HttpServletRequest request, HttpServletResponse response) {
         final AsyncContext asyncContext = request.startAsync(request, response);
         asyncContext.setTimeout(10 * 60 * 1000);
         contexts.add(asyncContext);
@@ -332,7 +332,7 @@ public class ChatController {
 
     @PostMapping("/sendMsg/{userID}/{user2ID}")
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException {
         List<AsyncContext> asyncContexts = new ArrayList<>(this.contexts);
         this.contexts.clear();
         ServletContext application = request.getServletContext();
