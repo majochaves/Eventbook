@@ -17,8 +17,8 @@
         <title>Seleccionar asientos</title>
         <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="/components/base/base.css">
-        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-        <script src="/components/eventos/asientos.js"></script>
+        <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script defer src="/components/eventos/asientos.js"></script>
         <script src="/components/base/core.js"></script>
         <script src="/components/base/script.js"></script>
         
