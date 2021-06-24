@@ -1,4 +1,5 @@
-<%-- 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%--
     Document   : index
     Created on : 13-Apr-2021, 15:13:01
     Author     : josie
@@ -15,12 +16,12 @@
 <%@page import="com.eventbookspring.eventbookspring.entity.Administrador"%>
 <%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <title>Home</title>
-    <meta charset="utf-8">
+      <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta property="og:title" content="Template Monster Admin Template">
