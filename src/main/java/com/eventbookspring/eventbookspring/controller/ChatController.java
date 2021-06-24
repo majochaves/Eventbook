@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/chat/")
@@ -197,11 +198,104 @@ public class ChatController {
     }
 
 
-/*
-        __   ___       ___ ___  ___
-       |  \ |__  |    |__   |  |__
-       |__/ |___ |___ |___  |  |___
-*/
+    @PostMapping("/")
+    public String listarConFiltro(Model model, HttpServletRequest request, HttpServletResponse response){
+
+        try {
+            UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(request, response);
+            if (usuarioDTO == null){ // No ha hecho login
+                throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            String aBuscar = request.getParameter("aBuscar");
+            String username = request.getParameter("username");
+            String nombre = request.getParameter("nombre");
+            String apellidos = request.getParameter("apellidos");
+
+            List<Chat> chatsFiltrados = this.chatService.findChatsByUserID(usuarioDTO.getId());
+            chatsFiltrados = FiltrarChats(aBuscar, username, nombre, apellidos, chatsFiltrados);
+
+            // Mostrar vista con privilegios si los tiene
+            if(Autenticacion.tieneRol(request, response, Teleoperador.class) || Autenticacion.tieneRol(request, response, Administrador.class)){
+                model.addAttribute("allMessages", "Modo Teleoperador: mostrando todos los chats - <a href='/chat/'>Modo usuario</a>");
+            } else { // Solo los teleoperadores tienen permisos
+                throw new AutenticacionException("Solo los teleoperadores pueden ver esta página.");
+            }
+
+            request.setAttribute("chats", chatsFiltrados);
+
+            return "chat-listar";
+        } catch(AutenticacionException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
+        }
+    }
+
+
+    @PostMapping("/teleoperador")
+    public String listarConFiltroTeleoperador(Model model, HttpServletRequest request, HttpServletResponse response){
+
+        try {
+            UsuarioDTO usuarioDTO = Autenticacion.getUsuarioLogeado(request, response);
+            if (usuarioDTO == null){ // No ha hecho login
+                throw new AutenticacionException("¿Has iniciado sesión?");
+            }
+
+            String aBuscar = request.getParameter("aBuscar");
+            String username = request.getParameter("username");
+            String nombre = request.getParameter("nombre");
+            String apellidos = request.getParameter("apellidos");
+
+            List<Chat> chatsFiltrados = this.chatService.findAll();
+            chatsFiltrados = FiltrarChats(aBuscar, username, nombre, apellidos, chatsFiltrados);
+
+            // Mostrar vista con privilegios si los tiene
+            if(Autenticacion.tieneRol(request, response, Teleoperador.class) || Autenticacion.tieneRol(request, response, Administrador.class)){
+                model.addAttribute("allMessages", "Modo Teleoperador: mostrando todos los chats - <a href='/chat/'>Modo usuario</a>");
+            } else { // Solo los teleoperadores tienen permisos
+                throw new AutenticacionException("Solo los teleoperadores pueden ver esta página.");
+            }
+
+            request.setAttribute("chats", chatsFiltrados);
+
+            return "chat-listar";
+        } catch(AutenticacionException ex){
+            return Autenticacion.getErrorJsp(model, ex.getMessage());
+        }
+    }
+
+
+    private List<Chat> FiltrarChats(String aBuscar, String username, String nombre, String apellidos, List<Chat> chatsFiltrados) {
+        if (aBuscar.equals("Teleoperador")){
+            try{
+                // FILTRO NOMBRE DE USUARIO
+                chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getTeleoperador().getUsuario().getUsername().toLowerCase().contains(username.toLowerCase())).collect(Collectors.toList());
+
+                // FILTRO NOMBRE
+                chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getTeleoperador().getUsuario().getNombre().toLowerCase().contains(nombre.toLowerCase())).collect(Collectors.toList());
+
+                // FILTRO APELLIDOS
+                chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getTeleoperador().getUsuario().getApellidos().toLowerCase().contains(apellidos.toLowerCase())).collect(Collectors.toList());
+            } catch (Exception e){ }
+        } else {
+            // FILTRO NOMBRE DE USUARIO
+            chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getUsuario().getUsername().toLowerCase().contains(username.toLowerCase())).collect(Collectors.toList());
+
+            // FILTRO NOMBRE
+            chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getUsuario().getNombre().toLowerCase().contains(nombre.toLowerCase())).collect(Collectors.toList());
+
+            // FILTRO APELLIDOS
+            chatsFiltrados = chatsFiltrados.stream().filter(u -> u.getUsuario().getApellidos().toLowerCase().contains(apellidos.toLowerCase())).collect(Collectors.toList());
+
+        }
+        return chatsFiltrados;
+    }
+
+
+    /*
+            __   ___       ___ ___  ___
+           |  \ |__  |    |__   |  |__
+           |__/ |___ |___ |___  |  |___
+    */
     @GetMapping("/borrar/{userID}/{opID}")
     public String borrarChat(Model model, HttpSession session, @PathVariable("userID") Integer userID, @PathVariable("opID") Integer opID){
         try {

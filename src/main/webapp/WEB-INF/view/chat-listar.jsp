@@ -94,10 +94,10 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <form action="/chat/" method="POST">
+                                    <form action="" method="POST">
                                         <div class="form-group-sm">
                                             A buscar
-                                            <select class="form-control" id="aBuscar">
+                                            <select class="form-control" id="aBuscar" name="aBuscar">
                                                 <option>Teleoperador</option>
                                                 <option>Usuario</option>
                                             </select><br/>
