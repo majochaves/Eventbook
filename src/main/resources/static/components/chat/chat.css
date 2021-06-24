@@ -104,7 +104,7 @@
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;
   overflow-y: scroll;
-  height: 615px;
+  height: 674px;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;
@@ -147,16 +147,16 @@
   left: 93%;
 }
 .chat .chat-message {
-  padding: 30px;
+  padding: 0px;
 }
 .chat .chat-message textarea {
-  width: 100%;
   border: none;
   padding: 10px 20px;
   font: 16px/16px "Lato", Arial, sans-serif;
   margin-bottom: 10px;
   border-radius: 5px;
   resize: none;
+  flex-grow:1;
 }
 .chat .chat-message .fa-file-o, .chat .chat-message .fa-file-image-o {
   font-size: 14px;
@@ -172,6 +172,7 @@
   cursor: pointer;
   font-weight: bold;
   background: #F2F5F8;
+  margin-left: 10px;
 }
 .chat .chat-message button:hover {
   color: #75b1e8;
