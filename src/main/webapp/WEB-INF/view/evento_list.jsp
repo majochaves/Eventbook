@@ -66,8 +66,9 @@
                 <% if(puedeCrear){%><a href="/crearEvento" class="btn btn-primary">Crear evento</a><%}%>
 
                 <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
-                    <% if(eventos != null){
+                    <% if(!eventos.isEmpty()){
                         for(EventoDTO e : eventos){
+                            System.out.println("Evento: " + e.getId());
                     %>
                     <div class="col-xs-6 col-md-4 col-xl-auto" data-animate='{"class":"fadeInUp"}'>
                             <!-- Layout-->
@@ -76,10 +77,9 @@
                               </div>
                             </article>
                     </div>
-                    <%
-                        }
-                    }
-                    %>
+                    <%}}else{%>
+                    <p>No existen eventos en este momento.</p>
+                    <%}%>
                 </div>
             </div>
           </section>
