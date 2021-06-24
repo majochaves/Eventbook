@@ -1,9 +1,4 @@
 /*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
     Created on : 12-may-2021, 12:09:08
     Author     : memoriasIT
 */
@@ -20,6 +15,7 @@ and open the template in the editor.
   height: 890px;
   display: flex;
   flex-direction: row;
+  padding-right: 0px !important;
 }
 
 .people-list {
@@ -70,7 +66,7 @@ and open the template in the editor.
 }
 
 .chat {
-  width: 1020px;
+  width: 90%;
   height: 100%;
   float: left;
   background: #F2F5F8;
