@@ -101,7 +101,7 @@
 
 
                         <div class="chat-about">
-                            <div class="chat-with"><%= usuarioChat.getUsername()%> </div>
+                            <div class="chat-with">@<%= usuarioChat.getUsername()%> </div>
                             <div class="chat-num-messages"><%= usuarioChat.getNombre()%>, <%= usuarioChat.getApellidos()%></div>
                         </div>
                         <i class="fa fa-star"></i>

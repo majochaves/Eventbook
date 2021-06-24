@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -349,6 +350,13 @@ public class ChatController {
 
         // Message contains data
         if (!(message == null || message.contentEquals(""))) {
+            // Message cannot be stored if bigger than 500 chars
+            if(message.length() > 500 ){
+                message = message.substring(0, 500);
+            }
+
+            // Avoid errors in format
+            message = message.replaceAll("[^a-zA-Z0-9 ]+","");
 
             // Current time
             Date currentTime = new Date();
