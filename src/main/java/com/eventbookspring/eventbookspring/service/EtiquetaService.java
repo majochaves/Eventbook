@@ -16,6 +16,20 @@ public class EtiquetaService {
         this.etiquetaRepository = etiquetaRepository;
     }
 
+    public void guardarEtiqueta(Etiqueta etiqueta){
+        this.etiquetaRepository.save(etiqueta);
+    }
+
+    public Etiqueta findEtiquetaById(Integer id){
+        Etiqueta e = this.etiquetaRepository.getById(id);
+        return e;
+    }
+
+    public void borrarEtiqueta(Integer id){
+        Etiqueta e = this.etiquetaRepository.getById(id);
+        this.etiquetaRepository.delete(e);
+    }
+
     public List<Etiqueta> listarEtiquetas() {
         return this.etiquetaRepository.findSortedAlphabetically();
     }
