@@ -118,7 +118,7 @@
 
 
                         <div class="row justify-content-md-center">
-                            <div class="col-8">
+                            <div class="col-12 mb-5">
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">Realizar Análisis</button>
                             </div>
                         </div>

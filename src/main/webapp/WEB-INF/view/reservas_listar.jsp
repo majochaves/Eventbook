@@ -62,6 +62,7 @@
                 </table>
             </form>
             <div class="main-containter">
+                <% if(!eventos.isEmpty()){ %>
                 <table class="table mx-auto tableReserva">
                     <thead class="thead-light">
                     <tr>
@@ -72,7 +73,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% if(eventos != null){
+                    <%
                         for(EventoDTO e : eventos){
                     %>
                     <tr>

@@ -47,6 +47,11 @@
 
             <hr class="divider divider-sm mt-0"/>
 
+
+            <%
+                if(listaAnalisis!=null && !listaAnalisis.isEmpty()){
+            %>
+
             <div class="row">
                 <div class="col-md-12">
                     <table class="table table-hover table-bordered">
@@ -80,6 +85,25 @@
                     </table>
                 </div>
             </div>
+            <%
+                } else {
+            %>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <p class="text-center"><b>Aun no tienes ningún análisis guardado! Comienza creando un nuevo análisis!</b></p>
+                    <br/>
+                    <br/>
+                    <a class="btn btn-primary btn-block mt-5" href="/analisis/crear/mostrar">Comenzar con mi primer análisis&nbsp;<i class="fa-chevron-right"></i></a>
+                </div>
+            </div>
+
+
+            <%
+                }
+            %>
             <br/>
             <br/>
         </div>

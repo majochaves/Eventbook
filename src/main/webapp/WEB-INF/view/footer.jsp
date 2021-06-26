@@ -21,18 +21,18 @@
             <div class="col-lg-5">
                     <!-- Logo-->
                     <div class="logo"><a class="logo-link" href="/"><img class="logo-image-default" src="images/EventbookLogoOscuro.svg" alt="Intense" width="161" height="27"/><img class="logo-image-inverse" src="images/EventbookLogoClaro.svg" alt="Intense" width="161" height="27"/></a></div>
-              <p class="small">En Eventbook nos encargamos de proveer herramientas para que la gestión de tu próximo evento sea lo más sencilla posible. Desde una gestión de usuarios con control de accesos por login, sistema de soporte técnico y administración y gestión de reservas.</p>
+              <p class="small">En Eventbook nos encargamos de proveer herramientas para que la gesti&oacute;n de tu pr&oacute;ximo evento sea lo m&aacute;s sencilla posible. En nuestra plataforma, es posible realizar desde una gesti&oacute;n de usuarios con control de accesos por login, sistema de soporte t&eacute;cnico y administraci&oacute;n, gesti&oacute;n de reservas hasta realizar an&aacute;lisis estad&iacute;sticos de todos los usuarios del sistema.</p>
             </div>
             <div class="col-md-11 col-lg-7 col-xxl-6">
-              <p class="small">25 Menéndez Pelayo-Sainz de Baranda, 28009 Madrid</p>
+              <p class="small">Universidad de M&aacute;laga. Ingenier&iacute;a Software. Tecnolog&iacute;a de Aplicaciones Web.</p>
               <div class="row row-20">
                 <div class="col-auto col-sm-4">
                   <div class="media media-xxs text-white">
                     <div class="media-left"><span class="icon icon-xs int-phone novi-icon"></span></div>
                     <div class="media-body">
                       <ul class="list list-contact">
-                        <li class="list-contact-item"><a class="list-contact-link" href="tel:#">+1 234 567 8901</a></li>
-                        <li class="list-contact-item"><a class="list-contact-link" href="tel:#">+1 234 567 8902</a></li>
+                        <li class="list-contact-item"><a class="list-contact-link" href="tel:#">+34 123 456 789</a></li>
+                        <li class="list-contact-item"><a class="list-contact-link" href="tel:#">+34 234 567 8902</a></li>
                       </ul>
                     </div>
                   </div>

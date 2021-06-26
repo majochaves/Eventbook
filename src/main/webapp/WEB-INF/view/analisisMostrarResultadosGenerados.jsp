@@ -90,7 +90,7 @@
             </div>
 
             <div class="row justify-content-md-center">
-                <div class="col-8">
+                <div class="col-12 mb-5">
                     <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#abrirDialogoGuardar">Guardar Análisis</button>
                 </div>
             </div>
