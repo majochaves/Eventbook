@@ -245,10 +245,10 @@
                                     messageElement.getElementsByClassName("message-data")[0].innerHTML += innerHtml;
                                     <% } %>
 
-                                    console.log(sender);
-                                    console.log(idUserTo);
-                                    console.log("<%= thisUsuario.getId() %>");
-                                    console.log("AAAAAAAAAAAAAAAA")
+                                    // console.log(sender);
+                                    // console.log(idUserTo);
+                                    //<%--console.log("<%= thisUsuario.getId() %>");--%>
+                                    // console.log("AAAAAAAAAAAAAAAA")
 
                                     // Evitar hacer render de los mensajes que el usuario envía dos veces
                                     if (sender !== "<%= thisUsuario.getId() %>"){
@@ -265,8 +265,8 @@
                                         const userId1 = <%= user.getId()%>;
                                         const userId2 = <%= user2.getId()%>;
 
-                                        console.log(idUserTo, userId2);
-                                        console.log(sender, userId1);
+                                        // console.log(idUserTo, userId2);
+                                        // console.log(sender, userId1);
 
                                         if (idUserTo == userId2 && sender == userId1){ // Usuario izq
                                             // console.log(messageElement);
@@ -410,12 +410,7 @@
 
         } catch (e) {
             console.trace();
-            const stack = e.stack
-                .split("\n")
-                .slice(2)
-                .map((line) => line.replace(/\s+at\s+/, ""))
-                .join("\n");
-            console.log(stack, "hello");
+
         }
     </script>
 
