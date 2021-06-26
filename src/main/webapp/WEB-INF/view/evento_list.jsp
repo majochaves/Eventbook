@@ -1,11 +1,8 @@
-<%@ page import="com.eventbookspring.eventbookspring.entity.Evento" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.eventbookspring.eventbookspring.entity.Usuario" %>
 <%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
-<%@ page import="com.eventbookspring.eventbookspring.entity.Administrador" %>
-<%@ page import="com.eventbookspring.eventbookspring.entity.Creadoreventos" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
-<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %><%--
+<%@ page import="com.eventbookspring.eventbookspring.dto.UsuarioDTO" %>
+<%@ page import="com.eventbookspring.eventbookspring.entity.*" %><%--
     Document   : evento_list
     Created on : 20-Apr-2021, 12:09:51
     Author     : majochaves
@@ -62,7 +59,10 @@
                     </table>
                 </form>
 
-                <% if(puedeCrear){%><a href="/crearEvento" class="btn btn-primary">Crear evento</a><%}%>
+                <% if(puedeCrear){%>
+                <a href="/crearEvento" class="btn btn-primary">Crear evento</a>
+                <a href="/verEtiquetas" class="btn btn-warning">Administrar etiquetas</a>
+                <%}%>
 
                 <div class="row row-30 row-md-40 row-lg-50 justify-content-center">
                     <% if(!eventos.isEmpty()){

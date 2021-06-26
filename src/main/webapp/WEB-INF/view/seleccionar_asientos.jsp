@@ -8,7 +8,6 @@
 <%@ page import="com.eventbookspring.eventbookspring.entity.Evento" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
-/
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -49,9 +48,9 @@
                             <table class="d-flex justify-content-center">
                                 <% for(int f = 0; f < matrizAsientos.length; f++){ %>
                                     <tr>
-                                        <td>Fila <%=f+1%></td>
+                                        <td class="mx-2">Fila <%=f+1%></td>
                                         <%for(int a = 0; a < matrizAsientos[0].length; a++){ %>
-                                        <td> 
+                                        <td class="mx-2">
                                             <%if(matrizAsientos[f][a] == 0){%> 
                                                 <img src="images/AsientoDisponible.svg" height="25" width="25">
                                             <%}else{%>
@@ -61,10 +60,10 @@
                                         <%}%>
                                     </tr>
                                     <tr>
-                                        <td></td>
+                                        <td class="mx-2"></td>
                                         <%for(int a = 0; a < matrizAsientos[0].length; a++){ %>
-                                        <td> 
-                                            Asiento <%= a+1%>
+                                        <td class="mx-2">
+                                            <%= a+1%>
                                         </td>
                                         <%}%>
                                     </tr>

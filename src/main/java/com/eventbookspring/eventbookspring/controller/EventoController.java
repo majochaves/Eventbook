@@ -49,6 +49,8 @@ public class EventoController {
     @GetMapping("/eventos")
     public String doEventoListar(Model model){
         List<EventoDTO> eventoList = null;
+        List<Etiqueta> etiquetaList = this.etiquetaService.listarEtiquetas();
+        model.addAttribute("etiquetaList", etiquetaList);
         eventoList = this.eventoService.listarEventos();
         model.addAttribute("eventoList", eventoList);
         return "evento_list";
@@ -277,4 +279,48 @@ public class EventoController {
         }
         return "redirect:/verReservas/"+u.getId();
     }
+
+    @GetMapping("verEtiquetas")
+    public String doVerEtiquetas(Model model){
+        List<Etiqueta> etiquetaList = this.etiquetaService.listarEtiquetas();
+        model.addAttribute("etiquetaList", etiquetaList);
+        return "etiquetas_list";
+    }
+
+    @GetMapping("crearEtiqueta")
+    public String doCrearEtiqueta(Model model){
+        Etiqueta e = new Etiqueta();
+        model.addAttribute("etiqueta", e);
+        return "etiqueta";
+    }
+
+    @GetMapping("editarEtiqueta/{idEtiqueta}")
+    public String doEditarEtiqueta(Model model, @PathVariable("idEtiqueta") Integer idEtiqueta){
+        Etiqueta e = this.etiquetaService.findEtiquetaById(idEtiqueta);
+        model.addAttribute("etiqueta", e);
+        return "etiqueta";
+    }
+
+    @GetMapping("borrarEtiqueta/{idEtiqueta}")
+    public String doBorrarEtiqueta(@PathVariable("idEtiqueta") Integer idEtiqueta){
+        this.etiquetaService.borrarEtiqueta(idEtiqueta);
+        return "redirect:/verEtiquetas";
+    }
+
+
+    @PostMapping("etiquetaGuardar")
+    public String doGuardarEtiqueta(Model model, @ModelAttribute("etiqueta") Etiqueta etiqueta){
+        String strTo = null;
+        model.addAttribute("etiqueta", etiqueta);
+        if(etiqueta.getDescripcion() == null){
+            strTo="etiqueta";
+            model.addAttribute("strError", "Error: Por favor rellene todos los campos obligatorios");
+        }else{
+            this.etiquetaService.guardarEtiqueta(etiqueta);
+            strTo="redirect:/verEtiquetas";
+        }
+        return strTo;
+    }
+
+
 }
