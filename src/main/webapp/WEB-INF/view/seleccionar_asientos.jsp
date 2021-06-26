@@ -15,6 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Seleccionar asientos</title>
         <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="/components/base/base.css">
         <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
         <script defer src="/components/eventos/asientos.js"></script>
@@ -45,12 +46,12 @@
                             <input type="hidden" name="usuarioId" value="<%=Autenticacion.getUsuarioLogeado(request, response).getId()%>"/>
                             <input type="hidden" name="eventoId" value="<%=evento.getId()%>"/>
                             <input type="hidden" id="numEntradas" name="numEntradas" value="<%=new Integer(numEntradas)%>"/>
-                            <table class="d-flex justify-content-center">
+                            <table class="justify-content-center mx-auto">
                                 <% for(int f = 0; f < matrizAsientos.length; f++){ %>
                                     <tr>
-                                        <td class="mx-2">Fila <%=f+1%></td>
+                                        <td class="px-2">Fila <%=f+1%></td>
                                         <%for(int a = 0; a < matrizAsientos[0].length; a++){ %>
-                                        <td class="mx-2">
+                                        <td class="px-3">
                                             <%if(matrizAsientos[f][a] == 0){%> 
                                                 <img src="images/AsientoDisponible.svg" height="25" width="25">
                                             <%}else{%>
@@ -60,9 +61,9 @@
                                         <%}%>
                                     </tr>
                                     <tr>
-                                        <td class="mx-2"></td>
+                                        <td class="px-2"></td>
                                         <%for(int a = 0; a < matrizAsientos[0].length; a++){ %>
-                                        <td class="mx-2">
+                                        <td class="px-3">
                                             <%= a+1%>
                                         </td>
                                         <%}%>
