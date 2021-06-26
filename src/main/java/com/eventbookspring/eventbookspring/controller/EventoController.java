@@ -53,6 +53,16 @@ public class EventoController {
         model.addAttribute("eventoList", eventoList);
         return "evento_list";
     }
+    
+    @GetMapping("/verEventosFiltrados")
+    public String doEventosFiltrar(@RequestParam("etiqueta") Integer etiqueta, Model model){
+        List<EventoDTO> eventoList = null;
+        eventoList = this.eventoService.listarEventosConFiltro(etiqueta);
+        List<Etiqueta> etiquetaList = this.etiquetaService.listarEtiquetas();
+        model.addAttribute("etiquetaList", etiquetaList);
+        model.addAttribute("eventoList", eventoList);
+        return "evento_list";
+    }
 
     @PostMapping("/eventoGuardar")
     public String doGuardar (Model model, @ModelAttribute("evento") EventoDTO evento, @RequestParam("creadorEventosId") Integer creadorId) throws ParseException {
