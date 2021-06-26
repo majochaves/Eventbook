@@ -119,28 +119,29 @@ public class AnalistaService {
         Set<Usuario> listaUsuarios = new HashSet<>();//Evitamos repeticiones
         String autoGeneradoAnalisisDe = "";
         String autoGeneradoTiposFiltros = "";
-        if(tipoUsuario.contains(ADMINISTRADORES)){
-            listaUsuarios.addAll(this.usuarioRepository.getUsuariosAdministradores(fechaInicial, fechaFinal));
-            autoGeneradoAnalisisDe+=" Administradores,";
+        if(tipoUsuario!=null && !tipoUsuario.isEmpty()) {
+            if (tipoUsuario.contains(ADMINISTRADORES)) {
+                listaUsuarios.addAll(this.usuarioRepository.getUsuariosAdministradores(fechaInicial, fechaFinal));
+                autoGeneradoAnalisisDe += " Administradores,";
+            }
+            if (tipoUsuario.contains(ANALISTAS)) {
+                listaUsuarios.addAll(this.usuarioRepository.getUsuariosAnalistas(fechaInicial, fechaFinal));
+                autoGeneradoAnalisisDe += " Analistas,";
+            }
+            if (tipoUsuario.contains(USUARIOEVENTOS)) {
+                listaUsuarios.addAll(this.usuarioRepository.getUsuariosEventos(fechaInicial, fechaFinal));
+                autoGeneradoAnalisisDe += " Usuario Eventos,";
+            }
+            if (tipoUsuario.contains(CREADOREVENTOS)) {
+                listaUsuarios.addAll(this.usuarioRepository.getUsuariosCreadoresEventos(fechaInicial, fechaFinal));
+                autoGeneradoAnalisisDe += " Creadores de Eventos,";
+            }
+            if (tipoUsuario.contains(TELEOPERADORES)) {
+                listaUsuarios.addAll(this.usuarioRepository.getUsuariosTeleoperadores(fechaInicial, fechaFinal));
+                autoGeneradoAnalisisDe += " Teleoperadores,";
+            }
+            autoGeneradoAnalisisDe = autoGeneradoAnalisisDe.substring(0, autoGeneradoAnalisisDe.lastIndexOf(","));
         }
-        if(tipoUsuario.contains(ANALISTAS)){
-            listaUsuarios.addAll(this.usuarioRepository.getUsuariosAnalistas(fechaInicial, fechaFinal));
-            autoGeneradoAnalisisDe+=" Analistas,";
-        }
-        if(tipoUsuario.contains(USUARIOEVENTOS)){
-            listaUsuarios.addAll(this.usuarioRepository.getUsuariosEventos(fechaInicial, fechaFinal));
-            autoGeneradoAnalisisDe+=" Usuario Eventos,";
-        }
-        if(tipoUsuario.contains(CREADOREVENTOS)){
-            listaUsuarios.addAll(this.usuarioRepository.getUsuariosCreadoresEventos(fechaInicial, fechaFinal));
-            autoGeneradoAnalisisDe+=" Creadores de Eventos,";
-        }
-        if(tipoUsuario.contains(TELEOPERADORES)){
-            listaUsuarios.addAll(this.usuarioRepository.getUsuariosTeleoperadores(fechaInicial, fechaFinal));
-            autoGeneradoAnalisisDe+=" Teleoperadores,";
-        }
-        autoGeneradoAnalisisDe = autoGeneradoAnalisisDe.substring(0, autoGeneradoAnalisisDe.lastIndexOf(","));
-
 
 
 

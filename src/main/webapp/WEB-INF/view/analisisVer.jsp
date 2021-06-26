@@ -63,8 +63,14 @@
                     <button type="button" class="shadow-sm badge badge-warning" data-toggle="modal"
                             data-target="#abrirDialogoEditar">Modificar
                     </button>
+                    <%
+                        if(thisAnalisisDto.getTipoanalisisList()!=null && !thisAnalisisDto.getTipoanalisisList().isEmpty()){
+                    %>
                     <a href="/analisis/ver/graficas/<%=thisAnalisisDto.getId()%>" class="shadow-sm badge badge-primary">Ver
                         gráficas</a>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
 
