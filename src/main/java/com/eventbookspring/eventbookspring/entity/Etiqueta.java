@@ -33,7 +33,7 @@ public class Etiqueta implements Serializable {
     private Integer id;
     @Column(name = "DESCRIPCION", length = 100)
     private String descripcion;
-    @ManyToMany(mappedBy = "etiquetaList", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "etiquetaList")
     private List<Evento> eventoList;
 
     public Etiqueta() {

@@ -71,7 +71,7 @@ public class Evento implements Serializable {
     @JoinTable(name = "EVENTOETIQUETA", joinColumns = {
         @JoinColumn(name = "EVENTO_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "ETIQUETA_ID", referencedColumnName = "ID")})
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Etiqueta> etiquetaList;
     @JoinColumn(name = "CREADOREVENTOS_ID", referencedColumnName = "USUARIO_ID")
     @ManyToOne(optional = false)

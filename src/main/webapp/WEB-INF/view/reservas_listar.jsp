@@ -38,11 +38,11 @@
     </jsp:include>
     <!-- Intro-->
     <section class="section section-lg bg-white d-flex min-vh-100">
-        <div class="container-fluid">
+        <div class="container">
             <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>Mis Reservas</h1>
             <% if (!etiquetaList.isEmpty()){ %>
             <form method="get" action="/verReservasFiltradas/<%=usuario.getId()%>">
-                <table>
+                <table class="mx-auto">
                     <tr>
                         <td>Filtrar</td>
                         <td>

@@ -34,13 +34,13 @@
             </jsp:include>
           <!-- Intro-->
           <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
-            <div class="container-fluid">
+            <div class="container">
                 <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
                 Eventos
                 </h1>
                 <% if (!etiquetaList.isEmpty()){ %>
                 <form method="get" action="/verEventosFiltrados">
-                    <table>
+                    <table class="mx-auto">
                         <tr>
                             <td>Filtrar</td>
                             <td>
