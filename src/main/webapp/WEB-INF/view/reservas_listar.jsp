@@ -40,7 +40,7 @@
     <section class="section section-lg bg-white d-flex min-vh-100">
         <div class="container-fluid">
             <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>Mis Reservas</h1>
-
+            <% if (!etiquetaList.isEmpty()){ %>
             <form method="get" action="/verReservasFiltradas/<%=usuario.getId()%>">
                 <table>
                     <tr>
@@ -61,6 +61,7 @@
                     </tr>
                 </table>
             </form>
+            <%}%>
             <div class="main-containter">
                 <% if(!eventos.isEmpty()){ %>
                 <table class="table mx-auto tableReserva">

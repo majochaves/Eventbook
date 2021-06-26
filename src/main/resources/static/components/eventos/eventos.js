@@ -4,6 +4,13 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
+    var numEtiquetas = $("#numEtiquetas").val();
+    if(numEtiquetas === 0) {
+        $('#selectEventos').attr('disabled', 'disabled')
+    }else{
+        $('#selectEventos').attr('enabled', 'enabled')
+    }
+
    $('input[type="radio"]').click(function() {
        if($(this).attr('id') === "asientosFijosSi") {
             $('#configuracionAsientos').show();
@@ -14,4 +21,5 @@ $(document).ready(function() {
             $('#numAsientosFila').val("");
        }
    });
+
 });
