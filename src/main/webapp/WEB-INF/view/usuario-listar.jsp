@@ -128,11 +128,13 @@
                         <thead>
                             <tr class="table-secondary">
                                 <th>ID</th>
-                                <th>USER</th>
-                                <th>NAME</th>
+                                <th>USUARIO</th>
+                                <th>NOMBRE COMPLETO</th>
+                                <th>SEXO</th>
+                                <th>CIUDAD</th>
                                 <th>ROL</th>
                                 <th>EDICIÓN</th>
-                                <th>BORRADO</th>
+                                <th>ELIMINACIÓN</th>
                             </tr>        
                         </thead>
 
@@ -156,7 +158,9 @@
                                <tr>
                                    <td><%= u.getId() %></td>            
                                    <td><%= u.getUsername() %></td>
-                                   <td><%= u.getNombre() %></td>
+                                   <td><%= u.getNombre() + " " + u.getApellidos() %></td>
+                                   <td><%= u.getSexo().substring(0, 1).toUpperCase() + u.getSexo().substring(1) %></td>
+                                   <td><%= u.getCiudadResidencia() %></td>
                                    <td><%= rol %></td>
                                    <td class="align-middle text-center"> <a href="/usuario-editar/<%= u.getId() %>" class="btn btn-primary">Editar</a> </td>
                                    <td class="align-middle text-center"> <a href="/usuario-borrar/<%= u.getId() %>" class="btn btn-danger" ><i class="fas fa-trash"></i></a> </td>

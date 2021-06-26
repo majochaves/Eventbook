@@ -109,7 +109,7 @@ public class AdministradorController {
 
             if (resultado == null) {
                 model.addAttribute("error", "El nombre de usuario '" + dto.getUsername() +  "' ya está en uso");
-                model.addAttribute("usuarioDTO", dto);
+                model.addAttribute("usuarioDTO", service.findUsuarioById(dto.getId()));
                 List<String> sexos = new LinkedList<>();
                 sexos.add("hombre");
                 sexos.add("mujer");
