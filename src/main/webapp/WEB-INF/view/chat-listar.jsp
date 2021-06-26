@@ -163,7 +163,7 @@
 
                                        %>
 
-                                       <td class="align-middle text-center"> <a href="/chat/<%= otherID %>/<%= oneID %>" class="btn" >Chat</a> </td>
+                                       <td class="align-middle text-center"> <a href="/chat/<%= otherID %>/<%= oneID %>" class="btn btn-success shadow-sm" >Chat</a> </td>
                                        <td class="align-middle text-center"> <a href="/chat/borrar/<%= chat.getChatPK().getUsuarioId() %>/<%= chat.getChatPK().getTeleoperadorId() %>" class="btn btn-danger" >X</a> </td>
                                    </tr>     
                                 </tbody>
