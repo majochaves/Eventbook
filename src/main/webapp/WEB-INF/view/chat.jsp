@@ -75,16 +75,24 @@
                     <ul class="list">
                         <% for (Chat chat : chats) {
                                 Usuario usuario;
+                                Usuario usuario2;
                             if (adminPriviledges){
                                 usuario = chat.getUsuario();
+                                usuario2 = chat.getTeleoperador().getUsuario();
                             } else {
                                 usuario = chat.getTeleoperador().getUsuario();
+                                usuario2 = chat.getUsuario();
                             }
                         %>
                         <li class="clearfix">
                             <div class="about">
-                                <a href="/chat/<%= usuario.getId() %>/<%= userId2 %>">
-                                <div class="name"><%= usuario.getUsername()%></div>
+                                <% if(usuario.getId() != thisUsuario.getId()) {  %>
+                                    <a href="/chat/<%= usuario.getId() %>/<%= usuario2.getId() %>">
+                                        <div class="name"><%= usuario.getUsername()%></div>
+                                <% } else {  %>
+                                    <a href="/chat/<%= usuario2.getId() %>/<%= usuario.getId() %>">
+                                        <div class="name"><%= usuario2.getUsername()%></div>
+                                <% } %>
                                 <div class="status">
                                     <i class="fa fa-circle online"></i> online
                                 </div>
