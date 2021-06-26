@@ -219,8 +219,8 @@ public class ChatController {
             // Mostrar vista con privilegios si los tiene
             if(Autenticacion.tieneRol(request, response, Teleoperador.class) || Autenticacion.tieneRol(request, response, Administrador.class)){
                 model.addAttribute("allMessages", "Modo Teleoperador: mostrando todos los chats - <a href='/chat/'>Modo usuario</a>");
-            } else { // Solo los teleoperadores tienen permisos
-                throw new AutenticacionException("Solo los teleoperadores pueden ver esta página.");
+            } else { // Modo usuario
+                model.addAttribute("allMessages", "Modo Usuario: mostrando tus chats.");
             }
 
             request.setAttribute("chats", chatsFiltrados);
