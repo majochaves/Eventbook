@@ -24,11 +24,9 @@
         <script src="/components/base/script.js"></script>
         
     </head>
-    <%
+   <%
         List<EventoDTO> eventos = (List)request.getAttribute("eventoList");
-
-        String filtro = (String) request.getAttribute("filtro");
-
+        List<Etiqueta> etiquetaList = (List) request.getAttribute("etiquetaList");
         boolean puedeCrear = Autenticacion.tieneRol(request, response, Administrador.class, Creadoreventos.class);
     %>
     <body>
@@ -43,17 +41,19 @@
                 Eventos
                 </h1>
 
-                <!-- <a href="ServletEventoCrear" class="btn btn-primary">Crear evento</a>
-                <form align="right" action="ServletEventoListar">
+                <form method="get" action="/verEventosFiltrados">
                     <table>
                         <tr>
                             <td>Filtrar</td>
                             <td>
-                                <select name="fechaFiltrado">
-                                    <option <%= (filtro != null && filtro.equalsIgnoreCase("reciente") ? "selected" : " ")%> value="reciente">Fecha más reciente</option>
-                                    <option <%= (filtro != null && filtro.equalsIgnoreCase("noReciente") ? "selected" : " ")%> value="noReciente">Fecha menos reciente</option>
-
-                                </select>
+                                <select name="etiqueta">
+                                        <%
+                                    for(Etiqueta e:etiquetaList){
+                                %>
+                                    <option value="<%=e.getId()%>"><%=e.getDescripcion()%></option>
+                                        <%
+                                    }
+                                %>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-secondary"><i class="fas fa-filter"></i></button>
@@ -61,7 +61,6 @@
                         </tr>
                     </table>
                 </form>
-                -->
 
                 <% if(puedeCrear){%><a href="/crearEvento" class="btn btn-primary">Crear evento</a><%}%>
 
