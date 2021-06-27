@@ -43,76 +43,81 @@
     <!-- Intro-->
     <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
         <div class="container">
-            <%
+                <%
                 if (evento != null) {
             %>
             <h1><%=evento.getTitulo()%>
             </h1>
-            <%
+                <%
                 if (error != null) {
             %>
             <p><%=error%>
             </p>
-            <%
+                <%
                 }
                 if (!editar.isEmpty() && evento.getAsientosFijos() == 'S') {
             %>
             <h3>Información de tu reserva</h3>
             <p>Asientos reservados: <%=evento.getEntradasReservadas(usuario)%>
             </p>
-            <table>
-                <tr>
-                    <th>Fila</th>
-                    <th>Asiento</th>
-                </tr>
-                <%
-                    for (Reserva r : reservas) {
-                %>
-                <tr>
-                    <td><%=r.getReservaPK().getFila()%>
-                    </td>
-                    <td><%=r.getReservaPK().getAsiento()%>
-                    </td>
-                </tr>
+            <div class="row justify-content-center">
+                <div class="col-auto shadow-sm bg-light rounded">
+                    <table>
+                        <tr>
+                            <th class="pr-4 text-center">Fila</th>
+                            <th class="text-center">Asiento</th>
+                        </tr>
+                        <%
+                            for (Reserva r : reservas) {
+                        %>
+                        <tr>
+                            <td class="text-center"><%=r.getReservaPK().getFila()%>
+                            </td>
+                            <td class="text-center"><%=r.getReservaPK().getAsiento()%>
+                            </td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </table>
+                </div>
+            </div>
                 <%
                     }
                 %>
-            </table>
-            <%
-                }
-            %>
-            <div class="row justify-content-center">
-                <form method="POST" action="/crearReserva">
-                    <input type="hidden" name="usuarioId"
-                           value="<%=Autenticacion.getUsuarioLogeado(request, response).getId()%>"/>
-                    <input type="hidden" name="editar" value="<%=editar%>"/>
-                    <input type="hidden" name="id" value="<%= evento.getId() %>"/>
-                    <div class="form-group">
-                        <label for="numEntradas">Número de Entradas:*</label><br/>
-                        <input type="text" id="numEntradas" name="numEntradas"
-                               class="form-control" value="<%= (editar.equalsIgnoreCase("editar") ? numEntradas : "") %>"/><%=maxentradas%>
-                    </div>
+                <div class="row justify-content-center">
+                    <form method="POST" action="/crearReserva">
+                        <input type="hidden" name="usuarioId"
+                               value="<%=Autenticacion.getUsuarioLogeado(request, response).getId()%>"/>
+                        <input type="hidden" name="editar" value="<%=editar%>"/>
+                        <input type="hidden" name="id" value="<%= evento.getId() %>"/>
+                        <div class="form-group">
+                            <label for="numEntradas">Número de Entradas:*</label><br/>
+                            <input type="text" id="numEntradas" name="numEntradas"
+                                   class="form-control"
+                                   value="<%= (editar.equalsIgnoreCase("editar") ? numEntradas : "") %>"/><%=maxentradas%>
+                        </div>
 
-                    <%
-                        if (editar.equalsIgnoreCase("editar")) {
-                    %>
-                    <p>Nota*: Si pulsas editar, se borrará tu reserva actual y no podrás volver atrás. </p>
-                    <input type="submit" class="btn btn-secondary" value="Editar"/>
-                    <a href="/eliminarReserva//<%=evento.getId() + "/"+ usuario.getId()%>"
-                       class="btn btn-danger">Eliminar</a>
-                    <%
-                    } else {
-                    %>
-                    <input type="submit" class="btn btn-primary" value="Aceptar"/>
-                    <%
-                        }
-                    %>
-                </form>
+                        <%
+                            if (editar.equalsIgnoreCase("editar")) {
+                        %>
+                        <p>Nota*: Si pulsas editar, se borrará tu reserva actual y no podrás volver atrás. </p>
+                        <input type="submit" class="btn btn-secondary" value="Editar"/>
+                        <a href="/eliminarReserva//<%=evento.getId() + "/"+ usuario.getId()%>"
+                           class="btn btn-danger">Eliminar</a>
+                        <%
+                        } else {
+                        %>
+                        <input type="submit" class="btn btn-primary" value="Aceptar"/>
+                        <%
+                            }
+                        %>
+                    </form>
+                </div>
+                <%
+                    }
+                %>
             </div>
-            <%
-                }
-            %>
-        </div>
     </section>
 
 
