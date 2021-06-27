@@ -36,34 +36,30 @@
     <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
         <div class="container">
             <div class="row justify-content-center">
-                <div data-animate='{"class":"fadeInUp"}'>
-                    <h1><%= editar ? "Editar etiqueta " + etiqueta.getDescripcion(): "Crear una nueva etiqueta" %></h1>
-                    <%if(strError != null){%>
-                    <p><%=strError%></p>
-                    <%}%>
-                    <form:form method="POST" action="/etiquetaGuardar" modelAttribute="etiqueta">
-                        <form:hidden path="id"/>
-                        <div class="form-group">
-                            <label for="descripcion">Descripcion:*</label>
-                            <form:input path="descripcion" class="form-control"/>
+                <h1><%= editar ? "Editar etiqueta " + etiqueta.getDescripcion(): "Crear una nueva etiqueta" %></h1>
+                <%if(strError != null){%>
+                <p><%=strError%></p>
+                <%}%>
+                <form:form method="POST" action="/etiquetaGuardar" modelAttribute="etiqueta">
+                    <form:hidden path="id"/>
+                    <div class="form-group">
+                        <label for="descripcion">Descripcion:*</label>
+                        <form:input path="descripcion" class="form-control"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <a class="btn btn-danger" href="/verEtiquetas">Cancelar</a>
                         </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <a class="btn btn-danger" href="/verEtiquetas">Cancelar</a>
-                            </div>
-                            <div class="col-8">
-                                <input class="btn btn-primary btn-block" type="submit" value="<%= editar ? "Confirmar cambios" : "Crear etiqueta" %>"/>
-                            </div>
+                        <div class="col-8">
+                            <input class="btn btn-primary btn-block" type="submit" value="<%= editar ? "Confirmar cambios" : "Crear etiqueta" %>"/>
                         </div>
-                    </form:form>
-                </div>
+                    </div>
+                </form:form>
             </div>
         </div>
     </section>
 
-
     <jsp:include page="footer.jsp" />
 </div>
-<div class="to-top int-arrow-up"></div>
 </body>
 </html>

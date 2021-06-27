@@ -59,6 +59,11 @@ public class Etiqueta implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public void removeEvento(Evento evento) {
+        eventoList.remove(evento);
+        evento.getEtiquetaList().remove(this);
+    }
+
     @XmlTransient
     public List<Evento> getEventoList() {
         return eventoList;
