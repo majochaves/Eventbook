@@ -48,7 +48,7 @@
                         <div class="col-4">
                             <a class="btn btn-danger" href="/verEtiquetas">Cancelar</a>
                         </div>
-                        <div class="col-7 ml-5">
+                        <div class="ml-3 col-auto">
                             <input class="btn btn-primary btn-block" type="submit" value="<%= editar ? "Confirmar cambios" : "Crear etiqueta" %>"/>
                         </div>
                     </div>
