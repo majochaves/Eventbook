@@ -5,9 +5,6 @@
 --%>
 
 <%@page import="java.util.List" %>
-<%@ page import="com.eventbookspring.eventbookspring.entity.Usuario" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.entity.Etiqueta" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>

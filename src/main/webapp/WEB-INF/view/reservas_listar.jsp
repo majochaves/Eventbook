@@ -16,12 +16,19 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Mis Reservas</title>
     <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
+
+
+
+
     <link rel="stylesheet" href="/components/base/base.css">
-    <link rel="stylesheet" href="/components/base/tabla.css">
-    <script src="/components/eventos/eventos.js"></script>
+    <link rel="stylesheet" href="/components/base/tablas.css">
+    <link rel="stylesheet" href="/components/base/modal.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="/components/bootstrap/js/popper.js"></script>
+    <script src="/components/bootstrap/js/bootstrap.min.js"></script>
     <script src="/components/base/core.js"></script>
     <script src="/components/base/script.js"></script>
-
+    <script src="/components/eventos/eventos.js"></script>
 </head>
 <%
     Usuario usuario = (Usuario)request.getAttribute("usuario");
@@ -62,17 +69,15 @@
                 </table>
             </form>
             <%}%>
-            <div class="main-containter">
+            <div class="main-containter mt-5">
                 <% if(!eventos.isEmpty()){ %>
-                <table class="table mx-auto tableReserva">
-                    <thead class="thead-light">
-                    <tr>
+                <table class="table table-hover table-bordered">
+                    <tr class="table-secondary">
                         <th scope="col">Nombre del evento</th>
                         <th scope="col">Numero de asientos</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Acción</th>
                     </tr>
-                    </thead>
                     <tbody>
                     <%
                         for(EventoDTO e : eventos){
@@ -81,7 +86,7 @@
                         <td><%=e.getTitulo()%></td>
                         <td><%=e.getEntradasReservadas(usuario)%></td>
                         <td><%=new SimpleDateFormat("dd/MM/yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(e.getFecha()))%></td>
-                        <td><a href="/editarReserva/<%=e.getId() + "/"+ usuario.getId()%>">Ver</a></td>
+                        <td class="text-center"><a class="btn btn-primary" href="/editarReserva/<%=e.getId() + "/"+ usuario.getId()%>">Ver</a></td>
                     </tr>
                     </tbody>
                     <%}}else{%>
