@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -76,17 +77,20 @@ public class ChatController {
                 throw new AutenticacionException("¿Has iniciado sesión?");
             }
 
-            // Coger lista de todos los chats (para mostrar filtro y búsqueda sobre ellos)
-            List<Chat> chatList = this.chatService.findChatsByUserID(usuarioDTO.getId());
-            model.addAttribute("chats", chatList);
+            try {
+                // Coger lista de todos los chats (para mostrar filtro y búsqueda sobre ellos)
+                List<Chat> chatList = this.chatService.findChatsByUserID(usuarioDTO.getId());
+                 model.addAttribute("chats", chatList);
+                // Anyadir usuarios al modelo
+                model.addAttribute("usuarioChat", this.usuarioService.findUsuarioByID(userID));
+                model.addAttribute("usuarioChat2", this.usuarioService.findUsuarioByID(user2ID));
 
-            // Anyadir usuarios al modelo
-            model.addAttribute("usuarioChat", this.usuarioService.findUsuarioByID(userID));
-            model.addAttribute("usuarioChat2", this.usuarioService.findUsuarioByID(user2ID));
-
-            // Coger lista de mensajes entre estos usuarios
-            List<Par<Integer, Mensaje>> mensajes = this.mensajeService.getListOfMensajesByIDs(userID, user2ID);
-            model.addAttribute("mensajesHistorial", mensajes);
+                 // Coger lista de mensajes entre estos usuarios
+                List<Par<Integer, Mensaje>> mensajes = this.mensajeService.getListOfMensajesByIDs(userID, user2ID);
+                model.addAttribute("mensajesHistorial", mensajes);
+            } catch(EntityNotFoundException e){
+                throw new AutenticacionException("El chat entre " + userID + " y " + user2ID + " no existe");
+            }
 
             return "chat";
         } catch(AutenticacionException ex){
@@ -165,7 +169,11 @@ public class ChatController {
                 model.addAttribute("allMessages", "Modo Usuario: mostrando tus chats.");
             }
 
-            model.addAttribute("chats", this.chatService.findChatsByUserID(usuarioDTO.getId()));
+            try {
+                model.addAttribute("chats", this.chatService.findChatsByUserID(usuarioDTO.getId()));
+            } catch(EntityNotFoundException e){
+                new Exception("El usuario no existe");
+            }
 
             return "chat-listar";
         } catch(AutenticacionException ex){
