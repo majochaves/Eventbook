@@ -32,7 +32,3 @@ build/
 ### VS Code ###
 .vscode/
 
-### DB ###
-/eventbook/*
-/eventbook
-derby.log
