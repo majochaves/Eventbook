@@ -7,8 +7,10 @@ import com.eventbookspring.eventbookspring.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EtiquetaService {
@@ -35,16 +37,23 @@ public class EtiquetaService {
     }
 
     public void borrarEtiqueta(Integer id){
-        Etiqueta e = this.etiquetaRepository.getById(id);
-        Iterator<Evento> it = e.getEventoList().iterator();
-        if(it.hasNext()){
-            Evento evento = it.next();
-            if(evento != null){
-                e.removeEvento(evento);
-                this.eventoRepository.save(evento);
+
+        Optional<Etiqueta> thisEtiquetaOpt = this.etiquetaRepository.findById(id);
+        if(thisEtiquetaOpt.isPresent()){
+            Etiqueta thisEtiqueta = thisEtiquetaOpt.get();
+            List<Evento> listaEventos = thisEtiqueta.getEventoList();
+            if(listaEventos!=null){
+                for(Evento e : listaEventos){
+                    List<Etiqueta> listaEtiquetas = e.getEtiquetaList();
+                    listaEtiquetas.remove(thisEtiqueta);
+                    e.setEtiquetaList(listaEtiquetas);
+                    this.eventoRepository.save(e);
+                }
             }
+            this.etiquetaRepository.delete(thisEtiqueta);
         }
-        this.etiquetaRepository.delete(e);
+
+
     }
 
     public List<Etiqueta> listarEtiquetas() {
