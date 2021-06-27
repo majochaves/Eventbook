@@ -4,8 +4,6 @@
     Author     : majochaves
 --%>
 
-<%@page import="java.util.List"%>
-<%@ page import="com.eventbookspring.eventbookspring.entity.Evento" %>
 <%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
 <%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -83,7 +81,7 @@
                                     </tr>
                                 <% } %>
                             </table>
-                            <input id="btn-enviar" type="submit" class="btn btn-secondary" value="Enviar" style="display:none;"/>
+                            <input id="btn-enviar" type="submit" class="btn btn-primary" value="Enviar" style="display:none;"/>
                         </form>
                 </div>
             </section>
