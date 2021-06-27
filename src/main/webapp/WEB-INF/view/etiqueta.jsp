@@ -5,17 +5,13 @@
     Author     : majochaves
 --%>
 
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.List"%>
-<%@ page import="com.eventbookspring.eventbookspring.clases.Autenticacion" %>
 <%@ page import="com.eventbookspring.eventbookspring.entity.*" %>
-<%@ page import="com.eventbookspring.eventbookspring.dto.EventoDTO" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Crear evento</title>
+    <title>Crear Etiqueta</title>
     <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/components/base/base.css">
     <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -40,17 +36,19 @@
                 <%if(strError != null){%>
                 <p><%=strError%></p>
                 <%}%>
+            </div>
+            <div class="row justify-content-center">
                 <form:form method="POST" action="/etiquetaGuardar" modelAttribute="etiqueta">
                     <form:hidden path="id"/>
                     <div class="form-group">
                         <label for="descripcion">Descripcion:*</label>
-                        <form:input path="descripcion" class="form-control"/>
+                        <form:input path="descripcion" class="form-control" />
                     </div>
                     <div class="row">
                         <div class="col-4">
                             <a class="btn btn-danger" href="/verEtiquetas">Cancelar</a>
                         </div>
-                        <div class="col-8">
+                        <div class="col-7 ml-5">
                             <input class="btn btn-primary btn-block" type="submit" value="<%= editar ? "Confirmar cambios" : "Crear etiqueta" %>"/>
                         </div>
                     </div>
