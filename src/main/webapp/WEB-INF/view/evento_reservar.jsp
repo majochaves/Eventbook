@@ -44,7 +44,7 @@
             
             <!-- Intro-->
             <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
-              <div class="container-fluid">
+              <div class="container">
                   <% if(evento != null){
                   %>
                       <h1><%=evento.getTitulo()%></h1>
@@ -75,12 +75,12 @@
                   <%
                       }
                   %>
-                      <form method="POST" action="/crearReserva">
-                          <table>
+                      <form class="mx-auto" method="POST" action="/crearReserva">
+                          <table class="mx-auto">
                               <tr>
                                 <input type="hidden" name="usuarioId" value="<%=Autenticacion.getUsuarioLogeado(request, response).getId()%>"/>
                                 <input type="hidden" name="editar" value="<%=editar%>" />
-                                <td>Numero de Entradas </td>
+                                <td>Numero de Entradas</td>
                                 <td><input type="text" name="numEntradas" value="<%= (editar.equalsIgnoreCase("editar") ? numEntradas : "") %>" /><%=maxentradas%></td>
                                 <input type="hidden" name="id" value="<%= evento.getId() %>" />
                               </tr>

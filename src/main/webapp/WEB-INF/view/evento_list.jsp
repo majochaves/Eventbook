@@ -16,7 +16,8 @@
         <title>Eventos</title>
         <link rel="icon" href="/images/calendar-favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="/components/base/base.css">
-        <script src="/components/eventos/eventos.js"></script>
+        <script defer src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script defer src="/components/eventos/eventos.js"></script>
         <script src="/components/base/core.js"></script>
         <script src="/components/base/script.js"></script>
         
@@ -33,17 +34,17 @@
             </jsp:include>
           <!-- Intro-->
           <section class="section section-lg bg-gradient-animated text-center d-flex align-items-center min-vh-100">
-            <div class="container-fluid">
+            <div class="container">
                 <h1 class="text-center" data-animate='{"class":"fadeInUp"}'>
                 Eventos
                 </h1>
-
+                <% if (!etiquetaList.isEmpty()){ %>
                 <form method="get" action="/verEventosFiltrados">
-                    <table>
+                    <table class="mx-auto">
                         <tr>
                             <td>Filtrar</td>
                             <td>
-                                <select name="etiqueta">
+                                <select id="selectEventos" name="etiqueta">
                                         <%
                                     for(Etiqueta e:etiquetaList){
                                 %>
@@ -58,6 +59,7 @@
                         </tr>
                     </table>
                 </form>
+                <%}%>
 
                 <% if(puedeCrear){%>
                 <a href="/crearEvento" class="btn btn-primary">Crear evento</a>
